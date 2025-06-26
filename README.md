@@ -12,6 +12,13 @@
 |---------|------|------|-----|
 | USA | ✅ | ❌ | ⚪ |
 
+- Fix contries found in geographies but not in countries
+
+- Add reset and/or two finger drag to map
+
+- Group like flags with multiple country codes (eg FR)
+
+- Create groups of countries for challenges. Also possibly blacklist common countries
 
 # React + Vite
 
