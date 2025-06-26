@@ -1,3 +1,18 @@
+# Todo:
+
+- Allow prompts for all 3 types of input
+
+- Log suggesses as success or failure
+
+- Border box or other visual indicator of small countries prompted on map
+
+- Log guesses as a table below the input boxes. Something like
+
+| Country | Name | Flag | Map |
+|---------|------|------|-----|
+| USA | ✅ | ❌ | ⚪ |
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
