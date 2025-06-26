@@ -45,7 +45,8 @@ function WorldMap({ onCountrySelect }) {
         }}
       >
         <ZoomableGroup>
-          <Geographies geography='src/data/geographies.json'>
+          {/* <Geographies geography={process.env.PUBLIC_URL + '/geographies.json'}> */}
+          <Geographies geography={`${import.meta.env.BASE_URL}geographies.json`}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const countryName = geo.properties.name;
