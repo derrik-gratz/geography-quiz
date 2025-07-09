@@ -1,29 +1,131 @@
 import './App.css';
 import React, { useState } from 'react';
-import Score from './components/Score';
 import FlagSelector from './components/Flags';
 import TextCountryInput from './components/TextCountryInput';
 import WorldMap from './components/WorldMap';
 import CountryPrompt, { PROMPT_TYPES } from './components/CountryPrompt';
+import GuessTable from './components/GuessTable';
 
 function App() {
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
   const [currentPrompt, setCurrentPrompt] = useState(null);
   const [promptType, setPromptType] = useState(null);
+  const [guesses, setGuesses] = useState([]);
+  const [showNiceMessage, setShowNiceMessage] = useState(false);
+  const generatePromptRef = React.useRef(null);
+  const clearInputsRef = React.useRef(null);
+
+  // Helper function to clear all inputs
+  const clearAllInputs = () => {
+    if (clearInputsRef.current) {
+      clearInputsRef.current();
+    }
+  };
+
+  // Helper function to record a guess
+  const recordGuess = (country, promptType, correct) => {
+    const newGuess = {
+      country: country.Name,
+      countryCode: country.Code,
+      promptType: promptType,
+      correct: correct,
+      timestamp: new Date().toISOString()
+    };
+    setGuesses(prev => [...prev, newGuess]);
+  };
+
+  // Helper function to record a provided field (not guessed)
+  const recordProvidedField = (country, promptType) => {
+    const newGuess = {
+      country: country.Name,
+      countryCode: country.Code,
+      promptType: promptType,
+      correct: null, // null indicates provided field
+      timestamp: new Date().toISOString()
+    };
+    setGuesses(prev => [...prev, newGuess]);
+  };
+
+  // Helper function to check if all missing values are correct
+  const checkAllCorrect = (country, currentGuess = null) => {
+    if (!country) return false;
+    
+    // Get all guesses for this country
+    let countryGuesses = guesses.filter(guess => guess.country === country.Name);
+    
+    // If we have a current guess, add it to the list for checking
+    if (currentGuess) {
+      countryGuesses = [...countryGuesses, currentGuess];
+    }
+    
+    // Determine which fields need to be guessed (not provided as prompt)
+    const textNeeded = promptType !== PROMPT_TYPES.TEXT;
+    const flagNeeded = promptType !== PROMPT_TYPES.FLAG;
+    const mapNeeded = promptType !== PROMPT_TYPES.MAP;
+    
+    // Check if all required fields have correct guesses
+    const textCorrect = !textNeeded || countryGuesses.some(guess => guess.promptType === 'text' && guess.correct === true);
+    const flagCorrect = !flagNeeded || countryGuesses.some(guess => guess.promptType === 'flag' && guess.correct === true);
+    const mapCorrect = !mapNeeded || countryGuesses.some(guess => guess.promptType === 'map' && guess.correct === true);
+    
+    const allCorrect = textCorrect && flagCorrect && mapCorrect;
+    
+    console.log('Checking all correct for:', country.Name);
+    console.log('Text needed:', textNeeded, 'Text correct:', textCorrect);
+    console.log('Flag needed:', flagNeeded, 'Flag correct:', flagCorrect);
+    console.log('Map needed:', mapNeeded, 'Map correct:', mapCorrect);
+    console.log('All correct:', allCorrect);
+    
+    return allCorrect;
+  };
 
   const handlePromptGenerated = (country, type) => {
     setCurrentPrompt(country);
     setPromptType(type);
+    // Record the provided field so it appears in the table
+    if (country && type) {
+      recordProvidedField(country, type);
+    }
   };
 
   const handleFlagSelect = (code) => {
     console.log('Selected flag:', code);
     if (currentPrompt && currentPrompt.Code.toLowerCase() === code) {
       setCorrect(prev => prev + 1);
+      
+      // Create the current guess
+      const currentGuess = promptType !== PROMPT_TYPES.FLAG ? {
+        country: currentPrompt.Name,
+        countryCode: currentPrompt.Code,
+        promptType: 'flag',
+        correct: true,
+        timestamp: new Date().toISOString()
+      } : null;
+      
+      // Only record flag guess if flag wasn't the prompt type
+      if (promptType !== PROMPT_TYPES.FLAG) {
+        recordGuess(currentPrompt, 'flag', true);
+      }
       console.log('Correct! Flag selected matches prompt.');
+      
+      // Check if all missing values are now correct BEFORE clearing inputs
+      if (checkAllCorrect(currentPrompt, currentGuess)) {
+        setShowNiceMessage(true);
+        setTimeout(() => {
+          setShowNiceMessage(false);
+          // Clear all inputs and generate new prompt
+          clearAllInputs();
+          if (generatePromptRef.current) {
+            generatePromptRef.current();
+          }
+        }, 1000);
+      }
     } else {
       setIncorrect(prev => prev + 1);
+      if (currentPrompt && promptType !== PROMPT_TYPES.FLAG) {
+        recordGuess(currentPrompt, 'flag', false);
+      }
       console.log('Incorrect flag selected.');
     }
   };
@@ -32,9 +134,39 @@ function App() {
     console.log('Selected country:', country);
     if (currentPrompt && currentPrompt.Code === country.Code) {
       setCorrect(prev => prev + 1);
+      
+      // Create the current guess
+      const currentGuess = promptType !== PROMPT_TYPES.TEXT ? {
+        country: currentPrompt.Name,
+        countryCode: currentPrompt.Code,
+        promptType: 'text',
+        correct: true,
+        timestamp: new Date().toISOString()
+      } : null;
+      
+      // Only record text guess if text wasn't the prompt type
+      if (promptType !== PROMPT_TYPES.TEXT) {
+        recordGuess(currentPrompt, 'text', true);
+      }
       console.log('Correct! Country selected matches prompt.');
+      
+      // Check if all missing values are now correct BEFORE clearing inputs
+      if (checkAllCorrect(currentPrompt, currentGuess)) {
+        setShowNiceMessage(true);
+        setTimeout(() => {
+          setShowNiceMessage(false);
+          // Clear all inputs and generate new prompt
+          clearAllInputs();
+          if (generatePromptRef.current) {
+            generatePromptRef.current();
+          }
+        }, 1000);
+      }
     } else {
       setIncorrect(prev => prev + 1);
+      if (currentPrompt && promptType !== PROMPT_TYPES.TEXT) {
+        recordGuess(currentPrompt, 'text', false);
+      }
       console.log('Incorrect country selected.');
     }
   };
@@ -43,9 +175,39 @@ function App() {
     console.log('Selected country from map:', country);
     if (currentPrompt && currentPrompt.Code === country.Code) {
       setCorrect(prev => prev + 1);
+      
+      // Create the current guess
+      const currentGuess = promptType !== PROMPT_TYPES.MAP ? {
+        country: currentPrompt.Name,
+        countryCode: currentPrompt.Code,
+        promptType: 'map',
+        correct: true,
+        timestamp: new Date().toISOString()
+      } : null;
+      
+      // Only record map guess if map wasn't the prompt type
+      if (promptType !== PROMPT_TYPES.MAP) {
+        recordGuess(currentPrompt, 'map', true);
+      }
       console.log('Correct! Country selected from map matches prompt.');
+      
+      // Check if all missing values are now correct BEFORE clearing inputs
+      if (checkAllCorrect(currentPrompt, currentGuess)) {
+        setShowNiceMessage(true);
+        setTimeout(() => {
+          setShowNiceMessage(false);
+          // Clear all inputs and generate new prompt
+          clearAllInputs();
+          if (generatePromptRef.current) {
+            generatePromptRef.current();
+          }
+        }, 1000);
+      }
     } else {
       setIncorrect(prev => prev + 1);
+      if (currentPrompt && promptType !== PROMPT_TYPES.MAP) {
+        recordGuess(currentPrompt, 'map', false);
+      }
       console.log('Incorrect country selected from map.');
     }
   };
@@ -61,8 +223,14 @@ function App() {
       <header className="placeholder">Geography Quiz</header>
 
       <div className="top-bar">
-        <CountryPrompt onPromptGenerated={handlePromptGenerated} />
-        <Score correct={correct} incorrect={incorrect} />
+        <CountryPrompt 
+          onPromptGenerated={handlePromptGenerated} 
+          showNiceMessage={showNiceMessage}
+          generatePromptRef={generatePromptRef}
+          clearInputsRef={clearInputsRef}
+        />
+        {/* Guess History Table moved to top */}
+        <GuessTable guesses={guesses} currentPromptType={promptType} />
       </div>
 
       <div className="main-area">
@@ -71,14 +239,16 @@ function App() {
             onCountrySelect={handleMapCountrySelect} 
             highlightedCountry={shouldHighlightMap ? currentPrompt : null}
             showCoordinates={shouldShowCoordinates}
+            clearInputsRef={clearInputsRef}
           />
         </div>
         <div className="sidebar">
           <FlagSelector 
             onSelect={handleFlagSelect} 
             highlightedCountry={shouldHighlightFlag ? currentPrompt : null}
+            clearInputsRef={clearInputsRef}
           />
-          <TextCountryInput onSelect={handleCountrySelect} />
+          <TextCountryInput onSelect={handleCountrySelect} clearInputsRef={clearInputsRef} />
         </div>
       </div>
     </div>

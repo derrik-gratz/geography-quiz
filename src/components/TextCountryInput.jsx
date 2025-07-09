@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import countries from '../data/countries.json';
 
-function TextCountryInput({ onSelect }) {
+function TextCountryInput({ onSelect, clearInputsRef }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -13,6 +13,28 @@ function TextCountryInput({ onSelect }) {
       .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
       .toLowerCase();
   };
+
+  // Function to clear the input
+  const clearInput = () => {
+    setInput('');
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
+
+  // Set the clear function in the ref so parent can call it
+  React.useEffect(() => {
+    if (clearInputsRef) {
+      // Store the current clear function
+      const currentClear = clearInputsRef.current;
+      clearInputsRef.current = () => {
+        clearInput();
+        // Call any existing clear function
+        if (currentClear) {
+          currentClear();
+        }
+      };
+    }
+  }, [clearInputsRef]);
 
   const handleChange = (e) => {
     const value = e.target.value;

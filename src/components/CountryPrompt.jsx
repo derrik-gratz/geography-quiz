@@ -13,7 +13,7 @@ const PROMPT_TYPES = {
   FLAG: 'flag'
 };
 
-function CountryPrompt({ onPromptGenerated }) {
+function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePromptRef }) {
   const [currentCountry, setCurrentCountry] = useState(null);
   const [promptType, setPromptType] = useState(PROMPT_TYPES.TEXT);
   
@@ -27,25 +27,15 @@ function CountryPrompt({ onPromptGenerated }) {
 
   // Generate a random country and prompt type
   const generateRandomCountry = () => {
-    // Filter countries based on prompt type requirements
-    let availableCountries = countries;
-    if (promptType === PROMPT_TYPES.MAP) {
-      // For map prompts, only use countries with coordinate data
-      availableCountries = countries.filter(country => 
-        countryCoordinates[country.Code]
-      );
-    }
-    
-    const randomIndex = Math.floor(Math.random() * availableCountries.length);
-    const country = availableCountries[randomIndex];
-    setCurrentCountry(country);
-    
     // Only select from enabled prompt types (checked checkboxes)
     const enabledTypeKeys = Object.keys(enabledTypes).filter(type => enabledTypes[type]);
     
     if (enabledTypeKeys.length === 0) {
       // Fallback: if no types are enabled, default to text
       setPromptType(PROMPT_TYPES.TEXT);
+      const randomIndex = Math.floor(Math.random() * countries.length);
+      const country = countries[randomIndex];
+      setCurrentCountry(country);
       if (onPromptGenerated) {
         onPromptGenerated(country, PROMPT_TYPES.TEXT);
       }
@@ -56,10 +46,30 @@ function CountryPrompt({ onPromptGenerated }) {
     const randomType = enabledTypeKeys[Math.floor(Math.random() * enabledTypeKeys.length)];
     setPromptType(randomType);
     
+    // Filter countries based on the selected prompt type
+    let availableCountries = countries;
+    if (randomType === PROMPT_TYPES.MAP) {
+      // For map prompts, only use countries with coordinate data
+      availableCountries = countries.filter(country => 
+        countryCoordinates[country.Code]
+      );
+    }
+    
+    const randomIndex = Math.floor(Math.random() * availableCountries.length);
+    const country = availableCountries[randomIndex];
+    setCurrentCountry(country);
+    
     if (onPromptGenerated) {
       onPromptGenerated(country, randomType);
     }
   };
+
+  // Set the generate function in the ref so parent can call it
+  React.useEffect(() => {
+    if (generatePromptRef) {
+      generatePromptRef.current = generateRandomCountry;
+    }
+  }, [enabledTypes, promptType, generatePromptRef]);
 
   // Handle checkbox toggles for prompt types
   const handleTypeToggle = (type) => {
@@ -75,16 +85,19 @@ function CountryPrompt({ onPromptGenerated }) {
     }
   };
 
-  // Generate initial prompt when component first loads
-  useEffect(() => {
-    generateRandomCountry();
-  }, []);
+  // Don't auto-generate initial prompt - let user click "New Prompt" to start
 
   // Render the prompt content based on type (text name, map location, or flag icon)
   // Human prompt: "Now have the prompt just say 'find' with either the country name or the flag icon"
   // Human prompt: "no the coordinates should just be displayed as text where it says 'find'"
   const renderPromptContent = () => {
-    if (!currentCountry) return null;
+    if (showNiceMessage) {
+      return <span style={{ color: '#4CAF50', fontSize: '2rem', fontWeight: 'bold' }}>Nice!</span>;
+    }
+    
+    if (!currentCountry) {
+      return <span style={{ color: '#666', fontStyle: 'italic' }}>Click "New Prompt" to start</span>;
+    }
     
     if (promptType === PROMPT_TYPES.FLAG) {
       // For flag prompts: show "Find:" with the actual flag icon

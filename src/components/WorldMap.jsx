@@ -11,9 +11,29 @@ import countryCoordinates from '../data/countryCoordinates.json';
 
 // const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false }) {
+function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false, clearInputsRef }) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [mousePosition, setMousePosition] = useState(null);
+
+  // Function to clear the selection
+  const clearSelection = () => {
+    setSelectedCountry(null);
+  };
+
+  // Set the clear function in the ref so parent can call it
+  React.useEffect(() => {
+    if (clearInputsRef) {
+      // Store the current clear function
+      const currentClear = clearInputsRef.current;
+      clearInputsRef.current = () => {
+        clearSelection();
+        // Call any existing clear function
+        if (currentClear) {
+          currentClear();
+        }
+      };
+    }
+  }, [clearInputsRef]);
 
   // Create a mapping from country names to ISO codes for easier lookup
   const countryNameToCode = {};

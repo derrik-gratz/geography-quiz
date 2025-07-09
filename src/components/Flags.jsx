@@ -4,8 +4,28 @@ import countries from '../data/countries.json';
 // Get all country codes from countries.json
 const countryCodes = countries.map(country => country.Code.toLowerCase());
 
-function FlagSelector({ onSelect, highlightedCountry }) {
+function FlagSelector({ onSelect, highlightedCountry, clearInputsRef }) {
   const [selected, setSelected] = useState(null);
+
+  // Function to clear the selection
+  const clearSelection = () => {
+    setSelected(null);
+  };
+
+  // Set the clear function in the ref so parent can call it
+  React.useEffect(() => {
+    if (clearInputsRef) {
+      // Store the current clear function
+      const currentClear = clearInputsRef.current;
+      clearInputsRef.current = () => {
+        clearSelection();
+        // Call any existing clear function
+        if (currentClear) {
+          currentClear();
+        }
+      };
+    }
+  }, [clearInputsRef]);
 
   return (
     <div style={{
