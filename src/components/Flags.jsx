@@ -4,7 +4,7 @@ import countries from '../data/countries.json';
 // Get all country codes from countries.json
 const countryCodes = countries.map(country => country.Code.toLowerCase());
 
-function FlagSelector({ onSelect }) {
+function FlagSelector({ onSelect, highlightedCountry }) {
   const [selected, setSelected] = useState(null);
 
   return (
@@ -21,26 +21,44 @@ function FlagSelector({ onSelect }) {
       maxHeight: '320px',
       overflowY: 'auto',
     }}>
-      {countryCodes.map(code => (
-        <span
-          key={code}
-          className={`fi fi-${code} flag-icon${selected === code ? ' selected' : ''}`}
-          style={{
-            fontSize: '2.5rem',
-            cursor: 'pointer',
-            border: selected === code ? '2px solid #646cff' : '2px solid transparent',
-            borderRadius: '4px',
-            padding: '0.2rem',
-            boxShadow: selected === code ? '0 0 0 4px #646cff' : undefined,
-            transition: 'border 0.2s, background 0.2s',
-          }}
-          onClick={() => {
-            setSelected(code);
-            if (onSelect) onSelect(code);
-          }}
-          title={code.toUpperCase()}
-        />
-      ))}
+      {countryCodes.map(code => {
+        const isSelected = selected === code;
+        const isHighlighted = highlightedCountry && highlightedCountry.Code.toLowerCase() === code;
+        
+        // Determine border style based on state
+        let borderStyle = '2px solid transparent';
+        let boxShadow = undefined;
+        
+        if (isHighlighted) {
+          borderStyle = '3px solid #ff6b6b';
+          boxShadow = '0 0 0 4px #ff6b6b';
+        } else if (isSelected) {
+          borderStyle = '2px solid #646cff';
+          boxShadow = '0 0 0 4px #646cff';
+        }
+        
+        return (
+          <span
+            key={code}
+            className={`fi fi-${code} flag-icon${isSelected ? ' selected' : ''}`}
+            style={{
+              fontSize: '2.5rem',
+              cursor: 'pointer',
+              border: borderStyle,
+              borderRadius: '4px',
+              padding: '0.2rem',
+              boxShadow: boxShadow,
+              transition: 'border 0.2s, background 0.2s',
+              transform: isHighlighted ? 'scale(1.1)' : 'scale(1)',
+            }}
+            onClick={() => {
+              setSelected(code);
+              if (onSelect) onSelect(code);
+            }}
+            title={code.toUpperCase()}
+          />
+        );
+      })}
     </div>
   );
 }
