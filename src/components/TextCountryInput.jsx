@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import countries from '../data/countries.json';
 
-function TextCountryInput({ onSelect, clearInputsRef }) {
+function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPrompt = null }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
-  // Function to normalize text by removing accents and converting to lowercase
-  const normalizeText = (text) => {
-    return text
-      .normalize('NFD') // Decompose characters with accents
-      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
-      .toLowerCase();
-  };
 
   // Function to clear the input
   const clearInput = () => {
@@ -35,6 +27,14 @@ function TextCountryInput({ onSelect, clearInputsRef }) {
       };
     }
   }, [clearInputsRef]);
+
+  // Function to normalize text by removing accents and converting to lowercase
+  const normalizeText = (text) => {
+    return text
+      .normalize('NFD') // Decompose characters with accents
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
+      .toLowerCase();
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -84,7 +84,16 @@ function TextCountryInput({ onSelect, clearInputsRef }) {
         value={input}
         onChange={handleChange}
         placeholder="Type a country name..."
-        style={{ width: '100%', padding: '0.5rem', fontSize: '1rem', borderRadius: '4px', border: '1px solid #ccc' }}
+        style={{ 
+          width: '100%', 
+          padding: '0.5rem', 
+          fontSize: '1rem', 
+          borderRadius: '4px', 
+          border: '1px solid #ccc',
+          backgroundColor: '#fff',
+          color: '#333',
+          cursor: 'text'
+        }}
         // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
         onFocus={() => input && setShowSuggestions(true)}
         // onBlur: Hides suggestions when user clicks away from the input field
@@ -121,6 +130,7 @@ function TextCountryInput({ onSelect, clearInputsRef }) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
+                backgroundColor: 'transparent'
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#f0f0f0';

@@ -11,7 +11,7 @@ import countryCoordinates from '../data/countryCoordinates.json';
 
 // const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false, clearInputsRef }) {
+function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false, clearInputsRef, guesses = [], currentPrompt = null }) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [mousePosition, setMousePosition] = useState(null);
 
@@ -220,20 +220,26 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
                       default: {
                         fill: fillColor,
                         stroke: "#FFFFFF",
-                        strokeWidth: isHighlighted ? 2 : 0.5,
+                        strokeWidth: isHighlighted || isSelected ? 2 : 0.5,
                         outline: "none",
+                        opacity: 1,
+                        cursor: 'pointer',
                       },
                       hover: {
                         fill: isHighlighted ? "#45a049" : (isSelected ? "#535bf2" : "#F53"),
                         stroke: "#FFFFFF",
-                        strokeWidth: isHighlighted ? 2 : 0.5,
+                        strokeWidth: isHighlighted || isSelected ? 2 : 0.5,
                         outline: "none",
+                        opacity: 1,
+                        cursor: 'pointer',
                       },
                       pressed: {
-                        fill: "#E42",
+                        fill: isHighlighted ? "#45a049" : "#E42",
                         stroke: "#FFFFFF",
                         strokeWidth: 0.5,
                         outline: "none",
+                        opacity: 1,
+                        cursor: 'pointer',
                       },
                     }}
                   />

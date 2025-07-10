@@ -25,6 +25,19 @@ function App() {
 
   // Helper function to record a guess
   const recordGuess = (country, promptType, correct) => {
+    // Check if there's already a correct guess for this country and prompt type
+    const existingCorrectGuess = guesses.find(guess => 
+      guess.country === country.Name && 
+      guess.promptType === promptType && 
+      guess.correct === true
+    );
+    
+    // If there's already a correct guess for this field, don't add a new one
+    if (existingCorrectGuess) {
+      console.log(`Already have correct guess for ${country.Name} ${promptType}, ignoring new guess.`);
+      return;
+    }
+    
     const newGuess = {
       country: country.Name,
       countryCode: country.Code,
@@ -240,15 +253,24 @@ function App() {
             highlightedCountry={shouldHighlightMap ? currentPrompt : null}
             showCoordinates={shouldShowCoordinates}
             clearInputsRef={clearInputsRef}
+            guesses={guesses}
+            currentPrompt={currentPrompt}
           />
         </div>
         <div className="sidebar">
+          <TextCountryInput 
+            onSelect={handleCountrySelect} 
+            clearInputsRef={clearInputsRef}
+            guesses={guesses}
+            currentPrompt={currentPrompt}
+          />
           <FlagSelector 
             onSelect={handleFlagSelect} 
             highlightedCountry={shouldHighlightFlag ? currentPrompt : null}
             clearInputsRef={clearInputsRef}
+            guesses={guesses}
+            currentPrompt={currentPrompt}
           />
-          <TextCountryInput onSelect={handleCountrySelect} clearInputsRef={clearInputsRef} />
         </div>
       </div>
     </div>

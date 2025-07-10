@@ -4,7 +4,7 @@ import countries from '../data/countries.json';
 // Get all country codes from countries.json
 const countryCodes = countries.map(country => country.Code.toLowerCase());
 
-function FlagSelector({ onSelect, highlightedCountry, clearInputsRef }) {
+function FlagSelector({ onSelect, highlightedCountry, clearInputsRef, guesses = [], currentPrompt = null }) {
   const [selected, setSelected] = useState(null);
 
   // Function to clear the selection

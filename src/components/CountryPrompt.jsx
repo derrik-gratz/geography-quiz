@@ -159,7 +159,7 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
       border: '2px solid #646cff',
       borderRadius: '8px',
       background: '#f8f9ff',
-      marginBottom: '1rem',
+      margin: '0 0 1rem 0', // Standardized margin
       textAlign: 'center',
       width: '300px', // Fixed width to prevent scaling with content
       height: '200px', // Fixed height for consistent layout

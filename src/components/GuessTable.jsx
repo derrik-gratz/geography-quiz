@@ -73,7 +73,7 @@ function GuessTable({ guesses, currentPromptType }) {
 
   return (
     <div style={{
-      marginTop: '1rem',
+      margin: '0 0 1rem 0', // Standardized margin
       padding: '1rem',
       border: '1px solid #ddd',
       borderRadius: '8px',
