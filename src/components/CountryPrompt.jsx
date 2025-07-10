@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import countries from '../data/countries.json';
 import countryCoordinates from '../data/countryCoordinates.json';
+import quizSets from '../data/quizSets.json';
+import QuizSetSelector from './QuizSetSelector';
 
 // Define the available prompt types - coordinates are for helping locate countries on map
 // Human prompt: "Now have the prompt just say 'find' with either the country name or the flag icon, and if it's a country, highlight the country on the map in green"
@@ -13,7 +15,7 @@ const PROMPT_TYPES = {
   FLAG: 'flag'
 };
 
-function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePromptRef }) {
+function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePromptRef, clearInputsRef, currentQuizSet = null, guesses = [], onSetChange = null }) {
   const [currentCountry, setCurrentCountry] = useState(null);
   const [promptType, setPromptType] = useState(PROMPT_TYPES.TEXT);
   
@@ -25,16 +27,71 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
     [PROMPT_TYPES.FLAG]: true
   });
 
+  // Get available countries based on current quiz set
+  const getAvailableCountries = () => {
+    if (!currentQuizSet) {
+      return countries; // All countries if no set selected
+    }
+    
+    const setData = quizSets.sets[currentQuizSet];
+    if (!setData) {
+      return countries; // Fallback to all countries if set not found
+    }
+    
+    // Filter countries to only include those in the selected set
+    return countries.filter(country => 
+      setData.countries.includes(country.Code)
+    );
+  };
+
+  // Check if all countries in the current set have been completed
+  const isSetCompleted = () => {
+    if (!currentQuizSet) {
+      return false; // No set selected, so not completed
+    }
+    
+    const setData = quizSets.sets[currentQuizSet];
+    if (!setData) {
+      return false;
+    }
+    
+    // Check if all countries in the set have been completed
+    return setData.countries.every(countryCode => {
+      const countryName = countries.find(c => c.Code === countryCode)?.Name;
+      if (!countryName) return true; // Skip if country not found
+      
+      // Check if this country has been completed (all fields correct)
+      const countryGuesses = guesses.filter(guess => guess.country === countryName);
+      const textCorrect = countryGuesses.some(guess => guess.promptType === 'text' && guess.correct === true);
+      const flagCorrect = countryGuesses.some(guess => guess.promptType === 'flag' && guess.correct === true);
+      const mapCorrect = countryGuesses.some(guess => guess.promptType === 'map' && guess.correct === true);
+      
+      return textCorrect && flagCorrect && mapCorrect;
+    });
+  };
+
   // Generate a random country and prompt type
-  const generateRandomCountry = () => {
+  const generatePrompt = () => {
+    // Check if the current set is completed
+    if (isSetCompleted()) {
+      console.log('Set completed, not generating new prompt');
+      return; // Don't generate new prompt if set is completed
+    }
+    
+    const availableCountries = getAvailableCountries();
+    if (availableCountries.length === 0) {
+      console.log('No countries available for prompt generation');
+      return;
+    }
+    
     // Only select from enabled prompt types (checked checkboxes)
     const enabledTypeKeys = Object.keys(enabledTypes).filter(type => enabledTypes[type]);
     
     if (enabledTypeKeys.length === 0) {
       // Fallback: if no types are enabled, default to text
       setPromptType(PROMPT_TYPES.TEXT);
-      const randomIndex = Math.floor(Math.random() * countries.length);
-      const country = countries[randomIndex];
+      const randomIndex = Math.floor(Math.random() * availableCountries.length);
+      const country = availableCountries[randomIndex];
       setCurrentCountry(country);
       if (onPromptGenerated) {
         onPromptGenerated(country, PROMPT_TYPES.TEXT);
@@ -46,17 +103,23 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
     const randomType = enabledTypeKeys[Math.floor(Math.random() * enabledTypeKeys.length)];
     setPromptType(randomType);
     
-    // Filter countries based on the selected prompt type
-    let availableCountries = countries;
+    // Filter countries based on the selected prompt type and quiz set
+    let availableCountriesForType = getAvailableCountries();
     if (randomType === PROMPT_TYPES.MAP) {
       // For map prompts, only use countries with coordinate data
-      availableCountries = countries.filter(country => 
+      availableCountriesForType = availableCountriesForType.filter(country => 
         countryCoordinates[country.Code]
       );
     }
     
-    const randomIndex = Math.floor(Math.random() * availableCountries.length);
-    const country = availableCountries[randomIndex];
+    if (availableCountriesForType.length === 0) {
+      // If no countries available for this type, fall back to text type
+      setPromptType(PROMPT_TYPES.TEXT);
+      availableCountriesForType = getAvailableCountries();
+    }
+    
+    const randomIndex = Math.floor(Math.random() * availableCountriesForType.length);
+    const country = availableCountriesForType[randomIndex];
     setCurrentCountry(country);
     
     if (onPromptGenerated) {
@@ -67,9 +130,9 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
   // Set the generate function in the ref so parent can call it
   React.useEffect(() => {
     if (generatePromptRef) {
-      generatePromptRef.current = generateRandomCountry;
+      generatePromptRef.current = generatePrompt;
     }
-  }, [enabledTypes, promptType, generatePromptRef]);
+  }, [enabledTypes, promptType, generatePromptRef, guesses]);
 
   // Handle checkbox toggles for prompt types
   const handleTypeToggle = (type) => {
@@ -81,7 +144,7 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
     
     // If current prompt type is being disabled, generate new prompt immediately
     if (enabledTypes[type] && !newEnabledTypes[type] && promptType === type) {
-      generateRandomCountry();
+      generatePrompt();
     }
   };
 
@@ -154,34 +217,19 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
     // Human prompt: "Make the prompt box not scale with the length of the name/flag. Have it have a fixed width, with the country name wrapping if necessary"
     // Human prompt: "similarily, have it be a fixed height. allow up to 3 lines for the text length. The 'prompt type: text' field can be removed"
     // Human prompt: "make the new prompt button stick to the bottom of the box, not float dynamically below the prompt text. Also, the text can get bumped weirdly when there are 3 lines of wrapping. Ensure there is enough space such that it won't get pushed out of the box"
-    <div style={{
-      padding: '1rem',
-      border: '2px solid #646cff',
-      borderRadius: '8px',
-      background: '#f8f9ff',
-      margin: '0 0 1rem 0', // Standardized margin
-      textAlign: 'center',
-      width: '300px', // Fixed width to prevent scaling with content
-      height: '200px', // Fixed height for consistent layout
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
+    <div className="country-prompt">
+      {/* Quiz Set Selector Dropdown - Mobile Only */}
+      <div className="mobile-set-selector">
+        <label className="set-selector-label">Set:</label>
+        <QuizSetSelector 
+          onSetChange={onSetChange}
+          currentSet={currentQuizSet}
+          isMobile={true}
+        />
+      </div>
+      
       {/* Prompt text area - limited to 3 lines maximum with guaranteed space */}
-      <div style={{
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-        color: '#333',
-        wordWrap: 'break-word', // Allow long words to break
-        overflowWrap: 'break-word', // Modern word wrapping
-        hyphens: 'auto', // Add hyphens for better text flow
-        lineHeight: '1.2', // Consistent line spacing
-        height: '4.8rem', // Guaranteed space for 4 lines (4 * 1.2rem) to prevent overflow
-        overflow: 'hidden', // Hide text that exceeds the allocated space
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center', // Center content vertically and horizontally
-        marginBottom: '1rem' // Fixed spacing below text
-      }}>
+      <div className="prompt-text-area">
         {renderPromptContent()}
       </div>
       
@@ -190,97 +238,44 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
       
       {/* New Prompt button - positioned at bottom */}
       <button
-        onClick={generateRandomCountry}
-        style={{
-          padding: '0.5rem 1rem',
-          backgroundColor: '#646cff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '1rem',
-          fontWeight: 'bold',
-          marginBottom: '1rem' // Fixed spacing above checkboxes
-        }}
-        onMouseOver={(e) => {
-          e.target.style.backgroundColor = '#535bf2';
-        }}
-        onMouseOut={(e) => {
-          e.target.style.backgroundColor = '#646cff';
-        }}
+        onClick={generatePrompt}
+        className="new-prompt-button"
       >
         New Prompt
       </button>
 
       {/* Checkbox controls for prompt types - positioned at bottom */}
       {/* Human prompt: "move the prompt checkboxes below the new prompt button" */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '1rem',
-        flexWrap: 'wrap' // Allow wrapping on small screens
-      }}>
+      <div className="prompt-checkboxes">
         {/* Name checkbox */}
-        <label style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          cursor: 'pointer',
-          fontSize: '0.9rem',
-          color: '#000' // Black text for better readability
-          // Human prompt: "modify the css of the checkbox font to be black text"
-        }}>
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={enabledTypes[PROMPT_TYPES.TEXT]}
             onChange={() => handleTypeToggle(PROMPT_TYPES.TEXT)}
-            style={{
-              transform: 'scale(1.2)', // Slightly larger checkboxes
-              cursor: 'pointer'
-            }}
+            className="checkbox-input"
           />
           Name
         </label>
         
         {/* Map checkbox */}
-        <label style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          cursor: 'pointer',
-          fontSize: '0.9rem',
-          color: '#000' // Black text for better readability
-        }}>
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={enabledTypes[PROMPT_TYPES.MAP]}
             onChange={() => handleTypeToggle(PROMPT_TYPES.MAP)}
-            style={{
-              transform: 'scale(1.2)', // Slightly larger checkboxes
-              cursor: 'pointer'
-            }}
+            className="checkbox-input"
           />
           Map
         </label>
         
         {/* Flag checkbox */}
-        <label style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          cursor: 'pointer',
-          fontSize: '0.9rem',
-          color: '#000' // Black text for better readability
-          // Human prompt: "modify the css of the checkbox font to be black text"
-        }}>
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={enabledTypes[PROMPT_TYPES.FLAG]}
             onChange={() => handleTypeToggle(PROMPT_TYPES.FLAG)}
-            style={{
-              transform: 'scale(1.2)', // Slightly larger checkboxes
-              cursor: 'pointer'
-            }}
+            className="checkbox-input"
           />
           Flag
         </label>

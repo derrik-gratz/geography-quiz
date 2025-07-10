@@ -6,6 +6,9 @@ import WorldMap from './components/WorldMap';
 import CountryPrompt, { PROMPT_TYPES } from './components/CountryPrompt';
 import GuessTable from './components/GuessTable';
 import ExportModal from './components/ExportModal';
+import QuizSetSelector from './components/QuizSetSelector';
+import quizSets from './data/quizSets.json';
+import countries from './data/countries.json';
 
 function App() {
   const [correct, setCorrect] = useState(0);
@@ -15,6 +18,7 @@ function App() {
   const [guesses, setGuesses] = useState([]);
   const [showNiceMessage, setShowNiceMessage] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [currentQuizSet, setCurrentQuizSet] = useState(null);
   const generatePromptRef = React.useRef(null);
   const clearInputsRef = React.useRef(null);
 
@@ -28,6 +32,22 @@ function App() {
   // Handler for opening export modal
   const handleExport = () => {
     setShowExportModal(true);
+  };
+
+  // Handler for changing quiz set
+  const handleQuizSetChange = (setKey) => {
+    setCurrentQuizSet(setKey);
+    // Clear current prompt when changing sets
+    setCurrentPrompt(null);
+    setPromptType(null);
+    // Clear all inputs
+    clearAllInputs();
+    // Clear guess history when changing sets
+    setGuesses([]);
+    // Generate new prompt immediately
+    if (generatePromptRef.current) {
+      generatePromptRef.current();
+    }
   };
 
   // Helper function to record a guess
@@ -96,6 +116,32 @@ function App() {
     console.log('Flag needed:', flagNeeded, 'Flag correct:', flagCorrect);
     console.log('Map needed:', mapNeeded, 'Map correct:', mapCorrect);
     console.log('All correct:', allCorrect);
+    
+    // If this country is now complete, check if all countries in the current set are complete
+    if (allCorrect && currentQuizSet) {
+      const setData = quizSets.sets[currentQuizSet];
+      if (setData) {
+        const setCountries = setData.countries;
+        const allSetCountriesComplete = setCountries.every(countryCode => {
+          const countryName = countries.find(c => c.Code === countryCode)?.Name;
+          if (!countryName) return true; // Skip if country not found
+          
+          const countryGuesses = guesses.filter(guess => guess.country === countryName);
+          const textCorrect = countryGuesses.some(guess => guess.promptType === 'text' && guess.correct === true);
+          const flagCorrect = countryGuesses.some(guess => guess.promptType === 'flag' && guess.correct === true);
+          const mapCorrect = countryGuesses.some(guess => guess.promptType === 'map' && guess.correct === true);
+          
+          return textCorrect && flagCorrect && mapCorrect;
+        });
+        
+        if (allSetCountriesComplete) {
+          // All countries in the set are complete - show export modal
+          setTimeout(() => {
+            setShowExportModal(true);
+          }, 1000); // Small delay to show the "Nice!" message first
+        }
+      }
+    }
     
     return allCorrect;
   };
@@ -248,9 +294,29 @@ function App() {
           showNiceMessage={showNiceMessage}
           generatePromptRef={generatePromptRef}
           clearInputsRef={clearInputsRef}
+          currentQuizSet={currentQuizSet}
+          guesses={guesses}
+          onSetChange={handleQuizSetChange}
         />
-        {/* Guess History Table moved to top */}
-        <GuessTable guesses={guesses} currentPromptType={promptType} onExport={handleExport} />
+        
+        {/* Guess History Table - Desktop */}
+        <div className="desktop-only">
+          <GuessTable guesses={guesses} currentPromptType={promptType} onExport={handleExport} />
+        </div>
+        
+        {/* Guess History Table - Mobile */}
+        <div className="mobile-only">
+          <GuessTable guesses={guesses} currentPromptType={promptType} onExport={handleExport} isMobile={true} />
+        </div>
+        
+        {/* Quiz Set Selector Container - Desktop Only */}
+        <div className="quiz-set-selector desktop-only">
+          <h3>Select a Set</h3>
+          <QuizSetSelector 
+            onSetChange={handleQuizSetChange}
+            currentSet={currentQuizSet}
+          />
+        </div>
       </div>
 
       <div className="main-area">
@@ -287,6 +353,7 @@ function App() {
         onClose={() => setShowExportModal(false)}
         guesses={guesses}
         currentPromptType={promptType}
+        currentQuizSet={currentQuizSet}
       />
     </div>
   );

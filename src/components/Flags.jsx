@@ -57,45 +57,20 @@ function FlagSelector({ onSelect, highlightedCountry, clearInputsRef, guesses = 
   });
 
   return (
-    <div style={{
-      border: '1px solid #ccc',
-      borderRadius: '8px',
-      background: '#f9f9f9',
-      maxWidth: '100%',
-    }}>
+    <div className="flag-selector">
       {/* Color Filter Bar */}
-      <div style={{
-        padding: '0.5rem',
-        borderBottom: '1px solid #ddd',
-        backgroundColor: '#fff',
-        borderRadius: '8px 8px 0 0',
-      }}>
-        <div style={{
-          display: 'flex',
-          gap: '0.5rem',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-        }}>
-          <span style={{ fontSize: '0.9rem', color: '#666', marginRight: '0.5rem' }}>
+      <div className="color-filter-bar">
+        <div className="color-filter-container">
+          <span className="filter-label">
             Filter by color:
           </span>
           {availableColors.map(color => (
             <button
               key={color.value}
               onClick={() => setSelectedColor(color.value)}
+              className={`color-button ${selectedColor === color.value ? 'selected' : ''}`}
               style={{
                 backgroundColor: color.color,
-                border: selectedColor === color.value ? '3px solid #333' : '2px solid #ccc',
-                borderRadius: '4px',
-                width: '24px',
-                height: '24px',
-                cursor: 'pointer',
-                padding: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.7rem',
-                fontWeight: 'bold',
                 color: color.value === 'white' || color.value === 'yellow' ? '#000' : '#fff',
               }}
               title={color.name}
@@ -107,15 +82,7 @@ function FlagSelector({ onSelect, highlightedCountry, clearInputsRef, guesses = 
       </div>
 
       {/* Flag Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))',
-        gap: '1rem',
-        padding: '1rem',
-        minHeight: '200px',
-        maxHeight: '320px',
-        overflowY: 'auto',
-      }}>
+      <div className="flag-grid">
         {filteredCountryCodes.map(code => {
           const isSelected = selected === code;
           const isHighlighted = highlightedCountry && highlightedCountry.Code.toLowerCase() === code;
@@ -135,16 +102,10 @@ function FlagSelector({ onSelect, highlightedCountry, clearInputsRef, guesses = 
           return (
             <span
               key={code}
-              className={`fi fi-${code} flag-icon${isSelected ? ' selected' : ''}`}
+              className={`fi fi-${code} flag-icon${isSelected ? ' selected' : ''}${isHighlighted ? ' highlighted' : ''}`}
               style={{
-                fontSize: '2.5rem',
-                cursor: 'pointer',
                 border: borderStyle,
-                borderRadius: '4px',
-                padding: '0.2rem',
                 boxShadow: boxShadow,
-                transition: 'border 0.2s, background 0.2s',
-                transform: isHighlighted ? 'scale(1.1)' : 'scale(1)',
               }}
               onClick={() => {
                 setSelected(code);
@@ -158,12 +119,7 @@ function FlagSelector({ onSelect, highlightedCountry, clearInputsRef, guesses = 
       
       {/* Show message if no flags match the filter */}
       {filteredCountryCodes.length === 0 && (
-        <div style={{
-          padding: '2rem',
-          textAlign: 'center',
-          color: '#666',
-          fontStyle: 'italic',
-        }}>
+        <div className="no-flags-message">
           No flags found with the selected color.
         </div>
       )}

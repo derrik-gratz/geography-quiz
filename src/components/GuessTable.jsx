@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function GuessTable({ guesses, currentPromptType, onExport }) {
+function GuessTable({ guesses, currentPromptType, onExport, isMobile = false }) {
+  const [showMobileResults, setShowMobileResults] = useState(false);
+  
   // Get unique countries from guesses
   const uniqueCountries = [...new Set(guesses.map(guess => guess.country))];
   
@@ -71,6 +73,83 @@ function GuessTable({ guesses, currentPromptType, onExport }) {
     return `${emoji}/${attempts.length}`;
   };
 
+  // Mobile compact view
+  if (isMobile) {
+    const solvedCount = Object.values(countryResults).filter(isCountrySolved).length;
+    const totalCount = Object.keys(countryResults).length;
+    
+    return (
+      <div className="mobile-guess-table">
+        <div className="mobile-guess-header">
+          <div className="mobile-guess-stats">
+            <span className="stats-text">
+              {solvedCount}/{totalCount} solved
+            </span>
+          </div>
+          <div className="mobile-guess-buttons">
+            {uniqueCountries.length > 0 && (
+              <button
+                onClick={onExport}
+                className="mobile-export-button"
+              >
+                📊 Export
+              </button>
+            )}
+            {uniqueCountries.length > 0 && (
+              <button
+                onClick={() => setShowMobileResults(!showMobileResults)}
+                className="mobile-results-button"
+              >
+                {showMobileResults ? 'Hide' : 'Show'} Results
+              </button>
+            )}
+          </div>
+        </div>
+        
+        {showMobileResults && uniqueCountries.length > 0 && (
+          <div className="mobile-results-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Country</th>
+                  <th>Name</th>
+                  <th>Flag</th>
+                  <th>Map</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.values(countryResults).reverse().map((country, index) => (
+                  <tr key={index}>
+                    <td>
+                      {shouldRevealCountry(country) ? (
+                        <div className="country-cell">
+                          <span 
+                            className={`fi fi-${country.code.toLowerCase()}`}
+                          />
+                          <span>{country.name}</span>
+                        </div>
+                      ) : (
+                        '???'
+                      )}
+                    </td>
+                    <td>{getStatusDisplay(country.nameAttempts, 'text', country.name)}</td>
+                    <td>{getStatusDisplay(country.flagAttempts, 'flag', country.name)}</td>
+                    <td>{getStatusDisplay(country.mapAttempts, 'map', country.name)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        
+        {uniqueCountries.length === 0 && (
+          <p className="no-guesses-message">No guesses recorded yet.</p>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop view (original implementation)
   return (
     <div style={{
       margin: '0 0 1rem 0', // Standardized margin

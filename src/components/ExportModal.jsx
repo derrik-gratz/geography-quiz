@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import quizSets from '../data/quizSets.json';
 
-function ExportModal({ isOpen, onClose, guesses, currentPromptType }) {
+function ExportModal({ isOpen, onClose, guesses, currentPromptType, currentQuizSet = null }) {
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
@@ -8,6 +9,17 @@ function ExportModal({ isOpen, onClose, guesses, currentPromptType }) {
   // Generate markdown content
   const generateMarkdown = () => {
     let markdown = '# Geography Quiz Results\n\n';
+    
+    // Add set information if there's an active set
+    if (currentQuizSet) {
+      const setData = quizSets.sets[currentQuizSet];
+      if (setData) {
+        markdown += `**Quiz Set**: ${setData.name}\n`;
+        markdown += `**Description**: ${setData.description}\n`;
+        markdown += `**Total Countries**: ${setData.countries.length}\n\n`;
+        markdown += '---\n\n';
+      }
+    }
     
     // Group guesses by country
     const countryGroups = {};
