@@ -5,6 +5,7 @@ import TextCountryInput from './components/TextCountryInput';
 import WorldMap from './components/WorldMap';
 import CountryPrompt, { PROMPT_TYPES } from './components/CountryPrompt';
 import GuessTable from './components/GuessTable';
+import ExportModal from './components/ExportModal';
 
 function App() {
   const [correct, setCorrect] = useState(0);
@@ -13,6 +14,7 @@ function App() {
   const [promptType, setPromptType] = useState(null);
   const [guesses, setGuesses] = useState([]);
   const [showNiceMessage, setShowNiceMessage] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
   const generatePromptRef = React.useRef(null);
   const clearInputsRef = React.useRef(null);
 
@@ -21,6 +23,11 @@ function App() {
     if (clearInputsRef.current) {
       clearInputsRef.current();
     }
+  };
+
+  // Handler for opening export modal
+  const handleExport = () => {
+    setShowExportModal(true);
   };
 
   // Helper function to record a guess
@@ -243,7 +250,7 @@ function App() {
           clearInputsRef={clearInputsRef}
         />
         {/* Guess History Table moved to top */}
-        <GuessTable guesses={guesses} currentPromptType={promptType} />
+        <GuessTable guesses={guesses} currentPromptType={promptType} onExport={handleExport} />
       </div>
 
       <div className="main-area">
@@ -273,6 +280,14 @@ function App() {
           />
         </div>
       </div>
+
+      {/* Export Modal */}
+      <ExportModal 
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        guesses={guesses}
+        currentPromptType={promptType}
+      />
     </div>
   );
 }

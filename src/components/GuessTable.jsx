@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GuessTable({ guesses, currentPromptType }) {
+function GuessTable({ guesses, currentPromptType, onExport }) {
   // Get unique countries from guesses
   const uniqueCountries = [...new Set(guesses.map(guess => guess.country))];
   
@@ -80,7 +80,30 @@ function GuessTable({ guesses, currentPromptType }) {
       background: '#f9f9f9',
       flex: '0 0 auto' // Don't grow or shrink
     }}>
-      <h3 style={{ margin: '0 0 1rem 0', color: '#333' }}>Guess History</h3>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '1rem'
+      }}>
+        <h3 style={{ margin: 0, color: '#333' }}>Guess History</h3>
+        {uniqueCountries.length > 0 && (
+          <button
+            onClick={onExport}
+            style={{
+              backgroundColor: '#646cff',
+              color: 'white',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+            }}
+          >
+            📊 Export Results
+          </button>
+        )}
+      </div>
       
       {uniqueCountries.length === 0 ? (
         <p style={{ color: '#666', fontStyle: 'italic' }}>No guesses recorded yet.</p>
