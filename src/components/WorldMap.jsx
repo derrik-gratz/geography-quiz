@@ -15,6 +15,7 @@ import countryCoordinates from '../data/countryCoordinates.json';
 function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false, clearInputsRef, guesses = [], currentPrompt = null }) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [mousePosition, setMousePosition] = useState(null);
+  const [zoom, setZoom] = useState(1);
 
   // Function to clear the selection
   const clearSelection = () => {
@@ -49,7 +50,17 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
   });
 
   const handleCountryClick = (geo) => {
-    const countryName = geo.properties.name;
+    let countryName = geo.properties.name;
+    if (!countryName) {
+      // Try alternative property
+      countryName = geo.properties.ADMIN;
+    }
+    // Log for debugging
+    if (!countryName) {
+      console.log('Region clicked: undefined', geo.properties);
+    } else {
+      console.log('Region clicked:', countryName);
+    }
     const countryCode = countryNameToCode[countryName];
     
     if (countryCode) {
@@ -146,6 +157,36 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
     return `${formatCoordinate(coords.lat, true)}, ${formatCoordinate(coords.lon, false)}`;
   };
 
+  // Use the new GeoJSON URLs for country boundaries
+  const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
+  const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
+
+  // Helper to get centroid of a feature
+  const getCentroid = (geo) => {
+    if (!geo || !geo.geometry) return [0, 0];
+    if (geo.geometry.type === "Point") return geo.geometry.coordinates;
+    // For Polygon or MultiPolygon, use d3-geo centroid if available, else fallback
+    if (geo.geometry.type === "Polygon") {
+      // Simple centroid calculation for polygons
+      const coords = geo.geometry.coordinates[0];
+      let x = 0, y = 0, n = coords.length;
+      coords.forEach(([lon, lat]) => { x += lon; y += lat; });
+      return [x / n, y / n];
+    }
+    if (geo.geometry.type === "MultiPolygon") {
+      // Use first polygon for centroid
+      const coords = geo.geometry.coordinates[0][0];
+      let x = 0, y = 0, n = coords.length;
+      coords.forEach(([lon, lat]) => { x += lon; y += lat; });
+      return [x / n, y / n];
+    }
+    return [0, 0];
+  };
+
+  // Circle radius scales down as zoom increases
+  const baseCircleRadius = 3; // smaller default
+  const getCircleRadius = () => baseCircleRadius / Math.sqrt(zoom);
+
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {/* Coordinate display overlay for mouse position */}
@@ -166,12 +207,10 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
           {mousePosition.lat}, {mousePosition.lon}
         </div>
       )}
-      
       <ComposableMap
         projection="geoEqualEarth"
         projectionConfig={{
-          scale: 147,
-          center: [0, 0] // Center the projection
+          scale: 147
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -180,7 +219,11 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
           height: '100%'
         }}
       >
-        <ZoomableGroup>
+        <ZoomableGroup
+          onMoveEnd={({ zoom }) => setZoom(zoom)}
+          minZoom={1}
+          maxZoom={20}
+        >
           {/* Coordinate grid lines */}
           {showCoordinates && generateGridLines().map((line, index) => (
             <Line
@@ -194,24 +237,13 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
               }}
             />
           ))}
-          <Graticule stroke='#F53'/>
-          {/* <Geographies geography={process.env.PUBLIC_URL + '/geographies.json'}> */}
-          <Geographies geography={`${import.meta.env.BASE_URL}geographies.json`}>
+          {/* Main countries */}
+          <Geographies geography={mainGeoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const countryName = geo.properties.name;
                 const countryCode = countryNameToCode[countryName];
                 const isSelected = selectedCountry === countryCode;
-                const isHighlighted = highlightedCountry && highlightedCountry.Code === countryCode;
-                
-                // Determine fill color based on state
-                let fillColor = "#D6D6DA"; // default
-                if (isHighlighted) {
-                  fillColor = "#4CAF50"; // green for highlighted
-                } else if (isSelected) {
-                  fillColor = "#646cff"; // blue for selected
-                }
-                
                 return (
                   <Geography
                     key={geo.rsmKey}
@@ -219,30 +251,50 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
                     onClick={() => handleCountryClick(geo)}
                     style={{
                       default: {
-                        fill: fillColor,
-                        stroke: "#FFFFFF",
-                        strokeWidth: isHighlighted || isSelected ? 2 : 0.5,
-                        outline: "none",
-                        opacity: 1,
-                        cursor: 'pointer',
-                      },
-                      hover: {
-                        fill: isHighlighted ? "#45a049" : (isSelected ? "#535bf2" : "#F53"),
-                        stroke: "#FFFFFF",
-                        strokeWidth: isHighlighted || isSelected ? 2 : 0.5,
-                        outline: "none",
-                        opacity: 1,
-                        cursor: 'pointer',
-                      },
-                      pressed: {
-                        fill: isHighlighted ? "#45a049" : "#E42",
+                        fill: isSelected ? "#646cff" : "#D6D6DA",
                         stroke: "#FFFFFF",
                         strokeWidth: 0.5,
                         outline: "none",
-                        opacity: 1,
-                        cursor: 'pointer',
+                      },
+                      hover: {
+                        fill: isSelected ? "#535bf2" : "#F53",
+                        stroke: "#FFFFFF",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                      },
+                      pressed: {
+                        fill: "#E42",
+                        stroke: "#FFFFFF",
+                        strokeWidth: 0.5,
+                        outline: "none",
                       },
                     }}
+                  />
+                );
+              })
+            }
+          </Geographies>
+          {/* Tiny countries overlay */}
+          <Geographies geography={tinyGeoUrl}>
+            {({ geographies, projection }) =>
+              geographies.map((geo) => {
+                const countryName = geo.properties.name;
+                const countryCode = countryNameToCode[countryName];
+                const isSelected = selectedCountry === countryCode;
+                // Draw only a small circle at the centroid
+                const [lon, lat] = getCentroid(geo);
+                const [cx, cy] = projection([lon, lat]);
+                return (
+                  <circle
+                    key={geo.rsmKey + '-tiny-circle'}
+                    cx={cx}
+                    cy={cy}
+                    r={getCircleRadius()}
+                    fill={isSelected ? "#646cff" : "#FF9800"}
+                    stroke="#fff"
+                    strokeWidth={0.7}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleCountryClick(geo)}
                   />
                 );
               })
