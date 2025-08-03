@@ -224,7 +224,10 @@
     "name": "Bolivia, Plurinational State of",
     "code": "BO",
     "aliases": ["Bolivia"],
-    "coordinates": null,
+    "coordinates": {
+      "lat": -16.4243,
+      "lon": -64.3658
+    },
     "flagColors": ["red", "yellow", "green"],
     "primaryColor": "red"
   },
@@ -265,10 +268,10 @@
     "code": "BR",
     "aliases": [],
     "coordinates": {
-      "lat": -14.2350,
-      "lon": -51.9253
+      "lat": -10,
+      "lon": -52
     },
-    "flagColors": ["green", "yellow", "blue", "white"],
+    "flagColors": ["green", "yellow", "blue"],
     "primaryColor": "green"
   },
   {
@@ -408,13 +411,12 @@
   {
     "name": "Colombia",
     "code": "CO",
-    "aliases": [],
+    "aliases": ["Republic of Colombia"],
     "coordinates": {
-      "lat": 4.5709,
-      "lon": -74.2973
+      "lat": 4,
+      "lon": -72
     },
-    "flagColors": ["yellow", "blue", "red"],
-    "primaryColor": "yellow"
+    "flagColors": ["yellow", "blue", "red"]
   },
   {
     "name": "Comoros",
@@ -423,5 +425,16 @@
     "coordinates": null,
     "flagColors": ["green", "white", "red", "yellow"],
     "primaryColor": "green"
+  },
+  {
+    "name": "Peru",
+    "code": "PE",
+    "aliases": ["Republic of Peru"],
+    "coordinates": {
+      "lat": -10,
+      "lon": -76
+    },
+    "flagColors": ["white", "red"]
   }
+  
 ] 

@@ -3,6 +3,7 @@ import {
   ComposableMap,
   Geographies,
   Geography,
+  Graticule,
   ZoomableGroup,
   Line
 } from "react-simple-maps";
@@ -193,7 +194,7 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
               }}
             />
           ))}
-          
+          <Graticule stroke='#F53'/>
           {/* <Geographies geography={process.env.PUBLIC_URL + '/geographies.json'}> */}
           <Geographies geography={`${import.meta.env.BASE_URL}geographies.json`}>
             {({ geographies }) =>

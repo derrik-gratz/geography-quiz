@@ -1,5 +1,10 @@
 {
   "sets": {
+    "test_set": {
+      "name": "Test Set (Canada & Mexico)",
+      "description": "A test set with only Canada and Mexico.",
+      "countries": ["CA", "MX"]
+    },
     "europe": {
       "name": "Europe",
       "description": "European countries",

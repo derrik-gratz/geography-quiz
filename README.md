@@ -1,5 +1,7 @@
 # Todo:
 
+- Allow user to challenge themselves on only one type of response. E.g., only guessing flags, maps, names, etc.
+
 - Export table of guesses to easily postable/markdown format
 
 - Border box or other visual indicator of small countries prompted on map

@@ -111,40 +111,28 @@ function App() {
     
     const allCorrect = textCorrect && flagCorrect && mapCorrect;
     
-    console.log('Checking all correct for:', country.Name);
-    console.log('Text needed:', textNeeded, 'Text correct:', textCorrect);
-    console.log('Flag needed:', flagNeeded, 'Flag correct:', flagCorrect);
-    console.log('Map needed:', mapNeeded, 'Map correct:', mapCorrect);
-    console.log('All correct:', allCorrect);
-    
-    // If this country is now complete, check if all countries in the current set are complete
-    if (allCorrect && currentQuizSet) {
-      const setData = quizSets.sets[currentQuizSet];
-      if (setData) {
-        const setCountries = setData.countries;
-        const allSetCountriesComplete = setCountries.every(countryCode => {
-          const countryName = countries.find(c => c.Code === countryCode)?.Name;
-          if (!countryName) return true; // Skip if country not found
-          
-          const countryGuesses = guesses.filter(guess => guess.country === countryName);
-          const textCorrect = countryGuesses.some(guess => guess.promptType === 'text' && guess.correct === true);
-          const flagCorrect = countryGuesses.some(guess => guess.promptType === 'flag' && guess.correct === true);
-          const mapCorrect = countryGuesses.some(guess => guess.promptType === 'map' && guess.correct === true);
-          
-          return textCorrect && flagCorrect && mapCorrect;
-        });
-        
-        if (allSetCountriesComplete) {
-          // All countries in the set are complete - show export modal
-          setTimeout(() => {
-            setShowExportModal(true);
-          }, 1000); // Small delay to show the "Nice!" message first
-        }
-      }
-    }
-    
     return allCorrect;
   };
+
+  // useEffect to check for set completion and show export modal
+  React.useEffect(() => {
+    if (!currentQuizSet) return;
+    const setData = quizSets.sets[currentQuizSet];
+    if (!setData) return;
+    const setCountries = setData.countries;
+    const allSetCountriesComplete = setCountries.every(countryCode => {
+      const countryName = countries.find(c => c.Code === countryCode)?.Name;
+      if (!countryName) return true; // Skip if country not found
+      const countryGuesses = guesses.filter(guess => guess.country === countryName);
+      const textCorrect = countryGuesses.some(guess => guess.promptType === 'text' && guess.correct === true);
+      const flagCorrect = countryGuesses.some(guess => guess.promptType === 'flag' && guess.correct === true);
+      const mapCorrect = countryGuesses.some(guess => guess.promptType === 'map' && guess.correct === true);
+      return textCorrect && flagCorrect && mapCorrect;
+    });
+    if (allSetCountriesComplete && setCountries.length > 0) {
+      setShowExportModal(true);
+    }
+  }, [guesses, currentQuizSet]);
 
   const handlePromptGenerated = (country, type) => {
     setCurrentPrompt(country);
@@ -310,13 +298,7 @@ function App() {
         </div>
         
         {/* Quiz Set Selector Container - Desktop Only */}
-        <div className="quiz-set-selector desktop-only">
-          <h3>Select a Set</h3>
-          <QuizSetSelector 
-            onSetChange={handleQuizSetChange}
-            currentSet={currentQuizSet}
-          />
-        </div>
+        {/* REMOVED: <div className="quiz-set-selector desktop-only">...</div> */}
       </div>
 
       <div className="main-area">

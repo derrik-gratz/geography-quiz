@@ -74,7 +74,8 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
   const generatePrompt = () => {
     // Check if the current set is completed
     if (isSetCompleted()) {
-      console.log('Set completed, not generating new prompt');
+      setCurrentCountry(null);
+      setPromptType(null);
       return; // Don't generate new prompt if set is completed
     }
     
@@ -157,7 +158,9 @@ function CountryPrompt({ onPromptGenerated, showNiceMessage = false, generatePro
     if (showNiceMessage) {
       return <span style={{ color: '#4CAF50', fontSize: '2rem', fontWeight: 'bold' }}>Nice!</span>;
     }
-    
+    if (isSetCompleted()) {
+      return <span style={{ color: '#4CAF50', fontSize: '1.2rem', fontWeight: 'bold' }}>Set completed!</span>;
+    }
     if (!currentCountry) {
       return <span style={{ color: '#666', fontStyle: 'italic' }}>Click "New Prompt" to start</span>;
     }
