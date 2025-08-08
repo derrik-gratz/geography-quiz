@@ -1,0 +1,2392 @@
+[
+  {
+    "country": "Aruba",
+    "aliases": null,
+    "code": "ABW",
+    "capital": "Oranjestad",
+    "location": {
+      "lat": -12.0,
+      "long": -69.0
+    }
+  },
+  {
+    "country": "Islamic Republic of Afghanistan",
+    "aliases": "Islamic Republic of Afghanistan",
+    "code": "AFG",
+    "capital": "Kabul",
+    "location": {
+      "lat": 33.0,
+      "long": 66.0
+    }
+  },
+  {
+    "country": "Republic of Angola",
+    "aliases": "Republic of Angola",
+    "code": "AGO",
+    "capital": "Luanda",
+    "location": {
+      "lat": -12.0,
+      "long": -18.0
+    }
+  },
+  {
+    "country": "Anguilla",
+    "aliases": null,
+    "code": "AIA",
+    "capital": "The Valley",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    }
+  },
+  {
+    "country": "Åland Islands",
+    "aliases": ["Aland Islands"],
+    "code": "ALA",
+    "capital": "Mariehamn",
+    "location": {
+      "lat": -60.0,
+      "long": -20.0
+    }
+  },
+  {
+    "country": "Republic of Albania",
+    "aliases": "Republic of Albania",
+    "code": "ALB",
+    "capital": "Tirana",
+    "location": {
+      "lat": 41.0,
+      "long": 20.0
+    }
+  },
+  {
+    "country": "Principality of Andorra",
+    "aliases": "Principality of Andorra",
+    "code": "AND",
+    "capital": "Andorra la Vella",
+    "location": {
+      "lat": -42.0,
+      "long": -1.0
+    }
+  },
+  {
+    "country": "United Arab Emirates",
+    "aliases": "United Arab Emirates",
+    "code": "ARE",
+    "capital": "Abu Dhabi",
+    "location": {
+      "lat": 24.0,
+      "long": 54.0
+    }
+  },
+  {
+    "country": "Argentine Republica",
+    "aliases": "Argentine Republic",
+    "code": "ARG",
+    "capital": "Buenos Aires",
+    "location": {
+      "lat": -34.0,
+      "long": -64.0
+    }
+  },
+  {
+    "country": "Republic of Armenia",
+    "aliases": "Republic of Armenia",
+    "code": "ARM",
+    "capital": "Yerevan",
+    "location": {
+      "lat": -40.0,
+      "long": -44.0
+    }
+  },
+  {
+    "country": "American Samoa",
+    "aliases": null,
+    "code": "ASM",
+    "capital": "Pago Pago",
+    "location": {
+      "lat": -14.0,
+      "long": -170.0
+    }
+  },
+  {
+    "country": "Antarctica",
+    "aliases": null,
+    "code": "ATA",
+    "capital": "",
+    "location": {
+      "lat": -90.0,
+      "long": 0.0
+    }
+  },
+  {
+    "country": "The French Southern Territories",
+    "aliases": null,
+    "code": "ATF",
+    "capital": "Saint Pierre",
+    "location": {
+      "lat": -43.0,
+      "long": -67.0
+    }
+  },
+  {
+    "country": "Antigua and Barbuda",
+    "aliases": "Antigua and Barbuda",
+    "code": "ATG",
+    "capital": "None (",
+    "location": {
+      "lat": -17.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Commonwealth of Australia",
+    "aliases": "Commonwealth of Australia",
+    "code": "AUS",
+    "capital": "Canberra",
+    "location": {
+      "lat": -25.0,
+      "long": 133.0
+    }
+  },
+  {
+    "country": "Republic of Austria",
+    "aliases": "Republic of Austria",
+    "code": "AUT",
+    "capital": "Vienna",
+    "location": {
+      "lat": -47.0,
+      "long": -13.0
+    }
+  },
+  {
+    "country": "Republic of Azerbaijan",
+    "aliases": "Republic of Azerbaijan",
+    "code": "AZE",
+    "capital": "Baku",
+    "location": {
+      "lat": -40.0,
+      "long": -47.0
+    }
+  },
+  {
+    "country": "Republic of Burundi",
+    "aliases": "Republic of Burundi",
+    "code": "BDI",
+    "capital": "Gitega",
+    "location": {
+      "lat": -3.0,
+      "long": -30.0
+    }
+  },
+  {
+    "country": "Kingdom of Belgium",
+    "aliases": "Kingdom of Belgium",
+    "code": "BEL",
+    "capital": "City of Brussels",
+    "location": {
+      "lat": -50.0,
+      "long": -4.0
+    }
+  },
+  {
+    "country": "Republic of Benin",
+    "aliases": "Republic of Benin",
+    "code": "BEN",
+    "capital": "Porto-Novo",
+    "location": {
+      "lat": -6.0,
+      "long": -2.0
+    }
+  },
+  {
+    "country": "Bonaire, Sint Eustatius and Saba",
+    "aliases": null,
+    "code": "BES",
+    "capital": "Kralendijk",
+    "location": {
+      "lat": -12.0,
+      "long": -68.0
+    }
+  },
+  {
+    "country": "Burkina Faso",
+    "aliases": "Burkina Faso",
+    "code": "BFA",
+    "capital": "Ouagadougou",
+    "location": {
+      "lat": -12.0,
+      "long": -1.0
+    }
+  },
+  {
+    "country": "People's Republic of Bangladesh",
+    "aliases": "People's Republic of Bangladesh",
+    "code": "BGD",
+    "capital": "Dhaka",
+    "location": {
+      "lat": 24.0,
+      "long": 90.0
+    }
+  },
+  {
+    "country": "Republic of Bulgaria",
+    "aliases": "Republic of Bulgaria",
+    "code": "BGR",
+    "capital": "Sofia",
+    "location": {
+      "lat": 43.0,
+      "long": 25.0
+    }
+  },
+  {
+    "country": "Kingdom of Bahrain",
+    "aliases": "Kingdom of Bahrain",
+    "code": "BHR",
+    "capital": "Manama",
+    "location": {
+      "lat": -26.0,
+      "long": -50.0
+    }
+  },
+  {
+    "country": "Commonwealth of The Bahamas",
+    "aliases": "Commonwealth of The Bahamas",
+    "code": "BHS",
+    "capital": "Nassau",
+    "location": {
+      "lat": -25.0,
+      "long": -77.0
+    }
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "aliases": "Bosnia and Herzegovina",
+    "code": "BIH",
+    "capital": "Sarajevo",
+    "location": {
+      "lat": 44.0,
+      "long": 18.0
+    }
+  },
+  {
+    "country": "Saint Barthélemy",
+    "aliases": ["Saint Barthelemy"],
+    "code": "BLM",
+    "capital": "Gustavia",
+    "location": {
+      "lat": -17.0,
+      "long": -62.0
+    }
+  },
+  {
+    "country": "Republic of Belarus",
+    "aliases": "Republic of Belarus",
+    "code": "BLR",
+    "capital": "Minsk",
+    "location": {
+      "lat": 53.0,
+      "long": 27.0
+    }
+  },
+  {
+    "country": "Belize",
+    "aliases": "Belize",
+    "code": "BLZ",
+    "capital": "Belmopan",
+    "location": {
+      "lat": -17.0,
+      "long": -88.0
+    }
+  },
+  {
+    "country": "Bermuda",
+    "aliases": null,
+    "code": "BMU",
+    "capital": "Hamilton",
+    "location": {
+      "lat": -32.0,
+      "long": -64.0
+    }
+  },
+  {
+    "country": "Plurinational State of Bolivia",
+    "aliases": "Plurinational State of Bolivia",
+    "code": "BOL",
+    "capital": "Sucre",
+    "location": {
+      "lat": -16.0,
+      "long": -64.0
+    }
+  },
+  {
+    "country": "Federative Republic of Brazil",
+    "aliases": "Federative Republic of Brazil",
+    "code": "BRA",
+    "capital": "Brasília",
+    "location": {
+      "lat": -10.0,
+      "long": -52.0
+    }
+  },
+  {
+    "country": "Barbados",
+    "aliases": "Barbados",
+    "code": "BRB",
+    "capital": "Bridgetown",
+    "location": {
+      "lat": -13.0,
+      "long": -59.0
+    }
+  },
+  {
+    "country": "Brunei Darussalam",
+    "aliases": "Brunei Darussalam",
+    "code": "BRN",
+    "capital": "Bandar Seri Begawan",
+    "location": {
+      "lat": -4.0,
+      "long": -114.0
+    }
+  },
+  {
+    "country": "Kingdom of Bhutan",
+    "aliases": "Kingdom of Bhutan",
+    "code": "BTN",
+    "capital": "Thimphu",
+    "location": {
+      "lat": -27.0,
+      "long": -90.0
+    }
+  },
+  {
+    "country": "Republic of Botswana",
+    "aliases": "Republic of Botswana",
+    "code": "BWA",
+    "capital": "Gaborone",
+    "location": {
+      "lat": -24.0,
+      "long": -25.0
+    }
+  },
+  {
+    "country": "Central African Republic",
+    "aliases": "Central African Republic",
+    "code": "CAF",
+    "capital": "Bangui",
+    "location": {
+      "lat": 7.0,
+      "long": 21.0
+    }
+  },
+  {
+    "country": "Canada",
+    "aliases": "Canada",
+    "code": "CAN",
+    "capital": "Ottawa",
+    "location": {
+      "lat": 60.0,
+      "long": -110.0
+    }
+  },
+  {
+    "country": "Swiss Confederation",
+    "aliases": "Swiss Confederation",
+    "code": "CHE",
+    "capital": "None (",
+    "location": {
+      "lat": -46.0,
+      "long": -8.0
+    }
+  },
+  {
+    "country": "Republic of Chile",
+    "aliases": "Republic of Chile",
+    "code": "CHL",
+    "capital": "Santiago",
+    "location": {
+      "lat": -34.0,
+      "long": -71.0
+    }
+  },
+  {
+    "country": "People's Republic of China",
+    "aliases": "People's Republic of China",
+    "code": "CHN",
+    "capital": "Beijing",
+    "location": {
+      "lat": 35.0,
+      "long": 103.0
+    }
+  },
+  {
+    "country": "Republic of Côte d'Ivoire",
+    "aliases": "Republic of Côte d'Ivoire",
+    "code": "CIV",
+    "capital": "Yamoussoukro",
+    "location": {
+      "lat": 8.0,
+      "long": -5.0
+    }
+  },
+  {
+    "country": "Republic of Cameroon",
+    "aliases": "Republic of Cameroon",
+    "code": "CMR",
+    "capital": "Yaoundé",
+    "location": {
+      "lat": 6.0,
+      "long": 12.0
+    }
+  },
+  {
+    "country": "Democratic Republicof the Congo",
+    "aliases": "Democratic Republic of the Congo",
+    "code": "COD",
+    "capital": "Kinshasa",
+    "location": {
+      "lat": -3.0,
+      "long": 24.0
+    }
+  },
+  {
+    "country": "Republic of the Congo",
+    "aliases": "Republic of the Congo",
+    "code": "COG",
+    "capital": "Brazzaville",
+    "location": {
+      "lat": -1.0,
+      "long": -15.0
+    }
+  },
+  {
+    "country": "Cook Islands",
+    "aliases": "Cook Islands",
+    "code": "COK",
+    "capital": "Avarua",
+    "location": {
+      "lat": -21.0,
+      "long": -159.0
+    }
+  },
+  {
+    "country": "Republic of Colombia",
+    "aliases": "Republic of Colombia",
+    "code": "COL",
+    "capital": "Bogotá",
+    "location": {
+      "lat": 4.0,
+      "long": -72.0
+    }
+  },
+  {
+    "country": "Union of the Comoros",
+    "aliases": "Union of the Comoros",
+    "code": "COM",
+    "capital": "Moroni",
+    "location": {
+      "lat": -12.0,
+      "long": -43.0
+    }
+  },
+  {
+    "country": "Republic of Cabo Verde",
+    "aliases": "Republic of Cabo Verde",
+    "code": "CPV",
+    "capital": "Praia",
+    "location": {
+      "lat": -15.0,
+      "long": -23.0
+    }
+  },
+  {
+    "country": "Republic of Costa Rica",
+    "aliases": "Republic of Costa Rica",
+    "code": "CRI",
+    "capital": "San José",
+    "location": {
+      "lat": 10.0,
+      "long": -84.0
+    }
+  },
+  {
+    "country": "Republic of Cuba",
+    "aliases": "Republic of Cuba",
+    "code": "CUB",
+    "capital": "Havana",
+    "location": {
+      "lat": 22.0,
+      "long": -80.0
+    }
+  },
+  {
+    "country": "Curaçao",
+    "aliases": ["Curacao"],
+    "code": "CUW",
+    "capital": "Willemstad",
+    "location": {
+      "lat": -12.0,
+      "long": -69.0
+    }
+  },
+  {
+    "country": "The Cayman Islands",
+    "aliases": null,
+    "code": "CYM",
+    "capital": "George Town",
+    "location": {
+      "lat": -19.0,
+      "long": -81.0
+    }
+  },
+  {
+    "country": "Republic of Cyprus",
+    "aliases": "Republic of Cyprus",
+    "code": "CYP",
+    "capital": "Nicosia",
+    "location": {
+      "lat": 35.0,
+      "long": 33.0
+    }
+  },
+  {
+    "country": "Czech Republic",
+    "aliases": "Czech Republic",
+    "code": "CZE",
+    "capital": "Prague",
+    "location": {
+      "lat": -49.0,
+      "long": -15.0
+    }
+  },
+  {
+    "country": "Federal Republic of Germany",
+    "aliases": "Federal Republic of Germany",
+    "code": "DEU",
+    "capital": "Berlin",
+    "location": {
+      "lat": 51.0,
+      "long": 9.0
+    }
+  },
+  {
+    "country": "Republic of Djibouti",
+    "aliases": "Republic of Djibouti",
+    "code": "DJI",
+    "capital": "Djibouti City",
+    "location": {
+      "lat": -11.0,
+      "long": -43.0
+    }
+  },
+  {
+    "country": "Commonwealth of Dominica",
+    "aliases": "Commonwealth of Dominica",
+    "code": "DMA",
+    "capital": "Roseau",
+    "location": {
+      "lat": -15.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Denmark",
+    "aliases": null,
+    "code": "DNK",
+    "capital": "Copenhagen",
+    "location": {
+      "lat": 56.0,
+      "long": 10.0
+    }
+  },
+  {
+    "country": "Dominican Republic",
+    "aliases": "Dominican Republic",
+    "code": "DOM",
+    "capital": "Santo Domingo",
+    "location": {
+      "lat": -19.0,
+      "long": -70.0
+    }
+  },
+  {
+    "country": "People's Democratic Republic of Algeria",
+    "aliases": "People's Democratic Republic of Algeria",
+    "code": "DZA",
+    "capital": "Algiers",
+    "location": {
+      "lat": 28.0,
+      "long": 2.0
+    }
+  },
+  {
+    "country": "Republic of Ecuador",
+    "aliases": "Republic of Ecuador",
+    "code": "ECU",
+    "capital": "Quito",
+    "location": {
+      "lat": -2.0,
+      "long": -77.0
+    }
+  },
+  {
+    "country": "Arab Republic of Egypt",
+    "aliases": "Arab Republic of Egypt",
+    "code": "EGY",
+    "capital": "Cairo",
+    "location": {
+      "lat": 26.0,
+      "long": 30.0
+    }
+  },
+  {
+    "country": "State of Eritrea",
+    "aliases": "State of Eritrea",
+    "code": "ERI",
+    "capital": "Asmara",
+    "location": {
+      "lat": 15.0,
+      "long": 39.0
+    }
+  },
+  {
+    "country": "Western Sahara",
+    "aliases": null,
+    "code": "ESH",
+    "capital": "",
+    "location": {
+      "lat": 24.0,
+      "long": -14.0
+    }
+  },
+  {
+    "country": "Kingdom of Spain",
+    "aliases": "Kingdom of Spain",
+    "code": "ESP",
+    "capital": "Madrid",
+    "location": {
+      "lat": 40.0,
+      "long": -4.0
+    }
+  },
+  {
+    "country": "Republic of Estonia",
+    "aliases": "Republic of Estonia",
+    "code": "EST",
+    "capital": "Tallinn",
+    "location": {
+      "lat": 59.0,
+      "long": 26.0
+    }
+  },
+  {
+    "country": "Federal Democratic Republic of Ethiopia",
+    "aliases": "Federal Democratic Republic of Ethiopia",
+    "code": "ETH",
+    "capital": "Addis Ababa",
+    "location": {
+      "lat": -9.0,
+      "long": -38.0
+    }
+  },
+  {
+    "country": "Republic of Finland",
+    "aliases": "Republic of Finland",
+    "code": "FIN",
+    "capital": "Helsinki",
+    "location": {
+      "lat": 64.0,
+      "long": 26.0
+    }
+  },
+  {
+    "country": "Republic of Fiji",
+    "aliases": "Republic of Fiji",
+    "code": "FJI",
+    "capital": "Suva",
+    "location": {
+      "lat": -18.0,
+      "long": 179.0
+    }
+  },
+  {
+    "country": "Malvinas",
+    "aliases": ["Falkland Islands (the) [Malvinas]"],
+    "code": "FLK",
+    "capital": "Stanley",
+    "location": {
+      "lat": -51.0,
+      "long": -59.0
+    }
+  },
+  {
+    "country": "The Faroe Islands",
+    "aliases": null,
+    "code": "FRO",
+    "capital": "Tórshavn",
+    "location": {
+      "lat": -62.0,
+      "long": -6.0
+    }
+  },
+  {
+    "country": "Federated States of Micronesia",
+    "aliases": "Federated States of Micronesia",
+    "code": "FSM",
+    "capital": "Palikir",
+    "location": {
+      "lat": -6.0,
+      "long": -158.0
+    }
+  },
+  {
+    "country": "Gabonese Republic",
+    "aliases": "Gabonese Republic",
+    "code": "GAB",
+    "capital": "Libreville",
+    "location": {
+      "lat": -1.0,
+      "long": 12.0
+    }
+  },
+  {
+    "country": "United Kingdom of Great Britain and Northern Ireland",
+    "aliases": "United Kingdom of Great Britain and Northern Ireland",
+    "code": "GBR",
+    "capital": "London",
+    "location": {
+      "lat": 55.0,
+      "long": -3.0
+    }
+  },
+  {
+    "country": "Georgia",
+    "aliases": "Georgia",
+    "code": "GEO",
+    "capital": "Tbilisi",
+    "location": {
+      "lat": -42.0,
+      "long": -43.0
+    }
+  },
+  {
+    "country": "Guernsey",
+    "aliases": null,
+    "code": "GGY",
+    "capital": "Saint Peter Port",
+    "location": {
+      "lat": -49.0,
+      "long": -2.0
+    }
+  },
+  {
+    "country": "Republic of Ghana",
+    "aliases": "Republic of Ghana",
+    "code": "GHA",
+    "capital": "Accra",
+    "location": {
+      "lat": -8.0,
+      "long": -1.0
+    }
+  },
+  {
+    "country": "Gibraltar",
+    "aliases": null,
+    "code": "GIB",
+    "capital": "",
+    "location": {
+      "lat": -36.0,
+      "long": -5.0
+    }
+  },
+  {
+    "country": "Republic of Guinea",
+    "aliases": "Republic of Guinea",
+    "code": "GIN",
+    "capital": "Conakry",
+    "location": {
+      "lat": 11.0,
+      "long": -10.0
+    }
+  },
+  {
+    "country": "Guadeloupe",
+    "aliases": null,
+    "code": "GLP",
+    "capital": "",
+    "location": {
+      "lat": -16.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Republic of The Gambia",
+    "aliases": "Republic of The Gambia",
+    "code": "GMB",
+    "capital": "Banjul",
+    "location": {
+      "lat": -13.0,
+      "long": -16.0
+    }
+  },
+  {
+    "country": "Republic of Guinea-Bissau",
+    "aliases": "Republic of Guinea-Bissau",
+    "code": "GNB",
+    "capital": "Bissau",
+    "location": {
+      "lat": 12.0,
+      "long": -15.0
+    }
+  },
+  {
+    "country": "Republic of Equatorial Guinea",
+    "aliases": "Republic of Equatorial Guinea",
+    "code": "GNQ",
+    "capital": "Malabo",
+    "location": {
+      "lat": -1.0,
+      "long": -10.0
+    }
+  },
+  {
+    "country": "Hellenic Republic",
+    "aliases": "Hellenic Republic",
+    "code": "GRC",
+    "capital": "Athens",
+    "location": {
+      "lat": 39.0,
+      "long": 22.0
+    }
+  },
+  {
+    "country": "Grenada",
+    "aliases": "Grenada",
+    "code": "GRD",
+    "capital": "St. George's",
+    "location": {
+      "lat": -12.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Greenland",
+    "aliases": null,
+    "code": "GRL",
+    "capital": "Nuuk",
+    "location": {
+      "lat": -72.0,
+      "long": -40.0
+    }
+  },
+  {
+    "country": "Republic of Guatemala",
+    "aliases": "Republic of Guatemala",
+    "code": "GTM",
+    "capital": "Guatemala City",
+    "location": {
+      "lat": -15.0,
+      "long": -90.0
+    }
+  },
+  {
+    "country": "Guam",
+    "aliases": null,
+    "code": "GUM",
+    "capital": "Hagåtña",
+    "location": {
+      "lat": -13.0,
+      "long": -144.0
+    }
+  },
+  {
+    "country": "Co-operative Republic of Guyana",
+    "aliases": "Co-operative Republic of Guyana",
+    "code": "GUY",
+    "capital": "Georgetown",
+    "location": {
+      "lat": 5.0,
+      "long": -59.0
+    }
+  },
+  {
+    "country": "Hong Kong",
+    "aliases": null,
+    "code": "HKG",
+    "capital": "",
+    "location": {
+      "lat": -22.0,
+      "long": -114.0
+    }
+  },
+  {
+    "country": "Heard Island and McDonald Islands",
+    "aliases": null,
+    "code": "HMD",
+    "capital": "",
+    "location": {
+      "lat": -53.0,
+      "long": -73.0
+    }
+  },
+  {
+    "country": "Republic of Honduras",
+    "aliases": "Republic of Honduras",
+    "code": "HND",
+    "capital": "Tegucigalpa",
+    "location": {
+      "lat": -15.0,
+      "long": -86.0
+    }
+  },
+  {
+    "country": "Republic of Croatia",
+    "aliases": "Republic of Croatia",
+    "code": "HRV",
+    "capital": "Zagreb",
+    "location": {
+      "lat": -45.0,
+      "long": -15.0
+    }
+  },
+  {
+    "country": "Republic of Haiti",
+    "aliases": "Republic of Haiti",
+    "code": "HTI",
+    "capital": "Port-au-Prince",
+    "location": {
+      "lat": -19.0,
+      "long": -72.0
+    }
+  },
+  {
+    "country": "Hungary",
+    "aliases": "Hungary",
+    "code": "HUN",
+    "capital": "Budapest",
+    "location": {
+      "lat": 47.0,
+      "long": 20.0
+    }
+  },
+  {
+    "country": "Republic of Indonesia",
+    "aliases": "Republic of Indonesia",
+    "code": "IDN",
+    "capital": "Jakarta",
+    "location": {
+      "lat": -5.0,
+      "long": 120.0
+    }
+  },
+  {
+    "country": "Isle of Man",
+    "aliases": null,
+    "code": "IMN",
+    "capital": "Douglas",
+    "location": {
+      "lat": -54.0,
+      "long": -4.0
+    }
+  },
+  {
+    "country": "Republic of India",
+    "aliases": "Republic of India",
+    "code": "IND",
+    "capital": "New Delhi",
+    "location": {
+      "lat": 21.0,
+      "long": 78.0
+    }
+  },
+  {
+    "country": "The British Indian Ocean Territory",
+    "aliases": null,
+    "code": "IOT",
+    "capital": "Administered from",
+    "location": {
+      "lat": -7.0,
+      "long": -72.0
+    }
+  },
+  {
+    "country": "Ireland",
+    "aliases": "Ireland",
+    "code": "IRL",
+    "capital": "Dublin",
+    "location": {
+      "lat": 53.0,
+      "long": -8.0
+    }
+  },
+  {
+    "country": "Islamic Republic of Iran",
+    "aliases": "Islamic Republic of Iran",
+    "code": "IRN",
+    "capital": "Tehran",
+    "location": {
+      "lat": 32.0,
+      "long": 53.0
+    }
+  },
+  {
+    "country": "Republic of Iraq",
+    "aliases": "Republic of Iraq",
+    "code": "IRQ",
+    "capital": "Baghdad",
+    "location": {
+      "lat": 33.0,
+      "long": 44.0
+    }
+  },
+  {
+    "country": "Iceland",
+    "aliases": "Iceland",
+    "code": "ISL",
+    "capital": "Reykjavík",
+    "location": {
+      "lat": 65.0,
+      "long": -18.0
+    }
+  },
+  {
+    "country": "State of Israel",
+    "aliases": "State of Israel",
+    "code": "ISR",
+    "capital": "Jerusalem",
+    "location": {
+      "lat": 31.0,
+      "long": 35.0
+    }
+  },
+  {
+    "country": "Italian Republic",
+    "aliases": "Italian Republic",
+    "code": "ITA",
+    "capital": "Rome",
+    "location": {
+      "lat": 43.0,
+      "long": 12.0
+    }
+  },
+  {
+    "country": "Jamaica",
+    "aliases": "Jamaica",
+    "code": "JAM",
+    "capital": "Kingston",
+    "location": {
+      "lat": -18.0,
+      "long": -77.0
+    }
+  },
+  {
+    "country": "Jersey",
+    "aliases": null,
+    "code": "JEY",
+    "capital": "St Helier",
+    "location": {
+      "lat": -49.0,
+      "long": -2.0
+    }
+  },
+  {
+    "country": "Hashemite Kingdom of Jordan",
+    "aliases": "Hashemite Kingdom of Jordan",
+    "code": "JOR",
+    "capital": "Amman",
+    "location": {
+      "lat": -31.0,
+      "long": -36.0
+    }
+  },
+  {
+    "country": "Japan",
+    "aliases": "Japan",
+    "code": "JPN",
+    "capital": "Tokyo",
+    "location": {
+      "lat": 36.0,
+      "long": 138.0
+    }
+  },
+  {
+    "country": "Republic of Kazakhstan",
+    "aliases": "Republic of Kazakhstan",
+    "code": "KAZ",
+    "capital": "Astana",
+    "location": {
+      "lat": 48.0,
+      "long": 68.0
+    }
+  },
+  {
+    "country": "Republic of Kenya",
+    "aliases": "Republic of Kenya",
+    "code": "KEN",
+    "capital": "Nairobi",
+    "location": {
+      "lat": 1.0,
+      "long": 38.0
+    }
+  },
+  {
+    "country": "Kyrgyz Republic",
+    "aliases": "Kyrgyz Republic",
+    "code": "KGZ",
+    "capital": "Bishkek",
+    "location": {
+      "lat": 41.0,
+      "long": 75.0
+    }
+  },
+  {
+    "country": "Kingdom of Cambodia",
+    "aliases": "Kingdom of Cambodia",
+    "code": "KHM",
+    "capital": "Phnom Penh",
+    "location": {
+      "lat": -12.0,
+      "long": -105.0
+    }
+  },
+  {
+    "country": "Republic of Kiribati",
+    "aliases": "Republic of Kiribati",
+    "code": "KIR",
+    "capital": "Tarawa",
+    "location": {
+      "lat": -1.0,
+      "long": -173.0
+    }
+  },
+  {
+    "country": "Federation of Saint Kitts and Nevis",
+    "aliases": "Federation of Saint Kitts and Nevis",
+    "code": "KNA",
+    "capital": "Basseterre",
+    "location": {
+      "lat": -17.0,
+      "long": -62.0
+    }
+  },
+  {
+    "country": "Republic of Korea",
+    "aliases": "Republic of Korea",
+    "code": "KOR",
+    "capital": "Seoul",
+    "location": {
+      "lat": 36.0,
+      "long": 128.0
+    }
+  },
+  {
+    "country": "State of Kuwait",
+    "aliases": "State of Kuwait",
+    "code": "KWT",
+    "capital": "Kuwait City",
+    "location": {
+      "lat": -29.0,
+      "long": -47.0
+    }
+  },
+  {
+    "country": "Lao People's Democratic Republic",
+    "aliases": "Lao People's Democratic Republic",
+    "code": "LAO",
+    "capital": "Vientiane",
+    "location": {
+      "lat": 18.0,
+      "long": 105.0
+    }
+  },
+  {
+    "country": "Republic of Lebanon",
+    "aliases": "Republic of Lebanon",
+    "code": "LBN",
+    "capital": "Beirut",
+    "location": {
+      "lat": -33.0,
+      "long": -35.0
+    }
+  },
+  {
+    "country": "Republic of Liberia",
+    "aliases": "Republic of Liberia",
+    "code": "LBR",
+    "capital": "Monrovia",
+    "location": {
+      "lat": -6.0,
+      "long": -9.0
+    }
+  },
+  {
+    "country": "State of Libyaa",
+    "aliases": "State of Libya",
+    "code": "LBY",
+    "capital": "Tripoli",
+    "location": {
+      "lat": 27.0,
+      "long": 17.0
+    }
+  },
+  {
+    "country": "Saint Lucia",
+    "aliases": "Saint Lucia",
+    "code": "LCA",
+    "capital": "Castries",
+    "location": {
+      "lat": -13.0,
+      "long": -60.0
+    }
+  },
+  {
+    "country": "Principality of Liechtenstein",
+    "aliases": "Principality of Liechtenstein",
+    "code": "LIE",
+    "capital": "Vaduz",
+    "location": {
+      "lat": -47.0,
+      "long": -9.0
+    }
+  },
+  {
+    "country": "Democratic Socialist Republic of Sri Lanka",
+    "aliases": "Democratic Socialist Republic of Sri Lanka",
+    "code": "LKA",
+    "capital": "Sri Jayawardenepura Kotte",
+    "location": {
+      "lat": 7.0,
+      "long": 81.0
+    }
+  },
+  {
+    "country": "Kingdom of Lesotho",
+    "aliases": "Kingdom of Lesotho",
+    "code": "LSO",
+    "capital": "Maseru",
+    "location": {
+      "lat": -29.0,
+      "long": -28.0
+    }
+  },
+  {
+    "country": "Republic of Lithuania",
+    "aliases": "Republic of Lithuania",
+    "code": "LTU",
+    "capital": "Vilnius",
+    "location": {
+      "lat": 55.0,
+      "long": 24.0
+    }
+  },
+  {
+    "country": "Grand Duchy of Luxembourg",
+    "aliases": "Grand Duchy of Luxembourg",
+    "code": "LUX",
+    "capital": "Luxembourg",
+    "location": {
+      "lat": -49.0,
+      "long": -6.0
+    }
+  },
+  {
+    "country": "Republic of Latvia",
+    "aliases": "Republic of Latvia",
+    "code": "LVA",
+    "capital": "Riga",
+    "location": {
+      "lat": 57.0,
+      "long": 25.0
+    }
+  },
+  {
+    "country": "Macao",
+    "aliases": null,
+    "code": "MAC",
+    "capital": "",
+    "location": {
+      "lat": -22.0,
+      "long": -113.0
+    }
+  },
+  {
+    "country": "Saint Martin (French part)",
+    "aliases": null,
+    "code": "MAF",
+    "capital": "Marigot",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    }
+  },
+  {
+    "country": "Kingdom of Morocco",
+    "aliases": "Kingdom of Morocco",
+    "code": "MAR",
+    "capital": "Rabat",
+    "location": {
+      "lat": 32.0,
+      "long": -6.0
+    }
+  },
+  {
+    "country": "Principality of Monaco",
+    "aliases": "Principality of Monaco",
+    "code": "MCO",
+    "capital": "Monaco",
+    "location": {
+      "lat": -43.0,
+      "long": -7.0
+    }
+  },
+  {
+    "country": "Republic of Moldova",
+    "aliases": "Republic of Moldova",
+    "code": "MDA",
+    "capital": "Chișinău",
+    "location": {
+      "lat": 47.0,
+      "long": 29.0
+    }
+  },
+  {
+    "country": "Republic of Madagascar",
+    "aliases": "Republic of Madagascar",
+    "code": "MDG",
+    "capital": "Antananarivo",
+    "location": {
+      "lat": -20.0,
+      "long": 47.0
+    }
+  },
+  {
+    "country": "Republic of Maldives",
+    "aliases": "Republic of Maldives",
+    "code": "MDV",
+    "capital": "Malé",
+    "location": {
+      "lat": -4.0,
+      "long": -73.0
+    }
+  },
+  {
+    "country": "United Mexican States",
+    "aliases": "United Mexican States",
+    "code": "MEX",
+    "capital": "Mexico City",
+    "location": {
+      "lat": 23.0,
+      "long": -102.0
+    }
+  },
+  {
+    "country": "Republic of the Marshall Islands",
+    "aliases": "Republic of the Marshall Islands",
+    "code": "MHL",
+    "capital": "Majuro",
+    "location": {
+      "lat": -9.0,
+      "long": -169.0
+    }
+  },
+  {
+    "country": "Republic of North Macedonia",
+    "aliases": "Republic of North Macedonia",
+    "code": "MKD",
+    "capital": "Skopje",
+    "location": {
+      "lat": 42.0,
+      "long": 22.0
+    }
+  },
+  {
+    "country": "Republic of Mali",
+    "aliases": "Republic of Mali",
+    "code": "MLI",
+    "capital": "Bamako",
+    "location": {
+      "lat": 17.0,
+      "long": -4.0
+    }
+  },
+  {
+    "country": "Republic of Malta",
+    "aliases": "Republic of Malta",
+    "code": "MLT",
+    "capital": "Valletta",
+    "location": {
+      "lat": -35.0,
+      "long": -14.0
+    }
+  },
+  {
+    "country": "Republic of the Union of Myanmar",
+    "aliases": "Republic of the Union of Myanmar",
+    "code": "MMR",
+    "capital": "Naypyidaw",
+    "location": {
+      "lat": 22.0,
+      "long": 96.0
+    }
+  },
+  {
+    "country": "Montenegro",
+    "aliases": "Montenegro",
+    "code": "MNE",
+    "capital": "Podgorica",
+    "location": {
+      "lat": -42.0,
+      "long": -19.0
+    }
+  },
+  {
+    "country": "Mongolia",
+    "aliases": "Mongolia",
+    "code": "MNG",
+    "capital": "Ulaanbaatar",
+    "location": {
+      "lat": 48.0,
+      "long": 106.0
+    }
+  },
+  {
+    "country": "The Northern Mariana Islands",
+    "aliases": null,
+    "code": "MNP",
+    "capital": "Saipan",
+    "location": {
+      "lat": -16.0,
+      "long": -145.0
+    }
+  },
+  {
+    "country": "Republic of Mozambique",
+    "aliases": "Republic of Mozambique",
+    "code": "MOZ",
+    "capital": "Maputo",
+    "location": {
+      "lat": -18.0,
+      "long": -35.0
+    }
+  },
+  {
+    "country": "Islamic Republic of Mauritania",
+    "aliases": "Islamic Republic of Mauritania",
+    "code": "MRT",
+    "capital": "Nouakchott",
+    "location": {
+      "lat": 20.0,
+      "long": -12.0
+    }
+  },
+  {
+    "country": "Montserrat",
+    "aliases": null,
+    "code": "MSR",
+    "capital": "Plymouth",
+    "location": {
+      "lat": -16.0,
+      "long": -62.0
+    }
+  },
+  {
+    "country": "Martinique",
+    "aliases": null,
+    "code": "MTQ",
+    "capital": "",
+    "location": {
+      "lat": -14.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Republic of Mauritius",
+    "aliases": "Republic of Mauritius",
+    "code": "MUS",
+    "capital": "Port Louis",
+    "location": {
+      "lat": -20.0,
+      "long": -57.0
+    }
+  },
+  {
+    "country": "Republic of Malawi",
+    "aliases": "Republic of Malawi",
+    "code": "MWI",
+    "capital": "Lilongwe",
+    "location": {
+      "lat": -13.0,
+      "long": -34.0
+    }
+  },
+  {
+    "country": "Malaysia",
+    "aliases": "Malaysia",
+    "code": "MYS",
+    "capital": "Kuala Lumpur",
+    "location": {
+      "lat": 2.0,
+      "long": 112.0
+    }
+  },
+  {
+    "country": "Republic of Namibia",
+    "aliases": "Republic of Namibia",
+    "code": "NAM",
+    "capital": "Windhoek",
+    "location": {
+      "lat": -22.0,
+      "long": 17.0
+    }
+  },
+  {
+    "country": "New Caledonia",
+    "aliases": null,
+    "code": "NCL",
+    "capital": "Nouméa",
+    "location": {
+      "lat": -21.0,
+      "long": -165.0
+    }
+  },
+  {
+    "country": "Republic of the Niger",
+    "aliases": "Republic of the Niger",
+    "code": "NER",
+    "capital": "Niamey",
+    "location": {
+      "lat": 16.0,
+      "long": 8.0
+    }
+  },
+  {
+    "country": "Norfolk Island",
+    "aliases": null,
+    "code": "NFK",
+    "capital": "Kingston",
+    "location": {
+      "lat": -29.0,
+      "long": -167.0
+    }
+  },
+  {
+    "country": "Federal Republic of Nigeria",
+    "aliases": "Federal Republic of Nigeria",
+    "code": "NGA",
+    "capital": "Abuja",
+    "location": {
+      "lat": 8.0,
+      "long": 10.0
+    }
+  },
+  {
+    "country": "Republic of Nicaragua",
+    "aliases": "Republic of Nicaragua",
+    "code": "NIC",
+    "capital": "Managua",
+    "location": {
+      "lat": 13.0,
+      "long": -85.0
+    }
+  },
+  {
+    "country": "Niue",
+    "aliases": "Niue",
+    "code": "NIU",
+    "capital": "Alofi",
+    "location": {
+      "lat": -19.0,
+      "long": -169.0
+    }
+  },
+  {
+    "country": "Kingdom of the Netherlands",
+    "aliases": "Kingdom of the Netherlands",
+    "code": "NLD",
+    "capital": "Amsterdam",
+    "location": {
+      "lat": -52.0,
+      "long": -4.0
+    }
+  },
+  {
+    "country": "Federal Democratic Republic of Nepal",
+    "aliases": "Federal Democratic Republic of Nepal",
+    "code": "NPL",
+    "capital": "Kathmandu",
+    "location": {
+      "lat": -28.0,
+      "long": -84.0
+    }
+  },
+  {
+    "country": "Republic of Nauru",
+    "aliases": "Republic of Nauru",
+    "code": "NRU",
+    "capital": "(",
+    "location": {
+      "lat": -0.0,
+      "long": -166.0
+    }
+  },
+  {
+    "country": "New Zealand",
+    "aliases": "New Zealand",
+    "code": "NZL",
+    "capital": "Wellington",
+    "location": {
+      "lat": -42.0,
+      "long": 173.0
+    }
+  },
+  {
+    "country": "Sultanate of Oman",
+    "aliases": "Sultanate of Oman",
+    "code": "OMN",
+    "capital": "Muscat",
+    "location": {
+      "lat": 21.0,
+      "long": 57.0
+    }
+  },
+  {
+    "country": "Islamic Republic of Pakistan",
+    "aliases": "Islamic Republic of Pakistan",
+    "code": "PAK",
+    "capital": "Islamabad",
+    "location": {
+      "lat": 30.0,
+      "long": 70.0
+    }
+  },
+  {
+    "country": "Republic of Panama",
+    "aliases": "Republic of Panama",
+    "code": "PAN",
+    "capital": "Panama City",
+    "location": {
+      "lat": 9.0,
+      "long": -80.0
+    }
+  },
+  {
+    "country": "Pitcairn",
+    "aliases": null,
+    "code": "PCN",
+    "capital": "Adamstown",
+    "location": {
+      "lat": -25.0,
+      "long": -130.0
+    }
+  },
+  {
+    "country": "Republic of Peru",
+    "aliases": "Republic of Peru",
+    "code": "PER",
+    "capital": "Lima",
+    "location": {
+      "lat": -10.0,
+      "long": -76.0
+    }
+  },
+  {
+    "country": "Republic of the Philippines",
+    "aliases": "Republic of the Philippines",
+    "code": "PHL",
+    "capital": "Manila",
+    "location": {
+      "lat": 13.0,
+      "long": 122.0
+    }
+  },
+  {
+    "country": "Republic of Palau",
+    "aliases": "Republic of Palau",
+    "code": "PLW",
+    "capital": "Ngerulmud",
+    "location": {
+      "lat": -7.0,
+      "long": -134.0
+    }
+  },
+  {
+    "country": "Independent State of Papua New Guinea",
+    "aliases": "Independent State of Papua New Guinea",
+    "code": "PNG",
+    "capital": "Port Moresby",
+    "location": {
+      "lat": -6.0,
+      "long": 147.0
+    }
+  },
+  {
+    "country": "Republic of Poland",
+    "aliases": "Republic of Poland",
+    "code": "POL",
+    "capital": "Warsaw",
+    "location": {
+      "lat": 52.0,
+      "long": 20.0
+    }
+  },
+  {
+    "country": "Puerto Rico",
+    "aliases": null,
+    "code": "PRI",
+    "capital": "San Juan",
+    "location": {
+      "lat": -18.0,
+      "long": -66.0
+    }
+  },
+  {
+    "country": "Democratic People's Republic of Korea",
+    "aliases": "Democratic People's Republic of Korea",
+    "code": "PRK",
+    "capital": "Pyongyang",
+    "location": {
+      "lat": 40.0,
+      "long": 127.0
+    }
+  },
+  {
+    "country": "Portuguese Republic",
+    "aliases": "Portuguese Republic",
+    "code": "PRT",
+    "capital": "Lisbon",
+    "location": {
+      "lat": 39.0,
+      "long": -8.0
+    }
+  },
+  {
+    "country": "Republic of Paraguay",
+    "aliases": "Republic of Paraguay",
+    "code": "PRY",
+    "capital": "Asunción",
+    "location": {
+      "lat": -23.0,
+      "long": -58.0
+    }
+  },
+  {
+    "country": "State of Palestine",
+    "aliases": "State of Palestine",
+    "code": "PSE",
+    "capital": "Jerusalem",
+    "location": {
+      "lat": -32.0,
+      "long": -35.0
+    }
+  },
+  {
+    "country": "French Polynesia",
+    "aliases": null,
+    "code": "PYF",
+    "capital": "Papeete",
+    "location": {
+      "lat": -17.0,
+      "long": -149.0
+    }
+  },
+  {
+    "country": "State of Qatar",
+    "aliases": "State of Qatar",
+    "code": "QAT",
+    "capital": "Doha",
+    "location": {
+      "lat": -25.0,
+      "long": -51.0
+    }
+  },
+  {
+    "country": "Romania",
+    "aliases": "Romania",
+    "code": "ROU",
+    "capital": "Bucharest",
+    "location": {
+      "lat": 46.0,
+      "long": 25.0
+    }
+  },
+  {
+    "country": "Russian Federation",
+    "aliases": "Russian Federation",
+    "code": "RUS",
+    "capital": "Moscow",
+    "location": {
+      "lat": 66.0,
+      "long": 94.0
+    }
+  },
+  {
+    "country": "Republic of Rwanda",
+    "aliases": "Republic of Rwanda",
+    "code": "RWA",
+    "capital": "Kigali",
+    "location": {
+      "lat": -2.0,
+      "long": 30.0
+    }
+  },
+  {
+    "country": "Kingdom of Saudi Arabia",
+    "aliases": "Kingdom of Saudi Arabia",
+    "code": "SAU",
+    "capital": "Riyadh",
+    "location": {
+      "lat": 24.0,
+      "long": 45.0
+    }
+  },
+  {
+    "country": "Republic of Sudan",
+    "aliases": "Republic of Sudan",
+    "code": "SDN",
+    "capital": "Khartoum",
+    "location": {
+      "lat": 15.0,
+      "long": 32.0
+    }
+  },
+  {
+    "country": "Republic of Senegal",
+    "aliases": "Republic of Senegal",
+    "code": "SEN",
+    "capital": "Dakar",
+    "location": {
+      "lat": 14.0,
+      "long": -14.0
+    }
+  },
+  {
+    "country": "Republic of Singapore",
+    "aliases": "Republic of Singapore",
+    "code": "SGP",
+    "capital": "Singapore",
+    "location": {
+      "lat": -1.0,
+      "long": -103.0
+    }
+  },
+  {
+    "country": "South Georgia and the South Sandwich Islands",
+    "aliases": null,
+    "code": "SGS",
+    "capital": "King Edward Point",
+    "location": {
+      "lat": -54.0,
+      "long": -36.0
+    }
+  },
+  {
+    "country": "Saint Helena, Ascension and Tristan da Cunha",
+    "aliases": null,
+    "code": "SHN",
+    "capital": "Jamestown",
+    "location": {
+      "lat": -15.0,
+      "long": -5.0
+    }
+  },
+  {
+    "country": "Solomon Islands",
+    "aliases": "Solomon Islands",
+    "code": "SLB",
+    "capital": "Honiara",
+    "location": {
+      "lat": -8.0,
+      "long": 159.0
+    }
+  },
+  {
+    "country": "Republic of Sierra Leone",
+    "aliases": "Republic of Sierra Leone",
+    "code": "SLE",
+    "capital": "Freetown",
+    "location": {
+      "lat": -8.0,
+      "long": -12.0
+    }
+  },
+  {
+    "country": "Republic of El Salvador",
+    "aliases": "Republic of El Salvador",
+    "code": "SLV",
+    "capital": "San Salvador",
+    "location": {
+      "lat": -13.0,
+      "long": -89.0
+    }
+  },
+  {
+    "country": "Republic of San Marino",
+    "aliases": "Republic of San Marino",
+    "code": "SMR",
+    "capital": "City of San Marino",
+    "location": {
+      "lat": -43.0,
+      "long": -12.0
+    }
+  },
+  {
+    "country": "Federal Republic of Somalia",
+    "aliases": "Federal Republic of Somalia",
+    "code": "SOM",
+    "capital": "Mogadishu",
+    "location": {
+      "lat": 10.0,
+      "long": 49.0
+    }
+  },
+  {
+    "country": "Saint Pierre and Miquelon",
+    "aliases": null,
+    "code": "SPM",
+    "capital": "Saint-Pierre",
+    "location": {
+      "lat": -46.0,
+      "long": -56.0
+    }
+  },
+  {
+    "country": "Republic of Serbia",
+    "aliases": "Republic of Serbia",
+    "code": "SRB",
+    "capital": "Belgrade",
+    "location": {
+      "lat": 44.0,
+      "long": 21.0
+    }
+  },
+  {
+    "country": "Republic of South Sudan",
+    "aliases": "Republic of South Sudan",
+    "code": "SSD",
+    "capital": "Juba",
+    "location": {
+      "lat": 8.0,
+      "long": 30.0
+    }
+  },
+  {
+    "country": "Sao Tome and Principe",
+    "aliases": "Democratic Republic of São Tomé and Príncipe",
+    "code": "STP",
+    "capital": "São Tomé",
+    "location": {
+      "lat": -0.0,
+      "long": -6.0
+    }
+  },
+  {
+    "country": "Republic of Suriname",
+    "aliases": "Republic of Suriname",
+    "code": "SUR",
+    "capital": "Paramaribo",
+    "location": {
+      "lat": 4.0,
+      "long": -56.0
+    }
+  },
+  {
+    "country": "Slovak Republic",
+    "aliases": "Slovak Republic",
+    "code": "SVK",
+    "capital": "Bratislava",
+    "location": {
+      "lat": -48.0,
+      "long": -19.0
+    }
+  },
+  {
+    "country": "Republic of Slovenia",
+    "aliases": "Republic of Slovenia",
+    "code": "SVN",
+    "capital": "Ljubljana",
+    "location": {
+      "lat": -46.0,
+      "long": -14.0
+    }
+  },
+  {
+    "country": "Kingdom of Sweden",
+    "aliases": "Kingdom of Sweden",
+    "code": "SWE",
+    "capital": "Stockholm",
+    "location": {
+      "lat": 63.0,
+      "long": 16.0
+    }
+  },
+  {
+    "country": "Kingdom of Eswatini",
+    "aliases": "Kingdom of Eswatini",
+    "code": "SWZ",
+    "capital": "Mbabane",
+    "location": {
+      "lat": -26.0,
+      "long": -31.0
+    }
+  },
+  {
+    "country": "Sint Maarten (Dutch part)",
+    "aliases": null,
+    "code": "SXM",
+    "capital": "Philipsburg",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    }
+  },
+  {
+    "country": "Republic of Seychelles",
+    "aliases": "Republic of Seychelles",
+    "code": "SYC",
+    "capital": "Victoria",
+    "location": {
+      "lat": -4.0,
+      "long": -55.0
+    }
+  },
+  {
+    "country": "Syrian Arab Republic",
+    "aliases": "Syrian Arab Republic",
+    "code": "SYR",
+    "capital": "Damascus",
+    "location": {
+      "lat": 35.0,
+      "long": 38.0
+    }
+  },
+  {
+    "country": "Turks and Caicos Islands",
+    "aliases": null,
+    "code": "TCA",
+    "capital": "Grand Turk (Cockburn Town)",
+    "location": {
+      "lat": -21.0,
+      "long": -71.0
+    }
+  },
+  {
+    "country": "Chad",
+    "aliases": "Republic of Chad",
+    "code": "TCD",
+    "capital": "N'Djamena",
+    "location": {
+      "lat": 15.0,
+      "long": 19.0
+    }
+  },
+  {
+    "country": "Togolese Republic",
+    "aliases": "Togolese Republic",
+    "code": "TGO",
+    "capital": "Lomé",
+    "location": {
+      "lat": 8.0,
+      "long": 1.0
+    }
+  },
+  {
+    "country": "Thailand",
+    "aliases": "Kingdom of Thailand",
+    "code": "THA",
+    "capital": "Bangkok",
+    "location": {
+      "lat": 15.0,
+      "long": 101.0
+    }
+  },
+  {
+    "country": "Tajikistan",
+    "aliases": "Republic of Tajikistan",
+    "code": "TJK",
+    "capital": "Dushanbe",
+    "location": {
+      "lat": 39.0,
+      "long": 71.0
+    }
+  },
+  {
+    "country": "Tokelau",
+    "aliases": null,
+    "code": "TKL",
+    "capital": "None",
+    "location": {
+      "lat": -9.0,
+      "long": -171.0
+    }
+  },
+  {
+    "country": "Turkmenistan",
+    "aliases": [],
+    "code": "TKM",
+    "capital": "Ashgabat",
+    "location": {
+      "lat": 39.0,
+      "long": 60.0
+    }
+  },
+  {
+    "country": "Timor-Leste",
+    "aliases": "Democratic Republic of Timor-Leste",
+    "code": "TLS",
+    "capital": "Dili",
+    "location": {
+      "lat": -8.0,
+      "long": -125.0
+    }
+  },
+  {
+    "country": "Tonga",
+    "aliases": "Kingdom of Tonga",
+    "code": "TON",
+    "capital": "Nukuʻalofa",
+    "location": {
+      "lat": -20.0,
+      "long": -175.0
+    }
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "aliases": ["Republic of Trinidad and Tobago"],
+    "code": "TTO",
+    "capital": "Port of Spain",
+    "location": {
+      "lat": -10.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Tunisia",
+    "aliases": "Republic of Tunisia",
+    "code": "TUN",
+    "capital": "Tunis",
+    "location": {
+      "lat": 34.0,
+      "long": 9.0
+    }
+  },
+  {
+    "country": "Turkiye",
+    "aliases": ["Republic of Türkiye", "Turkey", "Türkiye"],
+    "code": "TUR",
+    "capital": "Ankara",
+    "location": {
+      "lat": -39.0,
+      "long": -32.0
+    }
+  },
+  {
+    "country": "Tuvalu",
+    "aliases": "Tuvalu",
+    "code": "TUV",
+    "capital": "Funafuti",
+    "location": {
+      "lat": -8.0,
+      "long": -179.0
+    }
+  },
+  {
+    "country": "Taiwan",
+    "aliases": ["Republic of China", "ROC"],
+    "code": "TWN",
+    "capital": "Taipei",
+    "location": {
+      "lat": 24.0,
+      "long": 121.0
+    }
+  },
+  {
+    "country": "United Republic of Tanzania",
+    "aliases": ["Tanzania"],
+    "code": "TZA",
+    "capital": "Dodoma",
+    "location": {
+      "lat": -6.0,
+      "long": 35.0
+    }
+  },
+  {
+    "country": "Uganda",
+    "aliases": "Republic of Uganda",
+    "code": "UGA",
+    "capital": "Kampala",
+    "location": {
+      "lat": 1.0,
+      "long": 32.0
+    }
+  },
+  {
+    "country": "Ukraine",
+    "aliases": "Ukraine",
+    "code": "UKR",
+    "capital": "Kyiv",
+    "location": {
+      "lat": -50.0,
+      "long": -30.0
+    }
+  },
+  {
+    "country": "Uruguay",
+    "aliases": "Oriental Republic of Uruguay",
+    "code": "URY",
+    "capital": "Montevideo",
+    "location": {
+      "lat": -33.0,
+      "long": -57.0
+    }
+  },
+  {
+    "country": "United States of America",
+    "aliases": ["The United States of America", "USA"],
+    "code": "USA",
+    "capital": "Washington, D.C.",
+    "location": {
+      "lat": 40.0,
+      "long": -100.0
+    }
+  },
+  {
+    "country": "Uzbekistan",
+    "aliases": "Republic of Uzbekistan",
+    "code": "UZB",
+    "capital": "Tashkent",
+    "location": {
+      "lat": 42.0,
+      "long": 64.0
+    }
+  },
+  {
+    "country": "Holy See",
+    "aliases": ["The Holy See", "Vatican", "The Vatican"],
+    "code": "VAT",
+    "capital": "",
+    "location": {
+      "lat": -41.0,
+      "long": -12.0
+    }
+  },
+  {
+    "country": "Saint Vincent and the Grenadines",
+    "aliases": null,
+    "code": "VCT",
+    "capital": "Kingstown",
+    "location": {
+      "lat": -13.0,
+      "long": -61.0
+    }
+  },
+  {
+    "country": "Venezuela",
+    "aliases": "Bolivarian Republic of Venezuela",
+    "code": "VEN",
+    "capital": "Caracas",
+    "location": {
+      "lat": 7.0,
+      "long": -65.0
+    }
+  },
+  {
+    "country": "Virgin Islands (British)",
+    "aliases": null,
+    "code": "VGB",
+    "capital": "Road Town",
+    "location": {
+      "lat": -18.0,
+      "long": -64.0
+    }
+  },
+  {
+    "country": "Virgin Islands (U.S.)",
+    "aliases": null,
+    "code": "VIR",
+    "capital": "Charlotte Amalie",
+    "location": {
+      "lat": -18.0,
+      "long": -64.0
+    }
+  },
+  {
+    "country": "Vietnam",
+    "aliases": "Socialist Republic of Vietnam",
+    "code": "VNM",
+    "capital": "Hanoi",
+    "location": {
+      "lat": 16.0,
+      "long": 108.0
+    }
+  },
+  {
+    "country": "Vanuatu",
+    "aliases": "Republic of Vanuatu",
+    "code": "VUT",
+    "capital": "Port Vila",
+    "location": {
+      "lat": -17.0,
+      "long": 168.0
+    }
+  },
+  {
+    "country": "Wallis and Futuna",
+    "aliases": null,
+    "code": "WLF",
+    "capital": "Mata Utu",
+    "location": {
+      "lat": -13.0,
+      "long": -176.0
+    }
+  },
+  {
+    "country": "Samoa",
+    "aliases": "Independent State of Samoa",
+    "code": "WSM",
+    "capital": "Apia",
+    "location": {
+      "lat": -13.0,
+      "long": -172.0
+    }
+  },
+  {
+    "country": "Yemen",
+    "aliases": "Republic of Yemen",
+    "code": "YEM",
+    "capital": "Sanaa",
+    "location": {
+      "lat": -15.0,
+      "long": -44.0
+    }
+  },
+  {
+    "country": "South Africa",
+    "aliases": "Republic of South Africa",
+    "code": "ZAF",
+    "capital": "Pretoria",
+    "location": {
+      "lat": -30.0,
+      "long": 25.0
+    }
+  },
+  {
+    "country": "Zambia",
+    "aliases": "Republic of Zambia",
+    "code": "ZMB",
+    "capital": "Lusaka",
+    "location": {
+      "lat": -15.0,
+      "long": 30.0
+    }
+  },
+  {
+    "country": "Zimbabwe",
+    "aliases": "Republic of Zimbabwe",
+    "code": "ZWE",
+    "capital": "Harare",
+    "location": {
+      "lat": -19.0,
+      "long": 30.0
+    }
+  }
+]
