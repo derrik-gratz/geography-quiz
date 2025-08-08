@@ -16,6 +16,8 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [mousePosition, setMousePosition] = useState(null);
   const [zoom, setZoom] = useState(1);
+  const [center, setCenter] = useState([0, 0]);
+  const [zoomGroupRef, setZoomGroupRef] = useState(null);
 
   // Function to clear the selection
   const clearSelection = () => {
@@ -187,14 +189,20 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
   const baseCircleRadius = 3; // smaller default
   const getCircleRadius = () => baseCircleRadius / Math.sqrt(zoom);
 
+  // Function to reset zoom
+  const resetZoom = () => {
+    setZoom(1);
+    setCenter([0, 0]);
+  };
+
   return (
     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {/* Coordinate display overlay for mouse position */}
-      {showCoordinates && mousePosition && (
+      {showCoordinates && (
         <div style={{
           position: 'absolute',
           top: '10px',
-          right: '10px',
+          right: '120px',
           background: 'rgba(0, 0, 0, 0.8)',
           color: 'white',
           padding: '8px 12px',
@@ -204,8 +212,33 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
           zIndex: 1000,
           pointerEvents: 'none'
         }}>
-          {mousePosition.lat}, {mousePosition.lon}
+          {mousePosition ? `${mousePosition.lat}, ${mousePosition.lon}` : 'Mouse position'}
         </div>
+      )}
+      
+      {/* Reset zoom button */}
+      {showCoordinates && (
+        <button
+          onClick={resetZoom}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            // right: showCoordinates && mousePosition ? '200px' : '10px',
+            right: '10px',
+            background: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            border: 'none',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '14px',
+            fontFamily: 'monospace',
+            cursor: 'pointer',
+            zIndex: 1000
+          }}
+          title="Reset zoom"
+        >
+          Reset Zoom
+        </button>
       )}
       <ComposableMap
         projection="geoEqualEarth"
@@ -220,7 +253,13 @@ function WorldMap({ onCountrySelect, highlightedCountry, showCoordinates = false
         }}
       >
         <ZoomableGroup
-          onMoveEnd={({ zoom }) => setZoom(zoom)}
+          ref={setZoomGroupRef}
+          center={center}
+          zoom={zoom}
+          onMoveEnd={({ zoom, coordinates }) => {
+            setZoom(zoom);
+            setCenter(coordinates);
+          }}
           minZoom={1}
           maxZoom={20}
         >
