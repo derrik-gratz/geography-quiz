@@ -9,11 +9,14 @@ function App() {
         quizSet, 
         setQuizSet, 
         availableQuizSets, 
-        availableCountries 
+        availableCountries,
+        PROMPT_TYPES,
+        selectedPromptTypes,
+        setSelectedPromptTypes
     } = useQuizConfig();
 
     // Quiz engine state and functions
-    const { currentPrompt, generatePrompt } = useQuizEngine(availableCountries);
+    const { currentPrompt, generatePrompt } = useQuizEngine(availableCountries, selectedPromptTypes);
 
     return (
         <div className="app">
@@ -23,19 +26,22 @@ function App() {
             <main>
                 <p>Welcome to the Geography Quiz app!</p>
                 
-                {/* Quiz configuration section */}
+                {/* Quiz configuration section - handles quiz sets and prompt types */}
                 <QuizConfig 
                     quizSet={quizSet} 
                     setQuizSet={setQuizSet} 
-                    availableQuizSets={availableQuizSets} 
+                    availableQuizSets={availableQuizSets}
+                    selectedPromptTypes={selectedPromptTypes}
+                    setSelectedPromptTypes={setSelectedPromptTypes}
+                    PROMPT_TYPES={PROMPT_TYPES}
                 />
                 
-                {/* Quiz controls */}
+                {/* Quiz controls - generate new prompts */}
                 <button onClick={generatePrompt}>Generate Prompt</button>
                 
                 {/* Current prompt display */}
                 {currentPrompt && (
-                    <p>Current Prompt: {currentPrompt}</p>
+                    <p>Current Prompt: {currentPrompt.promptType} of {currentPrompt.countryCode}</p>
                 )}
             </main>
         </div>

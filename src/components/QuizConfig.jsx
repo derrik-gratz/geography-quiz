@@ -1,16 +1,50 @@
 /**
  * QuizConfig Component
  * 
- * Renders a dropdown for selecting quiz sets and manages quiz configuration
+ * Renders configuration options for quiz sets and prompt types
  * 
  * @param {string|null} props.quizSet - Currently selected quiz set
  * @param {Function} props.setQuizSet - Function to update quiz set selection
  * @param {Array} props.availableQuizSets - Array of available quiz sets
+ * @param {Array} props.selectedPromptTypes - Currently selected prompt types
+ * @param {Function} props.setSelectedPromptTypes - Function to update prompt type selection
+ * @param {Array} props.PROMPT_TYPES - Available prompt type constants
  * @returns {JSX.Element} Quiz configuration interface
  */
-export function QuizConfig({ quizSet, setQuizSet, availableQuizSets }) {
+export function QuizConfig({ 
+    quizSet, 
+    setQuizSet, 
+    availableQuizSets, 
+    selectedPromptTypes, 
+    setSelectedPromptTypes, 
+    PROMPT_TYPES 
+}) {
     return (
         <div className="quiz-config">
+            <label>Prompt types:</label>
+            <div className="prompt-types">
+                {selectedPromptTypes.length === 0 && (
+                    <div className="warning-message">
+                        <p>Select at least one prompt type.</p>
+                    </div>
+                )}
+                {PROMPT_TYPES.map(type => (
+                    <label key={type} className="prompt-type-checkbox">
+                        <input
+                            type="checkbox"
+                            checked={selectedPromptTypes.includes(type)}
+                            onChange={() => {
+                                if (selectedPromptTypes.includes(type)) {
+                                    setSelectedPromptTypes(selectedPromptTypes.filter(t => t !== type));
+                                } else {
+                                    setSelectedPromptTypes([...selectedPromptTypes, type]);
+                                }
+                            }}
+                        />
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </label>
+                ))}
+            </div>
             <label htmlFor="quiz-set">Select Quiz Set: </label>
             <select 
                 id="quiz-set"

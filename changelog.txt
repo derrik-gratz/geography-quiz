@@ -1,4 +1,47 @@
 
+2025-01-27
+
+## **Changelog - Prompt Types Feature Implementation**
+
+### **🎯 Prompt Types System**
+- **Added PROMPT_TYPES constant** to useQuizConfig hook
+  - Placed in config since it controls what types are available
+  - Exported for use in components
+
+### **🏗️ State Management Enhancement**
+- **Added selectedPromptTypes state** to useQuizConfig hook
+  - Initialized with all prompt types selected by default
+  - Provides setSelectedPromptTypes function for updates
+  - Exported in hook return object
+
+### **🧩 UI Enhancement - QuizConfig Component**
+- **Added prompt type selection checkboxes** to QuizConfig component
+  - Proper state management with toggle logic
+- **Added warning message** for when no prompt types are selected
+
+### **⚙️ Quiz Engine Enhancement**
+- **Updated useQuizEngine hook** to accept promptTypes parameter
+- **Enhanced prompt generation logic**
+  - Returns object structure: `{countryCode, promptType}`
+
+### **🔗 Component Integration**
+- **Updated App.jsx** to pass selectedPromptTypes to useQuizEngine
+- **Updated prompt display** to handle new object structure
+
+### **🎯 Key Technical Concepts**
+- **Component prop drilling** - Passing state and setters through component tree
+
+### **🚀 Current State**
+- ✅ Prompt types system fully implemented
+- ✅ User can select/deselect prompt types via checkboxes
+- ✅ Warning appears when no prompt types selected
+- ✅ Quiz engine generates prompts with both country and type
+- ✅ UI properly displays new prompt object structure
+
+The app now supports different types of prompts (name, flag, location) with user-configurable selection, setting the foundation for the actual prompt rendering logic!
+
+---
+
 2025-08-08
 
 ## **Changelog - Geography Quiz App Redesign Session**
@@ -34,7 +77,7 @@
 - **Implemented derived state logic** for available countries based on quiz set selection
 - **Added "All countries" option** that uses all country codes from country data
 
-### **�� Core Functionality**
+### **🎮 Core Functionality**
 - **Added prompt generation button** in main App component
 - **Implemented random country selection** from available countries
 - **Added current prompt display** in UI

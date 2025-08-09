@@ -2,9 +2,12 @@ import { useState, useMemo } from 'react';
 import quizSets from '../data/quiz_sets.json';
 import countryData from '../data/country_data.json';
 
+// Prompt type constants - defined here since config will control prompt types
+export const PROMPT_TYPES = ['name', 'flag', 'location'];
+
 /**
  * Custom hook for managing quiz configuration state
- * Handles quiz set selection and available countries filtering
+ * Handles quiz set selection, prompt types, and available countries filtering
  * 
  * @returns {Object} Configuration state and setters
  */
@@ -12,8 +15,9 @@ export function useQuizConfig() {
     const availableQuizSets = quizSets;
     const allCountryCodes = countryData.map(country => country.code);
 
+    // State for quiz set selection (null = no selection, 'all' = all countries)
     const [quizSet, setQuizSet] = useState(null);
-    const [promptTypes, setPromptTypes] = useState(['name', 'flag', 'location']);
+    const [selectedPromptTypes, setSelectedPromptTypes] = useState(PROMPT_TYPES);
 
     // Memoized current quiz set data to avoid unnecessary recalculations
     const currentQuizSetData = useMemo(() => {
@@ -33,9 +37,10 @@ export function useQuizConfig() {
     return { 
         quizSet, 
         setQuizSet, 
-        promptTypes, 
-        setPromptTypes, 
         availableQuizSets, 
-        availableCountries 
+        availableCountries,
+        PROMPT_TYPES,
+        selectedPromptTypes,
+        setSelectedPromptTypes
     };
 }
