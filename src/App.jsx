@@ -28,7 +28,6 @@ function App() {
       clearInputsRef.current();
     }
   };
-
   // Handler for opening export modal
   const handleExport = () => {
     setShowExportModal(true);
