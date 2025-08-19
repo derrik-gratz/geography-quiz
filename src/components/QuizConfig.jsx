@@ -52,6 +52,7 @@ export function QuizConfig({
                 onChange={(e) => setQuizSet(e.target.value || null)}
             >
                 <option value="all">All countries</option>
+                <option value="Daily challenge">Daily challenge</option>
                 {availableQuizSets.map(set => (
                     <option key={set.name} value={set.name}>
                         {set.name}
