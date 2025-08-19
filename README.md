@@ -1,8 +1,10 @@
 # Todo:
 
-- Make quiz engine remember previously used countries from the set
+- Add flags
 
-- Retrieve country info from prompt code
+- Country name entry field
+
+- Flag selection entry field
 
 - generate map display and flag display? 
 
@@ -22,8 +24,6 @@
 
 - Create groups of countries for challenges. Also possibly blacklist common countries
 
-
-Great question! If I were designing this geography quiz app from the ground up, here's how I'd approach the core systems and state management:
 
 ## **1. Core State Architecture**
 
