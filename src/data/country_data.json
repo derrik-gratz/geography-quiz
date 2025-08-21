@@ -8,7 +8,7 @@
       "lat": -12.0,
       "long": -69.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AW"
   },
   {
     "country": "Islamic Republic of Afghanistan",
@@ -19,10 +19,10 @@
       "lat": 33.0,
       "long": 66.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AF"
   },
   {
-    "country": "Republic of Angola",
+    "country": "Angola",
     "aliases": "Republic of Angola",
     "code": "AGO",
     "capital": "Luanda",
@@ -30,7 +30,7 @@
       "lat": -12.0,
       "long": -18.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AO"
   },
   {
     "country": "Anguilla",
@@ -41,18 +41,20 @@
       "lat": -18.0,
       "long": -63.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AI"
   },
   {
     "country": "Åland Islands",
-    "aliases": ["Aland Islands"],
+    "aliases": [
+      "Aland Islands"
+    ],
     "code": "ALA",
     "capital": "Mariehamn",
     "location": {
       "lat": -60.0,
       "long": -20.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AX"
   },
   {
     "country": "Republic of Albania",
@@ -63,7 +65,7 @@
       "lat": 41.0,
       "long": 20.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AL"
   },
   {
     "country": "Principality of Andorra",
@@ -74,7 +76,7 @@
       "lat": -42.0,
       "long": -1.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AD"
   },
   {
     "country": "United Arab Emirates",
@@ -85,10 +87,10 @@
       "lat": 24.0,
       "long": 54.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AE"
   },
   {
-    "country": "Argentine Republica",
+    "country": "Argentina",
     "aliases": "Argentine Republic",
     "code": "ARG",
     "capital": "Buenos Aires",
@@ -96,7 +98,7 @@
       "lat": -34.0,
       "long": -64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AR"
   },
   {
     "country": "Republic of Armenia",
@@ -107,7 +109,7 @@
       "lat": -40.0,
       "long": -44.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AM"
   },
   {
     "country": "American Samoa",
@@ -118,7 +120,7 @@
       "lat": -14.0,
       "long": -170.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AS"
   },
   {
     "country": "Antarctica",
@@ -129,7 +131,7 @@
       "lat": -90.0,
       "long": 0.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AQ"
   },
   {
     "country": "The French Southern Territories",
@@ -140,7 +142,7 @@
       "lat": -43.0,
       "long": -67.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TF"
   },
   {
     "country": "Antigua and Barbuda",
@@ -151,10 +153,10 @@
       "lat": -17.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AG"
   },
   {
-    "country": "Commonwealth of Australia",
+    "country": "Australia",
     "aliases": "Commonwealth of Australia",
     "code": "AUS",
     "capital": "Canberra",
@@ -162,7 +164,7 @@
       "lat": -25.0,
       "long": 133.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AU"
   },
   {
     "country": "Austria",
@@ -173,7 +175,7 @@
       "lat": -47.0,
       "long": -13.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AT"
   },
   {
     "country": "Azerbaijan",
@@ -184,7 +186,7 @@
       "lat": -40.0,
       "long": -47.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "AZ"
   },
   {
     "country": "Burundi",
@@ -195,7 +197,7 @@
       "lat": -3.0,
       "long": -30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BI"
   },
   {
     "country": "Belgium",
@@ -206,7 +208,7 @@
       "lat": -50.0,
       "long": -4.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BE"
   },
   {
     "country": "Benin",
@@ -217,7 +219,7 @@
       "lat": -6.0,
       "long": -2.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BJ"
   },
   {
     "country": "Bonaire, Sint Eustatius and Saba",
@@ -228,7 +230,7 @@
       "lat": -12.0,
       "long": -68.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BQ"
   },
   {
     "country": "Burkina Faso",
@@ -239,7 +241,7 @@
       "lat": -12.0,
       "long": -1.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BF"
   },
   {
     "country": "Bangladesh",
@@ -250,7 +252,7 @@
       "lat": 24.0,
       "long": 90.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BD"
   },
   {
     "country": "Bulgaria",
@@ -261,7 +263,7 @@
       "lat": 43.0,
       "long": 25.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BG"
   },
   {
     "country": "Bahrain",
@@ -272,10 +274,10 @@
       "lat": -26.0,
       "long": -50.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BH"
   },
   {
-    "country": "The Bahamas",
+    "country": "Bahamas",
     "aliases": "Commonwealth of The Bahamas",
     "code": "BHS",
     "capital": "Nassau",
@@ -283,7 +285,7 @@
       "lat": -25.0,
       "long": -77.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BS"
   },
   {
     "country": "Bosnia and Herzegovina",
@@ -294,18 +296,20 @@
       "lat": 44.0,
       "long": 18.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BA"
   },
   {
     "country": "Saint Barthélemy",
-    "aliases": ["Saint Barthelemy"],
+    "aliases": [
+      "Saint Barthelemy"
+    ],
     "code": "BLM",
     "capital": "Gustavia",
     "location": {
       "lat": -17.0,
       "long": -62.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BL"
   },
   {
     "country": "Belarus",
@@ -316,7 +320,7 @@
       "lat": 53.0,
       "long": 27.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BY"
   },
   {
     "country": "Belize",
@@ -327,7 +331,7 @@
       "lat": -17.0,
       "long": -88.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BZ"
   },
   {
     "country": "Bermuda",
@@ -338,7 +342,7 @@
       "lat": -32.0,
       "long": -64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BM"
   },
   {
     "country": "Bolivia",
@@ -349,7 +353,7 @@
       "lat": -16.0,
       "long": -64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BO"
   },
   {
     "country": "Brazil",
@@ -360,7 +364,7 @@
       "lat": -10.0,
       "long": -52.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BR"
   },
   {
     "country": "Barbados",
@@ -371,7 +375,7 @@
       "lat": -13.0,
       "long": -59.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BB"
   },
   {
     "country": "Brunei Darussalam",
@@ -382,7 +386,7 @@
       "lat": -4.0,
       "long": -114.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BN"
   },
   {
     "country": "Bhutan",
@@ -393,7 +397,7 @@
       "lat": -27.0,
       "long": -90.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BT"
   },
   {
     "country": "Botswana",
@@ -404,7 +408,7 @@
       "lat": -24.0,
       "long": -25.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "BW"
   },
   {
     "country": "Central African Republic",
@@ -415,7 +419,7 @@
       "lat": 7.0,
       "long": 21.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CF"
   },
   {
     "country": "Canada",
@@ -426,10 +430,10 @@
       "lat": 60.0,
       "long": -110.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CA"
   },
   {
-    "country": "Swiss Confederation",
+    "country": "Switzerland",
     "aliases": "Swiss Confederation",
     "code": "CHE",
     "capital": "None (",
@@ -437,7 +441,7 @@
       "lat": -46.0,
       "long": -8.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CH"
   },
   {
     "country": "Chile",
@@ -448,10 +452,10 @@
       "lat": -34.0,
       "long": -71.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CL"
   },
   {
-    "country": "People's Republic of China",
+    "country": "China",
     "aliases": "People's Republic of China",
     "code": "CHN",
     "capital": "Beijing",
@@ -459,7 +463,7 @@
       "lat": 35.0,
       "long": 103.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CN"
   },
   {
     "country": "Republic of Côte d'Ivoire",
@@ -470,7 +474,7 @@
       "lat": 8.0,
       "long": -5.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CI"
   },
   {
     "country": "Republic of Cameroon",
@@ -481,10 +485,10 @@
       "lat": 6.0,
       "long": 12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CM"
   },
   {
-    "country": "Democratic Republicof the Congo",
+    "country": "Congo",
     "aliases": "Democratic Republic of the Congo",
     "code": "COD",
     "capital": "Kinshasa",
@@ -492,7 +496,7 @@
       "lat": -3.0,
       "long": 24.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CD"
   },
   {
     "country": "Republic of the Congo",
@@ -503,7 +507,7 @@
       "lat": -1.0,
       "long": -15.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CG"
   },
   {
     "country": "Cook Islands",
@@ -514,10 +518,10 @@
       "lat": -21.0,
       "long": -159.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CK"
   },
   {
-    "country": "Republic of Colombia",
+    "country": "Colombia",
     "aliases": "Republic of Colombia",
     "code": "COL",
     "capital": "Bogotá",
@@ -525,7 +529,7 @@
       "lat": 4.0,
       "long": -72.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CO"
   },
   {
     "country": "Union of the Comoros",
@@ -536,10 +540,10 @@
       "lat": -12.0,
       "long": -43.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KM"
   },
   {
-    "country": "Republic of Cabo Verde",
+    "country": "Cabo Verde",
     "aliases": "Republic of Cabo Verde",
     "code": "CPV",
     "capital": "Praia",
@@ -547,7 +551,7 @@
       "lat": -15.0,
       "long": -23.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CV"
   },
   {
     "country": "Republic of Costa Rica",
@@ -558,10 +562,10 @@
       "lat": 10.0,
       "long": -84.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CR"
   },
   {
-    "country": "Republic of Cuba",
+    "country": "Cuba",
     "aliases": "Republic of Cuba",
     "code": "CUB",
     "capital": "Havana",
@@ -569,18 +573,20 @@
       "lat": 22.0,
       "long": -80.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CU"
   },
   {
     "country": "Curaçao",
-    "aliases": ["Curacao"],
+    "aliases": [
+      "Curacao"
+    ],
     "code": "CUW",
     "capital": "Willemstad",
     "location": {
       "lat": -12.0,
       "long": -69.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CW"
   },
   {
     "country": "The Cayman Islands",
@@ -591,7 +597,7 @@
       "lat": -19.0,
       "long": -81.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KY"
   },
   {
     "country": "Republic of Cyprus",
@@ -602,7 +608,7 @@
       "lat": 35.0,
       "long": 33.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CY"
   },
   {
     "country": "Czech Republic",
@@ -613,7 +619,7 @@
       "lat": -49.0,
       "long": -15.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "CZ"
   },
   {
     "country": "Federal Republic of Germany",
@@ -624,7 +630,7 @@
       "lat": 51.0,
       "long": 9.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DE"
   },
   {
     "country": "Republic of Djibouti",
@@ -635,10 +641,10 @@
       "lat": -11.0,
       "long": -43.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DJ"
   },
   {
-    "country": "Commonwealth of Dominica",
+    "country": "Dominica",
     "aliases": "Commonwealth of Dominica",
     "code": "DMA",
     "capital": "Roseau",
@@ -646,7 +652,7 @@
       "lat": -15.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DM"
   },
   {
     "country": "Denmark",
@@ -657,7 +663,7 @@
       "lat": 56.0,
       "long": 10.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DK"
   },
   {
     "country": "Dominican Republic",
@@ -668,10 +674,10 @@
       "lat": -19.0,
       "long": -70.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DO"
   },
   {
-    "country": "People's Democratic Republic of Algeria",
+    "country": "Algeria",
     "aliases": "People's Democratic Republic of Algeria",
     "code": "DZA",
     "capital": "Algiers",
@@ -679,10 +685,10 @@
       "lat": 28.0,
       "long": 2.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "DZ"
   },
   {
-    "country": "Republic of Ecuador",
+    "country": "Ecuador",
     "aliases": "Republic of Ecuador",
     "code": "ECU",
     "capital": "Quito",
@@ -690,7 +696,7 @@
       "lat": -2.0,
       "long": -77.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "EC"
   },
   {
     "country": "Arab Republic of Egypt",
@@ -701,7 +707,7 @@
       "lat": 26.0,
       "long": 30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "EG"
   },
   {
     "country": "State of Eritrea",
@@ -712,7 +718,7 @@
       "lat": 15.0,
       "long": 39.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ER"
   },
   {
     "country": "Western Sahara",
@@ -723,10 +729,10 @@
       "lat": 24.0,
       "long": -14.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "EH"
   },
   {
-    "country": "Kingdom of Spain",
+    "country": "Spain",
     "aliases": "Kingdom of Spain",
     "code": "ESP",
     "capital": "Madrid",
@@ -734,7 +740,7 @@
       "lat": 40.0,
       "long": -4.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ES"
   },
   {
     "country": "Republic of Estonia",
@@ -745,7 +751,7 @@
       "lat": 59.0,
       "long": 26.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "EE"
   },
   {
     "country": "Federal Democratic Republic of Ethiopia",
@@ -756,7 +762,7 @@
       "lat": -9.0,
       "long": -38.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ET"
   },
   {
     "country": "Republic of Finland",
@@ -767,10 +773,10 @@
       "lat": 64.0,
       "long": 26.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "FI"
   },
   {
-    "country": "Republic of Fiji",
+    "country": "Fiji",
     "aliases": "Republic of Fiji",
     "code": "FJI",
     "capital": "Suva",
@@ -778,18 +784,20 @@
       "lat": -18.0,
       "long": 179.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "FJ"
   },
   {
     "country": "Malvinas",
-    "aliases": ["Falkland Islands (the) [Malvinas]"],
+    "aliases": [
+      "Falkland Islands (the) [Malvinas]"
+    ],
     "code": "FLK",
     "capital": "Stanley",
     "location": {
       "lat": -51.0,
       "long": -59.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "FK"
   },
   {
     "country": "The Faroe Islands",
@@ -800,10 +808,10 @@
       "lat": -62.0,
       "long": -6.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "FO"
   },
   {
-    "country": "Federated States of Micronesia",
+    "country": "Micronesia",
     "aliases": "Federated States of Micronesia",
     "code": "FSM",
     "capital": "Palikir",
@@ -811,7 +819,7 @@
       "lat": -6.0,
       "long": -158.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "FM"
   },
   {
     "country": "Gabonese Republic",
@@ -822,7 +830,7 @@
       "lat": -1.0,
       "long": 12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GA"
   },
   {
     "country": "United Kingdom of Great Britain and Northern Ireland",
@@ -833,7 +841,7 @@
       "lat": 55.0,
       "long": -3.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GB"
   },
   {
     "country": "Georgia",
@@ -844,7 +852,7 @@
       "lat": -42.0,
       "long": -43.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GE"
   },
   {
     "country": "Guernsey",
@@ -855,7 +863,7 @@
       "lat": -49.0,
       "long": -2.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GG"
   },
   {
     "country": "Republic of Ghana",
@@ -866,7 +874,7 @@
       "lat": -8.0,
       "long": -1.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GH"
   },
   {
     "country": "Gibraltar",
@@ -877,7 +885,7 @@
       "lat": -36.0,
       "long": -5.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GI"
   },
   {
     "country": "Republic of Guinea",
@@ -888,7 +896,7 @@
       "lat": 11.0,
       "long": -10.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GN"
   },
   {
     "country": "Guadeloupe",
@@ -899,7 +907,7 @@
       "lat": -16.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GP"
   },
   {
     "country": "Republic of The Gambia",
@@ -910,7 +918,7 @@
       "lat": -13.0,
       "long": -16.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GM"
   },
   {
     "country": "Republic of Guinea-Bissau",
@@ -921,7 +929,7 @@
       "lat": 12.0,
       "long": -15.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GW"
   },
   {
     "country": "Republic of Equatorial Guinea",
@@ -932,10 +940,10 @@
       "lat": -1.0,
       "long": -10.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GQ"
   },
   {
-    "country": "Hellenic Republic",
+    "country": "Greece",
     "aliases": "Hellenic Republic",
     "code": "GRC",
     "capital": "Athens",
@@ -943,7 +951,7 @@
       "lat": 39.0,
       "long": 22.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GR"
   },
   {
     "country": "Grenada",
@@ -954,7 +962,7 @@
       "lat": -12.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GD"
   },
   {
     "country": "Greenland",
@@ -965,10 +973,10 @@
       "lat": -72.0,
       "long": -40.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GL"
   },
   {
-    "country": "Republic of Guatemala",
+    "country": "Guatemala",
     "aliases": "Republic of Guatemala",
     "code": "GTM",
     "capital": "Guatemala City",
@@ -976,7 +984,7 @@
       "lat": -15.0,
       "long": -90.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GT"
   },
   {
     "country": "Guam",
@@ -987,7 +995,7 @@
       "lat": -13.0,
       "long": -144.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GU"
   },
   {
     "country": "Co-operative Republic of Guyana",
@@ -998,7 +1006,7 @@
       "lat": 5.0,
       "long": -59.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GY"
   },
   {
     "country": "Hong Kong",
@@ -1009,7 +1017,7 @@
       "lat": -22.0,
       "long": -114.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HK"
   },
   {
     "country": "Heard Island and McDonald Islands",
@@ -1020,7 +1028,7 @@
       "lat": -53.0,
       "long": -73.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HM"
   },
   {
     "country": "Republic of Honduras",
@@ -1031,7 +1039,7 @@
       "lat": -15.0,
       "long": -86.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HN"
   },
   {
     "country": "Republic of Croatia",
@@ -1042,10 +1050,10 @@
       "lat": -45.0,
       "long": -15.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HR"
   },
   {
-    "country": "Republic of Haiti",
+    "country": "Haiti",
     "aliases": "Republic of Haiti",
     "code": "HTI",
     "capital": "Port-au-Prince",
@@ -1053,7 +1061,7 @@
       "lat": -19.0,
       "long": -72.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HT"
   },
   {
     "country": "Hungary",
@@ -1064,10 +1072,10 @@
       "lat": 47.0,
       "long": 20.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "HU"
   },
   {
-    "country": "Republic of Indonesia",
+    "country": "Indonesia",
     "aliases": "Republic of Indonesia",
     "code": "IDN",
     "capital": "Jakarta",
@@ -1075,7 +1083,7 @@
       "lat": -5.0,
       "long": 120.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ID"
   },
   {
     "country": "Isle of Man",
@@ -1086,7 +1094,7 @@
       "lat": -54.0,
       "long": -4.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IM"
   },
   {
     "country": "Republic of India",
@@ -1097,7 +1105,7 @@
       "lat": 21.0,
       "long": 78.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IN"
   },
   {
     "country": "The British Indian Ocean Territory",
@@ -1108,7 +1116,7 @@
       "lat": -7.0,
       "long": -72.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IO"
   },
   {
     "country": "Ireland",
@@ -1119,7 +1127,7 @@
       "lat": 53.0,
       "long": -8.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IE"
   },
   {
     "country": "Islamic Republic of Iran",
@@ -1130,7 +1138,7 @@
       "lat": 32.0,
       "long": 53.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IR"
   },
   {
     "country": "Republic of Iraq",
@@ -1141,7 +1149,7 @@
       "lat": 33.0,
       "long": 44.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IQ"
   },
   {
     "country": "Iceland",
@@ -1152,10 +1160,10 @@
       "lat": 65.0,
       "long": -18.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IS"
   },
   {
-    "country": "State of Israel",
+    "country": "Israel",
     "aliases": "State of Israel",
     "code": "ISR",
     "capital": "Jerusalem",
@@ -1163,7 +1171,7 @@
       "lat": 31.0,
       "long": 35.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IL"
   },
   {
     "country": "Italian Republic",
@@ -1174,7 +1182,7 @@
       "lat": 43.0,
       "long": 12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "IT"
   },
   {
     "country": "Jamaica",
@@ -1185,7 +1193,7 @@
       "lat": -18.0,
       "long": -77.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "JM"
   },
   {
     "country": "Jersey",
@@ -1196,7 +1204,7 @@
       "lat": -49.0,
       "long": -2.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "JE"
   },
   {
     "country": "Hashemite Kingdom of Jordan",
@@ -1207,7 +1215,7 @@
       "lat": -31.0,
       "long": -36.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "JO"
   },
   {
     "country": "Japan",
@@ -1218,10 +1226,10 @@
       "lat": 36.0,
       "long": 138.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "JP"
   },
   {
-    "country": "Republic of Kazakhstan",
+    "country": "Kazakhstan",
     "aliases": "Republic of Kazakhstan",
     "code": "KAZ",
     "capital": "Astana",
@@ -1229,7 +1237,7 @@
       "lat": 48.0,
       "long": 68.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KZ"
   },
   {
     "country": "Republic of Kenya",
@@ -1240,10 +1248,10 @@
       "lat": 1.0,
       "long": 38.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KE"
   },
   {
-    "country": "Kyrgyz Republic",
+    "country": "Kyrgyzstan",
     "aliases": "Kyrgyz Republic",
     "code": "KGZ",
     "capital": "Bishkek",
@@ -1251,10 +1259,10 @@
       "lat": 41.0,
       "long": 75.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KG"
   },
   {
-    "country": "Kingdom of Cambodia",
+    "country": "Cambodia",
     "aliases": "Kingdom of Cambodia",
     "code": "KHM",
     "capital": "Phnom Penh",
@@ -1262,7 +1270,7 @@
       "lat": -12.0,
       "long": -105.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KH"
   },
   {
     "country": "Republic of Kiribati",
@@ -1273,7 +1281,7 @@
       "lat": -1.0,
       "long": -173.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KI"
   },
   {
     "country": "Federation of Saint Kitts and Nevis",
@@ -1284,10 +1292,10 @@
       "lat": -17.0,
       "long": -62.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KN"
   },
   {
-    "country": "Republic of Korea",
+    "country": "South Korea",
     "aliases": "Republic of Korea",
     "code": "KOR",
     "capital": "Seoul",
@@ -1295,7 +1303,7 @@
       "lat": 36.0,
       "long": 128.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KR"
   },
   {
     "country": "State of Kuwait",
@@ -1306,10 +1314,10 @@
       "lat": -29.0,
       "long": -47.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KW"
   },
   {
-    "country": "Lao People's Democratic Republic",
+    "country": "Laos",
     "aliases": "Lao People's Democratic Republic",
     "code": "LAO",
     "capital": "Vientiane",
@@ -1317,10 +1325,10 @@
       "lat": 18.0,
       "long": 105.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LA"
   },
   {
-    "country": "Republic of Lebanon",
+    "country": "Lebanon",
     "aliases": "Republic of Lebanon",
     "code": "LBN",
     "capital": "Beirut",
@@ -1328,10 +1336,10 @@
       "lat": -33.0,
       "long": -35.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LB"
   },
   {
-    "country": "Republic of Liberia",
+    "country": "Liberia",
     "aliases": "Republic of Liberia",
     "code": "LBR",
     "capital": "Monrovia",
@@ -1339,10 +1347,10 @@
       "lat": -6.0,
       "long": -9.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LR"
   },
   {
-    "country": "State of Libyaa",
+    "country": "Libya",
     "aliases": "State of Libya",
     "code": "LBY",
     "capital": "Tripoli",
@@ -1350,7 +1358,7 @@
       "lat": 27.0,
       "long": 17.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LY"
   },
   {
     "country": "Saint Lucia",
@@ -1361,10 +1369,10 @@
       "lat": -13.0,
       "long": -60.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LC"
   },
   {
-    "country": "Principality of Liechtenstein",
+    "country": "Liechtenstein",
     "aliases": "Principality of Liechtenstein",
     "code": "LIE",
     "capital": "Vaduz",
@@ -1372,7 +1380,7 @@
       "lat": -47.0,
       "long": -9.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LI"
   },
   {
     "country": "Democratic Socialist Republic of Sri Lanka",
@@ -1383,7 +1391,7 @@
       "lat": 7.0,
       "long": 81.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LK"
   },
   {
     "country": "Kingdom of Lesotho",
@@ -1394,7 +1402,7 @@
       "lat": -29.0,
       "long": -28.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LS"
   },
   {
     "country": "Republic of Lithuania",
@@ -1405,7 +1413,7 @@
       "lat": 55.0,
       "long": 24.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LT"
   },
   {
     "country": "Grand Duchy of Luxembourg",
@@ -1416,10 +1424,10 @@
       "lat": -49.0,
       "long": -6.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LU"
   },
   {
-    "country": "Republic of Latvia",
+    "country": "Latvia",
     "aliases": "Republic of Latvia",
     "code": "LVA",
     "capital": "Riga",
@@ -1427,7 +1435,7 @@
       "lat": 57.0,
       "long": 25.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "LV"
   },
   {
     "country": "Macao",
@@ -1438,7 +1446,7 @@
       "lat": -22.0,
       "long": -113.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MO"
   },
   {
     "country": "Saint Martin (French part)",
@@ -1449,10 +1457,10 @@
       "lat": -18.0,
       "long": -63.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MF"
   },
   {
-    "country": "Kingdom of Morocco",
+    "country": "Morocco",
     "aliases": "Kingdom of Morocco",
     "code": "MAR",
     "capital": "Rabat",
@@ -1460,7 +1468,7 @@
       "lat": 32.0,
       "long": -6.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MA"
   },
   {
     "country": "Principality of Monaco",
@@ -1471,7 +1479,7 @@
       "lat": -43.0,
       "long": -7.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MC"
   },
   {
     "country": "Republic of Moldova",
@@ -1482,7 +1490,7 @@
       "lat": 47.0,
       "long": 29.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MD"
   },
   {
     "country": "Republic of Madagascar",
@@ -1493,10 +1501,10 @@
       "lat": -20.0,
       "long": 47.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MG"
   },
   {
-    "country": "Republic of Maldives",
+    "country": "Maldives",
     "aliases": "Republic of Maldives",
     "code": "MDV",
     "capital": "Malé",
@@ -1504,7 +1512,7 @@
       "lat": -4.0,
       "long": -73.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MV"
   },
   {
     "country": "United Mexican States",
@@ -1515,10 +1523,10 @@
       "lat": 23.0,
       "long": -102.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MX"
   },
   {
-    "country": "Republic of the Marshall Islands",
+    "country": "Marshall Islands",
     "aliases": "Republic of the Marshall Islands",
     "code": "MHL",
     "capital": "Majuro",
@@ -1526,10 +1534,10 @@
       "lat": -9.0,
       "long": -169.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MH"
   },
   {
-    "country": "Republic of North Macedonia",
+    "country": "Macedonia",
     "aliases": "Republic of North Macedonia",
     "code": "MKD",
     "capital": "Skopje",
@@ -1537,7 +1545,7 @@
       "lat": 42.0,
       "long": 22.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MK"
   },
   {
     "country": "Republic of Mali",
@@ -1548,10 +1556,10 @@
       "lat": 17.0,
       "long": -4.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ML"
   },
   {
-    "country": "Republic of Malta",
+    "country": "Malta",
     "aliases": "Republic of Malta",
     "code": "MLT",
     "capital": "Valletta",
@@ -1559,10 +1567,10 @@
       "lat": -35.0,
       "long": -14.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MT"
   },
   {
-    "country": "Republic of the Union of Myanmar",
+    "country": "Myanmar",
     "aliases": "Republic of the Union of Myanmar",
     "code": "MMR",
     "capital": "Naypyidaw",
@@ -1570,7 +1578,7 @@
       "lat": 22.0,
       "long": 96.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MM"
   },
   {
     "country": "Montenegro",
@@ -1581,7 +1589,7 @@
       "lat": -42.0,
       "long": -19.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ME"
   },
   {
     "country": "Mongolia",
@@ -1592,7 +1600,7 @@
       "lat": 48.0,
       "long": 106.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MN"
   },
   {
     "country": "The Northern Mariana Islands",
@@ -1603,7 +1611,7 @@
       "lat": -16.0,
       "long": -145.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MP"
   },
   {
     "country": "Republic of Mozambique",
@@ -1614,10 +1622,10 @@
       "lat": -18.0,
       "long": -35.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MZ"
   },
   {
-    "country": "Islamic Republic of Mauritania",
+    "country": "Mauritania",
     "aliases": "Islamic Republic of Mauritania",
     "code": "MRT",
     "capital": "Nouakchott",
@@ -1625,7 +1633,7 @@
       "lat": 20.0,
       "long": -12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MR"
   },
   {
     "country": "Montserrat",
@@ -1636,7 +1644,7 @@
       "lat": -16.0,
       "long": -62.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MS"
   },
   {
     "country": "Martinique",
@@ -1647,7 +1655,7 @@
       "lat": -14.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MQ"
   },
   {
     "country": "Republic of Mauritius",
@@ -1658,7 +1666,7 @@
       "lat": -20.0,
       "long": -57.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MU"
   },
   {
     "country": "Republic of Malawi",
@@ -1669,7 +1677,7 @@
       "lat": -13.0,
       "long": -34.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MW"
   },
   {
     "country": "Malaysia",
@@ -1680,7 +1688,7 @@
       "lat": 2.0,
       "long": 112.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "MY"
   },
   {
     "country": "Republic of Namibia",
@@ -1691,7 +1699,7 @@
       "lat": -22.0,
       "long": 17.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NA"
   },
   {
     "country": "New Caledonia",
@@ -1702,7 +1710,7 @@
       "lat": -21.0,
       "long": -165.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NC"
   },
   {
     "country": "Republic of the Niger",
@@ -1713,7 +1721,7 @@
       "lat": 16.0,
       "long": 8.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NE"
   },
   {
     "country": "Norfolk Island",
@@ -1724,10 +1732,10 @@
       "lat": -29.0,
       "long": -167.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NF"
   },
   {
-    "country": "Federal Republic of Nigeria",
+    "country": "Nigeria",
     "aliases": "Federal Republic of Nigeria",
     "code": "NGA",
     "capital": "Abuja",
@@ -1735,10 +1743,10 @@
       "lat": 8.0,
       "long": 10.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NG"
   },
   {
-    "country": "Republic of Nicaragua",
+    "country": "Nicaragua",
     "aliases": "Republic of Nicaragua",
     "code": "NIC",
     "capital": "Managua",
@@ -1746,7 +1754,7 @@
       "lat": 13.0,
       "long": -85.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NI"
   },
   {
     "country": "Niue",
@@ -1757,7 +1765,7 @@
       "lat": -19.0,
       "long": -169.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NU"
   },
   {
     "country": "Kingdom of the Netherlands",
@@ -1768,7 +1776,7 @@
       "lat": -52.0,
       "long": -4.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NL"
   },
   {
     "country": "Federal Democratic Republic of Nepal",
@@ -1779,10 +1787,10 @@
       "lat": -28.0,
       "long": -84.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NP"
   },
   {
-    "country": "Republic of Nauru",
+    "country": "Nauru",
     "aliases": "Republic of Nauru",
     "code": "NRU",
     "capital": "(",
@@ -1790,7 +1798,7 @@
       "lat": -0.0,
       "long": -166.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NR"
   },
   {
     "country": "New Zealand",
@@ -1801,10 +1809,21 @@
       "lat": -42.0,
       "long": 173.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "NZ"
   },
   {
-    "country": "Sultanate of Oman",
+    "country": "Norway",
+    "aliases": "Kingdom of Norway",
+    "code": "NOR",
+    "capital": "Oslo",
+    "location": {
+      "lat": 61.0,
+      "long": 8
+    },
+    "flagCode": "NO"
+  },
+  {
+    "country": "Oman",
     "aliases": "Sultanate of Oman",
     "code": "OMN",
     "capital": "Muscat",
@@ -1812,10 +1831,10 @@
       "lat": 21.0,
       "long": 57.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "OM"
   },
   {
-    "country": "Islamic Republic of Pakistan",
+    "country": "Pakistan",
     "aliases": "Islamic Republic of Pakistan",
     "code": "PAK",
     "capital": "Islamabad",
@@ -1823,10 +1842,10 @@
       "lat": 30.0,
       "long": 70.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PK"
   },
   {
-    "country": "Republic of Panama",
+    "country": "Panama",
     "aliases": "Republic of Panama",
     "code": "PAN",
     "capital": "Panama City",
@@ -1834,7 +1853,7 @@
       "lat": 9.0,
       "long": -80.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PA"
   },
   {
     "country": "Pitcairn",
@@ -1845,10 +1864,10 @@
       "lat": -25.0,
       "long": -130.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PN"
   },
   {
-    "country": "Republic of Peru",
+    "country": "Peru",
     "aliases": "Republic of Peru",
     "code": "PER",
     "capital": "Lima",
@@ -1856,7 +1875,7 @@
       "lat": -10.0,
       "long": -76.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PE"
   },
   {
     "country": "Republic of the Philippines",
@@ -1867,7 +1886,7 @@
       "lat": 13.0,
       "long": 122.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PH"
   },
   {
     "country": "Republic of Palau",
@@ -1878,10 +1897,10 @@
       "lat": -7.0,
       "long": -134.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PW"
   },
   {
-    "country": "Independent State of Papua New Guinea",
+    "country": "Papua New Guinea",
     "aliases": "Independent State of Papua New Guinea",
     "code": "PNG",
     "capital": "Port Moresby",
@@ -1889,10 +1908,10 @@
       "lat": -6.0,
       "long": 147.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PG"
   },
   {
-    "country": "Republic of Poland",
+    "country": "Poland",
     "aliases": "Republic of Poland",
     "code": "POL",
     "capital": "Warsaw",
@@ -1900,7 +1919,7 @@
       "lat": 52.0,
       "long": 20.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PL"
   },
   {
     "country": "Puerto Rico",
@@ -1911,10 +1930,10 @@
       "lat": -18.0,
       "long": -66.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PR"
   },
   {
-    "country": "Democratic People's Republic of Korea",
+    "country": "North Korea",
     "aliases": "Democratic People's Republic of Korea",
     "code": "PRK",
     "capital": "Pyongyang",
@@ -1922,10 +1941,10 @@
       "lat": 40.0,
       "long": 127.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "KP"
   },
   {
-    "country": "Portuguese Republic",
+    "country": "Portugal",
     "aliases": "Portuguese Republic",
     "code": "PRT",
     "capital": "Lisbon",
@@ -1933,7 +1952,7 @@
       "lat": 39.0,
       "long": -8.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PT"
   },
   {
     "country": "Republic of Paraguay",
@@ -1944,7 +1963,7 @@
       "lat": -23.0,
       "long": -58.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PY"
   },
   {
     "country": "State of Palestine",
@@ -1955,7 +1974,7 @@
       "lat": -32.0,
       "long": -35.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PS"
   },
   {
     "country": "French Polynesia",
@@ -1966,10 +1985,10 @@
       "lat": -17.0,
       "long": -149.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PF"
   },
   {
-    "country": "State of Qatar",
+    "country": "Qatar",
     "aliases": "State of Qatar",
     "code": "QAT",
     "capital": "Doha",
@@ -1977,7 +1996,7 @@
       "lat": -25.0,
       "long": -51.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "QA"
   },
   {
     "country": "Romania",
@@ -1988,7 +2007,7 @@
       "lat": 46.0,
       "long": 25.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "RO"
   },
   {
     "country": "Russian Federation",
@@ -1999,10 +2018,10 @@
       "lat": 66.0,
       "long": 94.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "RU"
   },
   {
-    "country": "Republic of Rwanda",
+    "country": "Rwanda",
     "aliases": "Republic of Rwanda",
     "code": "RWA",
     "capital": "Kigali",
@@ -2010,10 +2029,10 @@
       "lat": -2.0,
       "long": 30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "RW"
   },
   {
-    "country": "Kingdom of Saudi Arabia",
+    "country": "Saudi Arabia",
     "aliases": "Kingdom of Saudi Arabia",
     "code": "SAU",
     "capital": "Riyadh",
@@ -2021,7 +2040,7 @@
       "lat": 24.0,
       "long": 45.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SA"
   },
   {
     "country": "Republic of Sudan",
@@ -2032,7 +2051,7 @@
       "lat": 15.0,
       "long": 32.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SD"
   },
   {
     "country": "Republic of Senegal",
@@ -2043,10 +2062,10 @@
       "lat": 14.0,
       "long": -14.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SN"
   },
   {
-    "country": "Republic of Singapore",
+    "country": "Singapore",
     "aliases": "Republic of Singapore",
     "code": "SGP",
     "capital": "Singapore",
@@ -2054,7 +2073,7 @@
       "lat": -1.0,
       "long": -103.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SG"
   },
   {
     "country": "South Georgia and the South Sandwich Islands",
@@ -2065,7 +2084,7 @@
       "lat": -54.0,
       "long": -36.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "GS"
   },
   {
     "country": "Saint Helena, Ascension and Tristan da Cunha",
@@ -2076,7 +2095,7 @@
       "lat": -15.0,
       "long": -5.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SH"
   },
   {
     "country": "Solomon Islands",
@@ -2087,7 +2106,7 @@
       "lat": -8.0,
       "long": 159.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SB"
   },
   {
     "country": "Republic of Sierra Leone",
@@ -2098,10 +2117,10 @@
       "lat": -8.0,
       "long": -12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SL"
   },
   {
-    "country": "Republic of El Salvador",
+    "country": "El Salvador",
     "aliases": "Republic of El Salvador",
     "code": "SLV",
     "capital": "San Salvador",
@@ -2109,7 +2128,7 @@
       "lat": -13.0,
       "long": -89.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SV"
   },
   {
     "country": "Republic of San Marino",
@@ -2120,10 +2139,10 @@
       "lat": -43.0,
       "long": -12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SM"
   },
   {
-    "country": "Federal Republic of Somalia",
+    "country": "Somalia",
     "aliases": "Federal Republic of Somalia",
     "code": "SOM",
     "capital": "Mogadishu",
@@ -2131,7 +2150,7 @@
       "lat": 10.0,
       "long": 49.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SO"
   },
   {
     "country": "Saint Pierre and Miquelon",
@@ -2142,7 +2161,7 @@
       "lat": -46.0,
       "long": -56.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "PM"
   },
   {
     "country": "Republic of Serbia",
@@ -2153,7 +2172,7 @@
       "lat": 44.0,
       "long": 21.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "RS"
   },
   {
     "country": "Republic of South Sudan",
@@ -2164,7 +2183,7 @@
       "lat": 8.0,
       "long": 30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SS"
   },
   {
     "country": "Sao Tome and Principe",
@@ -2175,7 +2194,7 @@
       "lat": -0.0,
       "long": -6.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ST"
   },
   {
     "country": "Republic of Suriname",
@@ -2186,7 +2205,7 @@
       "lat": 4.0,
       "long": -56.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SR"
   },
   {
     "country": "Slovak Republic",
@@ -2197,7 +2216,7 @@
       "lat": -48.0,
       "long": -19.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SK"
   },
   {
     "country": "Republic of Slovenia",
@@ -2208,10 +2227,10 @@
       "lat": -46.0,
       "long": -14.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SI"
   },
   {
-    "country": "Kingdom of Sweden",
+    "country": "Sweden",
     "aliases": "Kingdom of Sweden",
     "code": "SWE",
     "capital": "Stockholm",
@@ -2219,7 +2238,7 @@
       "lat": 63.0,
       "long": 16.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SE"
   },
   {
     "country": "Kingdom of Eswatini",
@@ -2230,7 +2249,7 @@
       "lat": -26.0,
       "long": -31.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SZ"
   },
   {
     "country": "Sint Maarten (Dutch part)",
@@ -2241,7 +2260,7 @@
       "lat": -18.0,
       "long": -63.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SX"
   },
   {
     "country": "Republic of Seychelles",
@@ -2252,7 +2271,7 @@
       "lat": -4.0,
       "long": -55.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SC"
   },
   {
     "country": "Syrian Arab Republic",
@@ -2263,7 +2282,7 @@
       "lat": 35.0,
       "long": 38.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "SY"
   },
   {
     "country": "Turks and Caicos Islands",
@@ -2274,7 +2293,7 @@
       "lat": -21.0,
       "long": -71.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TC"
   },
   {
     "country": "Chad",
@@ -2285,7 +2304,7 @@
       "lat": 15.0,
       "long": 19.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TD"
   },
   {
     "country": "Togolese Republic",
@@ -2296,7 +2315,7 @@
       "lat": 8.0,
       "long": 1.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TG"
   },
   {
     "country": "Thailand",
@@ -2307,7 +2326,7 @@
       "lat": 15.0,
       "long": 101.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TH"
   },
   {
     "country": "Tajikistan",
@@ -2318,7 +2337,7 @@
       "lat": 39.0,
       "long": 71.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TJ"
   },
   {
     "country": "Tokelau",
@@ -2329,7 +2348,7 @@
       "lat": -9.0,
       "long": -171.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TK"
   },
   {
     "country": "Turkmenistan",
@@ -2340,7 +2359,7 @@
       "lat": 39.0,
       "long": 60.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TM"
   },
   {
     "country": "Timor-Leste",
@@ -2351,7 +2370,7 @@
       "lat": -8.0,
       "long": -125.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TL"
   },
   {
     "country": "Tonga",
@@ -2362,18 +2381,20 @@
       "lat": -20.0,
       "long": -175.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TO"
   },
   {
     "country": "Trinidad and Tobago",
-    "aliases": ["Republic of Trinidad and Tobago"],
+    "aliases": [
+      "Republic of Trinidad and Tobago"
+    ],
     "code": "TTO",
     "capital": "Port of Spain",
     "location": {
       "lat": -10.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TT"
   },
   {
     "country": "Tunisia",
@@ -2384,18 +2405,22 @@
       "lat": 34.0,
       "long": 9.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TN"
   },
   {
     "country": "Turkiye",
-    "aliases": ["Republic of Türkiye", "Turkey", "Türkiye"],
+    "aliases": [
+      "Republic of Türkiye",
+      "Turkey",
+      "Türkiye"
+    ],
     "code": "TUR",
     "capital": "Ankara",
     "location": {
       "lat": -39.0,
       "long": -32.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TR"
   },
   {
     "country": "Tuvalu",
@@ -2406,29 +2431,34 @@
       "lat": -8.0,
       "long": -179.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TV"
   },
   {
     "country": "Taiwan",
-    "aliases": ["Republic of China", "ROC"],
+    "aliases": [
+      "Republic of China",
+      "ROC"
+    ],
     "code": "TWN",
     "capital": "Taipei",
     "location": {
       "lat": 24.0,
       "long": 121.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TW"
   },
   {
     "country": "United Republic of Tanzania",
-    "aliases": ["Tanzania"],
+    "aliases": [
+      "Tanzania"
+    ],
     "code": "TZA",
     "capital": "Dodoma",
     "location": {
       "lat": -6.0,
       "long": 35.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "TZ"
   },
   {
     "country": "Uganda",
@@ -2439,7 +2469,7 @@
       "lat": 1.0,
       "long": 32.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "UG"
   },
   {
     "country": "Ukraine",
@@ -2450,7 +2480,7 @@
       "lat": -50.0,
       "long": -30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "UA"
   },
   {
     "country": "Uruguay",
@@ -2461,18 +2491,21 @@
       "lat": -33.0,
       "long": -57.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "UY"
   },
   {
     "country": "United States of America",
-    "aliases": ["The United States of America", "USA"],
+    "aliases": [
+      "The United States of America",
+      "USA"
+    ],
     "code": "USA",
     "capital": "Washington, D.C.",
     "location": {
       "lat": 40.0,
       "long": -100.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "US"
   },
   {
     "country": "Uzbekistan",
@@ -2483,29 +2516,33 @@
       "lat": 42.0,
       "long": 64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "UZ"
   },
   {
-    "country": "Holy See",
-    "aliases": ["The Holy See", "Vatican", "The Vatican"],
+    "country": "Vatican City",
+    "aliases": [
+      "The Holy See"
+    ],
     "code": "VAT",
     "capital": "",
     "location": {
       "lat": -41.0,
       "long": -12.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VA"
   },
   {
-    "country": "Saint Vincent and the Grenadines",
-    "aliases": null,
+    "country": "Saint Vincent",
+    "aliases": [
+      "Saint Vincent and the Grenadines"
+    ],
     "code": "VCT",
     "capital": "Kingstown",
     "location": {
       "lat": -13.0,
       "long": -61.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VC"
   },
   {
     "country": "Venezuela",
@@ -2516,7 +2553,7 @@
       "lat": 7.0,
       "long": -65.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VE"
   },
   {
     "country": "Virgin Islands (British)",
@@ -2527,7 +2564,7 @@
       "lat": -18.0,
       "long": -64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VG"
   },
   {
     "country": "Virgin Islands (U.S.)",
@@ -2538,7 +2575,7 @@
       "lat": -18.0,
       "long": -64.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VI"
   },
   {
     "country": "Vietnam",
@@ -2549,7 +2586,7 @@
       "lat": 16.0,
       "long": 108.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VN"
   },
   {
     "country": "Vanuatu",
@@ -2560,7 +2597,7 @@
       "lat": -17.0,
       "long": 168.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "VU"
   },
   {
     "country": "Wallis and Futuna",
@@ -2571,7 +2608,7 @@
       "lat": -13.0,
       "long": -176.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "WF"
   },
   {
     "country": "Samoa",
@@ -2582,7 +2619,7 @@
       "lat": -13.0,
       "long": -172.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "WS"
   },
   {
     "country": "Yemen",
@@ -2593,7 +2630,7 @@
       "lat": -15.0,
       "long": -44.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "YE"
   },
   {
     "country": "South Africa",
@@ -2604,7 +2641,7 @@
       "lat": -30.0,
       "long": 25.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ZA"
   },
   {
     "country": "Zambia",
@@ -2615,7 +2652,7 @@
       "lat": -15.0,
       "long": 30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ZM"
   },
   {
     "country": "Zimbabwe",
@@ -2626,6 +2663,6 @@
       "lat": -19.0,
       "long": 30.0
     },
-    "availablePromptTypes": ["name", "location", "flag"]
+    "flagCode": "ZW"
   }
 ]

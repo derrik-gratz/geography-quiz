@@ -1,6 +1,10 @@
 # Todo:
 
-- Add flags
+- Remove 'available prompts' and instead rely on if the data is present in the dictionary
+  - still need to fix prompting based on checkboxes
+
+- smaller flag UI + color based filtering
+  - https://gramener.com/flags/?show=flags&White=40-50%25
 
 - Country name entry field
 

@@ -8,6 +8,30 @@ import allQuizSets from '../data/quiz_sets.json';
 export class CountryDataService {
     
     /**
+     * Check if a country has a specific prompt type available
+     * 
+     * @param {Object} country - Country object
+     * @param {string} promptType - Prompt type to check ('name', 'location', 'flag')
+     * @returns {boolean} True if the prompt type is available
+     */
+    static hasPromptType(country, promptType) {
+        switch (promptType) {
+            case 'name':
+                return country.country && country.country.trim() !== '';
+            case 'location':
+                return country.location && 
+                       country.location.lat !== null && 
+                       country.location.lat !== undefined &&
+                       country.location.long !== null && 
+                       country.location.long !== undefined;
+            case 'flag':
+                return country.flagCode && country.flagCode !== null;
+            default:
+                return false;
+        }
+    }
+    
+    /**
      * Get available countries based on quiz set and prompt type selection
      * 
      * @param {string|null} quizSet - Quiz set name or 'all' for all countries
@@ -42,8 +66,16 @@ export class CountryDataService {
         const subsetCountryData = shuffledCountryData.slice(0, dailyChallengeCount);
 
         return subsetCountryData.map(country => {
-            // Use fallback if acceptable_prompt_types doesn't exist
-            const availablePromptTypes = country.availablePromptTypes || ['name', 'location'];
+            // Get available prompt types based on actual field data
+            const availablePromptTypes = ['name', 'location', 'flag'].filter(type => 
+                this.hasPromptType(country, type)
+            );
+            
+            if (availablePromptTypes.length === 0) {
+                // Fallback to name if no other types are available
+                availablePromptTypes.push('name');
+            }
+            
             const keepIndex = Math.floor(rng() * availablePromptTypes.length);
             const keepPromptType = availablePromptTypes[keepIndex];
 
@@ -90,16 +122,12 @@ export class CountryDataService {
             return countryData;
         } 
         return countryData.filter(country => {
-            // Use fallback if availablePromptTypes doesn't exist
-            const countryPromptTypes = country.availablePromptTypes || ['name', 'location'];
-            // Check if country supports ALL selected prompt types
-            return selectedTypes.every(type => countryPromptTypes.includes(type));
+            // Check if country supports ALL selected prompt types using field data
+            return selectedTypes.every(type => this.hasPromptType(country, type));
         }).map(country => ({
             ...country, 
-            // Restrict availablePromptTypes to only the selected types
-            availablePromptTypes: selectedTypes.filter(type => 
-                (country.availablePromptTypes || ['name', 'location']).includes(type)
-            )
+            // Set availablePromptTypes based on what's actually available in the data
+            availablePromptTypes: selectedTypes.filter(type => this.hasPromptType(country, type))
         }));
     }
     

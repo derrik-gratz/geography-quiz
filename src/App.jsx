@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react';
 import { QuizConfig } from './components/QuizConfig';
+import { QuizProgress } from './components/QuizProgress';
+import { QuizPrompt } from './components/QuizPrompt';
+import { FlagSelect } from './components/FlagSelect';
 import { useQuizConfig } from './hooks/useQuizConfig';
 import { useQuizEngine } from './hooks/useQuizEngine';
 import { CountryDataService } from './services/countryDataService';
+import countryData from './data/country_data.json';
 
 /**
  * Main App component for the Geography Quiz application
@@ -34,6 +38,16 @@ function App() {
         totalCountries
     } = useQuizEngine(processedCountryData);
 
+    const handleFlagSelect = (countryCode) => {
+        console.log('Flag selected:', countryCode);
+    };
+
+    const displayCountryFlags = countryData
+        .filter(country => country.flagCode && country.flagCode !== null)
+
+    const incorrectCountries = [];
+    const clearHighlights = () => {};
+
     return (
         <div className="app">
             <header>
@@ -52,31 +66,29 @@ function App() {
                     PROMPT_TYPES={PROMPT_TYPES}
                 />
                 
-                {/* Quiz progress indicator */}
-                <div className="quiz-progress">
-                    <p>Progress: {promptHistory.length} / {totalCountries} countries</p>
-                </div>
+                {/* Quiz progress section - displays current progress */}
+                <QuizProgress 
+                    currentProgress={promptHistory.length}
+                    totalCountries={totalCountries}
+                    isQuizFinished={isQuizFinished}
+                />
                 
-                {/* Quiz controls - generate new prompts */}
-                <button onClick={generatePrompt} disabled={isQuizFinished}>
-                    {isQuizFinished ? 'Quiz Finished!' : 'Generate Prompt'}
-                </button>
-                
-                {/* Current prompt display - shows the generated prompt */}
-                {currentPrompt && (
-                    <p>Current Prompt: {currentPrompt.promptType} of {currentPrompt.countryCode}</p>
-                )}
-                
-                {/* Quiz end modal */}
-                {isQuizFinished && (
-                    <div className="quiz-end-modal">
-                        <div className="modal-content">
-                            <h2>🎉 Quiz Finished! 🎉</h2>
-                            <p>Congratulations! You've completed all {totalCountries} countries in this quiz set.</p>
-                            <button onClick={resetQuiz}>Start New Quiz</button>
-                        </div>
-                    </div>
-                )}
+                {/* Quiz prompt section - handles displaying prompts and controls */}
+                <QuizPrompt 
+                    currentPrompt={currentPrompt}
+                    generatePrompt={generatePrompt}
+                    resetQuiz={resetQuiz}
+                    isQuizFinished={isQuizFinished}
+                    totalCountries={totalCountries}
+                    currentProgress={promptHistory.length}
+                />
+                {/* Flag select section - handles flag selection */}
+                <FlagSelect
+                    onSelect={handleFlagSelect}
+                    displayCountries={displayCountryFlags}
+                    incorrectCountries={incorrectCountries}
+                    clearHighlights={clearHighlights}
+                />
             </main>
         </div>
     );
