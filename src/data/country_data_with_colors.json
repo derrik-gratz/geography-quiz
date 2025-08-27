@@ -1,0 +1,3589 @@
+[
+  {
+    "country": "Aruba",
+    "aliases": null,
+    "code": "ABW",
+    "capital": "Oranjestad",
+    "location": {
+      "lat": -12.0,
+      "long": -69.0
+    },
+    "flagCode": "AW",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Islamic Republic of Afghanistan",
+    "aliases": "Islamic Republic of Afghanistan",
+    "code": "AFG",
+    "capital": "Kabul",
+    "location": {
+      "lat": 33.0,
+      "long": 66.0
+    },
+    "flagCode": "AF",
+    "colors": [
+      "red",
+      "green",
+      "black"
+    ]
+  },
+  {
+    "country": "Angola",
+    "aliases": "Republic of Angola",
+    "code": "AGO",
+    "capital": "Luanda",
+    "location": {
+      "lat": -12.0,
+      "long": -18.0
+    },
+    "flagCode": "AO",
+    "colors": [
+      "black",
+      "red"
+    ]
+  },
+  {
+    "country": "Anguilla",
+    "aliases": null,
+    "code": "AIA",
+    "capital": "The Valley",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    },
+    "flagCode": "AI",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Aland",
+    "aliases": [
+      "Åland"
+    ],
+    "code": "ALA",
+    "capital": "Mariehamn",
+    "location": {
+      "lat": -60.0,
+      "long": -20.0
+    },
+    "flagCode": "AX",
+    "colors": []
+  },
+  {
+    "country": "Albania",
+    "aliases": "Republic of Albania",
+    "code": "ALB",
+    "capital": "Tirana",
+    "location": {
+      "lat": 41.0,
+      "long": 20.0
+    },
+    "flagCode": "AL",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Andorra",
+    "aliases": "Principality of Andorra",
+    "code": "AND",
+    "capital": "Andorra la Vella",
+    "location": {
+      "lat": -42.0,
+      "long": -1.0
+    },
+    "flagCode": "AD",
+    "colors": [
+      "blue",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "United Arab Emirates",
+    "aliases": "United Arab Emirates",
+    "code": "ARE",
+    "capital": "Abu Dhabi",
+    "location": {
+      "lat": 24.0,
+      "long": 54.0
+    },
+    "flagCode": "AE",
+    "colors": [
+      "black",
+      "white",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Argentina",
+    "aliases": "Argentine Republic",
+    "code": "ARG",
+    "capital": "Buenos Aires",
+    "location": {
+      "lat": -34.0,
+      "long": -64.0
+    },
+    "flagCode": "AR",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Republic of Armenia",
+    "aliases": "Republic of Armenia",
+    "code": "ARM",
+    "capital": "Yerevan",
+    "location": {
+      "lat": -40.0,
+      "long": -44.0
+    },
+    "flagCode": "AM",
+    "colors": [
+      "red",
+      "blue",
+      "orange"
+    ]
+  },
+  {
+    "country": "American Samoa",
+    "aliases": null,
+    "code": "ASM",
+    "capital": "Pago Pago",
+    "location": {
+      "lat": -14.0,
+      "long": -170.0
+    },
+    "flagCode": "AS",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Antarctica",
+    "aliases": null,
+    "code": "ATA",
+    "capital": "",
+    "location": {
+      "lat": -90.0,
+      "long": 0.0
+    },
+    "flagCode": "AQ",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "French Southern Territories",
+    "aliases": null,
+    "code": "ATF",
+    "capital": "Saint Pierre",
+    "location": {
+      "lat": -43.0,
+      "long": -67.0
+    },
+    "flagCode": "TF",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Antigua and Barbuda",
+    "aliases": "Antigua and Barbuda",
+    "code": "ATG",
+    "capital": "None (",
+    "location": {
+      "lat": -17.0,
+      "long": -61.0
+    },
+    "flagCode": "AG",
+    "colors": [
+      "red",
+      "black"
+    ]
+  },
+  {
+    "country": "Australia",
+    "aliases": "Commonwealth of Australia",
+    "code": "AUS",
+    "capital": "Canberra",
+    "location": {
+      "lat": -25.0,
+      "long": 133.0
+    },
+    "flagCode": "AU",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Austria",
+    "aliases": "Republic of Austria",
+    "code": "AUT",
+    "capital": "Vienna",
+    "location": {
+      "lat": -47.0,
+      "long": -13.0
+    },
+    "flagCode": "AT",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Azerbaijan",
+    "aliases": "Republic of Azerbaijan",
+    "code": "AZE",
+    "capital": "Baku",
+    "location": {
+      "lat": -40.0,
+      "long": -47.0
+    },
+    "flagCode": "AZ",
+    "colors": [
+      "blue",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Burundi",
+    "aliases": "Republic of Burundi",
+    "code": "BDI",
+    "capital": "Gitega",
+    "location": {
+      "lat": -3.0,
+      "long": -30.0
+    },
+    "flagCode": "BI",
+    "colors": [
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Belgium",
+    "aliases": "Kingdom of Belgium",
+    "code": "BEL",
+    "capital": "City of Brussels",
+    "location": {
+      "lat": -50.0,
+      "long": -4.0
+    },
+    "flagCode": "BE",
+    "colors": [
+      "red",
+      "black",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Benin",
+    "aliases": "Republic of Benin",
+    "code": "BEN",
+    "capital": "Porto-Novo",
+    "location": {
+      "lat": -6.0,
+      "long": -2.0
+    },
+    "flagCode": "BJ",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Bonaire",
+    "aliases": [
+      "Bonaire, Sint Eustatius and Saba"
+    ],
+    "code": "BES",
+    "capital": "Kralendijk",
+    "location": {
+      "lat": -12.0,
+      "long": -68.0
+    },
+    "flagCode": "BQ",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Burkina Faso",
+    "aliases": "Burkina Faso",
+    "code": "BFA",
+    "capital": "Ouagadougou",
+    "location": {
+      "lat": -12.0,
+      "long": -1.0
+    },
+    "flagCode": "BF",
+    "colors": [
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Bangladesh",
+    "aliases": "People's Republic of Bangladesh",
+    "code": "BGD",
+    "capital": "Dhaka",
+    "location": {
+      "lat": 24.0,
+      "long": 90.0
+    },
+    "flagCode": "BD",
+    "colors": [
+      "green",
+      "red"
+    ]
+  },
+  {
+    "country": "Bulgaria",
+    "aliases": "Republic of Bulgaria",
+    "code": "BGR",
+    "capital": "Sofia",
+    "location": {
+      "lat": 43.0,
+      "long": 25.0
+    },
+    "flagCode": "BG",
+    "colors": []
+  },
+  {
+    "country": "Bahrain",
+    "aliases": "Kingdom of Bahrain",
+    "code": "BHR",
+    "capital": "Manama",
+    "location": {
+      "lat": -26.0,
+      "long": -50.0
+    },
+    "flagCode": "BH",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Bahamas",
+    "aliases": "Commonwealth of The Bahamas",
+    "code": "BHS",
+    "capital": "Nassau",
+    "location": {
+      "lat": -25.0,
+      "long": -77.0
+    },
+    "flagCode": "BS",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "aliases": "Bosnia and Herzegovina",
+    "code": "BIH",
+    "capital": "Sarajevo",
+    "location": {
+      "lat": 44.0,
+      "long": 18.0
+    },
+    "flagCode": "BA",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Saint Barthelemy",
+    "aliases": [
+      "Saint Barthélemy"
+    ],
+    "code": "BLM",
+    "capital": "Gustavia",
+    "location": {
+      "lat": -17.0,
+      "long": -62.0
+    },
+    "flagCode": "BL",
+    "colors": [
+      "white"
+    ]
+  },
+  {
+    "country": "Belarus",
+    "aliases": "Republic of Belarus",
+    "code": "BLR",
+    "capital": "Minsk",
+    "location": {
+      "lat": 53.0,
+      "long": 27.0
+    },
+    "flagCode": "BY",
+    "colors": [
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Belize",
+    "aliases": "Belize",
+    "code": "BLZ",
+    "capital": "Belmopan",
+    "location": {
+      "lat": -17.0,
+      "long": -88.0
+    },
+    "flagCode": "BZ",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Bermuda",
+    "aliases": null,
+    "code": "BMU",
+    "capital": "Hamilton",
+    "location": {
+      "lat": -32.0,
+      "long": -64.0
+    },
+    "flagCode": "BM",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Bolivia",
+    "aliases": "Plurinational State of Bolivia",
+    "code": "BOL",
+    "capital": "Sucre",
+    "location": {
+      "lat": -16.0,
+      "long": -64.0
+    },
+    "flagCode": "BO",
+    "colors": [
+      "red",
+      "yellow",
+      "green"
+    ]
+  },
+  {
+    "country": "Brazil",
+    "aliases": "Federative Republic of Brazil",
+    "code": "BRA",
+    "capital": "Bras\u00edlia",
+    "location": {
+      "lat": -10.0,
+      "long": -52.0
+    },
+    "flagCode": "BR",
+    "colors": [
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Barbados",
+    "aliases": "Barbados",
+    "code": "BRB",
+    "capital": "Bridgetown",
+    "location": {
+      "lat": -13.0,
+      "long": -59.0
+    },
+    "flagCode": "BB",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Brunei Darussalam",
+    "aliases": "Brunei Darussalam",
+    "code": "BRN",
+    "capital": "Bandar Seri Begawan",
+    "location": {
+      "lat": -4.0,
+      "long": -114.0
+    },
+    "flagCode": "BN",
+    "colors": [
+      "yellow"
+    ]
+  },
+  {
+    "country": "Bhutan",
+    "aliases": "Kingdom of Bhutan",
+    "code": "BTN",
+    "capital": "Thimphu",
+    "location": {
+      "lat": -27.0,
+      "long": -90.0
+    },
+    "flagCode": "BT",
+    "colors": [
+      "orange",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Botswana",
+    "aliases": "Republic of Botswana",
+    "code": "BWA",
+    "capital": "Gaborone",
+    "location": {
+      "lat": -24.0,
+      "long": -25.0
+    },
+    "flagCode": "BW",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Central African Republic",
+    "aliases": "Central African Republic",
+    "code": "CAF",
+    "capital": "Bangui",
+    "location": {
+      "lat": 7.0,
+      "long": 21.0
+    },
+    "flagCode": "CF",
+    "colors": [
+      "red",
+      "green",
+      "yellow",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Canada",
+    "aliases": "Canada",
+    "code": "CAN",
+    "capital": "Ottawa",
+    "location": {
+      "lat": 60.0,
+      "long": -110.0
+    },
+    "flagCode": "CA",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Switzerland",
+    "aliases": "Swiss Confederation",
+    "code": "CHE",
+    "capital": "None (",
+    "location": {
+      "lat": -46.0,
+      "long": -8.0
+    },
+    "flagCode": "CH",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Chile",
+    "aliases": "Republic of Chile",
+    "code": "CHL",
+    "capital": "Santiago",
+    "location": {
+      "lat": -34.0,
+      "long": -71.0
+    },
+    "flagCode": "CL",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "China",
+    "aliases": "People's Republic of China",
+    "code": "CHN",
+    "capital": "Beijing",
+    "location": {
+      "lat": 35.0,
+      "long": 103.0
+    },
+    "flagCode": "CN",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Ivory Coast",
+    "aliases": "Republic of Côte d'Ivoire",
+    "code": "CIV",
+    "capital": "Yamoussoukro",
+    "location": {
+      "lat": 8.0,
+      "long": -5.0
+    },
+    "flagCode": "CI",
+    "colors": [
+      "orange",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Cameroon",
+    "aliases": "Republic of Cameroon",
+    "code": "CMR",
+    "capital": "Yaoundé",
+    "location": {
+      "lat": 6.0,
+      "long": 12.0
+    },
+    "flagCode": "CM",
+    "colors": [
+      "green",
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Democratic Republic of the Congo",
+    "aliases": [],
+    "code": "COD",
+    "capital": "Kinshasa",
+    "location": {
+      "lat": -3.0,
+      "long": 24.0
+    },
+    "flagCode": "CD",
+    "colors": [
+      "blue",
+    ]
+  },
+  {
+    "country": "Republic of the Congo",
+    "aliases": [],
+    "code": "COG",
+    "capital": "Brazzaville",
+    "location": {
+      "lat": -1.0,
+      "long": -15.0
+    },
+    "flagCode": "CG",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Cook Islands",
+    "aliases": "Cook Islands",
+    "code": "COK",
+    "capital": "Avarua",
+    "location": {
+      "lat": -21.0,
+      "long": -159.0
+    },
+    "flagCode": "CK",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Colombia",
+    "aliases": "Republic of Colombia",
+    "code": "COL",
+    "capital": "Bogotá",
+    "location": {
+      "lat": 4.0,
+      "long": -72.0
+    },
+    "flagCode": "CO",
+    "colors": [
+      "yellow",
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Comoros",
+    "aliases": "Union of the Comoros",
+    "code": "COM",
+    "capital": "Moroni",
+    "location": {
+      "lat": -12.0,
+      "long": -43.0
+    },
+    "flagCode": "KM",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Cabo Verde",
+    "aliases": "Republic of Cabo Verde",
+    "code": "CPV",
+    "capital": "Praia",
+    "location": {
+      "lat": -15.0,
+      "long": -23.0
+    },
+    "flagCode": "CV",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Costa Rica",
+    "aliases": "Republic of Costa Rica",
+    "code": "CRI",
+    "capital": "San José",
+    "location": {
+      "lat": 10.0,
+      "long": -84.0
+    },
+    "flagCode": "CR",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Cuba",
+    "aliases": "Republic of Cuba",
+    "code": "CUB",
+    "capital": "Havana",
+    "location": {
+      "lat": 22.0,
+      "long": -80.0
+    },
+    "flagCode": "CU",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Curaçao",
+    "aliases": [
+      "Curacao"
+    ],
+    "code": "CUW",
+    "capital": "Willemstad",
+    "location": {
+      "lat": -12.0,
+      "long": -69.0
+    },
+    "flagCode": "CW",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Cayman Islands",
+    "aliases": null,
+    "code": "CYM",
+    "capital": "George Town",
+    "location": {
+      "lat": -19.0,
+      "long": -81.0
+    },
+    "flagCode": "KY",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Cyprus",
+    "aliases": "Republic of Cyprus",
+    "code": "CYP",
+    "capital": "Nicosia",
+    "location": {
+      "lat": 35.0,
+      "long": 33.0
+    },
+    "flagCode": "CY",
+    "colors": [
+      "orange",
+      "white"
+    ]
+  },
+  {
+    "country": "Czech Republic",
+    "aliases": "Czech Republic",
+    "code": "CZE",
+    "capital": "Prague",
+    "location": {
+      "lat": -49.0,
+      "long": -15.0
+    },
+    "flagCode": "CZ",
+    "colors": [
+      "blue",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Germany",
+    "aliases": "Federal Republic of Germany",
+    "code": "DEU",
+    "capital": "Berlin",
+    "location": {
+      "lat": 51.0,
+      "long": 9.0
+    },
+    "flagCode": "DE",
+    "colors": [
+      "black",
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Djibouti",
+    "aliases": "Republic of Djibouti",
+    "code": "DJI",
+    "capital": "Djibouti City",
+    "location": {
+      "lat": -11.0,
+      "long": -43.0
+    },
+    "flagCode": "DJ",
+    "colors": [
+      "white",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Dominica",
+    "aliases": "Commonwealth of Dominica",
+    "code": "DMA",
+    "capital": "Roseau",
+    "location": {
+      "lat": -15.0,
+      "long": -61.0
+    },
+    "flagCode": "DM",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Denmark",
+    "aliases": null,
+    "code": "DNK",
+    "capital": "Copenhagen",
+    "location": {
+      "lat": 56.0,
+      "long": 10.0
+    },
+    "flagCode": "DK",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Dominican Republic",
+    "aliases": "Dominican Republic",
+    "code": "DOM",
+    "capital": "Santo Domingo",
+    "location": {
+      "lat": -19.0,
+      "long": -70.0
+    },
+    "flagCode": "DO",
+    "colors": [
+      "red",
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Algeria",
+    "aliases": "People's Democratic Republic of Algeria",
+    "code": "DZA",
+    "capital": "Algiers",
+    "location": {
+      "lat": 28.0,
+      "long": 2.0
+    },
+    "flagCode": "DZ",
+    "colors": [
+      "green",
+      "white"
+    ]
+  },
+  {
+    "country": "Ecuador",
+    "aliases": "Republic of Ecuador",
+    "code": "ECU",
+    "capital": "Quito",
+    "location": {
+      "lat": -2.0,
+      "long": -77.0
+    },
+    "flagCode": "EC",
+    "colors": [
+      "yellow"
+    ]
+  },
+  {
+    "country": "Egypt",
+    "aliases": "Arab Republic of Egypt",
+    "code": "EGY",
+    "capital": "Cairo",
+    "location": {
+      "lat": 26.0,
+      "long": 30.0
+    },
+    "flagCode": "EG",
+    "colors": [
+      "black",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Eritrea",
+    "aliases": "State of Eritrea",
+    "code": "ERI",
+    "capital": "Asmara",
+    "location": {
+      "lat": 15.0,
+      "long": 39.0
+    },
+    "flagCode": "ER",
+    "colors": [
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Western Sahara",
+    "aliases": null,
+    "code": "ESH",
+    "capital": "",
+    "location": {
+      "lat": 24.0,
+      "long": -14.0
+    },
+    "colors": []
+  },
+  {
+    "country": "Spain",
+    "aliases": "Kingdom of Spain",
+    "code": "ESP",
+    "capital": "Madrid",
+    "location": {
+      "lat": 40.0,
+      "long": -4.0
+    },
+    "flagCode": "ES",
+    "colors": [
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Estonia",
+    "aliases": "Republic of Estonia",
+    "code": "EST",
+    "capital": "Tallinn",
+    "location": {
+      "lat": 59.0,
+      "long": 26.0
+    },
+    "flagCode": "EE",
+    "colors": [
+      "black",
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Ethiopia",
+    "aliases": "Federal Democratic Republic of Ethiopia",
+    "code": "ETH",
+    "capital": "Addis Ababa",
+    "location": {
+      "lat": -9.0,
+      "long": -38.0
+    },
+    "flagCode": "ET",
+    "colors": [
+      "blue",
+      "yellow",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Finland",
+    "aliases": "Republic of Finland",
+    "code": "FIN",
+    "capital": "Helsinki",
+    "location": {
+      "lat": 64.0,
+      "long": 26.0
+    },
+    "flagCode": "FI",
+    "colors": [
+      "white"
+    ]
+  },
+  {
+    "country": "Fiji",
+    "aliases": "Republic of Fiji",
+    "code": "FJI",
+    "capital": "Suva",
+    "location": {
+      "lat": -18.0,
+      "long": 179.0
+    },
+    "flagCode": "FJ",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Malvinas",
+    "aliases": [
+      "Falkland Islands (the) [Malvinas]"
+    ],
+    "code": "FLK",
+    "capital": "Stanley",
+    "location": {
+      "lat": -51.0,
+      "long": -59.0
+    },
+    "flagCode": "FK",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Faroe Islands",
+    "aliases": null,
+    "code": "FRO",
+    "capital": "Tórshavn",
+    "location": {
+      "lat": -62.0,
+      "long": -6.0
+    },
+    "flagCode": "FO",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Micronesia",
+    "aliases": "Federated States of Micronesia",
+    "code": "FSM",
+    "capital": "Palikir",
+    "location": {
+      "lat": -6.0,
+      "long": -158.0
+    },
+    "flagCode": "FM",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Gabon",
+    "aliases": "Gabonese Republic",
+    "code": "GAB",
+    "capital": "Libreville",
+    "location": {
+      "lat": -1.0,
+      "long": 12.0
+    },
+    "flagCode": "GA",
+    "colors": [
+      "green",
+      "yellow",
+      "blue"
+    ]
+  },
+  {
+    "country": "United Kingdom",
+    "aliases": "United Kingdom of Great Britain and Northern Ireland",
+    "code": "GBR",
+    "capital": "London",
+    "location": {
+      "lat": 55.0,
+      "long": -3.0
+    },
+    "flagCode": "GB",
+    "colors": [
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Georgia",
+    "aliases": "Georgia",
+    "code": "GEO",
+    "capital": "Tbilisi",
+    "location": {
+      "lat": -42.0,
+      "long": -43.0
+    },
+    "flagCode": "GE",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Guernsey",
+    "aliases": null,
+    "code": "GGY",
+    "capital": "Saint Peter Port",
+    "location": {
+      "lat": -49.0,
+      "long": -2.0
+    },
+    "flagCode": "GG",
+    "colors": [
+      "white",
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Ghana",
+    "aliases": "Republic of Ghana",
+    "code": "GHA",
+    "capital": "Accra",
+    "location": {
+      "lat": -8.0,
+      "long": -1.0
+    },
+    "flagCode": "GH",
+    "colors": [
+      "red",
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Gibraltar",
+    "aliases": null,
+    "code": "GIB",
+    "capital": "",
+    "location": {
+      "lat": -36.0,
+      "long": -5.0
+    },
+    "flagCode": "GI",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Guinea",
+    "aliases": "Republic of Guinea",
+    "code": "GIN",
+    "capital": "Conakry",
+    "location": {
+      "lat": 11.0,
+      "long": -10.0
+    },
+    "flagCode": "GN",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "The Gambia",
+    "aliases": "Republic of The Gambia",
+    "code": "GMB",
+    "capital": "Banjul",
+    "location": {
+      "lat": -13.0,
+      "long": -16.0
+    },
+    "flagCode": "GM",
+    "colors": [
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Guinea-Bissau",
+    "aliases": "Republic of Guinea-Bissau",
+    "code": "GNB",
+    "capital": "Bissau",
+    "location": {
+      "lat": 12.0,
+      "long": -15.0
+    },
+    "flagCode": "GW",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Equatorial Guinea",
+    "aliases": "Republic of Equatorial Guinea",
+    "code": "GNQ",
+    "capital": "Malabo",
+    "location": {
+      "lat": -1.0,
+      "long": -10.0
+    },
+    "flagCode": "GQ",
+    "colors": [
+      "green",
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Greece",
+    "aliases": "Hellenic Republic",
+    "code": "GRC",
+    "capital": "Athens",
+    "location": {
+      "lat": 39.0,
+      "long": 22.0
+    },
+    "flagCode": "GR",
+    "colors": [
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Grenada",
+    "aliases": [],
+    "code": "GRD",
+    "capital": "St. George's",
+    "location": {
+      "lat": -12.0,
+      "long": -61.0
+    },
+    "flagCode": "GD",
+    "colors": [
+      "red",
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Greenland",
+    "aliases": null,
+    "code": "GRL",
+    "capital": "Nuuk",
+    "location": {
+      "lat": -72.0,
+      "long": -40.0
+    },
+    "flagCode": "GL",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Guatemala",
+    "aliases": "Republic of Guatemala",
+    "code": "GTM",
+    "capital": "Guatemala City",
+    "location": {
+      "lat": -15.0,
+      "long": -90.0
+    },
+    "flagCode": "GT",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Guam",
+    "aliases": null,
+    "code": "GUM",
+    "capital": "Hagåtña",
+    "location": {
+      "lat": -13.0,
+      "long": -144.0
+    },
+    "flagCode": "GU",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Guyana",
+    "aliases": "Co-operative Republic of Guyana",
+    "code": "GUY",
+    "capital": "Georgetown",
+    "location": {
+      "lat": 5.0,
+      "long": -59.0
+    },
+    "flagCode": "GY",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Hong Kong",
+    "aliases": null,
+    "code": "HKG",
+    "capital": "",
+    "location": {
+      "lat": -22.0,
+      "long": -114.0
+    },
+    "flagCode": "HK",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Heard Island and McDonald Islands",
+    "aliases": ["HIMI"],
+    "code": "HMD",
+    "capital": "",
+    "location": {
+      "lat": -53.0,
+      "long": -73.0
+    },
+    "flagCode": "HM",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Honduras",
+    "aliases": "Republic of Honduras",
+    "code": "HND",
+    "capital": "Tegucigalpa",
+    "location": {
+      "lat": -15.0,
+      "long": -86.0
+    },
+    "flagCode": "HN",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Croatia",
+    "aliases": "Republic of Croatia",
+    "code": "HRV",
+    "capital": "Zagreb",
+    "location": {
+      "lat": -45.0,
+      "long": -15.0
+    },
+    "flagCode": "HR",
+    "colors": [
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Haiti",
+    "aliases": "Republic of Haiti",
+    "code": "HTI",
+    "capital": "Port-au-Prince",
+    "location": {
+      "lat": -19.0,
+      "long": -72.0
+    },
+    "flagCode": "HT",
+    "colors": [
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Hungary",
+    "aliases": "Hungary",
+    "code": "HUN",
+    "capital": "Budapest",
+    "location": {
+      "lat": 47.0,
+      "long": 20.0
+    },
+    "flagCode": "HU",
+    "colors": [
+      "red",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Indonesia",
+    "aliases": "Republic of Indonesia",
+    "code": "IDN",
+    "capital": "Jakarta",
+    "location": {
+      "lat": -5.0,
+      "long": 120.0
+    },
+    "flagCode": "ID",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Isle of Man",
+    "aliases": null,
+    "code": "IMN",
+    "capital": "Douglas",
+    "location": {
+      "lat": -54.0,
+      "long": -4.0
+    },
+    "flagCode": "IM",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "India",
+    "aliases": "Republic of India",
+    "code": "IND",
+    "capital": "New Delhi",
+    "location": {
+      "lat": 21.0,
+      "long": 78.0
+    },
+    "flagCode": "IN",
+    "colors": [
+      "orange",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "The British Indian Ocean Territory",
+    "aliases": null,
+    "code": "IOT",
+    "capital": "Administered from",
+    "location": {
+      "lat": -7.0,
+      "long": -72.0
+    },
+    "flagCode": "IO",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Ireland",
+    "aliases": "Ireland",
+    "code": "IRL",
+    "capital": "Dublin",
+    "location": {
+      "lat": 53.0,
+      "long": -8.0
+    },
+    "flagCode": "IE",
+    "colors": [
+      "white",
+      "green",
+      "orange"
+    ]
+  },
+  {
+    "country": "Iran",
+    "aliases": "Islamic Republic of Iran",
+    "code": "IRN",
+    "capital": "Tehran",
+    "location": {
+      "lat": 32.0,
+      "long": 53.0
+    },
+    "flagCode": "IR",
+    "colors": [
+      "green",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Iraq",
+    "aliases": "Republic of Iraq",
+    "code": "IRQ",
+    "capital": "Baghdad",
+    "location": {
+      "lat": 33.0,
+      "long": 44.0
+    },
+    "flagCode": "IQ",
+    "colors": [
+      "red",
+      "white",
+      "black"
+    ]
+  },
+  {
+    "country": "Iceland",
+    "aliases": null,
+    "code": "ISL",
+    "capital": "Reykjavík",
+    "location": {
+      "lat": 65.0,
+      "long": -18.0
+    },
+    "flagCode": "IS",
+    "colors": [
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Israel",
+    "aliases": "State of Israel",
+    "code": "ISR",
+    "capital": "Jerusalem",
+    "location": {
+      "lat": 31.0,
+      "long": 35.0
+    },
+    "flagCode": "IL",
+    "colors": [
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Italy",
+    "aliases": "Italian Republic",
+    "code": "ITA",
+    "capital": "Rome",
+    "location": {
+      "lat": 43.0,
+      "long": 12.0
+    },
+    "flagCode": "IT",
+    "colors": [
+      "red",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Jamaica",
+    "aliases": null,
+    "code": "JAM",
+    "capital": "Kingston",
+    "location": {
+      "lat": -18.0,
+      "long": -77.0
+    },
+    "flagCode": "JM",
+    "colors": [
+      "green",
+      "yellow",
+      "black"
+    ]
+  },
+  {
+    "country": "Jersey",
+    "aliases": null,
+    "code": "JEY",
+    "capital": "St Helier",
+    "location": {
+      "lat": -49.0,
+      "long": -2.0
+    },
+    "flagCode": "JE",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Jordan",
+    "aliases": "Hashemite Kingdom of Jordan",
+    "code": "JOR",
+    "capital": "Amman",
+    "location": {
+      "lat": -31.0,
+      "long": -36.0
+    },
+    "flagCode": "JO",
+    "colors": [
+      "black",
+      "white",
+      "green",
+      "red"
+    ]
+  },
+  {
+    "country": "Japan",
+    "aliases": null,
+    "code": "JPN",
+    "capital": "Tokyo",
+    "location": {
+      "lat": 36.0,
+      "long": 138.0
+    },
+    "flagCode": "JP",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Kazakhstan",
+    "aliases": "Republic of Kazakhstan",
+    "code": "KAZ",
+    "capital": "Astana",
+    "location": {
+      "lat": 48.0,
+      "long": 68.0
+    },
+    "flagCode": "KZ",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Kenya",
+    "aliases": "Republic of Kenya",
+    "code": "KEN",
+    "capital": "Nairobi",
+    "location": {
+      "lat": 1.0,
+      "long": 38.0
+    },
+    "flagCode": "KE",
+    "colors": [
+      "red",
+      "black",
+      "green"
+    ]
+  },
+  {
+    "country": "Kyrgyzstan",
+    "aliases": "Kyrgyz Republic",
+    "code": "KGZ",
+    "capital": "Bishkek",
+    "location": {
+      "lat": 41.0,
+      "long": 75.0
+    },
+    "flagCode": "KG",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Cambodia",
+    "aliases": "Kingdom of Cambodia",
+    "code": "KHM",
+    "capital": "Phnom Penh",
+    "location": {
+      "lat": -12.0,
+      "long": -105.0
+    },
+    "flagCode": "KH",
+    "colors": [
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Kiribati",
+    "aliases": "Republic of Kiribati",
+    "code": "KIR",
+    "capital": "Tarawa",
+    "location": {
+      "lat": -1.0,
+      "long": -173.0
+    },
+    "flagCode": "KI",
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Saint Kitts and Nevis",
+    "aliases": "Federation of Saint Kitts and Nevis",
+    "code": "KNA",
+    "capital": "Basseterre",
+    "location": {
+      "lat": -17.0,
+      "long": -62.0
+    },
+    "flagCode": "KN",
+    "colors": [
+      "red",
+      "black",
+      "green"
+    ]
+  },
+  {
+    "country": "South Korea",
+    "aliases": "Republic of Korea",
+    "code": "KOR",
+    "capital": "Seoul",
+    "location": {
+      "lat": 36.0,
+      "long": 128.0
+    },
+    "flagCode": "KR",
+    "colors": [
+      "white"
+    ]
+  },
+  {
+    "country": "Kuwait",
+    "aliases": "State of Kuwait",
+    "code": "KWT",
+    "capital": "Kuwait City",
+    "location": {
+      "lat": -29.0,
+      "long": -47.0
+    },
+    "flagCode": "KW",
+    "colors": [
+      "black",
+      "white",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Laos",
+    "aliases": "Lao People's Democratic Republic",
+    "code": "LAO",
+    "capital": "Vientiane",
+    "location": {
+      "lat": 18.0,
+      "long": 105.0
+    },
+    "flagCode": "LA",
+    "colors": [
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Lebanon",
+    "aliases": "Republic of Lebanon",
+    "code": "LBN",
+    "capital": "Beirut",
+    "location": {
+      "lat": -33.0,
+      "long": -35.0
+    },
+    "flagCode": "LB",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Liberia",
+    "aliases": "Republic of Liberia",
+    "code": "LBR",
+    "capital": "Monrovia",
+    "location": {
+      "lat": -6.0,
+      "long": -9.0
+    },
+    "flagCode": "LR",
+    "colors": [
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Libya",
+    "aliases": "State of Libya",
+    "code": "LBY",
+    "capital": "Tripoli",
+    "location": {
+      "lat": 27.0,
+      "long": 17.0
+    },
+    "flagCode": "LY",
+    "colors": [
+      "black",
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Saint Lucia",
+    "aliases": null,
+    "code": "LCA",
+    "capital": "Castries",
+    "location": {
+      "lat": -13.0,
+      "long": -60.0
+    },
+    "flagCode": "LC",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Liechtenstein",
+    "aliases": "Principality of Liechtenstein",
+    "code": "LIE",
+    "capital": "Vaduz",
+    "location": {
+      "lat": -47.0,
+      "long": -9.0
+    },
+    "flagCode": "LI",
+    "colors": [
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Sri Lanka",
+    "aliases": "Democratic Socialist Republic of Sri Lanka",
+    "code": "LKA",
+    "capital": "Sri Jayawardenepura Kotte",
+    "location": {
+      "lat": 7.0,
+      "long": 81.0
+    },
+    "flagCode": "LK",
+    "colors": [
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Lesotho",
+    "aliases": "Kingdom of Lesotho",
+    "code": "LSO",
+    "capital": "Maseru",
+    "location": {
+      "lat": -29.0,
+      "long": -28.0
+    },
+    "flagCode": "LS",
+    "colors": [
+      "blue",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Lithuania",
+    "aliases": "Republic of Lithuania",
+    "code": "LTU",
+    "capital": "Vilnius",
+    "location": {
+      "lat": 55.0,
+      "long": 24.0
+    },
+    "flagCode": "LT",
+    "colors": [
+      "red",
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Luxembourg",
+    "aliases": "Grand Duchy of Luxembourg",
+    "code": "LUX",
+    "capital": "Luxembourg",
+    "location": {
+      "lat": -49.0,
+      "long": -6.0
+    },
+    "flagCode": "LU",
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Latvia",
+    "aliases": "Republic of Latvia",
+    "code": "LVA",
+    "capital": "Riga",
+    "location": {
+      "lat": 57.0,
+      "long": 25.0
+    },
+    "flagCode": "LV",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Macao",
+    "aliases": ["Macau"],
+    "code": "MAC",
+    "capital": "",
+    "location": {
+      "lat": -22.0,
+      "long": -113.0
+    },
+    "flagCode": "MO",
+    "colors": ["green"]
+  },
+  {
+    "country": "Saint Martin",
+    "aliases": null,
+    "code": "MAF",
+    "capital": "Marigot",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    },
+    "flagCode": "MF",
+    "colors": [
+      "yellow",
+      "green"
+    ]
+  },
+  {
+    "country": "Morocco",
+    "aliases": "Kingdom of Morocco",
+    "code": "MAR",
+    "capital": "Rabat",
+    "location": {
+      "lat": 32.0,
+      "long": -6.0
+    },
+    "flagCode": "MA",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Monaco",
+    "aliases": "Principality of Monaco",
+    "code": "MCO",
+    "capital": "Monaco",
+    "location": {
+      "lat": -43.0,
+      "long": -7.0
+    },
+    "flagCode": "MC",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Moldova",
+    "aliases": "Republic of Moldova",
+    "code": "MDA",
+    "capital": "Chisinau",
+    "location": {
+      "lat": 47.0,
+      "long": 29.0
+    },
+    "flagCode": "MD",
+    "colors": [
+      "red",
+      "yellow",
+      "blue"
+    ]
+  },
+  {
+    "country": "Madagascar",
+    "aliases": "Republic of Madagascar",
+    "code": "MDG",
+    "capital": "Antananarivo",
+    "location": {
+      "lat": -20.0,
+      "long": 47.0
+    },
+    "flagCode": "MG",
+    "colors": [
+      "red",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Maldives",
+    "aliases": "Republic of Maldives",
+    "code": "MDV",
+    "capital": "Male",
+    "location": {
+      "lat": -4.0,
+      "long": -73.0
+    },
+    "flagCode": "MV",
+    "colors": [
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Mexico",
+    "aliases": "United Mexican States",
+    "code": "MEX",
+    "capital": "Mexico City",
+    "location": {
+      "lat": 23.0,
+      "long": -102.0
+    },
+    "flagCode": "MX",
+    "colors": [
+      "green",
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Marshall Islands",
+    "aliases": "Republic of the Marshall Islands",
+    "code": "MHL",
+    "capital": "Majuro",
+    "location": {
+      "lat": -9.0,
+      "long": -169.0
+    },
+    "flagCode": "MH",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Macedonia",
+    "aliases": "Republic of North Macedonia",
+    "code": "MKD",
+    "capital": "Skopje",
+    "location": {
+      "lat": 42.0,
+      "long": 22.0
+    },
+    "flagCode": "MK",
+    "colors": [
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Mali",
+    "aliases": "Republic of Mali",
+    "code": "MLI",
+    "capital": "Bamako",
+    "location": {
+      "lat": 17.0,
+      "long": -4.0
+    },
+    "flagCode": "ML",
+    "colors": [
+      "red",
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Malta",
+    "aliases": "Republic of Malta",
+    "code": "MLT",
+    "capital": "Valletta",
+    "location": {
+      "lat": -35.0,
+      "long": -14.0
+    },
+    "flagCode": "MT",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Myanmar",
+    "aliases": "Republic of the Union of Myanmar",
+    "code": "MMR",
+    "capital": "Naypyidaw",
+    "location": {
+      "lat": 22.0,
+      "long": 96.0
+    },
+    "flagCode": "MM",
+    "colors": [
+      "red",
+      "yellow",
+      "green"
+    ]
+  },
+  {
+    "country": "Montenegro",
+    "aliases": null,
+    "code": "MNE",
+    "capital": "Podgorica",
+    "location": {
+      "lat": -42.0,
+      "long": -19.0
+    },
+    "flagCode": "ME",
+    "colors": [
+      "red",
+      "orange"
+    ]
+  },
+  {
+    "country": "Mongolia",
+    "aliases": null,
+    "code": "MNG",
+    "capital": "Ulaanbaatar",
+    "location": {
+      "lat": 48.0,
+      "long": 106.0
+    },
+    "flagCode": "MN",
+    "colors": [
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Northern Mariana Islands",
+    "aliases": ["Commonwealth of the Northern Mariana Islands"],
+    "code": "MNP",
+    "capital": "Saipan",
+    "location": {
+      "lat": -16.0,
+      "long": -145.0
+    },
+    "flagCode": "MP",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Mozambique",
+    "aliases": "Republic of Mozambique",
+    "code": "MOZ",
+    "capital": "Maputo",
+    "location": {
+      "lat": -18.0,
+      "long": -35.0
+    },
+    "flagCode": "MZ",
+    "colors": [
+      "red",
+      "yellow",
+      "green",
+      "black"
+    ]
+  },
+  {
+    "country": "Mauritania",
+    "aliases": "Islamic Republic of Mauritania",
+    "code": "MRT",
+    "capital": "Nouakchott",
+    "location": {
+      "lat": 20.0,
+      "long": -12.0
+    },
+    "flagCode": "MR",
+    "colors": [
+      "green",
+      "red"
+    ]
+  },
+  {
+    "country": "Montserrat",
+    "aliases": null,
+    "code": "MSR",
+    "capital": "Plymouth",
+    "location": {
+      "lat": -16.0,
+      "long": -62.0
+    },
+    "flagCode": "MS",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Martinique",
+    "aliases": null,
+    "code": "MTQ",
+    "capital": null,
+    "location": {
+      "lat": -14.0,
+      "long": -61.0
+    },
+    "flagCode": "MQ",
+    "colors": [
+      "red",
+      "green",
+      "black"
+    ]
+  },
+  {
+    "country": "Mauritius",
+    "aliases": "Republic of Mauritius",
+    "code": "MUS",
+    "capital": "Port Louis",
+    "location": {
+      "lat": -20.0,
+      "long": -57.0
+    },
+    "flagCode": "MU",
+    "colors": [
+      "red",
+      "green",
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Malawi",
+    "aliases": ["Republic of Malawi"],
+    "code": "MWI",
+    "capital": "Lilongwe",
+    "location": {
+      "lat": -13.0,
+      "long": -34.0
+    },
+    "flagCode": "MW",
+    "colors": [
+      "red",
+      "green",
+      "black"
+    ]
+  },
+  {
+    "country": "Malaysia",
+    "aliases": null,
+    "code": "MYS",
+    "capital": "Kuala Lumpur",
+    "location": {
+      "lat": 2.0,
+      "long": 112.0
+    },
+    "flagCode": "MY",
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Namibia",
+    "aliases": "Republic of Namibia",
+    "code": "NAM",
+    "capital": "Windhoek",
+    "location": {
+      "lat": -22.0,
+      "long": 17.0
+    },
+    "flagCode": "NA",
+    "colors": [
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "New Caledonia",
+    "aliases": null,
+    "code": "NCL",
+    "capital": "Noumea",
+    "location": {
+      "lat": -21.0,
+      "long": -165.0
+    },
+    "flagCode": "NC",
+    "colors": [
+      "red",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Niger",
+    "aliases": "Republic of the Niger",
+    "code": "NER",
+    "capital": "Niamey",
+    "location": {
+      "lat": 16.0,
+      "long": 8.0
+    },
+    "flagCode": "NE",
+    "colors": [
+      "orange",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Norfolk Island",
+    "aliases": null,
+    "code": "NFK",
+    "capital": "Kingston",
+    "location": {
+      "lat": -29.0,
+      "long": -167.0
+    },
+    "flagCode": "NF",
+    "colors": [
+      "green",
+      "white"
+    ]
+  },
+  {
+    "country": "Nigeria",
+    "aliases": "Federal Republic of Nigeria",
+    "code": "NGA",
+    "capital": "Abuja",
+    "location": {
+      "lat": 8.0,
+      "long": 10.0
+    },
+    "flagCode": "NG",
+    "colors": [
+      "green",
+      "white"
+    ]
+  },
+  {
+    "country": "Nicaragua",
+    "aliases": "Republic of Nicaragua",
+    "code": "NIC",
+    "capital": "Managua",
+    "location": {
+      "lat": 13.0,
+      "long": -85.0
+    },
+    "flagCode": "NI",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "Niue",
+    "aliases": "Niue",
+    "code": "NIU",
+    "capital": "Alofi",
+    "location": {
+      "lat": -19.0,
+      "long": -169.0
+    },
+    "flagCode": "NU",
+    "colors": [
+      "yellow"
+    ]
+  },
+  {
+    "country": "Netherlands",
+    "aliases": "Kingdom of the Netherlands",
+    "code": "NLD",
+    "capital": "Amsterdam",
+    "location": {
+      "lat": -52.0,
+      "long": -4.0
+    },
+    "flagCode": "NL",
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Nepal",
+    "aliases": "Federal Democratic Republic of Nepal",
+    "code": "NPL",
+    "capital": "Kathmandu",
+    "location": {
+      "lat": -28.0,
+      "long": -84.0
+    },
+    "flagCode": "NP",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Nauru",
+    "aliases": "Republic of Nauru",
+    "code": "NRU",
+    "capital": "(",
+    "location": {
+      "lat": -0.0,
+      "long": -166.0
+    },
+    "flagCode": "NR",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "New Zealand",
+    "aliases": "New Zealand",
+    "code": "NZL",
+    "capital": "Wellington",
+    "location": {
+      "lat": -42.0,
+      "long": 173.0
+    },
+    "flagCode": "NZ",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Norway",
+    "aliases": "Kingdom of Norway",
+    "code": "NOR",
+    "capital": "Oslo",
+    "location": {
+      "lat": 61.0,
+      "long": 8
+    },
+    "flagCode": "NO",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Oman",
+    "aliases": "Sultanate of Oman",
+    "code": "OMN",
+    "capital": "Muscat",
+    "location": {
+      "lat": 21.0,
+      "long": 57.0
+    },
+    "flagCode": "OM",
+    "colors": [
+      "red",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "Pakistan",
+    "aliases": "Islamic Republic of Pakistan",
+    "code": "PAK",
+    "capital": "Islamabad",
+    "location": {
+      "lat": 30.0,
+      "long": 70.0
+    },
+    "flagCode": "PK",
+    "colors": [
+      "green",
+      "white"
+    ]
+  },
+  {
+    "country": "Panama",
+    "aliases": "Republic of Panama",
+    "code": "PAN",
+    "capital": "Panama City",
+    "location": {
+      "lat": 9.0,
+      "long": -80.0
+    },
+    "flagCode": "PA",
+    "colors": [
+      "white",
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Pitcairn",
+    "aliases": null,
+    "code": "PCN",
+    "capital": "Adamstown",
+    "location": {
+      "lat": -25.0,
+      "long": -130.0
+    },
+    "flagCode": "PN",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Peru",
+    "aliases": "Republic of Peru",
+    "code": "PER",
+    "capital": "Lima",
+    "location": {
+      "lat": -10.0,
+      "long": -76.0
+    },
+    "flagCode": "PE",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Philippines",
+    "aliases": "Republic of the Philippines",
+    "code": "PHL",
+    "capital": "Manila",
+    "location": {
+      "lat": 13.0,
+      "long": 122.0
+    },
+    "flagCode": "PH",
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Palau",
+    "aliases": "Republic of Palau",
+    "code": "PLW",
+    "capital": "Ngerulmud",
+    "location": {
+      "lat": -7.0,
+      "long": -134.0
+    },
+    "flagCode": "PW",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Papua New Guinea",
+    "aliases": "Independent State of Papua New Guinea",
+    "code": "PNG",
+    "capital": "Port Moresby",
+    "location": {
+      "lat": -6.0,
+      "long": 147.0
+    },
+    "flagCode": "PG",
+    "colors": [
+      "black",
+      "red"
+    ]
+  },
+  {
+    "country": "Poland",
+    "aliases": "Republic of Poland",
+    "code": "POL",
+    "capital": "Warsaw",
+    "location": {
+      "lat": 52.0,
+      "long": 20.0
+    },
+    "flagCode": "PL",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Puerto Rico",
+    "aliases": null,
+    "code": "PRI",
+    "capital": "San Juan",
+    "location": {
+      "lat": -18.0,
+      "long": -66.0
+    },
+    "flagCode": "PR",
+    "colors": [
+      "blue",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "North Korea",
+    "aliases": "Democratic People's Republic of Korea",
+    "code": "PRK",
+    "capital": "Pyongyang",
+    "location": {
+      "lat": 40.0,
+      "long": 127.0
+    },
+    "flagCode": "KP",
+    "colors": [
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Portugal",
+    "aliases": "Portuguese Republic",
+    "code": "PRT",
+    "capital": "Lisbon",
+    "location": {
+      "lat": 39.0,
+      "long": -8.0
+    },
+    "flagCode": "PT",
+    "colors": [
+      "red",
+      "green"
+    ]
+  },
+  {
+    "country": "Paraguay",
+    "aliases": "Republic of Paraguay",
+    "code": "PRY",
+    "capital": "Asuncion",
+    "location": {
+      "lat": -23.0,
+      "long": -58.0
+    },
+    "flagCode": "PY",
+    "colors": [
+      "blue",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "Palestine",
+    "aliases": "State of Palestine",
+    "code": "PSE",
+    "capital": "Jerusalem",
+    "location": {
+      "lat": -32.0,
+      "long": -35.0
+    },
+    "flagCode": "PS",
+    "colors": [
+      "red",
+      "white",
+      "black",
+      "green"
+    ]
+  },
+  {
+    "country": "French Polynesia",
+    "aliases": null,
+    "code": "PYF",
+    "capital": "Papeete",
+    "location": {
+      "lat": -17.0,
+      "long": -149.0
+    },
+    "flagCode": "PF",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Qatar",
+    "aliases": "State of Qatar",
+    "code": "QAT",
+    "capital": "Doha",
+    "location": {
+      "lat": -25.0,
+      "long": -51.0
+    },
+    "flagCode": "QA",
+    "colors": [
+      "red",
+      "white"
+    ]
+  },
+  {
+    "country": "Romania",
+    "aliases": "Romania",
+    "code": "ROU",
+    "capital": "Bucharest",
+    "location": {
+      "lat": 46.0,
+      "long": 25.0
+    },
+    "flagCode": "RO",
+    "colors": [
+      "blue",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Russia",
+    "aliases": "Russian Federation",
+    "code": "RUS",
+    "capital": "Moscow",
+    "location": {
+      "lat": 66.0,
+      "long": 94.0
+    },
+    "flagCode": "RU",
+    "colors": [
+      "white",
+      "blue",
+      "red"
+    ]
+  },
+  {
+    "country": "Rwanda",
+    "aliases": "Republic of Rwanda",
+    "code": "RWA",
+    "capital": "Kigali",
+    "location": {
+      "lat": -2.0,
+      "long": 30.0
+    },
+    "flagCode": "RW",
+    "colors": [
+      "blue",
+      "green",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Saudi Arabia",
+    "aliases": "Kingdom of Saudi Arabia",
+    "code": "SAU",
+    "capital": "Riyadh",
+    "location": {
+      "lat": 24.0,
+      "long": 45.0
+    },
+    "flagCode": "SA",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Sudan",
+    "aliases": "Republic of Sudan",
+    "code": "SDN",
+    "capital": "Khartoum",
+    "location": {
+      "lat": 15.0,
+      "long": 32.0
+    },
+    "flagCode": "SD",
+    "colors": [
+      "red",
+      "white",
+      "black",
+      "green"
+    ]
+  },
+  {
+    "country": "Senegal",
+    "aliases": "Republic of Senegal",
+    "code": "SEN",
+    "capital": "Dakar",
+    "location": {
+      "lat": 14.0,
+      "long": -14.0
+    },
+    "flagCode": "SN",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Singapore",
+    "aliases": "Republic of Singapore",
+    "code": "SGP",
+    "capital": "Singapore",
+    "location": {
+      "lat": -1.0,
+      "long": -103.0
+    },
+    "flagCode": "SG",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "South Georgia and the South Sandwich Islands",
+    "aliases": null,
+    "code": "SGS",
+    "capital": "King Edward Point",
+    "location": {
+      "lat": -54.0,
+      "long": -36.0
+    },
+    "flagCode": "GS",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Saint Helena, Ascension and Tristan da Cunha",
+    "aliases": null,
+    "code": "SHN",
+    "capital": "Jamestown",
+    "location": {
+      "lat": -15.0,
+      "long": -5.0
+    },
+    "flagCode": "SH",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Solomon Islands",
+    "aliases": null,
+    "code": "SLB",
+    "capital": "Honiara",
+    "location": {
+      "lat": -8.0,
+      "long": 159.0
+    },
+    "flagCode": "SB",
+    "colors": [
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Sierra Leone",
+    "aliases": "Republic of Sierra Leone",
+    "code": "SLE",
+    "capital": "Freetown",
+    "location": {
+      "lat": -8.0,
+      "long": -12.0
+    },
+    "flagCode": "SL",
+    "colors": [
+      "blue",
+      "white",
+      "green"
+    ]
+  },
+  {
+    "country": "El Salvador",
+    "aliases": "Republic of El Salvador",
+    "code": "SLV",
+    "capital": "San Salvador",
+    "location": {
+      "lat": -13.0,
+      "long": -89.0
+    },
+    "flagCode": "SV",
+    "colors": [
+      "blue",
+      "white"
+    ]
+  },
+  {
+    "country": "San Marino",
+    "aliases": "Republic of San Marino",
+    "code": "SMR",
+    "capital": "City of San Marino",
+    "location": {
+      "lat": -43.0,
+      "long": -12.0
+    },
+    "flagCode": "SM",
+    "colors": [
+      "white",
+      "blue"
+    ]
+  },
+  {
+    "country": "Somalia",
+    "aliases": "Federal Republic of Somalia",
+    "code": "SOM",
+    "capital": "Mogadishu",
+    "location": {
+      "lat": 10.0,
+      "long": 49.0
+    },
+    "flagCode": "SO",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Saint Pierre and Miquelon",
+    "aliases": null,
+    "code": "SPM",
+    "capital": "Saint-Pierre",
+    "location": {
+      "lat": -46.0,
+      "long": -56.0
+    },
+    "flagCode": "PM",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Serbia",
+    "aliases": "Republic of Serbia",
+    "code": "SRB",
+    "capital": "Belgrade",
+    "location": {
+      "lat": 44.0,
+      "long": 21.0
+    },
+    "flagCode": "RS",
+    "colors": [
+      "blue",
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "South Sudan",
+    "aliases": "Republic of South Sudan",
+    "code": "SSD",
+    "capital": "Juba",
+    "location": {
+      "lat": 8.0,
+      "long": 30.0
+    },
+    "flagCode": "SS",
+    "colors": [
+      "red",
+      "white",
+      "black",
+      "green",
+      "blue"
+    ]
+  },
+  {
+    "country": "Sao Tome and Principe",
+    "aliases": [
+      "São Tomé and Príncipe",
+      "Democratic Republic of São Tomé and Príncipe"
+    ],
+    "code": "STP",
+    "capital": "São Tomé",
+    "location": {
+      "lat": -0.0,
+      "long": -6.0
+    },
+    "flagCode": "ST",
+    "colors": [
+      "green",
+      "yellow",
+      "red"
+    ]
+  },
+  {
+    "country": "Republic of Suriname",
+    "aliases": "Republic of Suriname",
+    "code": "SUR",
+    "capital": "Paramaribo",
+    "location": {
+      "lat": 4.0,
+      "long": -56.0
+    },
+    "flagCode": "SR",
+    "colors": [
+      "green",
+      "red"
+    ]
+  },
+  {
+    "country": "Slovakia",
+    "aliases": "Slovak Republic",
+    "code": "SVK",
+    "capital": "Bratislava",
+    "location": {
+      "lat": -48.0,
+      "long": -19.0
+    },
+    "flagCode": "SK",
+    "colors": [
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Slovenia",
+    "aliases": "Republic of Slovenia",
+    "code": "SVN",
+    "capital": "Ljubljana",
+    "location": {
+      "lat": -46.0,
+      "long": -14.0
+    },
+    "flagCode": "SI",
+    "colors": [
+      "white",
+      "red",
+      "blue"
+    ]
+  },
+  {
+    "country": "Sweden",
+    "aliases": "Kingdom of Sweden",
+    "code": "SWE",
+    "capital": "Stockholm",
+    "location": {
+      "lat": 63.0,
+      "long": 16.0
+    },
+    "flagCode": "SE",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Eswatini",
+    "aliases": "Kingdom of Eswatini",
+    "code": "SWZ",
+    "capital": "Mbabane",
+    "location": {
+      "lat": -26.0,
+      "long": -31.0
+    },
+    "flagCode": "SZ",
+    "colors": [
+      "blue",
+      "red",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Saint Martin",
+    "aliases": null,
+    "code": "SXM",
+    "capital": "Philipsburg",
+    "location": {
+      "lat": -18.0,
+      "long": -63.0
+    },
+    "flagCode": "SX",
+    "colors": [
+      "yellow",
+      "green"
+    ]
+  },
+  {
+    "country": "Seychelles",
+    "aliases": "Republic of Seychelles",
+    "code": "SYC",
+    "capital": "Victoria",
+    "location": {
+      "lat": -4.0,
+      "long": -55.0
+    },
+    "flagCode": "SC",
+    "colors": [
+      "red",
+      "white",
+      "blue",
+      "yellow",
+      "greem"
+    ]
+  },
+  {
+    "country": "Syrian Arab Republic",
+    "aliases": "Syrian Arab Republic",
+    "code": "SYR",
+    "capital": "Damascus",
+    "location": {
+      "lat": 35.0,
+      "long": 38.0
+    },
+    "flagCode": "SY",
+    "colors": []
+  },
+  {
+    "country": "Turks and Caicos Islands",
+    "aliases": null,
+    "code": "TCA",
+    "capital": "Grand Turk (Cockburn Town)",
+    "location": {
+      "lat": -21.0,
+      "long": -71.0
+    },
+    "flagCode": "TC",
+    "colors": []
+  },
+  {
+    "country": "Chad",
+    "aliases": "Republic of Chad",
+    "code": "TCD",
+    "capital": "N'Djamena",
+    "location": {
+      "lat": 15.0,
+      "long": 19.0
+    },
+    "flagCode": "TD",
+    "colors": []
+  },
+  {
+    "country": "Togolese Republic",
+    "aliases": "Togolese Republic",
+    "code": "TGO",
+    "capital": "Lom\u00e9",
+    "location": {
+      "lat": 8.0,
+      "long": 1.0
+    },
+    "flagCode": "TG",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Thailand",
+    "aliases": "Kingdom of Thailand",
+    "code": "THA",
+    "capital": "Bangkok",
+    "location": {
+      "lat": 15.0,
+      "long": 101.0
+    },
+    "flagCode": "TH",
+    "colors": []
+  },
+  {
+    "country": "Tajikistan",
+    "aliases": "Republic of Tajikistan",
+    "code": "TJK",
+    "capital": "Dushanbe",
+    "location": {
+      "lat": 39.0,
+      "long": 71.0
+    },
+    "flagCode": "TJ",
+    "colors": []
+  },
+  {
+    "country": "Tokelau",
+    "aliases": null,
+    "code": "TKL",
+    "capital": "None",
+    "location": {
+      "lat": -9.0,
+      "long": -171.0
+    },
+    "flagCode": "TK",
+    "colors": []
+  },
+  {
+    "country": "Turkmenistan",
+    "aliases": [],
+    "code": "TKM",
+    "capital": "Ashgabat",
+    "location": {
+      "lat": 39.0,
+      "long": 60.0
+    },
+    "flagCode": "TM",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Timor-Leste",
+    "aliases": "Democratic Republic of Timor-Leste",
+    "code": "TLS",
+    "capital": "Dili",
+    "location": {
+      "lat": -8.0,
+      "long": -125.0
+    },
+    "flagCode": "TL",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Tonga",
+    "aliases": "Kingdom of Tonga",
+    "code": "TON",
+    "capital": "Nuku\u02bbalofa",
+    "location": {
+      "lat": -20.0,
+      "long": -175.0
+    },
+    "flagCode": "TO",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "aliases": [
+      "Republic of Trinidad and Tobago"
+    ],
+    "code": "TTO",
+    "capital": "Port of Spain",
+    "location": {
+      "lat": -10.0,
+      "long": -61.0
+    },
+    "flagCode": "TT",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Tunisia",
+    "aliases": "Republic of Tunisia",
+    "code": "TUN",
+    "capital": "Tunis",
+    "location": {
+      "lat": 34.0,
+      "long": 9.0
+    },
+    "flagCode": "TN",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Turkiye",
+    "aliases": [
+      "Republic of T\u00fcrkiye",
+      "Turkey",
+      "T\u00fcrkiye"
+    ],
+    "code": "TUR",
+    "capital": "Ankara",
+    "location": {
+      "lat": -39.0,
+      "long": -32.0
+    },
+    "flagCode": "TR",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Tuvalu",
+    "aliases": "Tuvalu",
+    "code": "TUV",
+    "capital": "Funafuti",
+    "location": {
+      "lat": -8.0,
+      "long": -179.0
+    },
+    "flagCode": "TV",
+    "colors": [
+      "blue"
+    ]
+  },
+  {
+    "country": "Taiwan",
+    "aliases": [
+      "Republic of China",
+      "ROC"
+    ],
+    "code": "TWN",
+    "capital": "Taipei",
+    "location": {
+      "lat": 24.0,
+      "long": 121.0
+    },
+    "flagCode": "TW",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "United Republic of Tanzania",
+    "aliases": [
+      "Tanzania"
+    ],
+    "code": "TZA",
+    "capital": "Dodoma",
+    "location": {
+      "lat": -6.0,
+      "long": 35.0
+    },
+    "flagCode": "TZ",
+    "colors": []
+  },
+  {
+    "country": "Uganda",
+    "aliases": "Republic of Uganda",
+    "code": "UGA",
+    "capital": "Kampala",
+    "location": {
+      "lat": 1.0,
+      "long": 32.0
+    },
+    "flagCode": "UG",
+    "colors": []
+  },
+  {
+    "country": "Ukraine",
+    "aliases": "Ukraine",
+    "code": "UKR",
+    "capital": "Kyiv",
+    "location": {
+      "lat": -50.0,
+      "long": -30.0
+    },
+    "flagCode": "UA",
+    "colors": [
+      "blue",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Uruguay",
+    "aliases": "Oriental Republic of Uruguay",
+    "code": "URY",
+    "capital": "Montevideo",
+    "location": {
+      "lat": -33.0,
+      "long": -57.0
+    },
+    "flagCode": "UY",
+    "colors": [
+      "white",
+      "red"
+    ]
+  },
+  {
+    "country": "United States of America",
+    "aliases": [
+      "The United States of America",
+      "USA"
+    ],
+    "code": "USA",
+    "capital": "Washington, D.C.",
+    "location": {
+      "lat": 40.0,
+      "long": -100.0
+    },
+    "flagCode": "US",
+    "colors": []
+  },
+  {
+    "country": "Uzbekistan",
+    "aliases": "Republic of Uzbekistan",
+    "code": "UZB",
+    "capital": "Tashkent",
+    "location": {
+      "lat": 42.0,
+      "long": 64.0
+    },
+    "flagCode": "UZ",
+    "colors": []
+  },
+  {
+    "country": "Vatican City",
+    "aliases": [
+      "The Holy See"
+    ],
+    "code": "VAT",
+    "capital": "",
+    "location": {
+      "lat": -41.0,
+      "long": -12.0
+    },
+    "flagCode": "VA",
+    "colors": [
+      "white",
+      "yellow"
+    ]
+  },
+  {
+    "country": "Saint Vincent",
+    "aliases": [
+      "Saint Vincent and the Grenadines"
+    ],
+    "code": "VCT",
+    "capital": "Kingstown",
+    "location": {
+      "lat": -13.0,
+      "long": -61.0
+    },
+    "flagCode": "VC",
+    "colors": [
+      "yellow"
+    ]
+  },
+  {
+    "country": "Venezuela",
+    "aliases": "Bolivarian Republic of Venezuela",
+    "code": "VEN",
+    "capital": "Caracas",
+    "location": {
+      "lat": 7.0,
+      "long": -65.0
+    },
+    "flagCode": "VE",
+    "colors": []
+  },
+  {
+    "country": "Virgin Islands (British)",
+    "aliases": null,
+    "code": "VGB",
+    "capital": "Road Town",
+    "location": {
+      "lat": -18.0,
+      "long": -64.0
+    },
+    "flagCode": "VG",
+    "colors": []
+  },
+  {
+    "country": "Virgin Islands (U.S.)",
+    "aliases": null,
+    "code": "VIR",
+    "capital": "Charlotte Amalie",
+    "location": {
+      "lat": -18.0,
+      "long": -64.0
+    },
+    "flagCode": "VI",
+    "colors": []
+  },
+  {
+    "country": "Vietnam",
+    "aliases": "Socialist Republic of Vietnam",
+    "code": "VNM",
+    "capital": "Hanoi",
+    "location": {
+      "lat": 16.0,
+      "long": 108.0
+    },
+    "flagCode": "VN",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Vanuatu",
+    "aliases": "Republic of Vanuatu",
+    "code": "VUT",
+    "capital": "Port Vila",
+    "location": {
+      "lat": -17.0,
+      "long": 168.0
+    },
+    "flagCode": "VU",
+    "colors": []
+  },
+  {
+    "country": "Wallis and Futuna",
+    "aliases": null,
+    "code": "WLF",
+    "capital": "Mata Utu",
+    "location": {
+      "lat": -13.0,
+      "long": -176.0
+    },
+    "flagCode": "WF",
+    "colors": []
+  },
+  {
+    "country": "Samoa",
+    "aliases": "Independent State of Samoa",
+    "code": "WSM",
+    "capital": "Apia",
+    "location": {
+      "lat": -13.0,
+      "long": -172.0
+    },
+    "flagCode": "WS",
+    "colors": [
+      "red"
+    ]
+  },
+  {
+    "country": "Yemen",
+    "aliases": "Republic of Yemen",
+    "code": "YEM",
+    "capital": "Sanaa",
+    "location": {
+      "lat": -15.0,
+      "long": -44.0
+    },
+    "flagCode": "YE",
+    "colors": []
+  },
+  {
+    "country": "South Africa",
+    "aliases": "Republic of South Africa",
+    "code": "ZAF",
+    "capital": "Pretoria",
+    "location": {
+      "lat": -30.0,
+      "long": 25.0
+    },
+    "flagCode": "ZA",
+    "colors": []
+  },
+  {
+    "country": "Zambia",
+    "aliases": "Republic of Zambia",
+    "code": "ZMB",
+    "capital": "Lusaka",
+    "location": {
+      "lat": -15.0,
+      "long": 30.0
+    },
+    "flagCode": "ZM",
+    "colors": [
+      "green"
+    ]
+  },
+  {
+    "country": "Zimbabwe",
+    "aliases": "Republic of Zimbabwe",
+    "code": "ZWE",
+    "capital": "Harare",
+    "location": {
+      "lat": -19.0,
+      "long": 30.0
+    },
+    "flagCode": "ZW",
+    "colors": []
+  }
+]
