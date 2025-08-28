@@ -1,4 +1,4 @@
-import allCountryData from '../data/country_data.json';
+import allCountryData from '../data/country_data_with_colors.json';
 import allQuizSets from '../data/quiz_sets.json';
 
 /**

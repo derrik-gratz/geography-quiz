@@ -484,7 +484,7 @@
     "country": "Brazil",
     "aliases": "Federative Republic of Brazil",
     "code": "BRA",
-    "capital": "Bras\u00edlia",
+    "capital": "Brasilia",
     "location": {
       "lat": -10.0,
       "long": -52.0
@@ -573,7 +573,7 @@
   },
   {
     "country": "Canada",
-    "aliases": "Canada",
+    "aliases": null,
     "code": "CAN",
     "capital": "Ottawa",
     "location": {
@@ -590,7 +590,7 @@
     "country": "Switzerland",
     "aliases": "Swiss Confederation",
     "code": "CHE",
-    "capital": "None (",
+    "capital": "Bern",
     "location": {
       "lat": -46.0,
       "long": -8.0
@@ -673,7 +673,7 @@
     },
     "flagCode": "CD",
     "colors": [
-      "blue",
+      "blue"
     ]
   },
   {
@@ -3126,7 +3126,7 @@
     ]
   },
   {
-    "country": "Syrian Arab Republic",
+    "country": "Syria",
     "aliases": "Syrian Arab Republic",
     "code": "SYR",
     "capital": "Damascus",
@@ -3135,7 +3135,11 @@
       "long": 38.0
     },
     "flagCode": "SY",
-    "colors": []
+    "colors": [
+      "green",
+      "white",
+      "black"
+    ]
   },
   {
     "country": "Turks and Caicos Islands",
@@ -3147,7 +3151,9 @@
       "long": -71.0
     },
     "flagCode": "TC",
-    "colors": []
+    "colors": [
+      "blue"
+    ]
   },
   {
     "country": "Chad",
@@ -3159,20 +3165,25 @@
       "long": 19.0
     },
     "flagCode": "TD",
-    "colors": []
+    "colors": [
+      "blue",
+      "yellow",
+      "red"
+    ]
   },
   {
-    "country": "Togolese Republic",
+    "country": "Togo",
     "aliases": "Togolese Republic",
     "code": "TGO",
-    "capital": "Lom\u00e9",
+    "capital": "Lomé",
     "location": {
       "lat": 8.0,
       "long": 1.0
     },
     "flagCode": "TG",
     "colors": [
-      "green"
+      "green",
+      "yellow"
     ]
   },
   {
@@ -3185,7 +3196,11 @@
       "long": 101.0
     },
     "flagCode": "TH",
-    "colors": []
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
   },
   {
     "country": "Tajikistan",
@@ -3197,7 +3212,11 @@
       "long": 71.0
     },
     "flagCode": "TJ",
-    "colors": []
+    "colors": [
+      "red",
+      "white",
+      "green"
+    ]
   },
   {
     "country": "Tokelau",
@@ -3209,7 +3228,10 @@
       "long": -171.0
     },
     "flagCode": "TK",
-    "colors": []
+    "colors": [
+      "blue",
+      "yellow"
+    ]
   },
   {
     "country": "Turkmenistan",
@@ -3243,7 +3265,7 @@
     "country": "Tonga",
     "aliases": "Kingdom of Tonga",
     "code": "TON",
-    "capital": "Nuku\u02bbalofa",
+    "capital": "Nuku'alofa",
     "location": {
       "lat": -20.0,
       "long": -175.0
@@ -3266,7 +3288,8 @@
     },
     "flagCode": "TT",
     "colors": [
-      "red"
+      "red",
+      "black"
     ]
   },
   {
@@ -3280,15 +3303,16 @@
     },
     "flagCode": "TN",
     "colors": [
-      "red"
+      "red",
+      "white"
     ]
   },
   {
     "country": "Turkiye",
     "aliases": [
-      "Republic of T\u00fcrkiye",
+      "Republic of Türkiye",
       "Turkey",
-      "T\u00fcrkiye"
+      "Türkiye"
     ],
     "code": "TUR",
     "capital": "Ankara",
@@ -3298,12 +3322,13 @@
     },
     "flagCode": "TR",
     "colors": [
-      "red"
+      "red",
+      "white"
     ]
   },
   {
     "country": "Tuvalu",
-    "aliases": "Tuvalu",
+    "aliases": null,
     "code": "TUV",
     "capital": "Funafuti",
     "location": {
@@ -3329,13 +3354,14 @@
     },
     "flagCode": "TW",
     "colors": [
-      "red"
+      "red",
+      "blue"
     ]
   },
   {
-    "country": "United Republic of Tanzania",
+    "country": "Tanzania",
     "aliases": [
-      "Tanzania"
+      "United Republic of Tanzania"
     ],
     "code": "TZA",
     "capital": "Dodoma",
@@ -3344,7 +3370,11 @@
       "long": 35.0
     },
     "flagCode": "TZ",
-    "colors": []
+    "colors": [
+      "green",
+      "black",
+      "blue"
+    ]
   },
   {
     "country": "Uganda",
@@ -3356,7 +3386,11 @@
       "long": 32.0
     },
     "flagCode": "UG",
-    "colors": []
+    "colors": [
+      "black",
+      "yellow",
+      "red"
+    ]
   },
   {
     "country": "Ukraine",
@@ -3385,13 +3419,12 @@
     "flagCode": "UY",
     "colors": [
       "white",
-      "red"
+      "blue"
     ]
   },
   {
     "country": "United States of America",
     "aliases": [
-      "The United States of America",
       "USA"
     ],
     "code": "USA",
@@ -3401,7 +3434,11 @@
       "long": -100.0
     },
     "flagCode": "US",
-    "colors": []
+    "colors": [
+      "red",
+      "white",
+      "blue"
+    ]
   },
   {
     "country": "Uzbekistan",
@@ -3413,7 +3450,11 @@
       "long": 64.0
     },
     "flagCode": "UZ",
-    "colors": []
+    "colors": [
+      "blue",
+      "white",
+      "green"
+    ]
   },
   {
     "country": "Vatican City",
@@ -3445,7 +3486,9 @@
     },
     "flagCode": "VC",
     "colors": [
-      "yellow"
+      "yellow",
+      "green",
+      "blue"
     ]
   },
   {
@@ -3458,7 +3501,11 @@
       "long": -65.0
     },
     "flagCode": "VE",
-    "colors": []
+    "colors": [
+      "yellow",
+      "blue",
+      "red"
+    ]
   },
   {
     "country": "Virgin Islands (British)",
@@ -3470,7 +3517,9 @@
       "long": -64.0
     },
     "flagCode": "VG",
-    "colors": []
+    "colors": [
+      "blue"
+    ]
   },
   {
     "country": "Virgin Islands (U.S.)",
@@ -3482,7 +3531,9 @@
       "long": -64.0
     },
     "flagCode": "VI",
-    "colors": []
+    "colors": [
+      "blue"
+    ]
   },
   {
     "country": "Vietnam",
@@ -3495,7 +3546,8 @@
     },
     "flagCode": "VN",
     "colors": [
-      "red"
+      "red",
+      "yellow"
     ]
   },
   {
@@ -3508,7 +3560,11 @@
       "long": 168.0
     },
     "flagCode": "VU",
-    "colors": []
+    "colors": [
+      "red",
+      "green",
+      "black"
+    ]
   },
   {
     "country": "Wallis and Futuna",
@@ -3520,7 +3576,11 @@
       "long": -176.0
     },
     "flagCode": "WF",
-    "colors": []
+    "colors": [
+      "blue",
+      "white",
+      "red"
+    ]
   },
   {
     "country": "Samoa",
@@ -3533,7 +3593,8 @@
     },
     "flagCode": "WS",
     "colors": [
-      "red"
+      "red",
+      "blue"
     ]
   },
   {
@@ -3546,7 +3607,11 @@
       "long": -44.0
     },
     "flagCode": "YE",
-    "colors": []
+    "colors": [
+      "red",
+      "white",
+      "black"
+    ]
   },
   {
     "country": "South Africa",
@@ -3558,7 +3623,12 @@
       "long": 25.0
     },
     "flagCode": "ZA",
-    "colors": []
+    "colors": [
+      "green",
+      "red",
+      "blue",
+      "black"
+    ]
   },
   {
     "country": "Zambia",
@@ -3584,6 +3654,12 @@
       "long": 30.0
     },
     "flagCode": "ZW",
-    "colors": []
+    "colors": [
+      "green",
+      "red",
+      "black",
+      "yellow",
+      "white"
+    ]
   }
 ]

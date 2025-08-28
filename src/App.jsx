@@ -6,7 +6,7 @@ import { FlagSelect } from './components/FlagSelect';
 import { useQuizConfig } from './hooks/useQuizConfig';
 import { useQuizEngine } from './hooks/useQuizEngine';
 import { CountryDataService } from './services/countryDataService';
-import countryData from './data/country_data.json';
+import countryData from './data/country_data_with_colors.json';
 
 /**
  * Main App component for the Geography Quiz application
