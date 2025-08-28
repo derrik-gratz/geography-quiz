@@ -6,6 +6,7 @@ import { FlagSelect } from './components/FlagSelect';
 import { useQuizConfig } from './hooks/useQuizConfig';
 import { useQuizEngine } from './hooks/useQuizEngine';
 import { CountryDataService } from './services/countryDataService';
+import { TextCountryInput } from './components/textInput';
 import countryData from './data/country_data.json';
 
 /**
@@ -81,6 +82,10 @@ function App() {
                     isQuizFinished={isQuizFinished}
                     totalCountries={totalCountries}
                     currentProgress={promptHistory.length}
+                />
+                <TextCountryInput
+                    // onSelect={handleFlagSelect}
+                    // clearInputsRef={clearInputsRef}
                 />
                 {/* Flag select section - handles flag selection */}
                 <FlagSelect

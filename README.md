@@ -3,13 +3,9 @@
 - Remove 'available prompts' and instead rely on if the data is present in the dictionary
   - still need to fix prompting based on checkboxes
 
-
-
-- Country name entry field
-
-- Flag selection entry field
-
 - generate map display and flag display? 
+
+- ivory coast alias not matching
 
 
 
