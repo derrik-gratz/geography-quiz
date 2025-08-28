@@ -3,8 +3,7 @@
 - Remove 'available prompts' and instead rely on if the data is present in the dictionary
   - still need to fix prompting based on checkboxes
 
-- smaller flag UI + color based filtering
-  - https://gramener.com/flags/?show=flags&White=40-50%25
+
 
 - Country name entry field
 
@@ -15,6 +14,9 @@
 
 
 # Feature additions
+
+- smaller flag UI + color based filtering
+  - https://gramener.com/flags/?show=flags&White=40-50%25
 
 - Learning mode: selecting an answer in one window displays the answers in the other one. 
 

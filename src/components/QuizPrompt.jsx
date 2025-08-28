@@ -19,6 +19,19 @@ export function QuizPrompt({
     totalCountries, 
     currentProgress 
 }) {
+    const formatLatitude = (lat) => {
+        const absLat = Math.abs(lat);
+        const direction = lat >= 0 ? 'N' : 'S';
+        return `${absLat.toFixed(1)}°${direction}`;
+      };
+      
+      const formatLongitude = (lon) => {
+        const absLon = Math.abs(lon);
+        const direction = lon >= 0 ? 'E' : 'W';
+        return `${absLon.toFixed(1)}°${direction}`;
+      };
+
+
     const renderPromptContent = () => {
         if (!currentPrompt) {
             return (
@@ -35,10 +48,9 @@ export function QuizPrompt({
                 return (
                     <div className="prompt-content">
                         {/* <h3>What is the name of this country?</h3> */}
-                        <div className="country-flag">
-                            <span className={`fi fi-${countryCode.toLowerCase()}`}></span>
+                        <div className="prompt-name">
+                            {countryData?.country || countryCode}
                         </div>
-                        <p className="hint">Flag: {countryCode}</p>
                     </div>
                 );
             
@@ -46,8 +58,7 @@ export function QuizPrompt({
                 return (
                     <div className="prompt-content">
                         {/* <h3>Which country does this flag belong to?</h3> */}
-                        <p className="country-name">{countryData?.name || countryCode}</p>
-                        <p className="hint">Name: {countryData?.name || countryCode}</p>
+                        <span className={`prompt-flag fi fi-${countryData.flagCode.toLowerCase()}`}></span>
                     </div>
                 );
             
@@ -55,10 +66,9 @@ export function QuizPrompt({
                 return (
                     <div className="prompt-content">
                         {/* <h3>Where is {countryData?.name || countryCode} located?</h3> */}
-                        <div className="country-flag">
-                            <span className={`fi fi-${countryCode.toLowerCase()}`}></span>
+                        <div className="prompt-location">
+                            { formatLatitude(countryData.location.lat) }, { formatLongitude(countryData.location.long) }
                         </div>
-                        <p className="hint">Flag: {countryCode}</p>
                     </div>
                 );
             

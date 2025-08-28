@@ -137,6 +137,11 @@ p {
   padding: 25px;
   margin: 20px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .prompt-content h3 {
@@ -155,6 +160,12 @@ p {
   border-radius: 4px;
   padding: 10px;
   background-color: white;
+}
+
+.prompt-flag {
+  font-size: 72px;
+  display: inline-block;
+  border: 3px solid grey;
 }
 
 .country-name {
