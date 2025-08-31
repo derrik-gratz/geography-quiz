@@ -6,8 +6,9 @@ import { FlagSelect } from './components/FlagSelect';
 import { useQuizConfig } from './hooks/useQuizConfig';
 import { useQuizEngine } from './hooks/useQuizEngine';
 import { CountryDataService } from './services/countryDataService';
-import { TextCountryInput } from './components/textInput';
+import { TextCountryInput } from './components/TextInput';
 import countryData from './data/country_data.json';
+import { WorldMap } from './components/WorldMap';
 
 /**
  * Main App component for the Geography Quiz application
@@ -94,6 +95,7 @@ function App() {
                     incorrectCountries={incorrectCountries}
                     clearHighlights={clearHighlights}
                 />
+                <WorldMap />
             </main>
         </div>
     );
