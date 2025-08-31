@@ -1,12 +1,12 @@
 [
   {
     "country": "Aruba",
-    "aliases": null,
+    "aliases": [],
     "code": "ABW",
     "capital": "Oranjestad",
     "location": {
-      "lat": -12.0,
-      "long": -69.0
+      "lat": -12,
+      "long": -69
     },
     "flagCode": "AW",
     "colors": [
@@ -14,13 +14,15 @@
     ]
   },
   {
-    "country": "Islamic Republic of Afghanistan",
-    "aliases": "Islamic Republic of Afghanistan",
+    "country": "Afghanistan",
+    "aliases": [
+      "Islamic Republic of Afghanistan"
+    ],
     "code": "AFG",
     "capital": "Kabul",
     "location": {
-      "lat": 33.0,
-      "long": 66.0
+      "lat": 33,
+      "long": 66
     },
     "flagCode": "AF",
     "colors": [
@@ -31,12 +33,14 @@
   },
   {
     "country": "Angola",
-    "aliases": "Republic of Angola",
+    "aliases": [
+      "Republic of Angola"
+    ],
     "code": "AGO",
     "capital": "Luanda",
     "location": {
-      "lat": -12.0,
-      "long": -18.0
+      "lat": -12,
+      "long": -18
     },
     "flagCode": "AO",
     "colors": [
@@ -46,12 +50,12 @@
   },
   {
     "country": "Anguilla",
-    "aliases": null,
+    "aliases": [],
     "code": "AIA",
     "capital": "The Valley",
     "location": {
-      "lat": -18.0,
-      "long": -63.0
+      "lat": -18,
+      "long": -63
     },
     "flagCode": "AI",
     "colors": [
@@ -66,20 +70,22 @@
     "code": "ALA",
     "capital": "Mariehamn",
     "location": {
-      "lat": -60.0,
-      "long": -20.0
+      "lat": -60,
+      "long": -20
     },
     "flagCode": "AX",
     "colors": []
   },
   {
     "country": "Albania",
-    "aliases": "Republic of Albania",
+    "aliases": [
+      "Republic of Albania"
+    ],
     "code": "ALB",
     "capital": "Tirana",
     "location": {
-      "lat": 41.0,
-      "long": 20.0
+      "lat": 41,
+      "long": 20
     },
     "flagCode": "AL",
     "colors": [
@@ -88,12 +94,14 @@
   },
   {
     "country": "Andorra",
-    "aliases": "Principality of Andorra",
+    "aliases": [
+      "Principality of Andorra"
+    ],
     "code": "AND",
     "capital": "Andorra la Vella",
     "location": {
-      "lat": -42.0,
-      "long": -1.0
+      "lat": -42,
+      "long": -1
     },
     "flagCode": "AD",
     "colors": [
@@ -104,12 +112,14 @@
   },
   {
     "country": "United Arab Emirates",
-    "aliases": "United Arab Emirates",
+    "aliases": [
+      "UAE"
+    ],
     "code": "ARE",
     "capital": "Abu Dhabi",
     "location": {
-      "lat": 24.0,
-      "long": 54.0
+      "lat": 24,
+      "long": 54
     },
     "flagCode": "AE",
     "colors": [
@@ -121,12 +131,14 @@
   },
   {
     "country": "Argentina",
-    "aliases": "Argentine Republic",
+    "aliases": [
+      "Argentine Republic"
+    ],
     "code": "ARG",
     "capital": "Buenos Aires",
     "location": {
-      "lat": -34.0,
-      "long": -64.0
+      "lat": -34,
+      "long": -64
     },
     "flagCode": "AR",
     "colors": [
@@ -135,13 +147,15 @@
     ]
   },
   {
-    "country": "Republic of Armenia",
-    "aliases": "Republic of Armenia",
+    "country": "Armenia",
+    "aliases": [
+      "Republic of Armenia"
+    ],
     "code": "ARM",
     "capital": "Yerevan",
     "location": {
-      "lat": -40.0,
-      "long": -44.0
+      "lat": -40,
+      "long": -44
     },
     "flagCode": "AM",
     "colors": [
@@ -152,12 +166,12 @@
   },
   {
     "country": "American Samoa",
-    "aliases": null,
+    "aliases": [],
     "code": "ASM",
     "capital": "Pago Pago",
     "location": {
-      "lat": -14.0,
-      "long": -170.0
+      "lat": -14,
+      "long": -170
     },
     "flagCode": "AS",
     "colors": [
@@ -167,12 +181,12 @@
   },
   {
     "country": "Antarctica",
-    "aliases": null,
+    "aliases": [],
     "code": "ATA",
     "capital": "",
     "location": {
-      "lat": -90.0,
-      "long": 0.0
+      "lat": -90,
+      "long": 0
     },
     "flagCode": "AQ",
     "colors": [
@@ -182,12 +196,12 @@
   },
   {
     "country": "French Southern Territories",
-    "aliases": null,
+    "aliases": [],
     "code": "ATF",
     "capital": "Saint Pierre",
     "location": {
-      "lat": -43.0,
-      "long": -67.0
+      "lat": -43,
+      "long": -67
     },
     "flagCode": "TF",
     "colors": [
@@ -197,12 +211,14 @@
   },
   {
     "country": "Antigua and Barbuda",
-    "aliases": "Antigua and Barbuda",
+    "aliases": [
+      "Antigua and Barbuda"
+    ],
     "code": "ATG",
     "capital": "None (",
     "location": {
-      "lat": -17.0,
-      "long": -61.0
+      "lat": -17,
+      "long": -61
     },
     "flagCode": "AG",
     "colors": [
@@ -212,12 +228,14 @@
   },
   {
     "country": "Australia",
-    "aliases": "Commonwealth of Australia",
+    "aliases": [
+      "Commonwealth of Australia"
+    ],
     "code": "AUS",
     "capital": "Canberra",
     "location": {
-      "lat": -25.0,
-      "long": 133.0
+      "lat": -25,
+      "long": 133
     },
     "flagCode": "AU",
     "colors": [
@@ -226,12 +244,14 @@
   },
   {
     "country": "Austria",
-    "aliases": "Republic of Austria",
+    "aliases": [
+      "Republic of Austria"
+    ],
     "code": "AUT",
     "capital": "Vienna",
     "location": {
-      "lat": -47.0,
-      "long": -13.0
+      "lat": -47,
+      "long": -13
     },
     "flagCode": "AT",
     "colors": [
@@ -241,12 +261,14 @@
   },
   {
     "country": "Azerbaijan",
-    "aliases": "Republic of Azerbaijan",
+    "aliases": [
+      "Republic of Azerbaijan"
+    ],
     "code": "AZE",
     "capital": "Baku",
     "location": {
-      "lat": -40.0,
-      "long": -47.0
+      "lat": -40,
+      "long": -47
     },
     "flagCode": "AZ",
     "colors": [
@@ -257,12 +279,14 @@
   },
   {
     "country": "Burundi",
-    "aliases": "Republic of Burundi",
+    "aliases": [
+      "Republic of Burundi"
+    ],
     "code": "BDI",
     "capital": "Gitega",
     "location": {
-      "lat": -3.0,
-      "long": -30.0
+      "lat": -3,
+      "long": -30
     },
     "flagCode": "BI",
     "colors": [
@@ -272,12 +296,14 @@
   },
   {
     "country": "Belgium",
-    "aliases": "Kingdom of Belgium",
+    "aliases": [
+      "Kingdom of Belgium"
+    ],
     "code": "BEL",
     "capital": "City of Brussels",
     "location": {
-      "lat": -50.0,
-      "long": -4.0
+      "lat": -50,
+      "long": -4
     },
     "flagCode": "BE",
     "colors": [
@@ -288,12 +314,14 @@
   },
   {
     "country": "Benin",
-    "aliases": "Republic of Benin",
+    "aliases": [
+      "Republic of Benin"
+    ],
     "code": "BEN",
     "capital": "Porto-Novo",
     "location": {
-      "lat": -6.0,
-      "long": -2.0
+      "lat": -6,
+      "long": -2
     },
     "flagCode": "BJ",
     "colors": [
@@ -310,8 +338,8 @@
     "code": "BES",
     "capital": "Kralendijk",
     "location": {
-      "lat": -12.0,
-      "long": -68.0
+      "lat": -12,
+      "long": -68
     },
     "flagCode": "BQ",
     "colors": [
@@ -320,12 +348,14 @@
   },
   {
     "country": "Burkina Faso",
-    "aliases": "Burkina Faso",
+    "aliases": [
+      "Burkina Faso"
+    ],
     "code": "BFA",
     "capital": "Ouagadougou",
     "location": {
-      "lat": -12.0,
-      "long": -1.0
+      "lat": -12,
+      "long": -1
     },
     "flagCode": "BF",
     "colors": [
@@ -335,12 +365,14 @@
   },
   {
     "country": "Bangladesh",
-    "aliases": "People's Republic of Bangladesh",
+    "aliases": [
+      "People's Republic of Bangladesh"
+    ],
     "code": "BGD",
     "capital": "Dhaka",
     "location": {
-      "lat": 24.0,
-      "long": 90.0
+      "lat": 24,
+      "long": 90
     },
     "flagCode": "BD",
     "colors": [
@@ -350,24 +382,28 @@
   },
   {
     "country": "Bulgaria",
-    "aliases": "Republic of Bulgaria",
+    "aliases": [
+      "Republic of Bulgaria"
+    ],
     "code": "BGR",
     "capital": "Sofia",
     "location": {
-      "lat": 43.0,
-      "long": 25.0
+      "lat": 43,
+      "long": 25
     },
     "flagCode": "BG",
     "colors": []
   },
   {
     "country": "Bahrain",
-    "aliases": "Kingdom of Bahrain",
+    "aliases": [
+      "Kingdom of Bahrain"
+    ],
     "code": "BHR",
     "capital": "Manama",
     "location": {
-      "lat": -26.0,
-      "long": -50.0
+      "lat": -26,
+      "long": -50
     },
     "flagCode": "BH",
     "colors": [
@@ -377,12 +413,14 @@
   },
   {
     "country": "Bahamas",
-    "aliases": "Commonwealth of The Bahamas",
+    "aliases": [
+      "Commonwealth of The Bahamas"
+    ],
     "code": "BHS",
     "capital": "Nassau",
     "location": {
-      "lat": -25.0,
-      "long": -77.0
+      "lat": -25,
+      "long": -77
     },
     "flagCode": "BS",
     "colors": [
@@ -392,12 +430,12 @@
   },
   {
     "country": "Bosnia and Herzegovina",
-    "aliases": "Bosnia and Herzegovina",
+    "aliases": [],
     "code": "BIH",
     "capital": "Sarajevo",
     "location": {
-      "lat": 44.0,
-      "long": 18.0
+      "lat": 44,
+      "long": 18
     },
     "flagCode": "BA",
     "colors": [
@@ -413,8 +451,8 @@
     "code": "BLM",
     "capital": "Gustavia",
     "location": {
-      "lat": -17.0,
-      "long": -62.0
+      "lat": -17,
+      "long": -62
     },
     "flagCode": "FR",
     "colors": [
@@ -425,12 +463,14 @@
   },
   {
     "country": "Belarus",
-    "aliases": "Republic of Belarus",
+    "aliases": [
+      "Republic of Belarus"
+    ],
     "code": "BLR",
     "capital": "Minsk",
     "location": {
-      "lat": 53.0,
-      "long": 27.0
+      "lat": 53,
+      "long": 27
     },
     "flagCode": "BY",
     "colors": [
@@ -440,12 +480,12 @@
   },
   {
     "country": "Belize",
-    "aliases": "Belize",
+    "aliases": [],
     "code": "BLZ",
     "capital": "Belmopan",
     "location": {
-      "lat": -17.0,
-      "long": -88.0
+      "lat": -17,
+      "long": -88
     },
     "flagCode": "BZ",
     "colors": [
@@ -454,12 +494,12 @@
   },
   {
     "country": "Bermuda",
-    "aliases": null,
+    "aliases": [],
     "code": "BMU",
     "capital": "Hamilton",
     "location": {
-      "lat": -32.0,
-      "long": -64.0
+      "lat": -32,
+      "long": -64
     },
     "flagCode": "BM",
     "colors": [
@@ -468,12 +508,14 @@
   },
   {
     "country": "Bolivia",
-    "aliases": "Plurinational State of Bolivia",
+    "aliases": [
+      "Plurinational State of Bolivia"
+    ],
     "code": "BOL",
     "capital": "Sucre",
     "location": {
-      "lat": -16.0,
-      "long": -64.0
+      "lat": -16,
+      "long": -64
     },
     "flagCode": "BO",
     "colors": [
@@ -484,12 +526,14 @@
   },
   {
     "country": "Brazil",
-    "aliases": "Federative Republic of Brazil",
+    "aliases": [
+      "Federative Republic of Brazil"
+    ],
     "code": "BRA",
     "capital": "Brasilia",
     "location": {
-      "lat": -10.0,
-      "long": -52.0
+      "lat": -10,
+      "long": -52
     },
     "flagCode": "BR",
     "colors": [
@@ -499,12 +543,12 @@
   },
   {
     "country": "Barbados",
-    "aliases": "Barbados",
+    "aliases": [],
     "code": "BRB",
     "capital": "Bridgetown",
     "location": {
-      "lat": -13.0,
-      "long": -59.0
+      "lat": -13,
+      "long": -59
     },
     "flagCode": "BB",
     "colors": [
@@ -514,12 +558,14 @@
   },
   {
     "country": "Brunei Darussalam",
-    "aliases": "Brunei Darussalam",
+    "aliases": [
+      "Brunei Darussalam"
+    ],
     "code": "BRN",
     "capital": "Bandar Seri Begawan",
     "location": {
-      "lat": -4.0,
-      "long": -114.0
+      "lat": -4,
+      "long": -114
     },
     "flagCode": "BN",
     "colors": [
@@ -528,12 +574,14 @@
   },
   {
     "country": "Bhutan",
-    "aliases": "Kingdom of Bhutan",
+    "aliases": [
+      "Kingdom of Bhutan"
+    ],
     "code": "BTN",
     "capital": "Thimphu",
     "location": {
-      "lat": -27.0,
-      "long": -90.0
+      "lat": -27,
+      "long": -90
     },
     "flagCode": "BT",
     "colors": [
@@ -543,12 +591,14 @@
   },
   {
     "country": "Botswana",
-    "aliases": "Republic of Botswana",
+    "aliases": [
+      "Republic of Botswana"
+    ],
     "code": "BWA",
     "capital": "Gaborone",
     "location": {
-      "lat": -24.0,
-      "long": -25.0
+      "lat": -24,
+      "long": -25
     },
     "flagCode": "BW",
     "colors": [
@@ -557,12 +607,14 @@
   },
   {
     "country": "Central African Republic",
-    "aliases": "Central African Republic",
+    "aliases": [
+      "Central African Republic"
+    ],
     "code": "CAF",
     "capital": "Bangui",
     "location": {
-      "lat": 7.0,
-      "long": 21.0
+      "lat": 7,
+      "long": 21
     },
     "flagCode": "CF",
     "colors": [
@@ -575,12 +627,12 @@
   },
   {
     "country": "Canada",
-    "aliases": null,
+    "aliases": [],
     "code": "CAN",
     "capital": "Ottawa",
     "location": {
-      "lat": 60.0,
-      "long": -110.0
+      "lat": 60,
+      "long": -110
     },
     "flagCode": "CA",
     "colors": [
@@ -590,12 +642,14 @@
   },
   {
     "country": "Switzerland",
-    "aliases": "Swiss Confederation",
+    "aliases": [
+      "Swiss Confederation"
+    ],
     "code": "CHE",
     "capital": "Bern",
     "location": {
-      "lat": -46.0,
-      "long": -8.0
+      "lat": -46,
+      "long": -8
     },
     "flagCode": "CH",
     "colors": [
@@ -605,12 +659,14 @@
   },
   {
     "country": "Chile",
-    "aliases": "Republic of Chile",
+    "aliases": [
+      "Republic of Chile"
+    ],
     "code": "CHL",
     "capital": "Santiago",
     "location": {
-      "lat": -34.0,
-      "long": -71.0
+      "lat": -34,
+      "long": -71
     },
     "flagCode": "CL",
     "colors": [
@@ -620,12 +676,14 @@
   },
   {
     "country": "China",
-    "aliases": "People's Republic of China",
+    "aliases": [
+      "People's Republic of China"
+    ],
     "code": "CHN",
     "capital": "Beijing",
     "location": {
-      "lat": 35.0,
-      "long": 103.0
+      "lat": 35,
+      "long": 103
     },
     "flagCode": "CN",
     "colors": [
@@ -634,12 +692,14 @@
   },
   {
     "country": "Ivory Coast",
-    "aliases": "Republic of Côte d'Ivoire",
+    "aliases": [
+      "Republic of Côte d'Ivoire"
+    ],
     "code": "CIV",
     "capital": "Yamoussoukro",
     "location": {
-      "lat": 8.0,
-      "long": -5.0
+      "lat": 8,
+      "long": -5
     },
     "flagCode": "CI",
     "colors": [
@@ -650,12 +710,14 @@
   },
   {
     "country": "Cameroon",
-    "aliases": "Republic of Cameroon",
+    "aliases": [
+      "Republic of Cameroon"
+    ],
     "code": "CMR",
     "capital": "Yaoundé",
     "location": {
-      "lat": 6.0,
-      "long": 12.0
+      "lat": 6,
+      "long": 12
     },
     "flagCode": "CM",
     "colors": [
@@ -670,8 +732,8 @@
     "code": "COD",
     "capital": "Kinshasa",
     "location": {
-      "lat": -3.0,
-      "long": 24.0
+      "lat": -3,
+      "long": 24
     },
     "flagCode": "CD",
     "colors": [
@@ -684,8 +746,8 @@
     "code": "COG",
     "capital": "Brazzaville",
     "location": {
-      "lat": -1.0,
-      "long": -15.0
+      "lat": -1,
+      "long": -15
     },
     "flagCode": "CG",
     "colors": [
@@ -696,12 +758,14 @@
   },
   {
     "country": "Cook Islands",
-    "aliases": "Cook Islands",
+    "aliases": [
+      "Cook Islands"
+    ],
     "code": "COK",
     "capital": "Avarua",
     "location": {
-      "lat": -21.0,
-      "long": -159.0
+      "lat": -21,
+      "long": -159
     },
     "flagCode": "CK",
     "colors": [
@@ -710,12 +774,14 @@
   },
   {
     "country": "Colombia",
-    "aliases": "Republic of Colombia",
+    "aliases": [
+      "Republic of Colombia"
+    ],
     "code": "COL",
     "capital": "Bogotá",
     "location": {
-      "lat": 4.0,
-      "long": -72.0
+      "lat": 4,
+      "long": -72
     },
     "flagCode": "CO",
     "colors": [
@@ -726,12 +792,14 @@
   },
   {
     "country": "Comoros",
-    "aliases": "Union of the Comoros",
+    "aliases": [
+      "Union of the Comoros"
+    ],
     "code": "COM",
     "capital": "Moroni",
     "location": {
-      "lat": -12.0,
-      "long": -43.0
+      "lat": -12,
+      "long": -43
     },
     "flagCode": "KM",
     "colors": [
@@ -740,12 +808,14 @@
   },
   {
     "country": "Cabo Verde",
-    "aliases": "Republic of Cabo Verde",
+    "aliases": [
+      "Republic of Cabo Verde"
+    ],
     "code": "CPV",
     "capital": "Praia",
     "location": {
-      "lat": -15.0,
-      "long": -23.0
+      "lat": -15,
+      "long": -23
     },
     "flagCode": "CV",
     "colors": [
@@ -754,12 +824,14 @@
   },
   {
     "country": "Costa Rica",
-    "aliases": "Republic of Costa Rica",
+    "aliases": [
+      "Republic of Costa Rica"
+    ],
     "code": "CRI",
     "capital": "San José",
     "location": {
-      "lat": 10.0,
-      "long": -84.0
+      "lat": 10,
+      "long": -84
     },
     "flagCode": "CR",
     "colors": [
@@ -768,12 +840,14 @@
   },
   {
     "country": "Cuba",
-    "aliases": "Republic of Cuba",
+    "aliases": [
+      "Republic of Cuba"
+    ],
     "code": "CUB",
     "capital": "Havana",
     "location": {
-      "lat": 22.0,
-      "long": -80.0
+      "lat": 22,
+      "long": -80
     },
     "flagCode": "CU",
     "colors": [
@@ -789,8 +863,8 @@
     "code": "CUW",
     "capital": "Willemstad",
     "location": {
-      "lat": -12.0,
-      "long": -69.0
+      "lat": -12,
+      "long": -69
     },
     "flagCode": "CW",
     "colors": [
@@ -799,12 +873,12 @@
   },
   {
     "country": "Cayman Islands",
-    "aliases": null,
+    "aliases": [],
     "code": "CYM",
     "capital": "George Town",
     "location": {
-      "lat": -19.0,
-      "long": -81.0
+      "lat": -19,
+      "long": -81
     },
     "flagCode": "KY",
     "colors": [
@@ -813,12 +887,14 @@
   },
   {
     "country": "Cyprus",
-    "aliases": "Republic of Cyprus",
+    "aliases": [
+      "Republic of Cyprus"
+    ],
     "code": "CYP",
     "capital": "Nicosia",
     "location": {
-      "lat": 35.0,
-      "long": 33.0
+      "lat": 35,
+      "long": 33
     },
     "flagCode": "CY",
     "colors": [
@@ -828,12 +904,14 @@
   },
   {
     "country": "Czech Republic",
-    "aliases": "Czech Republic",
+    "aliases": [
+      "Czech Republic"
+    ],
     "code": "CZE",
     "capital": "Prague",
     "location": {
-      "lat": -49.0,
-      "long": -15.0
+      "lat": -49,
+      "long": -15
     },
     "flagCode": "CZ",
     "colors": [
@@ -844,12 +922,14 @@
   },
   {
     "country": "France",
-    "aliases": "French Republic",
+    "aliases": [
+      "French Republic"
+    ],
     "code": "FRA",
     "capital": "Paris",
     "location": {
-      "lat": 47.0,
-      "long": 2.0
+      "lat": 47,
+      "long": 2
     },
     "flagCode": "FR",
     "colors": [
@@ -860,12 +940,14 @@
   },
   {
     "country": "Germany",
-    "aliases": "Federal Republic of Germany",
+    "aliases": [
+      "Federal Republic of Germany"
+    ],
     "code": "DEU",
     "capital": "Berlin",
     "location": {
-      "lat": 51.0,
-      "long": 9.0
+      "lat": 51,
+      "long": 9
     },
     "flagCode": "DE",
     "colors": [
@@ -876,12 +958,14 @@
   },
   {
     "country": "Djibouti",
-    "aliases": "Republic of Djibouti",
+    "aliases": [
+      "Republic of Djibouti"
+    ],
     "code": "DJI",
     "capital": "Djibouti City",
     "location": {
-      "lat": -11.0,
-      "long": -43.0
+      "lat": -11,
+      "long": -43
     },
     "flagCode": "DJ",
     "colors": [
@@ -892,12 +976,14 @@
   },
   {
     "country": "Dominica",
-    "aliases": "Commonwealth of Dominica",
+    "aliases": [
+      "Commonwealth of Dominica"
+    ],
     "code": "DMA",
     "capital": "Roseau",
     "location": {
-      "lat": -15.0,
-      "long": -61.0
+      "lat": -15,
+      "long": -61
     },
     "flagCode": "DM",
     "colors": [
@@ -906,12 +992,12 @@
   },
   {
     "country": "Denmark",
-    "aliases": null,
+    "aliases": [],
     "code": "DNK",
     "capital": "Copenhagen",
     "location": {
-      "lat": 56.0,
-      "long": 10.0
+      "lat": 56,
+      "long": 10
     },
     "flagCode": "DK",
     "colors": [
@@ -921,12 +1007,14 @@
   },
   {
     "country": "Dominican Republic",
-    "aliases": "Dominican Republic",
+    "aliases": [
+      "Dominican Republic"
+    ],
     "code": "DOM",
     "capital": "Santo Domingo",
     "location": {
-      "lat": -19.0,
-      "long": -70.0
+      "lat": -19,
+      "long": -70
     },
     "flagCode": "DO",
     "colors": [
@@ -937,12 +1025,14 @@
   },
   {
     "country": "Algeria",
-    "aliases": "People's Democratic Republic of Algeria",
+    "aliases": [
+      "People's Democratic Republic of Algeria"
+    ],
     "code": "DZA",
     "capital": "Algiers",
     "location": {
-      "lat": 28.0,
-      "long": 2.0
+      "lat": 28,
+      "long": 2
     },
     "flagCode": "DZ",
     "colors": [
@@ -952,12 +1042,14 @@
   },
   {
     "country": "Ecuador",
-    "aliases": "Republic of Ecuador",
+    "aliases": [
+      "Republic of Ecuador"
+    ],
     "code": "ECU",
     "capital": "Quito",
     "location": {
-      "lat": -2.0,
-      "long": -77.0
+      "lat": -2,
+      "long": -77
     },
     "flagCode": "EC",
     "colors": [
@@ -966,12 +1058,14 @@
   },
   {
     "country": "Egypt",
-    "aliases": "Arab Republic of Egypt",
+    "aliases": [
+      "Arab Republic of Egypt"
+    ],
     "code": "EGY",
     "capital": "Cairo",
     "location": {
-      "lat": 26.0,
-      "long": 30.0
+      "lat": 26,
+      "long": 30
     },
     "flagCode": "EG",
     "colors": [
@@ -982,12 +1076,14 @@
   },
   {
     "country": "Eritrea",
-    "aliases": "State of Eritrea",
+    "aliases": [
+      "State of Eritrea"
+    ],
     "code": "ERI",
     "capital": "Asmara",
     "location": {
-      "lat": 15.0,
-      "long": 39.0
+      "lat": 15,
+      "long": 39
     },
     "flagCode": "ER",
     "colors": [
@@ -998,23 +1094,25 @@
   },
   {
     "country": "Western Sahara",
-    "aliases": null,
+    "aliases": [],
     "code": "ESH",
     "capital": "",
     "location": {
-      "lat": 24.0,
-      "long": -14.0
+      "lat": 24,
+      "long": -14
     },
     "colors": []
   },
   {
     "country": "Spain",
-    "aliases": "Kingdom of Spain",
+    "aliases": [
+      "Kingdom of Spain"
+    ],
     "code": "ESP",
     "capital": "Madrid",
     "location": {
-      "lat": 40.0,
-      "long": -4.0
+      "lat": 40,
+      "long": -4
     },
     "flagCode": "ES",
     "colors": [
@@ -1024,12 +1122,14 @@
   },
   {
     "country": "Estonia",
-    "aliases": "Republic of Estonia",
+    "aliases": [
+      "Republic of Estonia"
+    ],
     "code": "EST",
     "capital": "Tallinn",
     "location": {
-      "lat": 59.0,
-      "long": 26.0
+      "lat": 59,
+      "long": 26
     },
     "flagCode": "EE",
     "colors": [
@@ -1040,12 +1140,14 @@
   },
   {
     "country": "Ethiopia",
-    "aliases": "Federal Democratic Republic of Ethiopia",
+    "aliases": [
+      "Federal Democratic Republic of Ethiopia"
+    ],
     "code": "ETH",
     "capital": "Addis Ababa",
     "location": {
-      "lat": -9.0,
-      "long": -38.0
+      "lat": -9,
+      "long": -38
     },
     "flagCode": "ET",
     "colors": [
@@ -1057,12 +1159,14 @@
   },
   {
     "country": "Finland",
-    "aliases": "Republic of Finland",
+    "aliases": [
+      "Republic of Finland"
+    ],
     "code": "FIN",
     "capital": "Helsinki",
     "location": {
-      "lat": 64.0,
-      "long": 26.0
+      "lat": 64,
+      "long": 26
     },
     "flagCode": "FI",
     "colors": [
@@ -1071,12 +1175,14 @@
   },
   {
     "country": "Fiji",
-    "aliases": "Republic of Fiji",
+    "aliases": [
+      "Republic of Fiji"
+    ],
     "code": "FJI",
     "capital": "Suva",
     "location": {
-      "lat": -18.0,
-      "long": 179.0
+      "lat": -18,
+      "long": 179
     },
     "flagCode": "FJ",
     "colors": [
@@ -1091,8 +1197,8 @@
     "code": "FLK",
     "capital": "Stanley",
     "location": {
-      "lat": -51.0,
-      "long": -59.0
+      "lat": -51,
+      "long": -59
     },
     "flagCode": "FK",
     "colors": [
@@ -1101,12 +1207,12 @@
   },
   {
     "country": "Faroe Islands",
-    "aliases": null,
+    "aliases": [],
     "code": "FRO",
     "capital": "Tórshavn",
     "location": {
-      "lat": -62.0,
-      "long": -6.0
+      "lat": -62,
+      "long": -6
     },
     "flagCode": "FO",
     "colors": [
@@ -1116,12 +1222,14 @@
   },
   {
     "country": "Micronesia",
-    "aliases": "Federated States of Micronesia",
+    "aliases": [
+      "Federated States of Micronesia"
+    ],
     "code": "FSM",
     "capital": "Palikir",
     "location": {
-      "lat": -6.0,
-      "long": -158.0
+      "lat": -6,
+      "long": -158
     },
     "flagCode": "FM",
     "colors": [
@@ -1130,12 +1238,14 @@
   },
   {
     "country": "Gabon",
-    "aliases": "Gabonese Republic",
+    "aliases": [
+      "Gabonese Republic"
+    ],
     "code": "GAB",
     "capital": "Libreville",
     "location": {
-      "lat": -1.0,
-      "long": 12.0
+      "lat": -1,
+      "long": 12
     },
     "flagCode": "GA",
     "colors": [
@@ -1146,12 +1256,14 @@
   },
   {
     "country": "United Kingdom",
-    "aliases": "United Kingdom of Great Britain and Northern Ireland",
+    "aliases": [
+      "United Kingdom of Great Britain and Northern Ireland"
+    ],
     "code": "GBR",
     "capital": "London",
     "location": {
-      "lat": 55.0,
-      "long": -3.0
+      "lat": 55,
+      "long": -3
     },
     "flagCode": "GB",
     "colors": [
@@ -1162,12 +1274,14 @@
   },
   {
     "country": "Georgia",
-    "aliases": "Georgia",
+    "aliases": [
+      "Georgia"
+    ],
     "code": "GEO",
     "capital": "Tbilisi",
     "location": {
-      "lat": -42.0,
-      "long": -43.0
+      "lat": -42,
+      "long": -43
     },
     "flagCode": "GE",
     "colors": [
@@ -1177,12 +1291,12 @@
   },
   {
     "country": "Guernsey",
-    "aliases": null,
+    "aliases": [],
     "code": "GGY",
     "capital": "Saint Peter Port",
     "location": {
-      "lat": -49.0,
-      "long": -2.0
+      "lat": -49,
+      "long": -2
     },
     "flagCode": "GG",
     "colors": [
@@ -1193,12 +1307,14 @@
   },
   {
     "country": "Ghana",
-    "aliases": "Republic of Ghana",
+    "aliases": [
+      "Republic of Ghana"
+    ],
     "code": "GHA",
     "capital": "Accra",
     "location": {
-      "lat": -8.0,
-      "long": -1.0
+      "lat": -8,
+      "long": -1
     },
     "flagCode": "GH",
     "colors": [
@@ -1209,12 +1325,12 @@
   },
   {
     "country": "Gibraltar",
-    "aliases": null,
+    "aliases": [],
     "code": "GIB",
     "capital": "",
     "location": {
-      "lat": -36.0,
-      "long": -5.0
+      "lat": -36,
+      "long": -5
     },
     "flagCode": "GI",
     "colors": [
@@ -1224,12 +1340,14 @@
   },
   {
     "country": "Guinea",
-    "aliases": "Republic of Guinea",
+    "aliases": [
+      "Republic of Guinea"
+    ],
     "code": "GIN",
     "capital": "Conakry",
     "location": {
-      "lat": 11.0,
-      "long": -10.0
+      "lat": 11,
+      "long": -10
     },
     "flagCode": "GN",
     "colors": [
@@ -1240,12 +1358,14 @@
   },
   {
     "country": "The Gambia",
-    "aliases": "Republic of The Gambia",
+    "aliases": [
+      "Republic of The Gambia"
+    ],
     "code": "GMB",
     "capital": "Banjul",
     "location": {
-      "lat": -13.0,
-      "long": -16.0
+      "lat": -13,
+      "long": -16
     },
     "flagCode": "GM",
     "colors": [
@@ -1256,12 +1376,14 @@
   },
   {
     "country": "Guinea-Bissau",
-    "aliases": "Republic of Guinea-Bissau",
+    "aliases": [
+      "Republic of Guinea-Bissau"
+    ],
     "code": "GNB",
     "capital": "Bissau",
     "location": {
-      "lat": 12.0,
-      "long": -15.0
+      "lat": 12,
+      "long": -15
     },
     "flagCode": "GW",
     "colors": [
@@ -1272,12 +1394,14 @@
   },
   {
     "country": "Equatorial Guinea",
-    "aliases": "Republic of Equatorial Guinea",
+    "aliases": [
+      "Republic of Equatorial Guinea"
+    ],
     "code": "GNQ",
     "capital": "Malabo",
     "location": {
-      "lat": -1.0,
-      "long": -10.0
+      "lat": -1,
+      "long": -10
     },
     "flagCode": "GQ",
     "colors": [
@@ -1289,12 +1413,14 @@
   },
   {
     "country": "Greece",
-    "aliases": "Hellenic Republic",
+    "aliases": [
+      "Hellenic Republic"
+    ],
     "code": "GRC",
     "capital": "Athens",
     "location": {
-      "lat": 39.0,
-      "long": 22.0
+      "lat": 39,
+      "long": 22
     },
     "flagCode": "GR",
     "colors": [
@@ -1308,8 +1434,8 @@
     "code": "GRD",
     "capital": "St. George's",
     "location": {
-      "lat": -12.0,
-      "long": -61.0
+      "lat": -12,
+      "long": -61
     },
     "flagCode": "GD",
     "colors": [
@@ -1320,12 +1446,12 @@
   },
   {
     "country": "Greenland",
-    "aliases": null,
+    "aliases": [],
     "code": "GRL",
     "capital": "Nuuk",
     "location": {
-      "lat": -72.0,
-      "long": -40.0
+      "lat": -72,
+      "long": -40
     },
     "flagCode": "GL",
     "colors": [
@@ -1335,12 +1461,14 @@
   },
   {
     "country": "Guatemala",
-    "aliases": "Republic of Guatemala",
+    "aliases": [
+      "Republic of Guatemala"
+    ],
     "code": "GTM",
     "capital": "Guatemala City",
     "location": {
-      "lat": -15.0,
-      "long": -90.0
+      "lat": -15,
+      "long": -90
     },
     "flagCode": "GT",
     "colors": [
@@ -1350,12 +1478,12 @@
   },
   {
     "country": "Guam",
-    "aliases": null,
+    "aliases": [],
     "code": "GUM",
     "capital": "Hagåtña",
     "location": {
-      "lat": -13.0,
-      "long": -144.0
+      "lat": -13,
+      "long": -144
     },
     "flagCode": "GU",
     "colors": [
@@ -1364,12 +1492,14 @@
   },
   {
     "country": "Guyana",
-    "aliases": "Co-operative Republic of Guyana",
+    "aliases": [
+      "Co-operative Republic of Guyana"
+    ],
     "code": "GUY",
     "capital": "Georgetown",
     "location": {
-      "lat": 5.0,
-      "long": -59.0
+      "lat": 5,
+      "long": -59
     },
     "flagCode": "GY",
     "colors": [
@@ -1380,12 +1510,12 @@
   },
   {
     "country": "Hong Kong",
-    "aliases": null,
+    "aliases": [],
     "code": "HKG",
     "capital": "",
     "location": {
-      "lat": -22.0,
-      "long": -114.0
+      "lat": -22,
+      "long": -114
     },
     "flagCode": "HK",
     "colors": [
@@ -1395,12 +1525,14 @@
   },
   {
     "country": "Heard Island and McDonald Islands",
-    "aliases": ["HIMI"],
+    "aliases": [
+      "HIMI"
+    ],
     "code": "HMD",
     "capital": "",
     "location": {
-      "lat": -53.0,
-      "long": -73.0
+      "lat": -53,
+      "long": -73
     },
     "flagCode": "HM",
     "colors": [
@@ -1409,12 +1541,14 @@
   },
   {
     "country": "Honduras",
-    "aliases": "Republic of Honduras",
+    "aliases": [
+      "Republic of Honduras"
+    ],
     "code": "HND",
     "capital": "Tegucigalpa",
     "location": {
-      "lat": -15.0,
-      "long": -86.0
+      "lat": -15,
+      "long": -86
     },
     "flagCode": "HN",
     "colors": [
@@ -1423,12 +1557,14 @@
   },
   {
     "country": "Croatia",
-    "aliases": "Republic of Croatia",
+    "aliases": [
+      "Republic of Croatia"
+    ],
     "code": "HRV",
     "capital": "Zagreb",
     "location": {
-      "lat": -45.0,
-      "long": -15.0
+      "lat": -45,
+      "long": -15
     },
     "flagCode": "HR",
     "colors": [
@@ -1439,12 +1575,14 @@
   },
   {
     "country": "Haiti",
-    "aliases": "Republic of Haiti",
+    "aliases": [
+      "Republic of Haiti"
+    ],
     "code": "HTI",
     "capital": "Port-au-Prince",
     "location": {
-      "lat": -19.0,
-      "long": -72.0
+      "lat": -19,
+      "long": -72
     },
     "flagCode": "HT",
     "colors": [
@@ -1454,12 +1592,14 @@
   },
   {
     "country": "Hungary",
-    "aliases": "Hungary",
+    "aliases": [
+      "Hungary"
+    ],
     "code": "HUN",
     "capital": "Budapest",
     "location": {
-      "lat": 47.0,
-      "long": 20.0
+      "lat": 47,
+      "long": 20
     },
     "flagCode": "HU",
     "colors": [
@@ -1470,12 +1610,14 @@
   },
   {
     "country": "Indonesia",
-    "aliases": "Republic of Indonesia",
+    "aliases": [
+      "Republic of Indonesia"
+    ],
     "code": "IDN",
     "capital": "Jakarta",
     "location": {
-      "lat": -5.0,
-      "long": 120.0
+      "lat": -5,
+      "long": 120
     },
     "flagCode": "ID",
     "colors": [
@@ -1485,12 +1627,12 @@
   },
   {
     "country": "Isle of Man",
-    "aliases": null,
+    "aliases": [],
     "code": "IMN",
     "capital": "Douglas",
     "location": {
-      "lat": -54.0,
-      "long": -4.0
+      "lat": -54,
+      "long": -4
     },
     "flagCode": "IM",
     "colors": [
@@ -1499,12 +1641,14 @@
   },
   {
     "country": "India",
-    "aliases": "Republic of India",
+    "aliases": [
+      "Republic of India"
+    ],
     "code": "IND",
     "capital": "New Delhi",
     "location": {
-      "lat": 21.0,
-      "long": 78.0
+      "lat": 21,
+      "long": 78
     },
     "flagCode": "IN",
     "colors": [
@@ -1515,12 +1659,12 @@
   },
   {
     "country": "The British Indian Ocean Territory",
-    "aliases": null,
+    "aliases": [],
     "code": "IOT",
     "capital": "Administered from",
     "location": {
-      "lat": -7.0,
-      "long": -72.0
+      "lat": -7,
+      "long": -72
     },
     "flagCode": "IO",
     "colors": [
@@ -1530,12 +1674,14 @@
   },
   {
     "country": "Ireland",
-    "aliases": "Ireland",
+    "aliases": [
+      "Ireland"
+    ],
     "code": "IRL",
     "capital": "Dublin",
     "location": {
-      "lat": 53.0,
-      "long": -8.0
+      "lat": 53,
+      "long": -8
     },
     "flagCode": "IE",
     "colors": [
@@ -1546,12 +1692,14 @@
   },
   {
     "country": "Iran",
-    "aliases": "Islamic Republic of Iran",
+    "aliases": [
+      "Islamic Republic of Iran"
+    ],
     "code": "IRN",
     "capital": "Tehran",
     "location": {
-      "lat": 32.0,
-      "long": 53.0
+      "lat": 32,
+      "long": 53
     },
     "flagCode": "IR",
     "colors": [
@@ -1562,12 +1710,14 @@
   },
   {
     "country": "Iraq",
-    "aliases": "Republic of Iraq",
+    "aliases": [
+      "Republic of Iraq"
+    ],
     "code": "IRQ",
     "capital": "Baghdad",
     "location": {
-      "lat": 33.0,
-      "long": 44.0
+      "lat": 33,
+      "long": 44
     },
     "flagCode": "IQ",
     "colors": [
@@ -1578,12 +1728,12 @@
   },
   {
     "country": "Iceland",
-    "aliases": null,
+    "aliases": [],
     "code": "ISL",
     "capital": "Reykjavík",
     "location": {
-      "lat": 65.0,
-      "long": -18.0
+      "lat": 65,
+      "long": -18
     },
     "flagCode": "IS",
     "colors": [
@@ -1593,12 +1743,14 @@
   },
   {
     "country": "Israel",
-    "aliases": "State of Israel",
+    "aliases": [
+      "State of Israel"
+    ],
     "code": "ISR",
     "capital": "Jerusalem",
     "location": {
-      "lat": 31.0,
-      "long": 35.0
+      "lat": 31,
+      "long": 35
     },
     "flagCode": "IL",
     "colors": [
@@ -1608,12 +1760,14 @@
   },
   {
     "country": "Italy",
-    "aliases": "Italian Republic",
+    "aliases": [
+      "Italian Republic"
+    ],
     "code": "ITA",
     "capital": "Rome",
     "location": {
-      "lat": 43.0,
-      "long": 12.0
+      "lat": 43,
+      "long": 12
     },
     "flagCode": "IT",
     "colors": [
@@ -1624,12 +1778,12 @@
   },
   {
     "country": "Jamaica",
-    "aliases": null,
+    "aliases": [],
     "code": "JAM",
     "capital": "Kingston",
     "location": {
-      "lat": -18.0,
-      "long": -77.0
+      "lat": -18,
+      "long": -77
     },
     "flagCode": "JM",
     "colors": [
@@ -1640,12 +1794,12 @@
   },
   {
     "country": "Jersey",
-    "aliases": null,
+    "aliases": [],
     "code": "JEY",
     "capital": "St Helier",
     "location": {
-      "lat": -49.0,
-      "long": -2.0
+      "lat": -49,
+      "long": -2
     },
     "flagCode": "JE",
     "colors": [
@@ -1655,12 +1809,14 @@
   },
   {
     "country": "Jordan",
-    "aliases": "Hashemite Kingdom of Jordan",
+    "aliases": [
+      "Hashemite Kingdom of Jordan"
+    ],
     "code": "JOR",
     "capital": "Amman",
     "location": {
-      "lat": -31.0,
-      "long": -36.0
+      "lat": -31,
+      "long": -36
     },
     "flagCode": "JO",
     "colors": [
@@ -1672,12 +1828,12 @@
   },
   {
     "country": "Japan",
-    "aliases": null,
+    "aliases": [],
     "code": "JPN",
     "capital": "Tokyo",
     "location": {
-      "lat": 36.0,
-      "long": 138.0
+      "lat": 36,
+      "long": 138
     },
     "flagCode": "JP",
     "colors": [
@@ -1687,12 +1843,14 @@
   },
   {
     "country": "Kazakhstan",
-    "aliases": "Republic of Kazakhstan",
+    "aliases": [
+      "Republic of Kazakhstan"
+    ],
     "code": "KAZ",
     "capital": "Astana",
     "location": {
-      "lat": 48.0,
-      "long": 68.0
+      "lat": 48,
+      "long": 68
     },
     "flagCode": "KZ",
     "colors": [
@@ -1701,12 +1859,14 @@
   },
   {
     "country": "Kenya",
-    "aliases": "Republic of Kenya",
+    "aliases": [
+      "Republic of Kenya"
+    ],
     "code": "KEN",
     "capital": "Nairobi",
     "location": {
-      "lat": 1.0,
-      "long": 38.0
+      "lat": 1,
+      "long": 38
     },
     "flagCode": "KE",
     "colors": [
@@ -1717,12 +1877,14 @@
   },
   {
     "country": "Kyrgyzstan",
-    "aliases": "Kyrgyz Republic",
+    "aliases": [
+      "Kyrgyz Republic"
+    ],
     "code": "KGZ",
     "capital": "Bishkek",
     "location": {
-      "lat": 41.0,
-      "long": 75.0
+      "lat": 41,
+      "long": 75
     },
     "flagCode": "KG",
     "colors": [
@@ -1731,12 +1893,14 @@
   },
   {
     "country": "Cambodia",
-    "aliases": "Kingdom of Cambodia",
+    "aliases": [
+      "Kingdom of Cambodia"
+    ],
     "code": "KHM",
     "capital": "Phnom Penh",
     "location": {
-      "lat": -12.0,
-      "long": -105.0
+      "lat": -12,
+      "long": -105
     },
     "flagCode": "KH",
     "colors": [
@@ -1746,12 +1910,14 @@
   },
   {
     "country": "Kiribati",
-    "aliases": "Republic of Kiribati",
+    "aliases": [
+      "Republic of Kiribati"
+    ],
     "code": "KIR",
     "capital": "Tarawa",
     "location": {
-      "lat": -1.0,
-      "long": -173.0
+      "lat": -1,
+      "long": -173
     },
     "flagCode": "KI",
     "colors": [
@@ -1762,12 +1928,14 @@
   },
   {
     "country": "Saint Kitts and Nevis",
-    "aliases": "Federation of Saint Kitts and Nevis",
+    "aliases": [
+      "Federation of Saint Kitts and Nevis"
+    ],
     "code": "KNA",
     "capital": "Basseterre",
     "location": {
-      "lat": -17.0,
-      "long": -62.0
+      "lat": -17,
+      "long": -62
     },
     "flagCode": "KN",
     "colors": [
@@ -1778,12 +1946,14 @@
   },
   {
     "country": "South Korea",
-    "aliases": "Republic of Korea",
+    "aliases": [
+      "Republic of Korea"
+    ],
     "code": "KOR",
     "capital": "Seoul",
     "location": {
-      "lat": 36.0,
-      "long": 128.0
+      "lat": 36,
+      "long": 128
     },
     "flagCode": "KR",
     "colors": [
@@ -1792,12 +1962,14 @@
   },
   {
     "country": "Kuwait",
-    "aliases": "State of Kuwait",
+    "aliases": [
+      "State of Kuwait"
+    ],
     "code": "KWT",
     "capital": "Kuwait City",
     "location": {
-      "lat": -29.0,
-      "long": -47.0
+      "lat": -29,
+      "long": -47
     },
     "flagCode": "KW",
     "colors": [
@@ -1809,12 +1981,14 @@
   },
   {
     "country": "Laos",
-    "aliases": "Lao People's Democratic Republic",
+    "aliases": [
+      "Lao People's Democratic Republic"
+    ],
     "code": "LAO",
     "capital": "Vientiane",
     "location": {
-      "lat": 18.0,
-      "long": 105.0
+      "lat": 18,
+      "long": 105
     },
     "flagCode": "LA",
     "colors": [
@@ -1824,12 +1998,14 @@
   },
   {
     "country": "Lebanon",
-    "aliases": "Republic of Lebanon",
+    "aliases": [
+      "Republic of Lebanon"
+    ],
     "code": "LBN",
     "capital": "Beirut",
     "location": {
-      "lat": -33.0,
-      "long": -35.0
+      "lat": -33,
+      "long": -35
     },
     "flagCode": "LB",
     "colors": [
@@ -1839,12 +2015,14 @@
   },
   {
     "country": "Liberia",
-    "aliases": "Republic of Liberia",
+    "aliases": [
+      "Republic of Liberia"
+    ],
     "code": "LBR",
     "capital": "Monrovia",
     "location": {
-      "lat": -6.0,
-      "long": -9.0
+      "lat": -6,
+      "long": -9
     },
     "flagCode": "LR",
     "colors": [
@@ -1855,12 +2033,14 @@
   },
   {
     "country": "Libya",
-    "aliases": "State of Libya",
+    "aliases": [
+      "State of Libya"
+    ],
     "code": "LBY",
     "capital": "Tripoli",
     "location": {
-      "lat": 27.0,
-      "long": 17.0
+      "lat": 27,
+      "long": 17
     },
     "flagCode": "LY",
     "colors": [
@@ -1871,12 +2051,12 @@
   },
   {
     "country": "Saint Lucia",
-    "aliases": null,
+    "aliases": [],
     "code": "LCA",
     "capital": "Castries",
     "location": {
-      "lat": -13.0,
-      "long": -60.0
+      "lat": -13,
+      "long": -60
     },
     "flagCode": "LC",
     "colors": [
@@ -1885,12 +2065,14 @@
   },
   {
     "country": "Liechtenstein",
-    "aliases": "Principality of Liechtenstein",
+    "aliases": [
+      "Principality of Liechtenstein"
+    ],
     "code": "LIE",
     "capital": "Vaduz",
     "location": {
-      "lat": -47.0,
-      "long": -9.0
+      "lat": -47,
+      "long": -9
     },
     "flagCode": "LI",
     "colors": [
@@ -1900,12 +2082,14 @@
   },
   {
     "country": "Sri Lanka",
-    "aliases": "Democratic Socialist Republic of Sri Lanka",
+    "aliases": [
+      "Democratic Socialist Republic of Sri Lanka"
+    ],
     "code": "LKA",
     "capital": "Sri Jayawardenepura Kotte",
     "location": {
-      "lat": 7.0,
-      "long": 81.0
+      "lat": 7,
+      "long": 81
     },
     "flagCode": "LK",
     "colors": [
@@ -1915,12 +2099,14 @@
   },
   {
     "country": "Lesotho",
-    "aliases": "Kingdom of Lesotho",
+    "aliases": [
+      "Kingdom of Lesotho"
+    ],
     "code": "LSO",
     "capital": "Maseru",
     "location": {
-      "lat": -29.0,
-      "long": -28.0
+      "lat": -29,
+      "long": -28
     },
     "flagCode": "LS",
     "colors": [
@@ -1931,12 +2117,14 @@
   },
   {
     "country": "Lithuania",
-    "aliases": "Republic of Lithuania",
+    "aliases": [
+      "Republic of Lithuania"
+    ],
     "code": "LTU",
     "capital": "Vilnius",
     "location": {
-      "lat": 55.0,
-      "long": 24.0
+      "lat": 55,
+      "long": 24
     },
     "flagCode": "LT",
     "colors": [
@@ -1947,12 +2135,14 @@
   },
   {
     "country": "Luxembourg",
-    "aliases": "Grand Duchy of Luxembourg",
+    "aliases": [
+      "Grand Duchy of Luxembourg"
+    ],
     "code": "LUX",
     "capital": "Luxembourg",
     "location": {
-      "lat": -49.0,
-      "long": -6.0
+      "lat": -49,
+      "long": -6
     },
     "flagCode": "LU",
     "colors": [
@@ -1963,12 +2153,14 @@
   },
   {
     "country": "Latvia",
-    "aliases": "Republic of Latvia",
+    "aliases": [
+      "Republic of Latvia"
+    ],
     "code": "LVA",
     "capital": "Riga",
     "location": {
-      "lat": 57.0,
-      "long": 25.0
+      "lat": 57,
+      "long": 25
     },
     "flagCode": "LV",
     "colors": [
@@ -1977,24 +2169,28 @@
   },
   {
     "country": "Macao",
-    "aliases": ["Macau"],
+    "aliases": [
+      "Macau"
+    ],
     "code": "MAC",
     "capital": "",
     "location": {
-      "lat": -22.0,
-      "long": -113.0
+      "lat": -22,
+      "long": -113
     },
     "flagCode": "MO",
-    "colors": ["green"]
+    "colors": [
+      "green"
+    ]
   },
   {
     "country": "Saint Martin",
-    "aliases": null,
+    "aliases": [],
     "code": "MAF",
     "capital": "Marigot",
     "location": {
-      "lat": -18.0,
-      "long": -63.0
+      "lat": -18,
+      "long": -63
     },
     "flagCode": "FR",
     "colors": [
@@ -2004,12 +2200,14 @@
   },
   {
     "country": "Morocco",
-    "aliases": "Kingdom of Morocco",
+    "aliases": [
+      "Kingdom of Morocco"
+    ],
     "code": "MAR",
     "capital": "Rabat",
     "location": {
-      "lat": 32.0,
-      "long": -6.0
+      "lat": 32,
+      "long": -6
     },
     "flagCode": "MA",
     "colors": [
@@ -2018,12 +2216,14 @@
   },
   {
     "country": "Monaco",
-    "aliases": "Principality of Monaco",
+    "aliases": [
+      "Principality of Monaco"
+    ],
     "code": "MCO",
     "capital": "Monaco",
     "location": {
-      "lat": -43.0,
-      "long": -7.0
+      "lat": -43,
+      "long": -7
     },
     "flagCode": "MC",
     "colors": [
@@ -2033,12 +2233,14 @@
   },
   {
     "country": "Moldova",
-    "aliases": "Republic of Moldova",
+    "aliases": [
+      "Republic of Moldova"
+    ],
     "code": "MDA",
     "capital": "Chisinau",
     "location": {
-      "lat": 47.0,
-      "long": 29.0
+      "lat": 47,
+      "long": 29
     },
     "flagCode": "MD",
     "colors": [
@@ -2049,12 +2251,14 @@
   },
   {
     "country": "Madagascar",
-    "aliases": "Republic of Madagascar",
+    "aliases": [
+      "Republic of Madagascar"
+    ],
     "code": "MDG",
     "capital": "Antananarivo",
     "location": {
-      "lat": -20.0,
-      "long": 47.0
+      "lat": -20,
+      "long": 47
     },
     "flagCode": "MG",
     "colors": [
@@ -2065,12 +2269,14 @@
   },
   {
     "country": "Maldives",
-    "aliases": "Republic of Maldives",
+    "aliases": [
+      "Republic of Maldives"
+    ],
     "code": "MDV",
     "capital": "Male",
     "location": {
-      "lat": -4.0,
-      "long": -73.0
+      "lat": -4,
+      "long": -73
     },
     "flagCode": "MV",
     "colors": [
@@ -2080,12 +2286,14 @@
   },
   {
     "country": "Mexico",
-    "aliases": "United Mexican States",
+    "aliases": [
+      "United Mexican States"
+    ],
     "code": "MEX",
     "capital": "Mexico City",
     "location": {
-      "lat": 23.0,
-      "long": -102.0
+      "lat": 23,
+      "long": -102
     },
     "flagCode": "MX",
     "colors": [
@@ -2096,12 +2304,14 @@
   },
   {
     "country": "Marshall Islands",
-    "aliases": "Republic of the Marshall Islands",
+    "aliases": [
+      "Republic of the Marshall Islands"
+    ],
     "code": "MHL",
     "capital": "Majuro",
     "location": {
-      "lat": -9.0,
-      "long": -169.0
+      "lat": -9,
+      "long": -169
     },
     "flagCode": "MH",
     "colors": [
@@ -2110,12 +2320,14 @@
   },
   {
     "country": "Macedonia",
-    "aliases": "Republic of North Macedonia",
+    "aliases": [
+      "Republic of North Macedonia"
+    ],
     "code": "MKD",
     "capital": "Skopje",
     "location": {
-      "lat": 42.0,
-      "long": 22.0
+      "lat": 42,
+      "long": 22
     },
     "flagCode": "MK",
     "colors": [
@@ -2125,12 +2337,14 @@
   },
   {
     "country": "Mali",
-    "aliases": "Republic of Mali",
+    "aliases": [
+      "Republic of Mali"
+    ],
     "code": "MLI",
     "capital": "Bamako",
     "location": {
-      "lat": 17.0,
-      "long": -4.0
+      "lat": 17,
+      "long": -4
     },
     "flagCode": "ML",
     "colors": [
@@ -2141,12 +2355,14 @@
   },
   {
     "country": "Malta",
-    "aliases": "Republic of Malta",
+    "aliases": [
+      "Republic of Malta"
+    ],
     "code": "MLT",
     "capital": "Valletta",
     "location": {
-      "lat": -35.0,
-      "long": -14.0
+      "lat": -35,
+      "long": -14
     },
     "flagCode": "MT",
     "colors": [
@@ -2156,12 +2372,14 @@
   },
   {
     "country": "Myanmar",
-    "aliases": "Republic of the Union of Myanmar",
+    "aliases": [
+      "Republic of the Union of Myanmar"
+    ],
     "code": "MMR",
     "capital": "Naypyidaw",
     "location": {
-      "lat": 22.0,
-      "long": 96.0
+      "lat": 22,
+      "long": 96
     },
     "flagCode": "MM",
     "colors": [
@@ -2172,12 +2390,12 @@
   },
   {
     "country": "Montenegro",
-    "aliases": null,
+    "aliases": [],
     "code": "MNE",
     "capital": "Podgorica",
     "location": {
-      "lat": -42.0,
-      "long": -19.0
+      "lat": -42,
+      "long": -19
     },
     "flagCode": "ME",
     "colors": [
@@ -2187,12 +2405,12 @@
   },
   {
     "country": "Mongolia",
-    "aliases": null,
+    "aliases": [],
     "code": "MNG",
     "capital": "Ulaanbaatar",
     "location": {
-      "lat": 48.0,
-      "long": 106.0
+      "lat": 48,
+      "long": 106
     },
     "flagCode": "MN",
     "colors": [
@@ -2202,12 +2420,14 @@
   },
   {
     "country": "Northern Mariana Islands",
-    "aliases": ["Commonwealth of the Northern Mariana Islands"],
+    "aliases": [
+      "Commonwealth of the Northern Mariana Islands"
+    ],
     "code": "MNP",
     "capital": "Saipan",
     "location": {
-      "lat": -16.0,
-      "long": -145.0
+      "lat": -16,
+      "long": -145
     },
     "flagCode": "MP",
     "colors": [
@@ -2216,12 +2436,14 @@
   },
   {
     "country": "Mozambique",
-    "aliases": "Republic of Mozambique",
+    "aliases": [
+      "Republic of Mozambique"
+    ],
     "code": "MOZ",
     "capital": "Maputo",
     "location": {
-      "lat": -18.0,
-      "long": -35.0
+      "lat": -18,
+      "long": -35
     },
     "flagCode": "MZ",
     "colors": [
@@ -2233,12 +2455,14 @@
   },
   {
     "country": "Mauritania",
-    "aliases": "Islamic Republic of Mauritania",
+    "aliases": [
+      "Islamic Republic of Mauritania"
+    ],
     "code": "MRT",
     "capital": "Nouakchott",
     "location": {
-      "lat": 20.0,
-      "long": -12.0
+      "lat": 20,
+      "long": -12
     },
     "flagCode": "MR",
     "colors": [
@@ -2248,12 +2472,12 @@
   },
   {
     "country": "Montserrat",
-    "aliases": null,
+    "aliases": [],
     "code": "MSR",
     "capital": "Plymouth",
     "location": {
-      "lat": -16.0,
-      "long": -62.0
+      "lat": -16,
+      "long": -62
     },
     "flagCode": "MS",
     "colors": [
@@ -2262,12 +2486,12 @@
   },
   {
     "country": "Martinique",
-    "aliases": null,
+    "aliases": [],
     "code": "MTQ",
     "capital": null,
     "location": {
-      "lat": -14.0,
-      "long": -61.0
+      "lat": -14,
+      "long": -61
     },
     "flagCode": "MQ",
     "colors": [
@@ -2278,12 +2502,14 @@
   },
   {
     "country": "Mauritius",
-    "aliases": "Republic of Mauritius",
+    "aliases": [
+      "Republic of Mauritius"
+    ],
     "code": "MUS",
     "capital": "Port Louis",
     "location": {
-      "lat": -20.0,
-      "long": -57.0
+      "lat": -20,
+      "long": -57
     },
     "flagCode": "MU",
     "colors": [
@@ -2295,12 +2521,14 @@
   },
   {
     "country": "Malawi",
-    "aliases": ["Republic of Malawi"],
+    "aliases": [
+      "Republic of Malawi"
+    ],
     "code": "MWI",
     "capital": "Lilongwe",
     "location": {
-      "lat": -13.0,
-      "long": -34.0
+      "lat": -13,
+      "long": -34
     },
     "flagCode": "MW",
     "colors": [
@@ -2311,12 +2539,12 @@
   },
   {
     "country": "Malaysia",
-    "aliases": null,
+    "aliases": [],
     "code": "MYS",
     "capital": "Kuala Lumpur",
     "location": {
-      "lat": 2.0,
-      "long": 112.0
+      "lat": 2,
+      "long": 112
     },
     "flagCode": "MY",
     "colors": [
@@ -2327,12 +2555,14 @@
   },
   {
     "country": "Namibia",
-    "aliases": "Republic of Namibia",
+    "aliases": [
+      "Republic of Namibia"
+    ],
     "code": "NAM",
     "capital": "Windhoek",
     "location": {
-      "lat": -22.0,
-      "long": 17.0
+      "lat": -22,
+      "long": 17
     },
     "flagCode": "NA",
     "colors": [
@@ -2343,12 +2573,12 @@
   },
   {
     "country": "New Caledonia",
-    "aliases": null,
+    "aliases": [],
     "code": "NCL",
     "capital": "Noumea",
     "location": {
-      "lat": -21.0,
-      "long": -165.0
+      "lat": -21,
+      "long": -165
     },
     "flagCode": "NC",
     "colors": [
@@ -2359,12 +2589,14 @@
   },
   {
     "country": "Niger",
-    "aliases": "Republic of the Niger",
+    "aliases": [
+      "Republic of the Niger"
+    ],
     "code": "NER",
     "capital": "Niamey",
     "location": {
-      "lat": 16.0,
-      "long": 8.0
+      "lat": 16,
+      "long": 8
     },
     "flagCode": "NE",
     "colors": [
@@ -2375,12 +2607,12 @@
   },
   {
     "country": "Norfolk Island",
-    "aliases": null,
+    "aliases": [],
     "code": "NFK",
     "capital": "Kingston",
     "location": {
-      "lat": -29.0,
-      "long": -167.0
+      "lat": -29,
+      "long": -167
     },
     "flagCode": "NF",
     "colors": [
@@ -2390,12 +2622,14 @@
   },
   {
     "country": "Nigeria",
-    "aliases": "Federal Republic of Nigeria",
+    "aliases": [
+      "Federal Republic of Nigeria"
+    ],
     "code": "NGA",
     "capital": "Abuja",
     "location": {
-      "lat": 8.0,
-      "long": 10.0
+      "lat": 8,
+      "long": 10
     },
     "flagCode": "NG",
     "colors": [
@@ -2405,12 +2639,14 @@
   },
   {
     "country": "Nicaragua",
-    "aliases": "Republic of Nicaragua",
+    "aliases": [
+      "Republic of Nicaragua"
+    ],
     "code": "NIC",
     "capital": "Managua",
     "location": {
-      "lat": 13.0,
-      "long": -85.0
+      "lat": 13,
+      "long": -85
     },
     "flagCode": "NI",
     "colors": [
@@ -2420,12 +2656,14 @@
   },
   {
     "country": "Niue",
-    "aliases": "Niue",
+    "aliases": [
+      "Niue"
+    ],
     "code": "NIU",
     "capital": "Alofi",
     "location": {
-      "lat": -19.0,
-      "long": -169.0
+      "lat": -19,
+      "long": -169
     },
     "flagCode": "NU",
     "colors": [
@@ -2434,12 +2672,14 @@
   },
   {
     "country": "Netherlands",
-    "aliases": "Kingdom of the Netherlands",
+    "aliases": [
+      "Kingdom of the Netherlands"
+    ],
     "code": "NLD",
     "capital": "Amsterdam",
     "location": {
-      "lat": -52.0,
-      "long": -4.0
+      "lat": -52,
+      "long": -4
     },
     "flagCode": "NL",
     "colors": [
@@ -2450,12 +2690,14 @@
   },
   {
     "country": "Nepal",
-    "aliases": "Federal Democratic Republic of Nepal",
+    "aliases": [
+      "Federal Democratic Republic of Nepal"
+    ],
     "code": "NPL",
     "capital": "Kathmandu",
     "location": {
-      "lat": -28.0,
-      "long": -84.0
+      "lat": -28,
+      "long": -84
     },
     "flagCode": "NP",
     "colors": [
@@ -2465,12 +2707,14 @@
   },
   {
     "country": "Nauru",
-    "aliases": "Republic of Nauru",
+    "aliases": [
+      "Republic of Nauru"
+    ],
     "code": "NRU",
     "capital": "(",
     "location": {
-      "lat": -0.0,
-      "long": -166.0
+      "lat": 0,
+      "long": -166
     },
     "flagCode": "NR",
     "colors": [
@@ -2479,12 +2723,14 @@
   },
   {
     "country": "New Zealand",
-    "aliases": "New Zealand",
+    "aliases": [
+      "New Zealand"
+    ],
     "code": "NZL",
     "capital": "Wellington",
     "location": {
-      "lat": -42.0,
-      "long": 173.0
+      "lat": -42,
+      "long": 173
     },
     "flagCode": "NZ",
     "colors": [
@@ -2493,11 +2739,13 @@
   },
   {
     "country": "Norway",
-    "aliases": "Kingdom of Norway",
+    "aliases": [
+      "Kingdom of Norway"
+    ],
     "code": "NOR",
     "capital": "Oslo",
     "location": {
-      "lat": 61.0,
+      "lat": 61,
       "long": 8
     },
     "flagCode": "NO",
@@ -2507,12 +2755,14 @@
   },
   {
     "country": "Oman",
-    "aliases": "Sultanate of Oman",
+    "aliases": [
+      "Sultanate of Oman"
+    ],
     "code": "OMN",
     "capital": "Muscat",
     "location": {
-      "lat": 21.0,
-      "long": 57.0
+      "lat": 21,
+      "long": 57
     },
     "flagCode": "OM",
     "colors": [
@@ -2523,12 +2773,14 @@
   },
   {
     "country": "Pakistan",
-    "aliases": "Islamic Republic of Pakistan",
+    "aliases": [
+      "Islamic Republic of Pakistan"
+    ],
     "code": "PAK",
     "capital": "Islamabad",
     "location": {
-      "lat": 30.0,
-      "long": 70.0
+      "lat": 30,
+      "long": 70
     },
     "flagCode": "PK",
     "colors": [
@@ -2538,12 +2790,14 @@
   },
   {
     "country": "Panama",
-    "aliases": "Republic of Panama",
+    "aliases": [
+      "Republic of Panama"
+    ],
     "code": "PAN",
     "capital": "Panama City",
     "location": {
-      "lat": 9.0,
-      "long": -80.0
+      "lat": 9,
+      "long": -80
     },
     "flagCode": "PA",
     "colors": [
@@ -2554,12 +2808,12 @@
   },
   {
     "country": "Pitcairn",
-    "aliases": null,
+    "aliases": [],
     "code": "PCN",
     "capital": "Adamstown",
     "location": {
-      "lat": -25.0,
-      "long": -130.0
+      "lat": -25,
+      "long": -130
     },
     "flagCode": "PN",
     "colors": [
@@ -2568,12 +2822,14 @@
   },
   {
     "country": "Peru",
-    "aliases": "Republic of Peru",
+    "aliases": [
+      "Republic of Peru"
+    ],
     "code": "PER",
     "capital": "Lima",
     "location": {
-      "lat": -10.0,
-      "long": -76.0
+      "lat": -10,
+      "long": -76
     },
     "flagCode": "PE",
     "colors": [
@@ -2583,12 +2839,14 @@
   },
   {
     "country": "Philippines",
-    "aliases": "Republic of the Philippines",
+    "aliases": [
+      "Republic of the Philippines"
+    ],
     "code": "PHL",
     "capital": "Manila",
     "location": {
-      "lat": 13.0,
-      "long": 122.0
+      "lat": 13,
+      "long": 122
     },
     "flagCode": "PH",
     "colors": [
@@ -2599,12 +2857,14 @@
   },
   {
     "country": "Palau",
-    "aliases": "Republic of Palau",
+    "aliases": [
+      "Republic of Palau"
+    ],
     "code": "PLW",
     "capital": "Ngerulmud",
     "location": {
-      "lat": -7.0,
-      "long": -134.0
+      "lat": -7,
+      "long": -134
     },
     "flagCode": "PW",
     "colors": [
@@ -2614,12 +2874,14 @@
   },
   {
     "country": "Papua New Guinea",
-    "aliases": "Independent State of Papua New Guinea",
+    "aliases": [
+      "Independent State of Papua New Guinea"
+    ],
     "code": "PNG",
     "capital": "Port Moresby",
     "location": {
-      "lat": -6.0,
-      "long": 147.0
+      "lat": -6,
+      "long": 147
     },
     "flagCode": "PG",
     "colors": [
@@ -2629,12 +2891,14 @@
   },
   {
     "country": "Poland",
-    "aliases": "Republic of Poland",
+    "aliases": [
+      "Republic of Poland"
+    ],
     "code": "POL",
     "capital": "Warsaw",
     "location": {
-      "lat": 52.0,
-      "long": 20.0
+      "lat": 52,
+      "long": 20
     },
     "flagCode": "PL",
     "colors": [
@@ -2644,12 +2908,12 @@
   },
   {
     "country": "Puerto Rico",
-    "aliases": null,
+    "aliases": [],
     "code": "PRI",
     "capital": "San Juan",
     "location": {
-      "lat": -18.0,
-      "long": -66.0
+      "lat": -18,
+      "long": -66
     },
     "flagCode": "PR",
     "colors": [
@@ -2660,12 +2924,14 @@
   },
   {
     "country": "North Korea",
-    "aliases": "Democratic People's Republic of Korea",
+    "aliases": [
+      "Democratic People's Republic of Korea"
+    ],
     "code": "PRK",
     "capital": "Pyongyang",
     "location": {
-      "lat": 40.0,
-      "long": 127.0
+      "lat": 40,
+      "long": 127
     },
     "flagCode": "KP",
     "colors": [
@@ -2675,12 +2941,14 @@
   },
   {
     "country": "Portugal",
-    "aliases": "Portuguese Republic",
+    "aliases": [
+      "Portuguese Republic"
+    ],
     "code": "PRT",
     "capital": "Lisbon",
     "location": {
-      "lat": 39.0,
-      "long": -8.0
+      "lat": 39,
+      "long": -8
     },
     "flagCode": "PT",
     "colors": [
@@ -2690,12 +2958,14 @@
   },
   {
     "country": "Paraguay",
-    "aliases": "Republic of Paraguay",
+    "aliases": [
+      "Republic of Paraguay"
+    ],
     "code": "PRY",
     "capital": "Asuncion",
     "location": {
-      "lat": -23.0,
-      "long": -58.0
+      "lat": -23,
+      "long": -58
     },
     "flagCode": "PY",
     "colors": [
@@ -2706,12 +2976,14 @@
   },
   {
     "country": "Palestine",
-    "aliases": "State of Palestine",
+    "aliases": [
+      "State of Palestine"
+    ],
     "code": "PSE",
     "capital": "Jerusalem",
     "location": {
-      "lat": -32.0,
-      "long": -35.0
+      "lat": -32,
+      "long": -35
     },
     "flagCode": "PS",
     "colors": [
@@ -2723,12 +2995,12 @@
   },
   {
     "country": "French Polynesia",
-    "aliases": null,
+    "aliases": [],
     "code": "PYF",
     "capital": "Papeete",
     "location": {
-      "lat": -17.0,
-      "long": -149.0
+      "lat": -17,
+      "long": -149
     },
     "flagCode": "PF",
     "colors": [
@@ -2738,12 +3010,14 @@
   },
   {
     "country": "Qatar",
-    "aliases": "State of Qatar",
+    "aliases": [
+      "State of Qatar"
+    ],
     "code": "QAT",
     "capital": "Doha",
     "location": {
-      "lat": -25.0,
-      "long": -51.0
+      "lat": -25,
+      "long": -51
     },
     "flagCode": "QA",
     "colors": [
@@ -2753,12 +3027,12 @@
   },
   {
     "country": "Romania",
-    "aliases": null,
+    "aliases": [],
     "code": "ROU",
     "capital": "Bucharest",
     "location": {
-      "lat": 46.0,
-      "long": 25.0
+      "lat": 46,
+      "long": 25
     },
     "flagCode": "RO",
     "colors": [
@@ -2769,12 +3043,14 @@
   },
   {
     "country": "Russia",
-    "aliases": "Russian Federation",
+    "aliases": [
+      "Russian Federation"
+    ],
     "code": "RUS",
     "capital": "Moscow",
     "location": {
-      "lat": 66.0,
-      "long": 94.0
+      "lat": 66,
+      "long": 94
     },
     "flagCode": "RU",
     "colors": [
@@ -2785,12 +3061,14 @@
   },
   {
     "country": "Rwanda",
-    "aliases": "Republic of Rwanda",
+    "aliases": [
+      "Republic of Rwanda"
+    ],
     "code": "RWA",
     "capital": "Kigali",
     "location": {
-      "lat": -2.0,
-      "long": 30.0
+      "lat": -2,
+      "long": 30
     },
     "flagCode": "RW",
     "colors": [
@@ -2801,12 +3079,14 @@
   },
   {
     "country": "Saudi Arabia",
-    "aliases": "Kingdom of Saudi Arabia",
+    "aliases": [
+      "Kingdom of Saudi Arabia"
+    ],
     "code": "SAU",
     "capital": "Riyadh",
     "location": {
-      "lat": 24.0,
-      "long": 45.0
+      "lat": 24,
+      "long": 45
     },
     "flagCode": "SA",
     "colors": [
@@ -2815,12 +3095,14 @@
   },
   {
     "country": "Sudan",
-    "aliases": "Republic of Sudan",
+    "aliases": [
+      "Republic of Sudan"
+    ],
     "code": "SDN",
     "capital": "Khartoum",
     "location": {
-      "lat": 15.0,
-      "long": 32.0
+      "lat": 15,
+      "long": 32
     },
     "flagCode": "SD",
     "colors": [
@@ -2832,12 +3114,14 @@
   },
   {
     "country": "Senegal",
-    "aliases": "Republic of Senegal",
+    "aliases": [
+      "Republic of Senegal"
+    ],
     "code": "SEN",
     "capital": "Dakar",
     "location": {
-      "lat": 14.0,
-      "long": -14.0
+      "lat": 14,
+      "long": -14
     },
     "flagCode": "SN",
     "colors": [
@@ -2848,12 +3132,14 @@
   },
   {
     "country": "Singapore",
-    "aliases": "Republic of Singapore",
+    "aliases": [
+      "Republic of Singapore"
+    ],
     "code": "SGP",
     "capital": "Singapore",
     "location": {
-      "lat": -1.0,
-      "long": -103.0
+      "lat": -1,
+      "long": -103
     },
     "flagCode": "SG",
     "colors": [
@@ -2863,12 +3149,12 @@
   },
   {
     "country": "South Georgia and the South Sandwich Islands",
-    "aliases": null,
+    "aliases": [],
     "code": "SGS",
     "capital": "King Edward Point",
     "location": {
-      "lat": -54.0,
-      "long": -36.0
+      "lat": -54,
+      "long": -36
     },
     "flagCode": "GS",
     "colors": [
@@ -2877,12 +3163,12 @@
   },
   {
     "country": "Saint Helena, Ascension and Tristan da Cunha",
-    "aliases": null,
+    "aliases": [],
     "code": "SHN",
     "capital": "Jamestown",
     "location": {
-      "lat": -15.0,
-      "long": -5.0
+      "lat": -15,
+      "long": -5
     },
     "flagCode": "SH",
     "colors": [
@@ -2891,12 +3177,12 @@
   },
   {
     "country": "Solomon Islands",
-    "aliases": null,
+    "aliases": [],
     "code": "SLB",
     "capital": "Honiara",
     "location": {
-      "lat": -8.0,
-      "long": 159.0
+      "lat": -8,
+      "long": 159
     },
     "flagCode": "SB",
     "colors": [
@@ -2906,12 +3192,14 @@
   },
   {
     "country": "Sierra Leone",
-    "aliases": "Republic of Sierra Leone",
+    "aliases": [
+      "Republic of Sierra Leone"
+    ],
     "code": "SLE",
     "capital": "Freetown",
     "location": {
-      "lat": -8.0,
-      "long": -12.0
+      "lat": -8,
+      "long": -12
     },
     "flagCode": "SL",
     "colors": [
@@ -2922,12 +3210,14 @@
   },
   {
     "country": "El Salvador",
-    "aliases": "Republic of El Salvador",
+    "aliases": [
+      "Republic of El Salvador"
+    ],
     "code": "SLV",
     "capital": "San Salvador",
     "location": {
-      "lat": -13.0,
-      "long": -89.0
+      "lat": -13,
+      "long": -89
     },
     "flagCode": "SV",
     "colors": [
@@ -2937,12 +3227,14 @@
   },
   {
     "country": "San Marino",
-    "aliases": "Republic of San Marino",
+    "aliases": [
+      "Republic of San Marino"
+    ],
     "code": "SMR",
     "capital": "City of San Marino",
     "location": {
-      "lat": -43.0,
-      "long": -12.0
+      "lat": -43,
+      "long": -12
     },
     "flagCode": "SM",
     "colors": [
@@ -2952,12 +3244,14 @@
   },
   {
     "country": "Somalia",
-    "aliases": "Federal Republic of Somalia",
+    "aliases": [
+      "Federal Republic of Somalia"
+    ],
     "code": "SOM",
     "capital": "Mogadishu",
     "location": {
-      "lat": 10.0,
-      "long": 49.0
+      "lat": 10,
+      "long": 49
     },
     "flagCode": "SO",
     "colors": [
@@ -2966,12 +3260,12 @@
   },
   {
     "country": "Saint Pierre and Miquelon",
-    "aliases": null,
+    "aliases": [],
     "code": "SPM",
     "capital": "Saint-Pierre",
     "location": {
-      "lat": -46.0,
-      "long": -56.0
+      "lat": -46,
+      "long": -56
     },
     "flagCode": "FR",
     "colors": [
@@ -2982,12 +3276,14 @@
   },
   {
     "country": "Serbia",
-    "aliases": "Republic of Serbia",
+    "aliases": [
+      "Republic of Serbia"
+    ],
     "code": "SRB",
     "capital": "Belgrade",
     "location": {
-      "lat": 44.0,
-      "long": 21.0
+      "lat": 44,
+      "long": 21
     },
     "flagCode": "RS",
     "colors": [
@@ -2998,12 +3294,14 @@
   },
   {
     "country": "South Sudan",
-    "aliases": "Republic of South Sudan",
+    "aliases": [
+      "Republic of South Sudan"
+    ],
     "code": "SSD",
     "capital": "Juba",
     "location": {
-      "lat": 8.0,
-      "long": 30.0
+      "lat": 8,
+      "long": 30
     },
     "flagCode": "SS",
     "colors": [
@@ -3023,8 +3321,8 @@
     "code": "STP",
     "capital": "São Tomé",
     "location": {
-      "lat": -0.0,
-      "long": -6.0
+      "lat": 0,
+      "long": -6
     },
     "flagCode": "ST",
     "colors": [
@@ -3035,12 +3333,14 @@
   },
   {
     "country": "Republic of Suriname",
-    "aliases": "Republic of Suriname",
+    "aliases": [
+      "Republic of Suriname"
+    ],
     "code": "SUR",
     "capital": "Paramaribo",
     "location": {
-      "lat": 4.0,
-      "long": -56.0
+      "lat": 4,
+      "long": -56
     },
     "flagCode": "SR",
     "colors": [
@@ -3050,12 +3350,14 @@
   },
   {
     "country": "Slovakia",
-    "aliases": "Slovak Republic",
+    "aliases": [
+      "Slovak Republic"
+    ],
     "code": "SVK",
     "capital": "Bratislava",
     "location": {
-      "lat": -48.0,
-      "long": -19.0
+      "lat": -48,
+      "long": -19
     },
     "flagCode": "SK",
     "colors": [
@@ -3066,12 +3368,14 @@
   },
   {
     "country": "Slovenia",
-    "aliases": "Republic of Slovenia",
+    "aliases": [
+      "Republic of Slovenia"
+    ],
     "code": "SVN",
     "capital": "Ljubljana",
     "location": {
-      "lat": -46.0,
-      "long": -14.0
+      "lat": -46,
+      "long": -14
     },
     "flagCode": "SI",
     "colors": [
@@ -3082,12 +3386,14 @@
   },
   {
     "country": "Sweden",
-    "aliases": "Kingdom of Sweden",
+    "aliases": [
+      "Kingdom of Sweden"
+    ],
     "code": "SWE",
     "capital": "Stockholm",
     "location": {
-      "lat": 63.0,
-      "long": 16.0
+      "lat": 63,
+      "long": 16
     },
     "flagCode": "SE",
     "colors": [
@@ -3097,12 +3403,14 @@
   },
   {
     "country": "Eswatini",
-    "aliases": "Kingdom of Eswatini",
+    "aliases": [
+      "Kingdom of Eswatini"
+    ],
     "code": "SWZ",
     "capital": "Mbabane",
     "location": {
-      "lat": -26.0,
-      "long": -31.0
+      "lat": -26,
+      "long": -31
     },
     "flagCode": "SZ",
     "colors": [
@@ -3113,12 +3421,12 @@
   },
   {
     "country": "Saint Martin",
-    "aliases": null,
+    "aliases": [],
     "code": "SXM",
     "capital": "Philipsburg",
     "location": {
-      "lat": -18.0,
-      "long": -63.0
+      "lat": -18,
+      "long": -63
     },
     "flagCode": "SX",
     "colors": [
@@ -3128,12 +3436,14 @@
   },
   {
     "country": "Seychelles",
-    "aliases": "Republic of Seychelles",
+    "aliases": [
+      "Republic of Seychelles"
+    ],
     "code": "SYC",
     "capital": "Victoria",
     "location": {
-      "lat": -4.0,
-      "long": -55.0
+      "lat": -4,
+      "long": -55
     },
     "flagCode": "SC",
     "colors": [
@@ -3146,12 +3456,14 @@
   },
   {
     "country": "Syria",
-    "aliases": "Syrian Arab Republic",
+    "aliases": [
+      "Syrian Arab Republic"
+    ],
     "code": "SYR",
     "capital": "Damascus",
     "location": {
-      "lat": 35.0,
-      "long": 38.0
+      "lat": 35,
+      "long": 38
     },
     "flagCode": "SY",
     "colors": [
@@ -3162,12 +3474,12 @@
   },
   {
     "country": "Turks and Caicos Islands",
-    "aliases": null,
+    "aliases": [],
     "code": "TCA",
     "capital": "Grand Turk (Cockburn Town)",
     "location": {
-      "lat": -21.0,
-      "long": -71.0
+      "lat": -21,
+      "long": -71
     },
     "flagCode": "TC",
     "colors": [
@@ -3176,12 +3488,14 @@
   },
   {
     "country": "Chad",
-    "aliases": "Republic of Chad",
+    "aliases": [
+      "Republic of Chad"
+    ],
     "code": "TCD",
     "capital": "N'Djamena",
     "location": {
-      "lat": 15.0,
-      "long": 19.0
+      "lat": 15,
+      "long": 19
     },
     "flagCode": "TD",
     "colors": [
@@ -3192,12 +3506,14 @@
   },
   {
     "country": "Togo",
-    "aliases": "Togolese Republic",
+    "aliases": [
+      "Togolese Republic"
+    ],
     "code": "TGO",
     "capital": "Lomé",
     "location": {
-      "lat": 8.0,
-      "long": 1.0
+      "lat": 8,
+      "long": 1
     },
     "flagCode": "TG",
     "colors": [
@@ -3207,12 +3523,14 @@
   },
   {
     "country": "Thailand",
-    "aliases": "Kingdom of Thailand",
+    "aliases": [
+      "Kingdom of Thailand"
+    ],
     "code": "THA",
     "capital": "Bangkok",
     "location": {
-      "lat": 15.0,
-      "long": 101.0
+      "lat": 15,
+      "long": 101
     },
     "flagCode": "TH",
     "colors": [
@@ -3223,12 +3541,14 @@
   },
   {
     "country": "Tajikistan",
-    "aliases": "Republic of Tajikistan",
+    "aliases": [
+      "Republic of Tajikistan"
+    ],
     "code": "TJK",
     "capital": "Dushanbe",
     "location": {
-      "lat": 39.0,
-      "long": 71.0
+      "lat": 39,
+      "long": 71
     },
     "flagCode": "TJ",
     "colors": [
@@ -3239,12 +3559,12 @@
   },
   {
     "country": "Tokelau",
-    "aliases": null,
+    "aliases": [],
     "code": "TKL",
     "capital": "None",
     "location": {
-      "lat": -9.0,
-      "long": -171.0
+      "lat": -9,
+      "long": -171
     },
     "flagCode": "TK",
     "colors": [
@@ -3258,8 +3578,8 @@
     "code": "TKM",
     "capital": "Ashgabat",
     "location": {
-      "lat": 39.0,
-      "long": 60.0
+      "lat": 39,
+      "long": 60
     },
     "flagCode": "TM",
     "colors": [
@@ -3268,12 +3588,14 @@
   },
   {
     "country": "Timor-Leste",
-    "aliases": "Democratic Republic of Timor-Leste",
+    "aliases": [
+      "Democratic Republic of Timor-Leste"
+    ],
     "code": "TLS",
     "capital": "Dili",
     "location": {
-      "lat": -8.0,
-      "long": -125.0
+      "lat": -8,
+      "long": -125
     },
     "flagCode": "TL",
     "colors": [
@@ -3282,12 +3604,14 @@
   },
   {
     "country": "Tonga",
-    "aliases": "Kingdom of Tonga",
+    "aliases": [
+      "Kingdom of Tonga"
+    ],
     "code": "TON",
     "capital": "Nuku'alofa",
     "location": {
-      "lat": -20.0,
-      "long": -175.0
+      "lat": -20,
+      "long": -175
     },
     "flagCode": "TO",
     "colors": [
@@ -3302,8 +3626,8 @@
     "code": "TTO",
     "capital": "Port of Spain",
     "location": {
-      "lat": -10.0,
-      "long": -61.0
+      "lat": -10,
+      "long": -61
     },
     "flagCode": "TT",
     "colors": [
@@ -3313,12 +3637,14 @@
   },
   {
     "country": "Tunisia",
-    "aliases": "Republic of Tunisia",
+    "aliases": [
+      "Republic of Tunisia"
+    ],
     "code": "TUN",
     "capital": "Tunis",
     "location": {
-      "lat": 34.0,
-      "long": 9.0
+      "lat": 34,
+      "long": 9
     },
     "flagCode": "TN",
     "colors": [
@@ -3336,8 +3662,8 @@
     "code": "TUR",
     "capital": "Ankara",
     "location": {
-      "lat": -39.0,
-      "long": -32.0
+      "lat": -39,
+      "long": -32
     },
     "flagCode": "TR",
     "colors": [
@@ -3347,12 +3673,12 @@
   },
   {
     "country": "Tuvalu",
-    "aliases": null,
+    "aliases": [],
     "code": "TUV",
     "capital": "Funafuti",
     "location": {
-      "lat": -8.0,
-      "long": -179.0
+      "lat": -8,
+      "long": -179
     },
     "flagCode": "TV",
     "colors": [
@@ -3368,8 +3694,8 @@
     "code": "TWN",
     "capital": "Taipei",
     "location": {
-      "lat": 24.0,
-      "long": 121.0
+      "lat": 24,
+      "long": 121
     },
     "flagCode": "TW",
     "colors": [
@@ -3385,8 +3711,8 @@
     "code": "TZA",
     "capital": "Dodoma",
     "location": {
-      "lat": -6.0,
-      "long": 35.0
+      "lat": -6,
+      "long": 35
     },
     "flagCode": "TZ",
     "colors": [
@@ -3397,12 +3723,14 @@
   },
   {
     "country": "Uganda",
-    "aliases": "Republic of Uganda",
+    "aliases": [
+      "Republic of Uganda"
+    ],
     "code": "UGA",
     "capital": "Kampala",
     "location": {
-      "lat": 1.0,
-      "long": 32.0
+      "lat": 1,
+      "long": 32
     },
     "flagCode": "UG",
     "colors": [
@@ -3413,12 +3741,14 @@
   },
   {
     "country": "Ukraine",
-    "aliases": "Ukraine",
+    "aliases": [
+      "Ukraine"
+    ],
     "code": "UKR",
     "capital": "Kyiv",
     "location": {
-      "lat": -50.0,
-      "long": -30.0
+      "lat": -50,
+      "long": -30
     },
     "flagCode": "UA",
     "colors": [
@@ -3428,12 +3758,14 @@
   },
   {
     "country": "Uruguay",
-    "aliases": "Oriental Republic of Uruguay",
+    "aliases": [
+      "Oriental Republic of Uruguay"
+    ],
     "code": "URY",
     "capital": "Montevideo",
     "location": {
-      "lat": -33.0,
-      "long": -57.0
+      "lat": -33,
+      "long": -57
     },
     "flagCode": "UY",
     "colors": [
@@ -3449,8 +3781,8 @@
     "code": "USA",
     "capital": "Washington, D.C.",
     "location": {
-      "lat": 40.0,
-      "long": -100.0
+      "lat": 40,
+      "long": -100
     },
     "flagCode": "US",
     "colors": [
@@ -3461,12 +3793,14 @@
   },
   {
     "country": "Uzbekistan",
-    "aliases": "Republic of Uzbekistan",
+    "aliases": [
+      "Republic of Uzbekistan"
+    ],
     "code": "UZB",
     "capital": "Tashkent",
     "location": {
-      "lat": 42.0,
-      "long": 64.0
+      "lat": 42,
+      "long": 64
     },
     "flagCode": "UZ",
     "colors": [
@@ -3483,8 +3817,8 @@
     "code": "VAT",
     "capital": "",
     "location": {
-      "lat": -41.0,
-      "long": -12.0
+      "lat": -41,
+      "long": -12
     },
     "flagCode": "VA",
     "colors": [
@@ -3500,8 +3834,8 @@
     "code": "VCT",
     "capital": "Kingstown",
     "location": {
-      "lat": -13.0,
-      "long": -61.0
+      "lat": -13,
+      "long": -61
     },
     "flagCode": "VC",
     "colors": [
@@ -3512,12 +3846,14 @@
   },
   {
     "country": "Venezuela",
-    "aliases": "Bolivarian Republic of Venezuela",
+    "aliases": [
+      "Bolivarian Republic of Venezuela"
+    ],
     "code": "VEN",
     "capital": "Caracas",
     "location": {
-      "lat": 7.0,
-      "long": -65.0
+      "lat": 7,
+      "long": -65
     },
     "flagCode": "VE",
     "colors": [
@@ -3528,12 +3864,12 @@
   },
   {
     "country": "Virgin Islands (British)",
-    "aliases": null,
+    "aliases": [],
     "code": "VGB",
     "capital": "Road Town",
     "location": {
-      "lat": -18.0,
-      "long": -64.0
+      "lat": -18,
+      "long": -64
     },
     "flagCode": "VG",
     "colors": [
@@ -3542,12 +3878,12 @@
   },
   {
     "country": "Virgin Islands (U.S.)",
-    "aliases": null,
+    "aliases": [],
     "code": "VIR",
     "capital": "Charlotte Amalie",
     "location": {
-      "lat": -18.0,
-      "long": -64.0
+      "lat": -18,
+      "long": -64
     },
     "flagCode": "VI",
     "colors": [
@@ -3556,12 +3892,14 @@
   },
   {
     "country": "Vietnam",
-    "aliases": "Socialist Republic of Vietnam",
+    "aliases": [
+      "Socialist Republic of Vietnam"
+    ],
     "code": "VNM",
     "capital": "Hanoi",
     "location": {
-      "lat": 16.0,
-      "long": 108.0
+      "lat": 16,
+      "long": 108
     },
     "flagCode": "VN",
     "colors": [
@@ -3571,12 +3909,14 @@
   },
   {
     "country": "Vanuatu",
-    "aliases": "Republic of Vanuatu",
+    "aliases": [
+      "Republic of Vanuatu"
+    ],
     "code": "VUT",
     "capital": "Port Vila",
     "location": {
-      "lat": -17.0,
-      "long": 168.0
+      "lat": -17,
+      "long": 168
     },
     "flagCode": "VU",
     "colors": [
@@ -3587,12 +3927,12 @@
   },
   {
     "country": "Wallis and Futuna",
-    "aliases": null,
+    "aliases": [],
     "code": "WLF",
     "capital": "Mata Utu",
     "location": {
-      "lat": -13.0,
-      "long": -176.0
+      "lat": -13,
+      "long": -176
     },
     "flagCode": "FR",
     "colors": [
@@ -3603,12 +3943,14 @@
   },
   {
     "country": "Samoa",
-    "aliases": "Independent State of Samoa",
+    "aliases": [
+      "Independent State of Samoa"
+    ],
     "code": "WSM",
     "capital": "Apia",
     "location": {
-      "lat": -13.0,
-      "long": -172.0
+      "lat": -13,
+      "long": -172
     },
     "flagCode": "WS",
     "colors": [
@@ -3618,12 +3960,14 @@
   },
   {
     "country": "Yemen",
-    "aliases": "Republic of Yemen",
+    "aliases": [
+      "Republic of Yemen"
+    ],
     "code": "YEM",
     "capital": "Sanaa",
     "location": {
-      "lat": -15.0,
-      "long": -44.0
+      "lat": -15,
+      "long": -44
     },
     "flagCode": "YE",
     "colors": [
@@ -3634,12 +3978,14 @@
   },
   {
     "country": "South Africa",
-    "aliases": "Republic of South Africa",
+    "aliases": [
+      "Republic of South Africa"
+    ],
     "code": "ZAF",
     "capital": "Pretoria",
     "location": {
-      "lat": -30.0,
-      "long": 25.0
+      "lat": -30,
+      "long": 25
     },
     "flagCode": "ZA",
     "colors": [
@@ -3651,12 +3997,14 @@
   },
   {
     "country": "Zambia",
-    "aliases": "Republic of Zambia",
+    "aliases": [
+      "Republic of Zambia"
+    ],
     "code": "ZMB",
     "capital": "Lusaka",
     "location": {
-      "lat": -15.0,
-      "long": 30.0
+      "lat": -15,
+      "long": 30
     },
     "flagCode": "ZM",
     "colors": [
@@ -3665,12 +4013,14 @@
   },
   {
     "country": "Zimbabwe",
-    "aliases": "Republic of Zimbabwe",
+    "aliases": [
+      "Republic of Zimbabwe"
+    ],
     "code": "ZWE",
     "capital": "Harare",
     "location": {
-      "lat": -19.0,
-      "long": 30.0
+      "lat": -19,
+      "long": 30
     },
     "flagCode": "ZW",
     "colors": [

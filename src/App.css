@@ -1,3 +1,38 @@
+/* CSS Custom Properties for theming */
+:root {
+  /* Light mode colors */
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-muted: #6c757d;
+  --background-primary: #ffffff;
+  --background-secondary: #f8f9fa;
+  --background-tertiary: #f5f5f5;
+  --border-color: #e0e0e0;
+  --border-dashed: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-bg: #d4edda;
+  --success-border: #c3e6cb;
+  --success-text: #155724;
+}
+
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --background-primary: #2d2d2d;
+    --background-secondary: #3a3a3a;
+    --background-tertiary: #404040;
+    --border-color: #555555;
+    --border-dashed: #666666;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --success-bg: #1e4a2e;
+    --success-border: #2d5a3d;
+    --success-text: #a8e6c1;
+  }
+}
+
 .app {
   text-align: center;
   padding: 20px;
@@ -9,7 +44,7 @@ header {
 }
 
 h1 {
-  color: #333;
+  color: var(--text-primary);
 }
 
 main {
@@ -18,13 +53,26 @@ main {
 }
 
 p {
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
 /* Flag Select Component */
 .flag-select {
   margin: 20px 0;
+}
+
+.color-picker {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.color-filter {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-right: 15px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .flag-grid {
@@ -44,7 +92,7 @@ p {
   border: 2px solid transparent;
   border-radius: 2px;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: grey;
   display: inline-block;
   text-align: center;
 }
@@ -52,17 +100,17 @@ p {
 .flag-icon:hover {
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
 }
 
 /* Quiz Progress Component */
 .quiz-progress {
-  background-color: white;
-  border: 1px solid #e0e0e0;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 25px;
   margin: 20px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .progress-header {
@@ -70,20 +118,20 @@ p {
 }
 
 .progress-header h3 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
   font-size: 18px;
 }
 
 .progress-text {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 16px;
   font-weight: 600;
   margin: 0;
 }
 
 .progress-bar-container {
-  background-color: #f5f5f5;
+  background-color: var(--background-tertiary);
   border-radius: 10px;
   height: 20px;
   overflow: hidden;
@@ -100,13 +148,13 @@ p {
 .completion-message {
   margin-top: 15px;
   padding: 10px;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
   border-radius: 6px;
 }
 
 .completion-message p {
-  color: #155724;
+  color: var(--success-text);
   margin: 0;
   font-weight: 600;
 }
@@ -117,26 +165,26 @@ p {
 }
 
 .prompt-placeholder {
-  background-color: #f8f9fa;
-  border: 2px dashed #dee2e6;
+  background-color: var(--background-secondary);
+  border: 2px dashed var(--border-dashed);
   border-radius: 8px;
   padding: 40px 20px;
   margin: 20px 0;
 }
 
 .prompt-placeholder p {
-  color: #6c757d;
+  color: var(--text-muted);
   font-style: italic;
   margin: 0;
 }
 
 .prompt-content {
-  background-color: white;
-  border: 1px solid #e0e0e0;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 25px;
   margin: 20px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow-color);
   min-height: 80px;
   display: flex;
   flex-direction: column;
@@ -145,7 +193,7 @@ p {
 }
 
 .prompt-content h3 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 20px;
   font-size: 18px;
 }
@@ -156,10 +204,10 @@ p {
 
 .country-flag .fi {
   font-size: 48px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 10px;
-  background-color: white;
+  background-color: var(--background-primary);
 }
 
 .prompt-flag {
@@ -171,12 +219,27 @@ p {
 .country-name {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary);
+  margin: 20px 0;
+}
+
+/* Prompt-specific text elements */
+.prompt-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 20px 0;
+}
+
+.prompt-location {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 20px 0;
 }
 
 .hint {
-  color: #6c757d;
+  color: var(--text-muted);
   font-size: 14px;
   font-style: italic;
   margin: 10px 0;
@@ -185,6 +248,70 @@ p {
 /* Quiz Controls */
 .quiz-controls {
   margin: 20px 0;
+}
+
+/* Quiz Configuration Component */
+.quiz-config {
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.quiz-config label {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 10px 0;
+  display: block;
+}
+
+.quiz-config select {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.quiz-config .prompt-types {
+  margin: 15px 0;
+}
+
+.quiz-config .prompt-type-checkbox {
+  display: inline-block;
+  margin: 5px 15px 5px 0;
+  color: var(--text-primary);
+  font-weight: normal;
+}
+
+.quiz-config .warning-message {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.quiz-config .warning-message p {
+  color: #856404;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Dark mode adjustments for warning message */
+@media (prefers-color-scheme: dark) {
+  .quiz-config .warning-message {
+    background-color: #3d2f00;
+    border-color: #5a4a00;
+  }
+  
+  .quiz-config .warning-message p {
+    color: #ffd54f;
+  }
 }
 
 .generate-prompt-btn {
@@ -233,23 +360,23 @@ p {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--background-primary);
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px var(--shadow-color);
   text-align: center;
   max-width: 400px;
   width: 90%;
 }
 
 .modal-content h2 {
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
 .modal-content p {
   margin-bottom: 25px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .modal-content button {
