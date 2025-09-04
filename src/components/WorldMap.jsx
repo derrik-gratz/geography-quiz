@@ -3,17 +3,15 @@ import {
     ComposableMap,
     Geographies,
     Geography,
-    Graticule
+    Graticule,
+    ZoomableGroup
 } from "react-simple-maps";
 import { geoPath } from "d3-geo";
+import countryData from '../data/country_data.json';
 
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
 const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
-
-function handleCountryClick(geo) {
-  console.log(geo.properties.NAME);
-}
 
 function isValidCountryCode(code) {
   return code && 
@@ -69,83 +67,161 @@ function getCentroid(geo){
 //   }
 // }
 
-export function WorldMap() {
+export function WorldMap(lockedOn) {
+  const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const lockedOnCode = lockedOn?.lockedOn;
+
+  function handleCountryClick(geo) {
+    if (!lockedOnCode){
+      console.log(geo.properties.NAME);
+      setSelectedCountry(geo.properties.ISO_A3);
+    } else {
+      console.log(lockedOn);
+    }
+  }
+  function resetViewWindow() {
+    setViewWindow({ coordinates: [0, 0], zoom: 1 });
+  }
+  function getCircleRadius(baseRadius=4){
+    return baseRadius / Math.sqrt(viewWindow.zoom);
+  }
     return(
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <div style={{
+          position: 'absolute',
+          top: '5px',
+          right: '5px',
+          display: 'flex',
+          gap: '5px',
+          zIndex: 1000
+        }}>
+          {!lockedOnCode && (
+            <button
+              onClick={() => evaluateSelection(selectedCountry)}
+              style={{
+                background: 'rgba(26, 168, 31, 0.8)',
+                color: 'white',
+                border: 'none',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                fontSize: '14px',
+                fontFamily: 'monospace',
+                cursor: 'pointer'
+              }}
+              title="Submit selection"
+            >
+              Submit
+            </button>
+          )}
+          <button
+            onClick={resetViewWindow}
+            style={{
+              background: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+              border: 'none',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              fontSize: '14px',
+              fontFamily: 'monospace',
+              cursor: 'pointer'
+            }}
+            title="Reset zoom"
+          >
+            Reset Zoom
+          </button>
+        </div>
         <ComposableMap
         projection="geoEqualEarth"
         projectionConfig={{
           scale: 147
         }}
-        // onMouseMove={handleMapMouseMove}
+        // onMouseMove={handleMouseMove}
         // onMouseLeave={handleMouseLeave}
         style={{
           width: '100%',
           height: '100%'
         }}
       >
-        <Graticule stroke="#999" />
-        <Geographies geography={mainGeoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                // const countryName = geo.properties.name;
-                // Some ISO_A3 are missing
-                const countryCode = getCountryCode(geo);
-                // const countryCode = countryNameToCode[countryName];
-                // const isSelected = selectedCountry === countryCode;
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onClick={() => handleCountryClick(geo)}
-                    style={{
-                      default: {
-                        fill: "#D6D6DA", //isSelected ? "#646cff" : "#D6D6DA",
-                        stroke: "#FFFFFF",
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                      hover: {
-                        fill: "#535bf2", //isSelected ? "#535bf2" : "#F53",
-                        stroke: "#FFFFFF",
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                    //   pressed: {
-                    //     fill: "#E42",
-                    //     stroke: "#FFFFFF",
-                    //     strokeWidth: 0.5,
-                    //     outline: "none",
-                    //   },
-                    }}
-                  />
-                );
-              })
-            }
-          </Geographies>
-          <Geographies geography={tinyGeoUrl}>
-            {({ geographies, projection }) =>
-              geographies.map((geo) => {
-                const countryCode = getCountryCode(geo);
-                const [centroid_x, centroid_y] = getCentroid(geo);
-                const [cx, cy] = projection([centroid_x, centroid_y]);
+        <ZoomableGroup
+          center={viewWindow.coordinates}
+          zoom={viewWindow.zoom}
+          onMoveEnd={({ zoom, coordinates }) => {
+            setViewWindow({ coordinates, zoom });
+          }}
+        >
 
-                return (
-                  <circle
-                    key={geo.rsmKey}
-                    cx={cx}
-                    cy={cy}
-                    r={5}
-                    fill="red"
-                    stroke="#fff"
-                    strokeWidth={0.5}
-                    onClick={() => handleCountryClick(geo)}
-                    style={{
-                      cursor: "pointer"
-                    }}
-                  />
-                )
-            })}
-          </Geographies>
+
+          <Graticule stroke="#999" step={[20,20]} />
+          <Geographies geography={mainGeoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => {
+                  // const countryName = geo.properties.name;
+                  // Some ISO_A3 are missing
+                  const countryCode = getCountryCode(geo);                 
+                  // const countryCode = countryNameToCode[countryName];
+                  const isSelected = selectedCountry === countryCode;
+                  if (countryData.find(country => country.code === countryCode)){
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        onClick={() => handleCountryClick(geo)}
+                        style={{
+                          default: {
+                            fill: (
+                              lockedOnCode === countryCode ? "#008000" :
+                                isSelected ? "#646cff" : "#D6D6DA"
+                            ),
+                            stroke: "#FFFFFF",
+                            strokeWidth: 0.5,
+                            outline: "none",
+                          },
+                          hover: {
+                            fill: (
+                              !lockedOnCode ? (
+                                isSelected ? "#535bf2" : "#F53"
+                              ) : (
+                                lockedOnCode === countryCode ? "#008000" : "#D6D6DA"
+                              )
+                            ),
+                            stroke: "#FFFFFF",
+                            strokeWidth: 0.5,
+                            outline: "none",
+                          },
+                        }}
+                      />
+                    );
+                  }
+                })
+              }
+            </Geographies>
+            <Geographies geography={tinyGeoUrl}>
+              {({ geographies, projection }) =>
+                geographies.map((geo) => {
+                  const countryCode = getCountryCode(geo);
+                  const [centroid_x, centroid_y] = getCentroid(geo);
+                  const [cx, cy] = projection([centroid_x, centroid_y]);
+
+                  return (
+                    <circle
+                      key={geo.rsmKey}
+                      cx={cx}
+                      cy={cy}
+                      r={getCircleRadius()}
+                      fill="red"
+                      stroke="#fff"
+                      strokeWidth={0.5}
+                      onClick={() => handleCountryClick(geo)}
+                      style={{
+                        cursor: "pointer"
+                      }}
+                    />
+                  )
+              })}
+            </Geographies>
+          </ZoomableGroup>
         </ComposableMap>
+      </div>
     )
 }

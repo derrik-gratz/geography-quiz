@@ -95,7 +95,9 @@ function App() {
                     incorrectCountries={incorrectCountries}
                     clearHighlights={clearHighlights}
                 />
-                <WorldMap />
+                <WorldMap
+                    lockedOn={null}
+                />
             </main>
         </div>
     );

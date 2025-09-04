@@ -3,7 +3,9 @@
 - Remove 'available prompts' and instead rely on if the data is present in the dictionary
   - still need to fix prompting based on checkboxes
 
-- generate map display and flag display? 
+- handle submission on map
+
+- add submission for flag selection?
 
 - ivory coast alias not matching
 
