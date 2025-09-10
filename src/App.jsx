@@ -39,7 +39,7 @@ function App() {
         resetQuiz,
         totalCountries
     } = useQuizEngine(processedCountryData);
-
+    console.log(currentPrompt);
     const handleFlagSelect = (countryCode) => {
         console.log('Flag selected:', countryCode);
     };
@@ -96,7 +96,7 @@ function App() {
                     clearHighlights={clearHighlights}
                 />
                 <WorldMap
-                    lockedOn={null}
+                    lockedOn={currentPrompt?.promptType === 'location' ? currentPrompt.countryCode : null }
                 />
             </main>
         </div>

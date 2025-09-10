@@ -1,5 +1,11 @@
 # Todo:
 
+- Remove scrolling/zooming when country is locked on. 
+
+- possibly clean up passing of prompted info (coordinates are already in the `currentPrompt`, don't need to query the countryData for them)
+
+- Set global 'max zoom'
+
 - Remove 'available prompts' and instead rely on if the data is present in the dictionary
   - still need to fix prompting based on checkboxes
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ComposableMap,
     Geographies,
@@ -72,6 +72,20 @@ export function WorldMap(lockedOn) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const lockedOnCode = lockedOn?.lockedOn;
+
+  // Set view window to center on locked country when lockedOnCode changes
+  useEffect(() => {
+    if (lockedOnCode) {
+      const country = countryData.find(country => country.code === lockedOnCode);
+      if (country && country.location) {
+        // Coordinates should be [longitude, latitude] for react-simple-maps
+        setViewWindow({ 
+          coordinates: [country.location.long, country.location.lat], 
+          zoom: 3 // Increased zoom to better focus on the country
+        });
+      }
+    }
+  }, [lockedOnCode]);
 
   function handleCountryClick(geo) {
     if (!lockedOnCode){
