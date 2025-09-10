@@ -70,6 +70,7 @@ function getCentroid(geo){
 export function WorldMap(lockedOn) {
   const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [hoveredCountry, setHoveredCountry] = useState(null);
   const lockedOnCode = lockedOn?.lockedOn;
 
   function handleCountryClick(geo) {
@@ -86,6 +87,7 @@ export function WorldMap(lockedOn) {
   function getCircleRadius(baseRadius=4){
     return baseRadius / Math.sqrt(viewWindow.zoom);
   }
+
     return(
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
         <div style={{
@@ -160,6 +162,7 @@ export function WorldMap(lockedOn) {
                   // Some ISO_A3 are missing
                   const countryCode = getCountryCode(geo);                 
                   // const countryCode = countryNameToCode[countryName];
+                  const isHovered = hoveredCountry === countryCode;
                   const isSelected = selectedCountry === countryCode;
                   if (countryData.find(country => country.code === countryCode)){
                     return (
@@ -167,6 +170,8 @@ export function WorldMap(lockedOn) {
                         key={geo.rsmKey}
                         geography={geo}
                         onClick={() => handleCountryClick(geo)}
+                        onMouseEnter={() => setHoveredCountry(countryCode)}
+                        onMouseLeave={() => setHoveredCountry(null)}
                         style={{
                           default: {
                             fill: (
@@ -185,9 +190,6 @@ export function WorldMap(lockedOn) {
                                 lockedOnCode === countryCode ? "#008000" : "#D6D6DA"
                               )
                             ),
-                            stroke: "#FFFFFF",
-                            strokeWidth: 0.5,
-                            outline: "none",
                           },
                         }}
                       />
@@ -199,7 +201,9 @@ export function WorldMap(lockedOn) {
             <Geographies geography={tinyGeoUrl}>
               {({ geographies, projection }) =>
                 geographies.map((geo) => {
-                  const countryCode = getCountryCode(geo);
+                  const countryCode = getCountryCode(geo);              
+                  const isSelected = selectedCountry === countryCode;
+                  const isHovered = hoveredCountry === countryCode;
                   const [centroid_x, centroid_y] = getCentroid(geo);
                   const [cx, cy] = projection([centroid_x, centroid_y]);
 
@@ -209,12 +213,22 @@ export function WorldMap(lockedOn) {
                       cx={cx}
                       cy={cy}
                       r={getCircleRadius()}
-                      fill="red"
+                      fill={
+                        lockedOnCode === countryCode ? "#008000" :
+                          isHovered && !lockedOnCode ? (
+                            isSelected ? "#535bf2" : "#F53"
+                          ) : (
+                            isSelected ? "#646cff" : "#FFA500"
+                          )
+                      }
                       stroke="#fff"
                       strokeWidth={0.5}
                       onClick={() => handleCountryClick(geo)}
+                      onMouseEnter={() => setHoveredCountry(countryCode)}
+                      onMouseLeave={() => setHoveredCountry(null)}
                       style={{
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        outline: "none",
                       }}
                     />
                   )
