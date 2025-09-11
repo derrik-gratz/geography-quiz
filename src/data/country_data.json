@@ -40,7 +40,7 @@
     "capital": "Luanda",
     "location": {
       "lat": -12,
-      "long": -18
+      "long": 18
     },
     "flagCode": "AO",
     "colors": [
@@ -863,7 +863,7 @@
     "code": "CUW",
     "capital": "Willemstad",
     "location": {
-      "lat": -12,
+      "lat": 12,
       "long": -69
     },
     "flagCode": "CW",
@@ -877,7 +877,7 @@
     "code": "CYM",
     "capital": "George Town",
     "location": {
-      "lat": -19,
+      "lat": 19,
       "long": -81
     },
     "flagCode": "KY",
@@ -910,8 +910,8 @@
     "code": "CZE",
     "capital": "Prague",
     "location": {
-      "lat": -49,
-      "long": -15
+      "lat": 49,
+      "long": 15
     },
     "flagCode": "CZ",
     "colors": [
@@ -964,8 +964,8 @@
     "code": "DJI",
     "capital": "Djibouti City",
     "location": {
-      "lat": -11,
-      "long": -43
+      "lat": 11,
+      "long": 43
     },
     "flagCode": "DJ",
     "colors": [
@@ -982,7 +982,7 @@
     "code": "DMA",
     "capital": "Roseau",
     "location": {
-      "lat": -15,
+      "lat": 15,
       "long": -61
     },
     "flagCode": "DM",
@@ -1013,7 +1013,7 @@
     "code": "DOM",
     "capital": "Santo Domingo",
     "location": {
-      "lat": -19,
+      "lat": 19,
       "long": -70
     },
     "flagCode": "DO",
@@ -3817,8 +3817,8 @@
     "code": "VAT",
     "capital": "",
     "location": {
-      "lat": -41,
-      "long": -12
+      "lat": 41,
+      "long": 12
     },
     "flagCode": "VA",
     "colors": [

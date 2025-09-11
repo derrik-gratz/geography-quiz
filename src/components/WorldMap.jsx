@@ -78,10 +78,9 @@ export function WorldMap(lockedOn) {
     if (lockedOnCode) {
       const country = countryData.find(country => country.code === lockedOnCode);
       if (country && country.location) {
-        // Coordinates should be [longitude, latitude] for react-simple-maps
         setViewWindow({ 
           coordinates: [country.location.long, country.location.lat], 
-          zoom: 3 // Increased zoom to better focus on the country
+          zoom: 8
         });
       }
     }
