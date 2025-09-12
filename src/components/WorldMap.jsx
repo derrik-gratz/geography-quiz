@@ -36,7 +36,6 @@ function getCentroid(geo){
   if (geo.geometry.type === "Point") return geo.geometry.coordinates;
   // For Polygon or MultiPolygon, use d3-geo centroid if available, else fallback
   if (geo.geometry.type === "Polygon") {
-    // Simple centroid calculation for polygons
     const coords = geo.geometry.coordinates[0];
     let x = 0, y = 0, n = coords.length;
     coords.forEach(([lon, lat]) => { x += lon; y += lat; });
@@ -52,54 +51,137 @@ function getCentroid(geo){
   return null; //[0, 0];
 };
 
-// function handleMapMouseMove(e) {
-//   if (!projection) return;
-  
-//   const rect = e.currentTarget.getBoundingClientRect();
-//   const mouseX = e.clientX - rect.left;
-//   const mouseY = e.clientY - rect.top;
-  
-//   try {
-//     const [longitude, latitude] = projection.invert([mouseX, mouseY]);
-//     console.log(`Mouse at: ${latitude.toFixed(2)}°, ${longitude.toFixed(2)}°`);
-//   } catch (error) {
-//     console.log('Could not convert coordinates');
-//   }
-// }
-
 export function WorldMap(lockedOn) {
-  const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [hoveredCountry, setHoveredCountry] = useState(null);
   const lockedOnCode = lockedOn?.lockedOn;
-
-  // Set view window to center on locked country when lockedOnCode changes
-  useEffect(() => {
-    if (lockedOnCode) {
-      const country = countryData.find(country => country.code === lockedOnCode);
-      if (country && country.location) {
-        setViewWindow({ 
-          coordinates: [country.location.long, country.location.lat], 
-          zoom: 8
-        });
-      }
-    }
-  }, [lockedOnCode]);
-
-  function handleCountryClick(geo) {
-    if (!lockedOnCode){
+  
+  // UNLOCKED MODE BEHAVIORS
+  const unlockedBehaviors = {
+    getDefaultViewWindow: () => ({ coordinates: [0, 0], zoom: 1 }),
+    
+    handleCountryClick: (geo) => {
       console.log(geo.properties.NAME);
       setSelectedCountry(geo.properties.ISO_A3);
-    } else {
-      console.log(lockedOn);
-    }
-  }
-  function resetViewWindow() {
-    setViewWindow({ coordinates: [0, 0], zoom: 1 });
-  }
+    },
+    
+    handleCountryHover: (countryCode) => {
+      setHoveredCountry(countryCode);
+    },
+    
+    handleCountryHoverLeave: () => {
+      setHoveredCountry(null);
+    },
+    
+    resetViewWindow: function() {
+      setViewWindow(this.getDefaultViewWindow());
+    },
+    
+    getCountryStyle: (isSelected, isHovered, countryCode) => ({
+      default: {
+        fill: isSelected ? "#646cff" : "#D6D6DA",
+        stroke: "#FFFFFF",
+        strokeWidth: 0.5,
+        outline: "none",
+      },
+      hover: {
+        fill: isSelected ? "#535bf2" : "#F53",
+      },
+    }),
+    
+    getCircleStyle: (isSelected, isHovered) => ({
+      fill: isHovered ? (
+        isSelected ? "#535bf2" : "#F53"
+      ) : (
+        isSelected ? "#646cff" : "#FFA500"
+      ),
+    }),
+    
+    showSubmitButton: true,
+  };
+
+  // LOCKED MODE BEHAVIORS
+  const lockedBehaviors = {
+    getDefaultViewWindow: () => {
+      if (lockedOnCode) {
+        const country = countryData.find(country => country.code === lockedOnCode);
+        if (country && country.location) {
+          return { 
+            coordinates: [country.location.long, country.location.lat], 
+            zoom: 8
+          };
+        }
+      }
+      return { coordinates: [0, 0], zoom: 1 };
+    },
+    
+    handleCountryClick: (geo) => {
+    },
+    
+    handleCountryHover: (countryCode) => {
+      // In locked mode, only highlight the locked country
+      // if (countryCode === lockedOnCode) {
+      //   setHoveredCountry(countryCode);
+      // }
+      setHoveredCountry(null);
+    },
+    
+    handleCountryHoverLeave: () => {
+      setHoveredCountry(null);
+    },
+    
+    resetViewWindow: function() {
+      setViewWindow(this.getDefaultViewWindow());
+    },
+    
+    getCountryStyle: (isSelected, isHovered, countryCode) => ({
+      default: {
+        fill: lockedOnCode === countryCode ? "#008000" : "#D6D6DA",
+        stroke: "#FFFFFF",
+        strokeWidth: 0.5,
+        outline: "none",
+      },
+      hover: {
+        fill: lockedOnCode === countryCode ? "#008000" : "#D6D6DA",
+      },
+    }),
+    
+    getCircleStyle: (isSelected, isHovered, countryCode) => ({
+      fill: lockedOnCode === countryCode ? "#008000" : "#FFA500",
+    }),
+    
+    showSubmitButton: false,
+  };
+
+  // Select behavior based on lock state
+  const behaviors = lockedOnCode ? lockedBehaviors : unlockedBehaviors;
+
+  // Initialize viewWindow with behavior-specific default
+  const [viewWindow, setViewWindow] = useState(behaviors.getDefaultViewWindow());
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [hoveredCountry, setHoveredCountry] = useState(null);
+
+  // Update viewWindow when lockedOnCode changes
+  useEffect(() => {
+    setViewWindow(behaviors.getDefaultViewWindow());
+  }, [lockedOnCode]);
+
+  // Assign behavior functions
+  const handleCountryClick = behaviors.handleCountryClick;
+  const handleCountryHover = behaviors.handleCountryHover;
+  const handleCountryHoverLeave = behaviors.handleCountryHoverLeave;
+  const resetViewWindow = behaviors.resetViewWindow;
+  const getCountryStyle = behaviors.getCountryStyle;
+  const getCircleStyle = behaviors.getCircleStyle;
+  const showSubmitButton = behaviors.showSubmitButton;
+
   function getCircleRadius(baseRadius=4){
     return baseRadius / Math.sqrt(viewWindow.zoom);
   }
+
+  // Placeholder for evaluateSelection - you'll need to implement this
+  const evaluateSelection = (countryCode) => {
+    console.log('Evaluating selection:', countryCode);
+    // TODO: Implement evaluation logic
+  };
 
     return(
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
@@ -111,7 +193,7 @@ export function WorldMap(lockedOn) {
           gap: '5px',
           zIndex: 1000
         }}>
-          {!lockedOnCode && (
+          {showSubmitButton && (
             <button
               onClick={() => evaluateSelection(selectedCountry)}
               style={{
@@ -183,28 +265,9 @@ export function WorldMap(lockedOn) {
                         key={geo.rsmKey}
                         geography={geo}
                         onClick={() => handleCountryClick(geo)}
-                        onMouseEnter={() => setHoveredCountry(countryCode)}
-                        onMouseLeave={() => setHoveredCountry(null)}
-                        style={{
-                          default: {
-                            fill: (
-                              lockedOnCode === countryCode ? "#008000" :
-                                isSelected ? "#646cff" : "#D6D6DA"
-                            ),
-                            stroke: "#FFFFFF",
-                            strokeWidth: 0.5,
-                            outline: "none",
-                          },
-                          hover: {
-                            fill: (
-                              !lockedOnCode ? (
-                                isSelected ? "#535bf2" : "#F53"
-                              ) : (
-                                lockedOnCode === countryCode ? "#008000" : "#D6D6DA"
-                              )
-                            ),
-                          },
-                        }}
+                        onMouseEnter={() => handleCountryHover(countryCode)}
+                        onMouseLeave={() => handleCountryHoverLeave()}
+                        style={getCountryStyle(isSelected, isHovered, countryCode)}
                       />
                     );
                   }
@@ -226,19 +289,12 @@ export function WorldMap(lockedOn) {
                       cx={cx}
                       cy={cy}
                       r={getCircleRadius()}
-                      fill={
-                        lockedOnCode === countryCode ? "#008000" :
-                          isHovered && !lockedOnCode ? (
-                            isSelected ? "#535bf2" : "#F53"
-                          ) : (
-                            isSelected ? "#646cff" : "#FFA500"
-                          )
-                      }
+                      fill={getCircleStyle(isSelected, isHovered, countryCode).fill}
                       stroke="#fff"
                       strokeWidth={0.5}
                       onClick={() => handleCountryClick(geo)}
-                      onMouseEnter={() => setHoveredCountry(countryCode)}
-                      onMouseLeave={() => setHoveredCountry(null)}
+                      onMouseEnter={() => handleCountryHover(countryCode)}
+                      onMouseLeave={() => handleCountryHoverLeave()}
                       style={{
                         cursor: "pointer",
                         outline: "none",
