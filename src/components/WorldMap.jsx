@@ -72,17 +72,21 @@ export function WorldMap(lockedOn) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const lockedOnCode = lockedOn?.lockedOn;
+  const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+  const [resetKey, setResetKey] = useState(0);
 
   // Set view window to center on locked country when lockedOnCode changes
   useEffect(() => {
     if (lockedOnCode) {
       const country = countryData.find(country => country.code === lockedOnCode);
       if (country && country.location) {
-        setViewWindow({ 
-          coordinates: [country.location.long, country.location.lat], 
-          zoom: 8
-        });
+        const lockedView = { coordinates: [country.location.long, country.location.lat], zoom: 8 };
+        setDefaultViewWindow(lockedView);
+        setViewWindow(lockedView);
       }
+    } else {
+      // Reset to world view when not locked
+      setDefaultViewWindow({ coordinates: [0, 0], zoom: 1 });
     }
   }, [lockedOnCode]);
 
@@ -95,7 +99,18 @@ export function WorldMap(lockedOn) {
     }
   }
   function resetViewWindow() {
-    setViewWindow({ coordinates: [0, 0], zoom: 1 });
+    setViewWindow(defaultViewWindow);
+    setResetKey(prev => prev + 1);
+    // if (lockedOnCode) {
+    //   // When locked, reset to the locked country view
+    //   const country = countryData.find(country => country.code === lockedOnCode);
+    //   if (country && country.location) {
+    //     setViewWindow(defaultViewWindow);
+    //     setResetKey(prev => prev + 1); // Force ZoomableGroup to re-render
+    //   }
+    // } else {
+    //   setResetKey(prev => prev + 1);
+    // }
   }
   function getCircleRadius(baseRadius=4){
     return baseRadius / Math.sqrt(viewWindow.zoom);
@@ -141,9 +156,9 @@ export function WorldMap(lockedOn) {
               fontFamily: 'monospace',
               cursor: 'pointer'
             }}
-            title="Reset zoom"
+            title="Reset view"
           >
-            Reset Zoom
+            Reset View
           </button>
         </div>
         <ComposableMap
@@ -159,10 +174,13 @@ export function WorldMap(lockedOn) {
         }}
       >
         <ZoomableGroup
+          key={resetKey}
           center={viewWindow.coordinates}
           zoom={viewWindow.zoom}
           onMoveEnd={({ zoom, coordinates }) => {
-            setViewWindow({ coordinates, zoom });
+            if (!lockedOnCode) {
+              setViewWindow({ coordinates, zoom });
+            }
           }}
         >
 
