@@ -3,6 +3,7 @@
 - Fix lat long specifications. Seems like inverted signs? 
 
 - Remove scrolling/zooming when country is locked on. 
+  - Reset button is fixed but perhaps ideally the map doesn't move. 
 
 - possibly clean up passing of prompted info (coordinates are already in the `currentPrompt`, don't need to query the countryData for them)
 
