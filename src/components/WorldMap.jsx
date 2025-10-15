@@ -50,7 +50,7 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap({ lockedOn, onSubmitAnswer }) {
+export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
   const lockedOnCode = lockedOn?.lockedOn;
   
   // State management
@@ -59,16 +59,17 @@ export function WorldMap({ lockedOn, onSubmitAnswer }) {
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
   const [resetKey, setResetKey] = useState(0);
+  const [mapSelectedCountry, setMapSelectedCountry] = useState(null);
 
   // UNLOCKED MODE BEHAVIORS
   const unlockedBehaviors = {
-    getDefaultViewWindow: () => ({ coordinates: [0, 0], zoom: 1 }),
+    getDefaultViewWindow: () => ({ coordinates: [0, 0], zoom: 1.5 }),
     
     handleCountryClick: (geo) => {
-      console.log(geo.properties.NAME);
-      setSelectedCountry(geo.properties.ISO_A3);
-      if (onSubmitAnswer) {
-        onSubmitAnswer(geo.properties.ISO_A3);
+      if (!disabled) {
+        console.log(geo.properties.NAME);
+        setSelectedCountry(geo.properties.ISO_A3);
+        setMapSelectedCountry(geo.properties.ISO_A3);
       }
     },
     
@@ -170,6 +171,21 @@ export function WorldMap({ lockedOn, onSubmitAnswer }) {
     setViewWindow(defaultView);
   }, [lockedOnCode]);
 
+  // Reset map selection when disabled or resetKey changes
+  useEffect(() => {
+    if (disabled || resetKey) {
+      setMapSelectedCountry(null);
+      setSelectedCountry(null);
+    }
+  }, [disabled, resetKey]);
+
+  // Handle map submission
+  const handleMapSubmit = () => {
+    if (mapSelectedCountry && onSubmitAnswer) {
+      onSubmitAnswer(mapSelectedCountry);
+    }
+  };
+
   // Assign behavior functions
   const handleCountryClick = behaviors.handleCountryClick;
   const handleCountryHover = behaviors.handleCountryHover;
@@ -199,22 +215,24 @@ export function WorldMap({ lockedOn, onSubmitAnswer }) {
         gap: '5px',
         zIndex: 1000
       }}>
-        {showSubmitButton && (
+        {!lockedOnCode && (
           <button
-            onClick={() => evaluateSelection(selectedCountry)}
+            onClick={handleMapSubmit}
+            disabled={!mapSelectedCountry || disabled}
             style={{
-              background: 'rgba(26, 168, 31, 0.8)',
+              background: mapSelectedCountry && !disabled ? 'rgba(26, 168, 31, 0.8)' : 'rgba(128, 128, 128, 0.8)',
               color: 'white',
               border: 'none',
               padding: '8px 12px',
               borderRadius: '4px',
               fontSize: '14px',
               fontFamily: 'monospace',
-              cursor: 'pointer'
+              cursor: mapSelectedCountry && !disabled ? 'pointer' : 'not-allowed',
+              opacity: mapSelectedCountry && !disabled ? 1 : 0.6
             }}
-            title="Submit selection"
+            title="Submit map selection"
           >
-            Submit
+            Submit Map
           </button>
         )}
         <button
@@ -262,7 +280,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer }) {
               geographies.map((geo) => {
                 const countryCode = getCountryCode(geo);
                 const isHovered = hoveredCountry === countryCode;
-                const isSelected = selectedCountry === countryCode;
+                const isSelected = mapSelectedCountry === countryCode;
                 
                 if (countryData.find(country => country.code === countryCode)) {
                   return (
@@ -284,7 +302,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer }) {
             {({ geographies, projection }) =>
               geographies.map((geo) => {
                 const countryCode = getCountryCode(geo);
-                const isSelected = selectedCountry === countryCode;
+                const isSelected = mapSelectedCountry === countryCode;
                 const isHovered = hoveredCountry === countryCode;
                 const [centroid_x, centroid_y] = getCentroid(geo);
                 const [cx, cy] = projection([centroid_x, centroid_y]);

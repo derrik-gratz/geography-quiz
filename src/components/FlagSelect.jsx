@@ -21,10 +21,27 @@ const availableColors = [
     { name: "orange", color: "#ffa500" }
 ]
 
-export function FlagSelect({ onSelect, displayCountries, incorrectCountries, clearHighlights }) {
+export function FlagSelect({ onSelect, displayCountries, incorrectCountries, clearHighlights, disabled = false }) {
     const [selectedColors, setSelectedColors] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    
     const handleFlagClick = (country) => {
-        onSelect(country);
+        if (!disabled) {
+            setSelectedCountry(country);
+        }
+    };
+
+    // Reset when disabled (new prompt type)
+    React.useEffect(() => {
+        if (disabled) {
+            setSelectedCountry(null);
+        }
+    }, [disabled]);
+
+    const handleSubmit = () => {
+        if (selectedCountry && onSelect) {
+            onSelect(selectedCountry);
+        }
     };
 
     const handleColorClick = (color) => {
@@ -45,6 +62,23 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
     return (
         <div className="flag-select">
             <div className="color-picker">
+            <button
+                    onClick={handleSubmit}
+                    disabled={!selectedCountry || disabled}
+                    style={{
+                        padding: '0.3rem 0.8rem',
+                        fontSize: '0.8rem',
+                        borderRadius: '4px',
+                        border: '1px solid #007bff',
+                        backgroundColor: selectedCountry && !disabled ? '#007bff' : '#f8f9fa',
+                        color: selectedCountry && !disabled ? '#fff' : '#6c757d',
+                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+                        whiteSpace: 'nowrap',
+                        marginLeft: '10px'
+                    }}
+                >
+                    Submit Flag
+                </button>
                 <span className="color-filter">Filter by color:</span>
                 {availableColors.map(color =>
                     <button 
@@ -60,11 +94,15 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
                 {filteredCountries.map((country) => (
                     <span
                         key={country.code}
-                        className={`flag-icon fi fi-${country.flagCode.toLowerCase()}`}
+                        className={`flag-icon fi fi-${country.flagCode.toLowerCase()} ${selectedCountry?.code === country.code ? 'selected' : ''}`}
                         onClick={() => handleFlagClick(country)}
                         role="button"
                         tabIndex={0}
                         aria-label={`Select ${country.name || country.code} flag`}
+                        style={{
+                            opacity: disabled ? 0.5 : 1,
+                            cursor: disabled ? 'not-allowed' : 'pointer'
+                        }}
                     />
                 ))}
             </div>
