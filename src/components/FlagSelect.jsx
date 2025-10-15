@@ -1,0 +1,111 @@
+import React, { useState } from 'react';
+
+/**
+ * FlagSelect Component
+ * 
+ * Displays a grid of country flags for user selection
+ * Returns country code when a flag is clicked
+ * 
+ * @param {Function} props.onSelect - Callback when a flag is selected
+ * @param {Array} props.displayCountries - Array of countries to display
+ * @returns {JSX.Element} Flag selection interface
+ */
+
+const availableColors = [
+    { name: "red"   , color: "#FF0000" },
+    { name: "white" , color: "#FFFFFF" },
+    { name: "blue"  , color: "#0000FF" },
+    { name: "green" , color: "#00FF00" },
+    { name: "black" , color: "#000000" },
+    { name: "yellow", color: "#FFFF00" },
+    { name: "orange", color: "#ffa500" }
+]
+
+export function FlagSelect({ onSelect, displayCountries, incorrectCountries, clearHighlights, disabled = false }) {
+    const [selectedColors, setSelectedColors] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    
+    const handleFlagClick = (country) => {
+        if (!disabled) {
+            setSelectedCountry(country);
+        }
+    };
+
+    // Reset when disabled (new prompt type)
+    React.useEffect(() => {
+        if (disabled) {
+            setSelectedCountry(null);
+        }
+    }, [disabled]);
+
+    const handleSubmit = () => {
+        if (selectedCountry && onSelect) {
+            onSelect(selectedCountry);
+        }
+    };
+
+    const handleColorClick = (color) => {
+        setSelectedColors(prevColors => {
+            if (prevColors.includes(color)) {
+                return prevColors.filter(c => c !== color);
+            }
+            return [...prevColors, color];
+        })
+    }
+
+    const filteredCountries = displayCountries.filter(country => {
+        return selectedColors.length === 0 ?
+            true :
+            selectedColors.every(color => country.colors.includes(color));
+    });
+
+    return (
+        <div className="flag-select">
+            <div className="color-picker">
+            <button
+                    onClick={handleSubmit}
+                    disabled={!selectedCountry || disabled}
+                    style={{
+                        padding: '0.3rem 0.8rem',
+                        fontSize: '0.8rem',
+                        borderRadius: '4px',
+                        border: '1px solid #007bff',
+                        backgroundColor: selectedCountry && !disabled ? '#007bff' : '#f8f9fa',
+                        color: selectedCountry && !disabled ? '#fff' : '#6c757d',
+                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+                        whiteSpace: 'nowrap',
+                        marginLeft: '10px'
+                    }}
+                >
+                    Submit Flag
+                </button>
+                <span className="color-filter">Filter by color:</span>
+                {availableColors.map(color =>
+                    <button 
+                        key={color.name}
+                        className={`color-filter-button ${selectedColors.includes(color.name) ? "selected" : ""}`}
+                        onClick={() => handleColorClick(color.name)}
+                        style={{ backgroundColor: color.color }}
+                        title={color.name}
+                    ></button>
+                )}
+            </div>
+            <div className="flag-grid">
+                {filteredCountries.map((country) => (
+                    <span
+                        key={country.code}
+                        className={`flag-icon fi fi-${country.flagCode.toLowerCase()} ${selectedCountry?.code === country.code ? 'selected' : ''}`}
+                        onClick={() => handleFlagClick(country)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Select ${country.name || country.code} flag`}
+                        style={{
+                            opacity: disabled ? 0.5 : 1,
+                            cursor: disabled ? 'not-allowed' : 'pointer'
+                        }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}

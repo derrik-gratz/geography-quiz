@@ -1,0 +1,9 @@
+{
+    "green": ["BD", "BR", "DM", "MR", "NG", "PK", "SA", "ST", "TM", "ZM", "BK", "BJ", "DZ", "GY", "SB", "TG"],
+    "white": ["MT", "PA", "LR", "DZ", "LB", "VA", "SM", "GR", "CY", "FI", "GE", "ID", "IL", "JP", "KP", "MC", "PL", "SG", "UY"],
+    "blue": ["PA", "UA", "SM", "SB", "RW", "SE", "NZ", "NR", "MH","LI", "LC", "LA", "KH", "IS", "HT", "GR", "CV", "CU", "AU", "BA", "BB", "BZ",  "AR", "BS", "BW", "CD", "FJ", "FM", "GT", "HN", "KZ", "NI", "PW", "SO", "TV"],
+    "yellow": ["VC", "EC", "ES", "VA", "BN", "CO", "UA", "SV", "SE"],
+    "black": ["AO", "LY", "PG"],
+    "red": ["PA", "LR", "PG", "AO", "LB", "LA", "HT", "UY", "SG", "MC", "JP", "AG", "AF", "AL", "AT", "BH", "BY", "CA", "CH", "CL", "CN", "DK", "ES", "ID", "KG", "KR", "GE", "LA", "LI", "LV", "MA", "ME", "MK", "MM", "MN", "MT", "MV", "NO", "PE", "PL", "PT", "QA", "TL", "TN", "TO", "TR", "TT", "TW", "VN", "WS"],
+    "orange": ["BT", "OM"]
+}

@@ -1,34 +1,26 @@
 import React, { useState } from 'react';
-import countries from '../data/countries.json';
+import countries from '../data/country_data.json';
 
-function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPrompt = null }) {
+export function TextCountryInput({ onSelect, resetKey }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Function to clear the input
-  const clearInput = () => {
-    setInput('');
+  React.useEffect(() => {
+    if (resetKey) {
+        setInput('');
+        setSuggestions([]);
+        setShowSuggestions(false);
+    }
+  }, [resetKey]);
+  
+  const handleSelect = (country) => {
+    setInput(country.country);
     setSuggestions([]);
     setShowSuggestions(false);
+    if (onSelect) onSelect(country);
   };
 
-  // Set the clear function in the ref so parent can call it
-  React.useEffect(() => {
-    if (clearInputsRef) {
-      // Store the current clear function
-      const currentClear = clearInputsRef.current;
-      clearInputsRef.current = () => {
-        clearInput();
-        // Call any existing clear function
-        if (currentClear) {
-          currentClear();
-        }
-      };
-    }
-  }, [clearInputsRef]);
-
-  // Function to normalize text by removing accents and converting to lowercase
   const normalizeText = (text) => {
     return text
       .normalize('NFD') // Decompose characters with accents
@@ -42,25 +34,9 @@ function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPromp
     if (value.length > 0) {
       const normalizedInput = normalizeText(value);
       const filtered = countries.filter(c => {
-        const normalizedName = normalizeText(c.Name);
-        const nameMatch = normalizedName.includes(normalizedInput);
-        
-        // Also check aliases if they exist
-        let aliasMatch = false;
-        let matchedAlias = null;
-        if (c.Aliases && Array.isArray(c.Aliases)) {
-          matchedAlias = c.Aliases.find(alias => 
-            normalizeText(alias).includes(normalizedInput)
-          );
-          aliasMatch = !!matchedAlias;
-        }
-        
-        // Store the matched alias for display purposes
-        if (aliasMatch) {
-          c.matchedAlias = matchedAlias;
-        }
-        
-        return nameMatch || aliasMatch;
+        const allAliases = [c.country, ...(Array.isArray(c.aliases) ? c.aliases : [])].filter(Boolean);
+        const matches = allAliases.map(name => normalizeText(name)).some(name => name.includes(normalizedInput));
+        return matches;
       }).slice(0, 10);
       setSuggestions(filtered);
       setShowSuggestions(true);
@@ -68,13 +44,6 @@ function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPromp
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  };
-
-  const handleSelect = (country) => {
-    setInput(country.Name);
-    setSuggestions([]);
-    setShowSuggestions(false);
-    if (onSelect) onSelect(country);
   };
 
   return (
@@ -119,12 +88,12 @@ function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPromp
         }}>
           {suggestions.map(country => (
             <li
-              key={country.Code}
+              key={country.code}
               onMouseDown={() => handleSelect(country)}
               style={{ 
                 padding: '0.5rem', 
                 cursor: 'pointer',
-                color: '#333',
+                color: 'black',
                 borderBottom: '1px solid #eee',
                 minHeight: '40px',
                 display: 'flex',
@@ -133,20 +102,20 @@ function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPromp
                 backgroundColor: 'transparent'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#f0f0f0';
+                e.currentTarget.style.backgroundColor = '#f0f0f0';
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'transparent';
+                e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <div>{country.Name}</div>
-              {country.matchedAlias && (
+              <div>{country.country}</div>
+              {country.aliases && country.aliases.length > 0 && (
                 <div style={{ 
                   fontSize: '0.8rem', 
                   color: '#666', 
                   fontStyle: 'italic' 
                 }}>
-                  Matched: {country.matchedAlias}
+                  Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
                 </div>
               )}
             </li>
@@ -155,6 +124,4 @@ function TextCountryInput({ onSelect, clearInputsRef, guesses = [], currentPromp
       )}
     </div>
   );
-}
-
-export default TextCountryInput; 
+} 

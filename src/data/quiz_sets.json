@@ -1,0 +1,18 @@
+[
+    {
+        "name": "test",
+        "country_codes": [
+            "USA",
+            "CAN",
+            "MEX"
+        ]
+    },
+    {
+        "name": "test2",
+        "country_codes": [
+            "RUS",
+            "CHN",
+            "IND"
+        ]
+    }
+]
