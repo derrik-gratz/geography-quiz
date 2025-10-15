@@ -50,7 +50,7 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap(lockedOn) {
+export function WorldMap({ lockedOn, onSubmitAnswer }) {
   const lockedOnCode = lockedOn?.lockedOn;
   
   // State management
@@ -67,6 +67,9 @@ export function WorldMap(lockedOn) {
     handleCountryClick: (geo) => {
       console.log(geo.properties.NAME);
       setSelectedCountry(geo.properties.ISO_A3);
+      if (onSubmitAnswer) {
+        onSubmitAnswer(geo.properties.ISO_A3);
+      }
     },
     
     handleCountryHover: (countryCode) => {

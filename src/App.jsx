@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { QuizConfig } from './components/QuizConfig';
-import { QuizProgress } from './components/QuizProgress';
+import { QuizLog } from './components/QuizLog';
 import { QuizPrompt } from './components/QuizPrompt';
 import { FlagSelect } from './components/FlagSelect';
 import { useQuizConfig } from './hooks/useQuizConfig';
@@ -37,7 +37,12 @@ function App() {
         promptHistory,
         isQuizFinished, 
         resetQuiz,
-        totalCountries
+        totalCountries,
+        submitAnswer,
+        attempts,
+        answers,
+        requiredAnswerTypes,
+        isComplete
     } = useQuizEngine(processedCountryData);
     console.log(currentPrompt);
     const handleFlagSelect = (countryCode) => {
@@ -68,11 +73,15 @@ function App() {
                     PROMPT_TYPES={PROMPT_TYPES}
                 />
                 
-                {/* Quiz progress section - displays current progress */}
-                <QuizProgress 
-                    currentProgress={promptHistory.length}
+                {/* Quiz log section - displays progress with attempts tracking */}
+                <QuizLog 
+                    promptHistory={promptHistory}
+                    attempts={attempts}
+                    answers={answers}
+                    currentPrompt={currentPrompt}
+                    requiredAnswerTypes={requiredAnswerTypes}
+                    isComplete={isComplete()}
                     totalCountries={totalCountries}
-                    isQuizFinished={isQuizFinished}
                 />
                 
                 {/* Quiz prompt section - handles displaying prompts and controls */}
@@ -85,18 +94,28 @@ function App() {
                     currentProgress={promptHistory.length}
                 />
                 <TextCountryInput
-                    // onSelect={handleFlagSelect}
-                    // clearInputsRef={clearInputsRef}
+                    onSelect={(country) => {
+                        const result = submitAnswer({ type: 'text', value: country });
+                        console.log('Text answer result:', result);
+                    }}
+                    resetKey={currentPrompt?.countryCode}
                 />
                 {/* Flag select section - handles flag selection */}
                 <FlagSelect
-                    onSelect={handleFlagSelect}
+                    onSelect={(country) => {
+                        const result = submitAnswer({ type: 'flag', value: country });
+                        console.log('Flag answer result:', result);
+                    }}
                     displayCountries={displayCountryFlags}
                     incorrectCountries={incorrectCountries}
                     clearHighlights={clearHighlights}
                 />
                 <WorldMap
                     lockedOn={currentPrompt?.promptType === 'location' ? currentPrompt.countryCode : null }
+                    onSubmitAnswer={(countryCode) => {
+                        const result = submitAnswer({ type: 'map', value: countryCode });
+                        console.log('Map answer result:', result);
+                    }}
                 />
             </main>
         </div>

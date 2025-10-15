@@ -17,6 +17,10 @@ export function useQuizEngine(countryData) {
     // Track if the quiz has ended
     const [isQuizFinished, setIsQuizFinished] = useState(false);
 
+    // Per-question state
+    const [answers, setAnswers] = useState({}); // { map?: code, text?: code, flag?: code }
+    const [attempts, setAttempts] = useState({ map: 0, text: 0, flag: 0 });
+
     /**
      * Reset quiz state when countryData changes (e.g., when switching quiz sets)
      */
@@ -24,6 +28,8 @@ export function useQuizEngine(countryData) {
         setPromptHistory([]);
         setCurrentPrompt(null);
         setIsQuizFinished(false);
+        setAnswers({});
+        setAttempts({ map: 0, text: 0, flag: 0 });
     }, [countryData]);
 
     /**
@@ -62,6 +68,9 @@ export function useQuizEngine(countryData) {
             };
             
             setCurrentPrompt(prompt);
+            // reset per-question state
+            setAnswers({});
+            setAttempts({ map: 0, text: 0, flag: 0 });
             setPromptHistory(prev => [...prev, prompt]);
             
         } catch (error) {
@@ -76,7 +85,54 @@ export function useQuizEngine(countryData) {
         setPromptHistory([]);
         setCurrentPrompt(null);
         setIsQuizFinished(false);
+        setAnswers({});
+        setAttempts({ map: 0, text: 0, flag: 0 });
     }, []);
+
+    // Required answer types: user must answer non-prompted types; configurable later
+    const requiredAnswerTypes = (() => {
+        if (!currentPrompt) return [];
+        const all = ['name', 'flag', 'location'];
+        return all.filter(t => t !== currentPrompt.promptType);
+    })();
+
+    const isComplete = useCallback(() => {
+        if (!currentPrompt) return false;
+        const answered = {
+            name: Boolean(answers.text || answers.name),
+            flag: Boolean(answers.flag),
+            location: Boolean(answers.map || answers.location),
+        };
+        return requiredAnswerTypes.every(t => answered[t]);
+    }, [answers, requiredAnswerTypes, currentPrompt]);
+
+    // Normalize input to ISO code
+    const normalize = (type, value) => {
+        if (!value) return null;
+        switch (type) {
+            case 'text':
+                return typeof value === 'object' && value.code ? value.code : null;
+            case 'flag':
+                return typeof value === 'object' && value.code ? value.code : (typeof value === 'string' ? value : null);
+            case 'map':
+                return value; // already ISO code
+            default:
+                return null;
+        }
+    };
+
+    // Unified submission API
+    const submitAnswer = useCallback(({ type, value }) => {
+        if (!currentPrompt) return { ok: false, reason: 'no_prompt' };
+        const code = normalize(type, value);
+        const correct = code && code === currentPrompt.countryCode;
+        setAttempts(prev => ({ ...prev, [type]: (prev[type] || 0) + 1 }));
+        if (correct) {
+            setAnswers(prev => ({ ...prev, [type]: code }));
+        }
+        const done = correct ? (requiredAnswerTypes.length === 1 ? true : isComplete()) : false;
+        return { ok: correct, correctCode: currentPrompt.countryCode, complete: done };
+    }, [currentPrompt, isComplete, requiredAnswerTypes]);
 
     return { 
         currentPrompt, 
@@ -84,6 +140,11 @@ export function useQuizEngine(countryData) {
         promptHistory,
         isQuizFinished,
         resetQuiz,
-        totalCountries: countryData?.length || 0
+        totalCountries: countryData?.length || 0,
+        submitAnswer,
+        attempts,
+        answers,
+        requiredAnswerTypes,
+        isComplete
     };
 }

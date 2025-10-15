@@ -159,6 +159,135 @@ p {
   font-weight: 600;
 }
 
+/* Quiz Log Component */
+.quiz-log {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.quiz-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.quiz-log-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.progress-summary {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.quiz-log-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.quiz-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.quiz-log-table th {
+  background: var(--background-tertiary);
+  color: var(--text-primary);
+  padding: 12px 8px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.quiz-log-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.log-entry {
+  transition: background-color 0.2s ease;
+}
+
+.log-entry:hover {
+  background: var(--background-tertiary);
+}
+
+.log-entry.in_progress {
+  background: rgba(255, 193, 7, 0.1);
+}
+
+.log-entry.completed {
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.country-name {
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.prompt-type {
+  text-transform: capitalize;
+  color: var(--text-secondary);
+  min-width: 80px;
+}
+
+.status {
+  text-align: center;
+  min-width: 60px;
+}
+
+.answer-cell {
+  text-align: center;
+  min-width: 80px;
+}
+
+.answer-status {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.answer-status:contains('✓') {
+  color: var(--success-text);
+}
+
+.answer-status:contains('?') {
+  color: #ffc107;
+}
+
+.answer-status:contains('-') {
+  color: var(--text-muted);
+}
+
+.attempts {
+  color: var(--text-muted);
+  font-size: 0.8em;
+}
+
+.no-entries {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.no-entries p {
+  margin: 0;
+  font-style: italic;
+}
+
 /* Quiz Prompt Component */
 .quiz-prompt {
   margin: 30px 0;

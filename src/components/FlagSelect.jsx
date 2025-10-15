@@ -23,8 +23,8 @@ const availableColors = [
 
 export function FlagSelect({ onSelect, displayCountries, incorrectCountries, clearHighlights }) {
     const [selectedColors, setSelectedColors] = useState([]);
-    const handleFlagClick = (countryCode) => {
-        onSelect(countryCode);
+    const handleFlagClick = (country) => {
+        onSelect(country);
     };
 
     const handleColorClick = (color) => {
@@ -61,7 +61,7 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
                     <span
                         key={country.code}
                         className={`flag-icon fi fi-${country.flagCode.toLowerCase()}`}
-                        onClick={() => handleFlagClick(country.flagCode)}
+                        onClick={() => handleFlagClick(country)}
                         role="button"
                         tabIndex={0}
                         aria-label={`Select ${country.name || country.code} flag`}
