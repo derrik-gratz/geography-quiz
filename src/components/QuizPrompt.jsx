@@ -17,7 +17,8 @@ export function QuizPrompt({
     resetQuiz, 
     isQuizFinished, 
     totalCountries, 
-    currentProgress 
+    currentProgress,
+    showNiceMessage = false
 }) {
     const formatLatitude = (lat) => {
         const absLat = Math.abs(lat);
@@ -33,6 +34,16 @@ export function QuizPrompt({
 
 
     const renderPromptContent = () => {
+        if (showNiceMessage) {
+            return (
+                <div className="prompt-content">
+                    <div className="prompt-name">
+                        Nice! 🎉
+                    </div>
+                </div>
+            );
+        }
+
         if (!currentPrompt) {
             return (
                 <div className="prompt-placeholder">

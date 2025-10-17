@@ -42,11 +42,11 @@ function App() {
         attempts,
         answers,
         requiredAnswerTypes,
-        isComplete
+        isComplete,
+        showNiceMessage
     } = useQuizEngine(processedCountryData);
-    console.log(currentPrompt);
     const handleFlagSelect = (countryCode) => {
-        console.log('Flag selected:', countryCode);
+        // Flag selection handled by onSelect callback
     };
 
     const displayCountryFlags = countryData
@@ -93,6 +93,7 @@ function App() {
                             isQuizFinished={isQuizFinished}
                             totalCountries={totalCountries}
                             currentProgress={promptHistory.length}
+                            showNiceMessage={showNiceMessage}
                         />
                     </div>
                     
@@ -116,7 +117,6 @@ function App() {
                             <TextCountryInput
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'text', value: country });
-                                    console.log('Text answer result:', result);
                                     // Text input doesn't need visual feedback on flags/map
                                 }}
                                 resetKey={currentPrompt?.countryCode}
@@ -127,7 +127,6 @@ function App() {
                             <FlagSelect
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'flag', value: country });
-                                    console.log('Flag answer result:', result);
                                     if (result.ok) {
                                         setCorrectFlags(prev => [...prev, country.code]);
                                     } else if (result.correctCode) {
@@ -149,7 +148,6 @@ function App() {
                             lockedOn={currentPrompt?.promptType === 'location' ? currentPrompt.countryCode : null }
                             onSubmitAnswer={(countryCode) => {
                                 const result = submitAnswer({ type: 'map', value: countryCode });
-                                console.log('Map answer result:', result);
                                 if (result.ok) {
                                     setCorrectMapCountries(prev => [...prev, countryCode]);
                                 } else if (result.correctCode) {

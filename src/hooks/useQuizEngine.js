@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 /**
  * Custom hook for managing quiz engine state and logic
@@ -11,7 +11,7 @@ export function useQuizEngine(countryData) {
     // Current prompt object: { countryCode: string, promptType: string, countryData: Object } or null
     const [currentPrompt, setCurrentPrompt] = useState(null);
     
-    // Array of previous prompts (not currently used but available for future features)
+    // Array of previous prompts with completion status
     const [promptHistory, setPromptHistory] = useState([]);
     
     // Track if the quiz has ended
@@ -20,6 +20,10 @@ export function useQuizEngine(countryData) {
     // Per-question state
     const [answers, setAnswers] = useState({}); // { map?: code, text?: code, flag?: code }
     const [attempts, setAttempts] = useState({ map: 0, text: 0, flag: 0 });
+    
+    // Auto-generation state
+    const [showNiceMessage, setShowNiceMessage] = useState(false);
+    const niceMessageTimeoutRef = useRef(null);
 
     /**
      * Reset quiz state when countryData changes (e.g., when switching quiz sets)
@@ -30,7 +34,29 @@ export function useQuizEngine(countryData) {
         setIsQuizFinished(false);
         setAnswers({});
         setAttempts({ map: 0, text: 0, flag: 0 });
+        setShowNiceMessage(false);
+        if (niceMessageTimeoutRef.current) {
+            clearTimeout(niceMessageTimeoutRef.current);
+            niceMessageTimeoutRef.current = null;
+        }
     }, [countryData]);
+
+    // TODO: certain countries will have a subset of prompt types
+    const requiredAnswerTypes = (() => {
+        if (!currentPrompt) return [];
+        const all = ['name', 'flag', 'location'];
+        return all.filter(t => t !== currentPrompt.promptType);
+    })();
+
+    const isComplete = useCallback(() => {
+        if (!currentPrompt) return false;
+        const answered = {
+            name: Boolean(answers.text || answers.name),
+            flag: Boolean(answers.flag),
+            location: Boolean(answers.map || answers.location),
+        };
+        return requiredAnswerTypes.every(t => answered[t]);
+    }, [answers, requiredAnswerTypes, currentPrompt]);
 
     /**
      * Generates a new prompt from the next available country
@@ -42,6 +68,27 @@ export function useQuizEngine(countryData) {
         }
 
         try {
+            // If there's a current prompt, mark it as completed (correct or incorrect)
+            if (currentPrompt) {
+                const wasCompleted = isComplete();
+                const completionStatus = wasCompleted ? 'correct' : 'incorrect';
+                
+                // Update the last prompt in history with completion status
+                setPromptHistory(prev => {
+                    const updated = [...prev];
+                    if (updated.length > 0) {
+                        updated[updated.length - 1] = {
+                            ...updated[updated.length - 1],
+                            promptType: currentPrompt.promptType, // Preserve the original prompt type
+                            completionStatus,
+                            finalAnswers: { ...answers },
+                            finalAttempts: { ...attempts }
+                        };
+                    }
+                    return updated;
+                });
+            }
+
             // Use promptHistory.length as the current index
             const currentIndex = promptHistory.length;
             
@@ -76,7 +123,33 @@ export function useQuizEngine(countryData) {
         } catch (error) {
             console.error('Error generating prompt:', error);
         }
-    }, [countryData, promptHistory.length]);
+    }, [countryData, promptHistory.length, currentPrompt, isComplete, answers, attempts]);
+
+    // Auto-generate next prompt when all required answer types are completed
+    useEffect(() => {
+        // Only run if there's an active prompt and we're not already showing the nice message
+        if (!currentPrompt || showNiceMessage || niceMessageTimeoutRef.current) {
+            return;
+        }
+        
+        const answered = {
+            name: Boolean(answers.text || answers.name),
+            flag: Boolean(answers.flag),
+            location: Boolean(answers.map || answers.location),
+        };
+        const isCurrentlyComplete = requiredAnswerTypes.every(t => answered[t]);
+        
+        if (isCurrentlyComplete) {
+            setShowNiceMessage(true);
+            
+            // Show "Nice!" message for 1 second, then generate next prompt
+            niceMessageTimeoutRef.current = setTimeout(() => {
+                setShowNiceMessage(false);
+                niceMessageTimeoutRef.current = null;
+                generatePrompt();
+            }, 1000);
+        }
+    }, [answers, requiredAnswerTypes, currentPrompt, showNiceMessage]);
 
     /**
      * Resets the quiz to start over with all countries available
@@ -87,24 +160,12 @@ export function useQuizEngine(countryData) {
         setIsQuizFinished(false);
         setAnswers({});
         setAttempts({ map: 0, text: 0, flag: 0 });
+        setShowNiceMessage(false);
+        if (niceMessageTimeoutRef.current) {
+            clearTimeout(niceMessageTimeoutRef.current);
+            niceMessageTimeoutRef.current = null;
+        }
     }, []);
-
-    // Required answer types: user must answer non-prompted types; configurable later
-    const requiredAnswerTypes = (() => {
-        if (!currentPrompt) return [];
-        const all = ['name', 'flag', 'location'];
-        return all.filter(t => t !== currentPrompt.promptType);
-    })();
-
-    const isComplete = useCallback(() => {
-        if (!currentPrompt) return false;
-        const answered = {
-            name: Boolean(answers.text || answers.name),
-            flag: Boolean(answers.flag),
-            location: Boolean(answers.map || answers.location),
-        };
-        return requiredAnswerTypes.every(t => answered[t]);
-    }, [answers, requiredAnswerTypes, currentPrompt]);
 
     // Normalize input to ISO code
     const normalize = (type, value) => {
@@ -145,6 +206,7 @@ export function useQuizEngine(countryData) {
         attempts,
         answers,
         requiredAnswerTypes,
-        isComplete
+        isComplete,
+        showNiceMessage
     };
 }

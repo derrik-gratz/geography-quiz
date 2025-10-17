@@ -77,11 +77,11 @@
 
 /* Left Column - Controls and Results */
 .left-column {
-  flex: 0 0 400px; /* Increased from 350px */
+  flex: 0 0 500px; 
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 400px; /* Increased from 350px */
+  gap: 10px;
+  max-width: 800px; /* Increased from 350px */
   overflow: hidden; /* Prevent content from overflowing */
 }
 
@@ -90,12 +90,13 @@
   background: var(--background-secondary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 2px 4px var(--shadow-color);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2px;
 }
+
 
 /* Right Column - Interactive Elements */
 .right-column {
@@ -263,7 +264,7 @@ p {
   text-align: center;
 }
 
-.flag-icon:hover {
+.flag-icon:hover:not(.disabled) {
   border-color: var(--color-hover-outline);
   box-shadow: 0 0 0 2px var(--color-hover-outline);
   background-color: var(--color-hover);
@@ -355,8 +356,8 @@ p {
   background: var(--background-secondary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 10px;
+  margin: 10px 0;
   box-shadow: 0 2px 4px var(--shadow-color);
   max-width: 100%;
   width: 100%;
@@ -429,9 +430,22 @@ p {
   background: rgba(40, 167, 69, 0.1);
 }
 
+.log-entry.completed.correct {
+  background: rgba(40, 167, 69, 0.15);
+  border-left: 4px solid var(--color-correct);
+}
+
+.log-entry.completed.incorrect {
+  background: rgba(220, 53, 69, 0.15);
+  border-left: 4px solid var(--color-incorrect);
+}
+
 .country-name {
-  font-weight: 500;
-  min-width: 120px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 20px 0;
+  min-width: 60px;
 }
 
 .prompt-type {
@@ -456,7 +470,11 @@ p {
 }
 
 .answer-status:contains('✓') {
-  color: var(--success-text);
+  color: var(--color-correct);
+}
+
+.answer-status:contains('✗') {
+  color: var(--color-incorrect);
 }
 
 .answer-status:contains('?') {
@@ -537,10 +555,10 @@ p {
   background-color: var(--background-primary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 25px;
-  margin: 20px 0;
+  padding: 5px;
+  margin: 5px 0;
   box-shadow: 0 2px 8px var(--shadow-color);
-  min-height: 80px;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -569,13 +587,6 @@ p {
   font-size: 72px;
   display: inline-block;
   border: 3px solid grey;
-}
-
-.country-name {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--text-primary);
-  margin: 20px 0;
 }
 
 /* Prompt-specific text elements */

@@ -24,7 +24,6 @@ function getCountryCode(geo) {
   } else if (isValidCountryCode(geo.properties.GU_A3)) {
     return geo.properties.GU_A3.trim();
   } else {
-    console.log(`Invalid country code: ${geo.properties.ISO_A3} or ${geo.properties.GU_A3}`);
     return null;
   }
 }
@@ -227,7 +226,6 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
 
   // Placeholder for evaluateSelection - you'll need to implement this
   const evaluateSelection = (countryCode) => {
-    console.log('Evaluating selection:', countryCode);
     // TODO: Implement evaluation logic
   };
 

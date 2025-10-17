@@ -1,5 +1,7 @@
 # Todo:
 
+- add give up options for each input type, which then highlights the correct answer
+
 - re-add available prompts, to handle outlier cases. E.g. bonaire having same flag as netherlands. I still want users to select that if needed, but not be prompted for it. 
 
 - move color values to the flag_colors json and out of country data.
@@ -8,7 +10,7 @@
 
 
 - mobile layout
-
+0
 - change end of quiz modal
   - add export results function
   - don't auto reset to overwrite current progress
@@ -18,12 +20,6 @@
 
 - Remove 'available prompts' and instead rely on if the data is present in the dictionary
   - still need to fix prompting based on checkboxes
-
-- handle submission on map
-
-- add submission for flag selection?
-
-- ivory coast alias not matching
 
 
 

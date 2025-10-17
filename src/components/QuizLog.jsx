@@ -32,8 +32,9 @@ export function QuizLog({
             country: prompt.countryData?.country || prompt.countryCode,
             promptType: prompt.promptType,
             status: isLast ? 'in_progress' : 'completed',
-            attempts: { map: 0, text: 0, flag: 0 },
-            answers: {}
+            completionStatus: prompt.completionStatus || 'unknown',
+            attempts: prompt.finalAttempts || { map: 0, text: 0, flag: 0 },
+            answers: prompt.finalAnswers || {}
         };
     });
 
@@ -73,11 +74,28 @@ export function QuizLog({
     };
 
     const getAnswerStatus = (entry, type) => {
+        // Map prompt types to answer keys
+        const typeToKey = {
+            'location': 'map',
+            'name': 'text', 
+            'flag': 'flag'
+        };
+        
+        if (type === entry.promptType) {
+            return '📋';
+        }
         if (entry.status === 'completed') {
-            return '✓'; // Would need actual completion data
+            // Show different indicators based on completion status
+            if (entry.completionStatus === 'correct') {
+                return '✓';
+            } else if (entry.completionStatus === 'incorrect') {
+                return '✗';
+            }
+            return '?';
         }
         
-        if (entry.answers && entry.answers[type]) {
+        const answerKey = typeToKey[type];
+        if (entry.answers && entry.answers[answerKey]) {
             return '✓';
         }
         
@@ -90,10 +108,10 @@ export function QuizLog({
 
     const getAttemptsDisplay = (entry, type) => {
         if (entry.status === 'completed') {
-            return '-'; // Would need actual attempt data
+            return entry.attempts?.[type] || '-';
         }
         
-        return entry.attempts?.[type] || 0;
+        return entry.attempts?.[type] || '-';
     };
 
     return (
@@ -110,28 +128,28 @@ export function QuizLog({
                     <thead>
                         <tr>
                             <th>Country</th>
-                            <th>Prompt</th>
-                            <th>Status</th>
+                            {/* <th>Prompt</th> */}
+                            {/* <th>Status</th> */}
                             <th>Map</th>
-                            <th>Text</th>
+                            <th>Name</th>
                             <th>Flag</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {allEntries.map((entry, index) => (
-                            <tr key={index} className={`log-entry ${entry.status}`}>
+                        {allEntries.reverse().map((entry, index) => (
+                            <tr key={index} className={`log-entry ${entry.status} ${entry.completionStatus || ''}`}>
                                 <td className="country-name">
-                                    {entry.country}
+                                    {entry.status === 'in_progress' ? "?" : entry.country}
                                 </td>
-                                <td className="prompt-type">
+                                {/* <td className="prompt-type">
                                     {entry.promptType}
-                                </td>
-                                <td className="status">
+                                </td> */}
+                                {/* <td className="status">
                                     {getStatusIcon(entry)}
-                                </td>
+                                </td> */}
                                 <td className="answer-cell">
                                     <span className="answer-status">
-                                        {getAnswerStatus(entry, 'map')}
+                                        {getAnswerStatus(entry, 'location')}
                                     </span>
                                     <span className="attempts">
                                         ({getAttemptsDisplay(entry, 'map')})
@@ -139,7 +157,7 @@ export function QuizLog({
                                 </td>
                                 <td className="answer-cell">
                                     <span className="answer-status">
-                                        {getAnswerStatus(entry, 'text')}
+                                        {getAnswerStatus(entry, 'name')}
                                     </span>
                                     <span className="attempts">
                                         ({getAttemptsDisplay(entry, 'text')})

@@ -26,20 +26,20 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
     const [selectedCountry, setSelectedCountry] = useState(null);
     
     const handleFlagClick = (country) => {
-        if (!disabled && !incorrectCountries.includes(country.code)) {
+        if (!disabled && !incorrectCountries.includes(country.code) && correctCountries.length === 0) {
             setSelectedCountry(country);
         }
     };
 
-    // Reset when disabled (new prompt type)
+    // Reset when disabled (new prompt type) or when correct countries are submitted
     React.useEffect(() => {
-        if (disabled) {
+        if (disabled || correctCountries.length > 0) {
             setSelectedCountry(null);
         }
-    }, [disabled]);
+    }, [disabled, correctCountries.length]);
 
     const handleSubmit = () => {
-        if (selectedCountry && onSelect) {
+        if (selectedCountry && onSelect && correctCountries.length === 0) {
             onSelect(selectedCountry);
         }
     };
@@ -71,6 +71,9 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
         if (incorrectCountries.includes(country.code)) {
             className += ' incorrect';
         }
+        if (correctCountries.length > 0) {
+            className += ' disabled';
+        }
         
         return className;
     };
@@ -78,17 +81,17 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
     return (
         <div className="flag-select">
             <div className="color-picker">
-            <button
+                <button
                     onClick={handleSubmit}
-                    disabled={!selectedCountry || disabled}
+                    disabled={!selectedCountry || disabled || correctCountries.length > 0}
                     style={{
                         padding: '0.3rem 0.8rem',
                         fontSize: '0.8rem',
                         borderRadius: '4px',
-                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
-                        backgroundColor: selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
-                        color: selectedCountry && !disabled ? '#fff' : 'var(--color-disabled)',
-                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+                        border: `1px solid ${selectedCountry && !disabled && correctCountries.length === 0 ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
+                        backgroundColor: selectedCountry && !disabled && correctCountries.length === 0 ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
+                        color: selectedCountry && !disabled && correctCountries.length === 0 ? '#fff' : 'var(--color-disabled)',
+                        cursor: selectedCountry && !disabled && correctCountries.length === 0 ? 'pointer' : 'not-allowed',
                         whiteSpace: 'nowrap',
                         marginLeft: '10px'
                     }}
@@ -116,8 +119,8 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
                         tabIndex={0}
                         aria-label={`Select ${country.name || country.code} flag`}
                         style={{
-                            opacity: disabled || incorrectCountries.includes(country.code) ? 0.6 : 1,
-                            cursor: disabled || incorrectCountries.includes(country.code) ? 'not-allowed' : 'pointer'
+                            opacity: disabled || incorrectCountries.includes(country.code) || correctCountries.length > 0 ? 0.6 : 1,
+                            cursor: disabled || incorrectCountries.includes(country.code) || correctCountries.length > 0 ? 'not-allowed' : 'pointer'
                         }}
                     />
                 ))}

@@ -100,7 +100,6 @@ export class CountryDataService {
         } else {
             const quizSetData = allQuizSets.find(q => q.name === quizSet);
             if (!quizSetData) {
-                console.log(`Quiz set ${quizSet} not found`);
                 return [];
             }
             // Filter countries to only include those in the quiz set
