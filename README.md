@@ -6,9 +6,6 @@
 
 - visual indicator of bad text guess, possibly log them too
 
-- cant select norway
-
-- prompted country not being highlighted
 
 - mobile layout
 
@@ -16,11 +13,6 @@
   - add export results function
   - don't auto reset to overwrite current progress
 
-
-- Fix lat long specifications. Seems like inverted signs? 
-
-- Remove scrolling/zooming when country is locked on. 
-  - Reset button is fixed but perhaps ideally the map doesn't move. 
 
 - possibly clean up passing of prompted info (coordinates are already in the `currentPrompt`, don't need to query the countryData for them)
 
