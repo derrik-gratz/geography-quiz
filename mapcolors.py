@@ -13,6 +13,8 @@ for key, value in color_map.items():
     for color in value:
         inverted_dict[color].append(key)
 
+print(inverted_dict)
+
 for country in country_data:
     country_code = country['flagCode']
     colors = inverted_dict[country_code]

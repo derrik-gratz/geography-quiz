@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { QuizConfig } from './components/QuizConfig';
 import { QuizLog } from './components/QuizLog';
 import { QuizPrompt } from './components/QuizPrompt';
@@ -52,8 +52,23 @@ function App() {
     const displayCountryFlags = countryData
         .filter(country => country.flagCode && country.flagCode !== null)
 
-    const incorrectCountries = [];
-    const clearHighlights = () => {};
+    // Track incorrect attempts for visual feedback - separate by input type
+    const [incorrectFlags, setIncorrectFlags] = useState([]);
+    const [incorrectMapCountries, setIncorrectMapCountries] = useState([]);
+    const [correctFlags, setCorrectFlags] = useState([]);
+    const [correctMapCountries, setCorrectMapCountries] = useState([]);
+    
+    const clearHighlights = () => {
+        setIncorrectFlags([]);
+        setIncorrectMapCountries([]);
+        setCorrectFlags([]);
+        setCorrectMapCountries([]);
+    };
+
+    // Clear highlights when current prompt changes
+    useEffect(() => {
+        clearHighlights();
+    }, [currentPrompt?.countryCode]);
 
     return (
         <div className="app">
@@ -102,6 +117,7 @@ function App() {
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'text', value: country });
                                     console.log('Text answer result:', result);
+                                    // Text input doesn't need visual feedback on flags/map
                                 }}
                                 resetKey={currentPrompt?.countryCode}
                                 disabled={currentPrompt?.promptType === 'name'}
@@ -112,9 +128,15 @@ function App() {
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'flag', value: country });
                                     console.log('Flag answer result:', result);
+                                    if (result.ok) {
+                                        setCorrectFlags(prev => [...prev, country.code]);
+                                    } else if (result.correctCode) {
+                                        setIncorrectFlags(prev => [...prev, country.code]);
+                                    }
                                 }}
                                 displayCountries={displayCountryFlags}
-                                incorrectCountries={incorrectCountries}
+                                incorrectCountries={incorrectFlags}
+                                correctCountries={correctFlags}
                                 clearHighlights={clearHighlights}
                                 disabled={currentPrompt?.promptType === 'flag'}
                             />
@@ -128,7 +150,14 @@ function App() {
                             onSubmitAnswer={(countryCode) => {
                                 const result = submitAnswer({ type: 'map', value: countryCode });
                                 console.log('Map answer result:', result);
+                                if (result.ok) {
+                                    setCorrectMapCountries(prev => [...prev, countryCode]);
+                                } else if (result.correctCode) {
+                                    setIncorrectMapCountries(prev => [...prev, countryCode]);
+                                }
                             }}
+                            incorrectCountries={incorrectMapCountries}
+                            correctCountries={correctMapCountries}
                             disabled={currentPrompt?.promptType === 'location'}
                         />
                     </div>

@@ -1,5 +1,22 @@
 # Todo:
 
+- re-add available prompts, to handle outlier cases. E.g. bonaire having same flag as netherlands. I still want users to select that if needed, but not be prompted for it. 
+
+- move color values to the flag_colors json and out of country data.
+
+- visual indicator of bad text guess, possibly log them too
+
+- cant select norway
+
+- prompted country not being highlighted
+
+- mobile layout
+
+- change end of quiz modal
+  - add export results function
+  - don't auto reset to overwrite current progress
+
+
 - Fix lat long specifications. Seems like inverted signs? 
 
 - Remove scrolling/zooming when country is locked on. 

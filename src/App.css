@@ -13,6 +13,18 @@
   --success-bg: #d4edda;
   --success-border: #c3e6cb;
   --success-text: #155724;
+  
+  /* Interactive state colors - consistent across components */
+  --color-hover: #fff3cd; /* Light yellow for hovered items */
+  --color-hover-outline: #ffc107; /* Yellow outline for hover */
+  --color-selected: #007bff; /* Blue for selected items */
+  --color-selected-outline: #0056b3; /* Darker blue outline for selected */
+  --color-correct: #28a745; /* Green for correct answers */
+  --color-correct-outline: #1e7e34; /* Darker green outline for correct */
+  --color-incorrect: #dc3545; /* Red for incorrect answers */
+  --color-incorrect-outline: #c82333; /* Darker red outline for incorrect */
+  --color-disabled: #6c757d; /* Gray for disabled items */
+  --color-disabled-bg: #f8f9fa; /* Light gray background for disabled */
 }
 
 /* Dark mode colors */
@@ -30,6 +42,18 @@
     --success-bg: #1e4a2e;
     --success-border: #2d5a3d;
     --success-text: #a8e6c1;
+    
+    /* Dark mode interactive state colors */
+    --color-hover: #4a4a2a; /* Darker yellow for hovered items in dark mode */
+    --color-hover-outline: #ffc107; /* Same yellow outline */
+    --color-selected: #007bff; /* Same blue for selected items */
+    --color-selected-outline: #0056b3; /* Same darker blue outline */
+    --color-correct: #28a745; /* Same green for correct answers */
+    --color-correct-outline: #1e7e34; /* Same darker green outline */
+    --color-incorrect: #dc3545; /* Same red for incorrect answers */
+    --color-incorrect-outline: #c82333; /* Same darker red outline */
+    --color-disabled: #6c757d; /* Same gray for disabled items */
+    --color-disabled-bg: #404040; /* Darker background for disabled in dark mode */
   }
 }
 
@@ -240,15 +264,34 @@ p {
 }
 
 .flag-icon:hover {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+  border-color: var(--color-hover-outline);
+  box-shadow: 0 0 0 2px var(--color-hover-outline);
+  background-color: var(--color-hover);
   /* transform: translateY(-2px); */
 }
 
 .flag-icon.selected {
-  border-color: #28a745;
-  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.3);
+  border-color: var(--color-selected);
+  box-shadow: 0 0 0 2px var(--color-selected-outline);
+  background-color: var(--color-selected);
+  color: white;
   transform: scale(1.05);
+}
+
+.flag-icon.correct {
+  border-color: var(--color-correct);
+  box-shadow: 0 0 0 2px var(--color-correct-outline);
+  background-color: var(--color-correct);
+  color: white;
+}
+
+.flag-icon.incorrect {
+  border-color: var(--color-incorrect);
+  box-shadow: 0 0 0 2px var(--color-incorrect-outline);
+  background-color: var(--color-incorrect);
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Quiz Progress Component */

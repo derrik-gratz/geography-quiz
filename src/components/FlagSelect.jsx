@@ -21,12 +21,12 @@ const availableColors = [
     { name: "orange", color: "#ffa500" }
 ]
 
-export function FlagSelect({ onSelect, displayCountries, incorrectCountries, clearHighlights, disabled = false }) {
+export function FlagSelect({ onSelect, displayCountries, incorrectCountries = [], correctCountries = [], disabled = false }) {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
     
     const handleFlagClick = (country) => {
-        if (!disabled) {
+        if (!disabled && !incorrectCountries.includes(country.code)) {
             setSelectedCountry(country);
         }
     };
@@ -59,6 +59,22 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
             selectedColors.every(color => country.colors.includes(color));
     });
 
+    const getFlagClassName = (country) => {
+        let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
+        
+        if (selectedCountry?.code === country.code) {
+            className += ' selected';
+        }
+        if (correctCountries.includes(country.code)) {
+            className += ' correct';
+        }
+        if (incorrectCountries.includes(country.code)) {
+            className += ' incorrect';
+        }
+        
+        return className;
+    };
+
     return (
         <div className="flag-select">
             <div className="color-picker">
@@ -69,9 +85,9 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
                         padding: '0.3rem 0.8rem',
                         fontSize: '0.8rem',
                         borderRadius: '4px',
-                        border: '1px solid #007bff',
-                        backgroundColor: selectedCountry && !disabled ? '#007bff' : '#f8f9fa',
-                        color: selectedCountry && !disabled ? '#fff' : '#6c757d',
+                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
+                        backgroundColor: selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
+                        color: selectedCountry && !disabled ? '#fff' : 'var(--color-disabled)',
                         cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
                         whiteSpace: 'nowrap',
                         marginLeft: '10px'
@@ -94,14 +110,14 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries, cle
                 {filteredCountries.map((country) => (
                     <span
                         key={country.code}
-                        className={`flag-icon fi fi-${country.flagCode.toLowerCase()} ${selectedCountry?.code === country.code ? 'selected' : ''}`}
+                        className={getFlagClassName(country)}
                         onClick={() => handleFlagClick(country)}
                         role="button"
                         tabIndex={0}
                         aria-label={`Select ${country.name || country.code} flag`}
                         style={{
-                            opacity: disabled ? 0.5 : 1,
-                            cursor: disabled ? 'not-allowed' : 'pointer'
+                            opacity: disabled || incorrectCountries.includes(country.code) ? 0.6 : 1,
+                            cursor: disabled || incorrectCountries.includes(country.code) ? 'not-allowed' : 'pointer'
                         }}
                     />
                 ))}

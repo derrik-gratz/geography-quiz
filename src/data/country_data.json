@@ -5,7 +5,7 @@
     "code": "ABW",
     "capital": "Oranjestad",
     "location": {
-      "lat": -12,
+      "lat": 12,
       "long": -69
     },
     "flagCode": "AW",
@@ -54,7 +54,7 @@
     "code": "AIA",
     "capital": "The Valley",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -63
     },
     "flagCode": "AI",
@@ -70,8 +70,8 @@
     "code": "ALA",
     "capital": "Mariehamn",
     "location": {
-      "lat": -60,
-      "long": -20
+      "lat": 60,
+      "long": 20
     },
     "flagCode": "AX",
     "colors": []
@@ -100,8 +100,8 @@
     "code": "AND",
     "capital": "Andorra la Vella",
     "location": {
-      "lat": -42,
-      "long": -1
+      "lat": 42,
+      "long": 1
     },
     "flagCode": "AD",
     "colors": [
@@ -154,8 +154,8 @@
     "code": "ARM",
     "capital": "Yerevan",
     "location": {
-      "lat": -40,
-      "long": -44
+      "lat": 40,
+      "long": 44
     },
     "flagCode": "AM",
     "colors": [
@@ -201,7 +201,7 @@
     "capital": "Saint Pierre",
     "location": {
       "lat": -43,
-      "long": -67
+      "long": 67
     },
     "flagCode": "TF",
     "colors": [
@@ -217,7 +217,7 @@
     "code": "ATG",
     "capital": "None (",
     "location": {
-      "lat": -17,
+      "lat": 17,
       "long": -61
     },
     "flagCode": "AG",
@@ -250,8 +250,8 @@
     "code": "AUT",
     "capital": "Vienna",
     "location": {
-      "lat": -47,
-      "long": -13
+      "lat": 47,
+      "long": 13
     },
     "flagCode": "AT",
     "colors": [
@@ -267,8 +267,8 @@
     "code": "AZE",
     "capital": "Baku",
     "location": {
-      "lat": -40,
-      "long": -47
+      "lat": 40,
+      "long": 47
     },
     "flagCode": "AZ",
     "colors": [
@@ -286,7 +286,7 @@
     "capital": "Gitega",
     "location": {
       "lat": -3,
-      "long": -30
+      "long": 30
     },
     "flagCode": "BI",
     "colors": [
@@ -302,8 +302,8 @@
     "code": "BEL",
     "capital": "City of Brussels",
     "location": {
-      "lat": -50,
-      "long": -4
+      "lat": 50,
+      "long": 4
     },
     "flagCode": "BE",
     "colors": [
@@ -320,8 +320,8 @@
     "code": "BEN",
     "capital": "Porto-Novo",
     "location": {
-      "lat": -6,
-      "long": -2
+      "lat": 6,
+      "long": 2
     },
     "flagCode": "BJ",
     "colors": [
@@ -338,12 +338,18 @@
     "code": "BES",
     "capital": "Kralendijk",
     "location": {
-      "lat": -12,
+      "lat": 12,
       "long": -68
     },
-    "flagCode": "BQ",
+    "flagCode": "NL",
     "colors": [
+      "red",
+      "white",
       "blue"
+    ],
+    "availablePrompts": [
+      "name",
+      "location"
     ]
   },
   {
@@ -354,7 +360,7 @@
     "code": "BFA",
     "capital": "Ouagadougou",
     "location": {
-      "lat": -12,
+      "lat": 12,
       "long": -1
     },
     "flagCode": "BF",
@@ -402,8 +408,8 @@
     "code": "BHR",
     "capital": "Manama",
     "location": {
-      "lat": -26,
-      "long": -50
+      "lat": 26,
+      "long": 50
     },
     "flagCode": "BH",
     "colors": [
@@ -419,7 +425,7 @@
     "code": "BHS",
     "capital": "Nassau",
     "location": {
-      "lat": -25,
+      "lat": 25,
       "long": -77
     },
     "flagCode": "BS",
@@ -451,7 +457,7 @@
     "code": "BLM",
     "capital": "Gustavia",
     "location": {
-      "lat": -17,
+      "lat": 17,
       "long": -62
     },
     "flagCode": "FR",
@@ -484,7 +490,7 @@
     "code": "BLZ",
     "capital": "Belmopan",
     "location": {
-      "lat": -17,
+      "lat": 17,
       "long": -88
     },
     "flagCode": "BZ",
@@ -498,7 +504,7 @@
     "code": "BMU",
     "capital": "Hamilton",
     "location": {
-      "lat": -32,
+      "lat": 32,
       "long": -64
     },
     "flagCode": "BM",
@@ -547,7 +553,7 @@
     "code": "BRB",
     "capital": "Bridgetown",
     "location": {
-      "lat": -13,
+      "lat": 13,
       "long": -59
     },
     "flagCode": "BB",
@@ -565,7 +571,7 @@
     "capital": "Bandar Seri Begawan",
     "location": {
       "lat": -4,
-      "long": -114
+      "long": 114
     },
     "flagCode": "BN",
     "colors": [
@@ -580,8 +586,8 @@
     "code": "BTN",
     "capital": "Thimphu",
     "location": {
-      "lat": -27,
-      "long": -90
+      "lat": 27,
+      "long": 90
     },
     "flagCode": "BT",
     "colors": [
@@ -598,7 +604,7 @@
     "capital": "Gaborone",
     "location": {
       "lat": -24,
-      "long": -25
+      "long": 25
     },
     "flagCode": "BW",
     "colors": [
@@ -648,8 +654,8 @@
     "code": "CHE",
     "capital": "Bern",
     "location": {
-      "lat": -46,
-      "long": -8
+      "lat": 46,
+      "long": 8
     },
     "flagCode": "CH",
     "colors": [
@@ -747,7 +753,7 @@
     "capital": "Brazzaville",
     "location": {
       "lat": -1,
-      "long": -15
+      "long": 15
     },
     "flagCode": "CG",
     "colors": [
@@ -799,7 +805,7 @@
     "capital": "Moroni",
     "location": {
       "lat": -12,
-      "long": -43
+      "long": 43
     },
     "flagCode": "KM",
     "colors": [
@@ -814,7 +820,7 @@
     "code": "CPV",
     "capital": "Praia",
     "location": {
-      "lat": -15,
+      "lat": 15,
       "long": -23
     },
     "flagCode": "CV",
@@ -1146,8 +1152,8 @@
     "code": "ETH",
     "capital": "Addis Ababa",
     "location": {
-      "lat": -9,
-      "long": -38
+      "lat": 9,
+      "long": 38
     },
     "flagCode": "ET",
     "colors": [
@@ -1211,7 +1217,7 @@
     "code": "FRO",
     "capital": "Tórshavn",
     "location": {
-      "lat": -62,
+      "lat": 62,
       "long": -6
     },
     "flagCode": "FO",
@@ -1234,7 +1240,8 @@
     "flagCode": "FM",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["flag", "name"]
   },
   {
     "country": "Gabon",
@@ -1280,8 +1287,8 @@
     "code": "GEO",
     "capital": "Tbilisi",
     "location": {
-      "lat": -42,
-      "long": -43
+      "lat": 42,
+      "long": 43
     },
     "flagCode": "GE",
     "colors": [
@@ -1295,7 +1302,7 @@
     "code": "GGY",
     "capital": "Saint Peter Port",
     "location": {
-      "lat": -49,
+      "lat": 49,
       "long": -2
     },
     "flagCode": "GG",
@@ -1313,7 +1320,7 @@
     "code": "GHA",
     "capital": "Accra",
     "location": {
-      "lat": -8,
+      "lat": 8,
       "long": -1
     },
     "flagCode": "GH",
@@ -1329,7 +1336,7 @@
     "code": "GIB",
     "capital": "",
     "location": {
-      "lat": -36,
+      "lat": 36,
       "long": -5
     },
     "flagCode": "GI",
@@ -1364,7 +1371,7 @@
     "code": "GMB",
     "capital": "Banjul",
     "location": {
-      "lat": -13,
+      "lat": 13,
       "long": -16
     },
     "flagCode": "GM",
@@ -1434,7 +1441,7 @@
     "code": "GRD",
     "capital": "St. George's",
     "location": {
-      "lat": -12,
+      "lat": 12,
       "long": -61
     },
     "flagCode": "GD",
@@ -1450,7 +1457,7 @@
     "code": "GRL",
     "capital": "Nuuk",
     "location": {
-      "lat": -72,
+      "lat": 72,
       "long": -40
     },
     "flagCode": "GL",
@@ -1467,7 +1474,7 @@
     "code": "GTM",
     "capital": "Guatemala City",
     "location": {
-      "lat": -15,
+      "lat": 15,
       "long": -90
     },
     "flagCode": "GT",
@@ -1482,8 +1489,8 @@
     "code": "GUM",
     "capital": "Hagåtña",
     "location": {
-      "lat": -13,
-      "long": -144
+      "lat": 13,
+      "long": 144
     },
     "flagCode": "GU",
     "colors": [
@@ -1514,8 +1521,8 @@
     "code": "HKG",
     "capital": "",
     "location": {
-      "lat": -22,
-      "long": -114
+      "lat": 22,
+      "long": 114
     },
     "flagCode": "HK",
     "colors": [
@@ -1532,7 +1539,7 @@
     "capital": "",
     "location": {
       "lat": -53,
-      "long": -73
+      "long": 73
     },
     "flagCode": "HM",
     "colors": [
@@ -1547,7 +1554,7 @@
     "code": "HND",
     "capital": "Tegucigalpa",
     "location": {
-      "lat": -15,
+      "lat": 15,
       "long": -86
     },
     "flagCode": "HN",
@@ -1563,8 +1570,8 @@
     "code": "HRV",
     "capital": "Zagreb",
     "location": {
-      "lat": -45,
-      "long": -15
+      "lat": 45,
+      "long": 15
     },
     "flagCode": "HR",
     "colors": [
@@ -1581,7 +1588,7 @@
     "code": "HTI",
     "capital": "Port-au-Prince",
     "location": {
-      "lat": -19,
+      "lat": 19,
       "long": -72
     },
     "flagCode": "HT",
@@ -1631,7 +1638,7 @@
     "code": "IMN",
     "capital": "Douglas",
     "location": {
-      "lat": -54,
+      "lat": 54,
       "long": -4
     },
     "flagCode": "IM",
@@ -1663,14 +1670,15 @@
     "code": "IOT",
     "capital": "Administered from",
     "location": {
-      "lat": -7,
-      "long": -72
+      "lat": 7,
+      "long": 72
     },
     "flagCode": "IO",
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": []
   },
   {
     "country": "Ireland",
@@ -1782,7 +1790,7 @@
     "code": "JAM",
     "capital": "Kingston",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -77
     },
     "flagCode": "JM",
@@ -1798,7 +1806,7 @@
     "code": "JEY",
     "capital": "St Helier",
     "location": {
-      "lat": -49,
+      "lat": 49,
       "long": -2
     },
     "flagCode": "JE",
@@ -1815,8 +1823,8 @@
     "code": "JOR",
     "capital": "Amman",
     "location": {
-      "lat": -31,
-      "long": -36
+      "lat": 31,
+      "long": 36
     },
     "flagCode": "JO",
     "colors": [
@@ -1899,8 +1907,8 @@
     "code": "KHM",
     "capital": "Phnom Penh",
     "location": {
-      "lat": -12,
-      "long": -105
+      "lat": 12,
+      "long": 105
     },
     "flagCode": "KH",
     "colors": [
@@ -1934,7 +1942,7 @@
     "code": "KNA",
     "capital": "Basseterre",
     "location": {
-      "lat": -17,
+      "lat": 17,
       "long": -62
     },
     "flagCode": "KN",
@@ -1968,8 +1976,8 @@
     "code": "KWT",
     "capital": "Kuwait City",
     "location": {
-      "lat": -29,
-      "long": -47
+      "lat": 29,
+      "long": 47
     },
     "flagCode": "KW",
     "colors": [
@@ -2004,8 +2012,8 @@
     "code": "LBN",
     "capital": "Beirut",
     "location": {
-      "lat": -33,
-      "long": -35
+      "lat": 33,
+      "long": 35
     },
     "flagCode": "LB",
     "colors": [
@@ -2021,7 +2029,7 @@
     "code": "LBR",
     "capital": "Monrovia",
     "location": {
-      "lat": -6,
+      "lat": 6,
       "long": -9
     },
     "flagCode": "LR",
@@ -2055,7 +2063,7 @@
     "code": "LCA",
     "capital": "Castries",
     "location": {
-      "lat": -13,
+      "lat": 13,
       "long": -60
     },
     "flagCode": "LC",
@@ -2071,8 +2079,8 @@
     "code": "LIE",
     "capital": "Vaduz",
     "location": {
-      "lat": -47,
-      "long": -9
+      "lat": 47,
+      "long": 9
     },
     "flagCode": "LI",
     "colors": [
@@ -2106,7 +2114,7 @@
     "capital": "Maseru",
     "location": {
       "lat": -29,
-      "long": -28
+      "long": 28
     },
     "flagCode": "LS",
     "colors": [
@@ -2141,8 +2149,8 @@
     "code": "LUX",
     "capital": "Luxembourg",
     "location": {
-      "lat": -49,
-      "long": -6
+      "lat": 49,
+      "long": 6
     },
     "flagCode": "LU",
     "colors": [
@@ -2175,8 +2183,8 @@
     "code": "MAC",
     "capital": "",
     "location": {
-      "lat": -22,
-      "long": -113
+      "lat": 22,
+      "long": 113
     },
     "flagCode": "MO",
     "colors": [
@@ -2222,8 +2230,8 @@
     "code": "MCO",
     "capital": "Monaco",
     "location": {
-      "lat": -43,
-      "long": -7
+      "lat": 43,
+      "long": 7
     },
     "flagCode": "MC",
     "colors": [
@@ -2275,8 +2283,8 @@
     "code": "MDV",
     "capital": "Male",
     "location": {
-      "lat": -4,
-      "long": -73
+      "lat": 4,
+      "long": 73
     },
     "flagCode": "MV",
     "colors": [
@@ -2310,8 +2318,8 @@
     "code": "MHL",
     "capital": "Majuro",
     "location": {
-      "lat": -9,
-      "long": -169
+      "lat": 9,
+      "long": 169
     },
     "flagCode": "MH",
     "colors": [
@@ -2361,8 +2369,8 @@
     "code": "MLT",
     "capital": "Valletta",
     "location": {
-      "lat": -35,
-      "long": -14
+      "lat": 35,
+      "long": 14
     },
     "flagCode": "MT",
     "colors": [
@@ -2394,8 +2402,8 @@
     "code": "MNE",
     "capital": "Podgorica",
     "location": {
-      "lat": -42,
-      "long": -19
+      "lat": 42,
+      "long": 19
     },
     "flagCode": "ME",
     "colors": [
@@ -2426,8 +2434,8 @@
     "code": "MNP",
     "capital": "Saipan",
     "location": {
-      "lat": -16,
-      "long": -145
+      "lat": 16,
+      "long": 145
     },
     "flagCode": "MP",
     "colors": [
@@ -2443,7 +2451,7 @@
     "capital": "Maputo",
     "location": {
       "lat": -18,
-      "long": -35
+      "long": 35
     },
     "flagCode": "MZ",
     "colors": [
@@ -2476,7 +2484,7 @@
     "code": "MSR",
     "capital": "Plymouth",
     "location": {
-      "lat": -16,
+      "lat": 16,
       "long": -62
     },
     "flagCode": "MS",
@@ -2490,7 +2498,7 @@
     "code": "MTQ",
     "capital": null,
     "location": {
-      "lat": -14,
+      "lat": 14,
       "long": -61
     },
     "flagCode": "MQ",
@@ -2509,7 +2517,7 @@
     "capital": "Port Louis",
     "location": {
       "lat": -20,
-      "long": -57
+      "long": 57
     },
     "flagCode": "MU",
     "colors": [
@@ -2528,7 +2536,7 @@
     "capital": "Lilongwe",
     "location": {
       "lat": -13,
-      "long": -34
+      "long": 34
     },
     "flagCode": "MW",
     "colors": [
@@ -2578,7 +2586,7 @@
     "capital": "Noumea",
     "location": {
       "lat": -21,
-      "long": -165
+      "long": 165
     },
     "flagCode": "NC",
     "colors": [
@@ -2612,13 +2620,14 @@
     "capital": "Kingston",
     "location": {
       "lat": -29,
-      "long": -167
+      "long": 167
     },
     "flagCode": "NF",
     "colors": [
       "green",
       "white"
-    ]
+    ],
+    "availablePrompts": ["flag", "name"]
   },
   {
     "country": "Nigeria",
@@ -2678,8 +2687,8 @@
     "code": "NLD",
     "capital": "Amsterdam",
     "location": {
-      "lat": -52,
-      "long": -4
+      "lat": 52,
+      "long": 4
     },
     "flagCode": "NL",
     "colors": [
@@ -2696,8 +2705,8 @@
     "code": "NPL",
     "capital": "Kathmandu",
     "location": {
-      "lat": -28,
-      "long": -84
+      "lat": 28,
+      "long": 84
     },
     "flagCode": "NP",
     "colors": [
@@ -2714,7 +2723,7 @@
     "capital": "(",
     "location": {
       "lat": 0,
-      "long": -166
+      "long": 166
     },
     "flagCode": "NR",
     "colors": [
@@ -2863,8 +2872,8 @@
     "code": "PLW",
     "capital": "Ngerulmud",
     "location": {
-      "lat": -7,
-      "long": -134
+      "lat": 7,
+      "long": 134
     },
     "flagCode": "PW",
     "colors": [
@@ -2912,7 +2921,7 @@
     "code": "PRI",
     "capital": "San Juan",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -66
     },
     "flagCode": "PR",
@@ -2982,8 +2991,8 @@
     "code": "PSE",
     "capital": "Jerusalem",
     "location": {
-      "lat": -32,
-      "long": -35
+      "lat": 32,
+      "long": 35
     },
     "flagCode": "PS",
     "colors": [
@@ -3016,8 +3025,8 @@
     "code": "QAT",
     "capital": "Doha",
     "location": {
-      "lat": -25,
-      "long": -51
+      "lat": 25,
+      "long": 51
     },
     "flagCode": "QA",
     "colors": [
@@ -3139,7 +3148,7 @@
     "capital": "Singapore",
     "location": {
       "lat": -1,
-      "long": -103
+      "long": 103
     },
     "flagCode": "SG",
     "colors": [
@@ -3198,7 +3207,7 @@
     "code": "SLE",
     "capital": "Freetown",
     "location": {
-      "lat": -8,
+      "lat": 8,
       "long": -12
     },
     "flagCode": "SL",
@@ -3216,7 +3225,7 @@
     "code": "SLV",
     "capital": "San Salvador",
     "location": {
-      "lat": -13,
+      "lat": 13,
       "long": -89
     },
     "flagCode": "SV",
@@ -3233,8 +3242,8 @@
     "code": "SMR",
     "capital": "City of San Marino",
     "location": {
-      "lat": -43,
-      "long": -12
+      "lat": 43,
+      "long": 12
     },
     "flagCode": "SM",
     "colors": [
@@ -3264,7 +3273,7 @@
     "code": "SPM",
     "capital": "Saint-Pierre",
     "location": {
-      "lat": -46,
+      "lat": 46,
       "long": -56
     },
     "flagCode": "FR",
@@ -3322,7 +3331,7 @@
     "capital": "São Tomé",
     "location": {
       "lat": 0,
-      "long": -6
+      "long": 6
     },
     "flagCode": "ST",
     "colors": [
@@ -3356,8 +3365,8 @@
     "code": "SVK",
     "capital": "Bratislava",
     "location": {
-      "lat": -48,
-      "long": -19
+      "lat": 48,
+      "long": 19
     },
     "flagCode": "SK",
     "colors": [
@@ -3374,8 +3383,8 @@
     "code": "SVN",
     "capital": "Ljubljana",
     "location": {
-      "lat": -46,
-      "long": -14
+      "lat": 46,
+      "long": 14
     },
     "flagCode": "SI",
     "colors": [
@@ -3410,7 +3419,7 @@
     "capital": "Mbabane",
     "location": {
       "lat": -26,
-      "long": -31
+      "long": 31
     },
     "flagCode": "SZ",
     "colors": [
@@ -3425,7 +3434,7 @@
     "code": "SXM",
     "capital": "Philipsburg",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -63
     },
     "flagCode": "SX",
@@ -3443,7 +3452,7 @@
     "capital": "Victoria",
     "location": {
       "lat": -4,
-      "long": -55
+      "long": 55
     },
     "flagCode": "SC",
     "colors": [
@@ -3478,7 +3487,7 @@
     "code": "TCA",
     "capital": "Grand Turk (Cockburn Town)",
     "location": {
-      "lat": -21,
+      "lat": 21,
       "long": -71
     },
     "flagCode": "TC",
@@ -3595,7 +3604,7 @@
     "capital": "Dili",
     "location": {
       "lat": -8,
-      "long": -125
+      "long": 125
     },
     "flagCode": "TL",
     "colors": [
@@ -3626,7 +3635,7 @@
     "code": "TTO",
     "capital": "Port of Spain",
     "location": {
-      "lat": -10,
+      "lat": 10,
       "long": -61
     },
     "flagCode": "TT",
@@ -3662,8 +3671,8 @@
     "code": "TUR",
     "capital": "Ankara",
     "location": {
-      "lat": -39,
-      "long": -32
+      "lat": 39,
+      "long": 32
     },
     "flagCode": "TR",
     "colors": [
@@ -3678,7 +3687,7 @@
     "capital": "Funafuti",
     "location": {
       "lat": -8,
-      "long": -179
+      "long": 179
     },
     "flagCode": "TV",
     "colors": [
@@ -3747,8 +3756,8 @@
     "code": "UKR",
     "capital": "Kyiv",
     "location": {
-      "lat": -50,
-      "long": -30
+      "lat": 50,
+      "long": 30
     },
     "flagCode": "UA",
     "colors": [
@@ -3834,7 +3843,7 @@
     "code": "VCT",
     "capital": "Kingstown",
     "location": {
-      "lat": -13,
+      "lat": 13,
       "long": -61
     },
     "flagCode": "VC",
@@ -3868,7 +3877,7 @@
     "code": "VGB",
     "capital": "Road Town",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -64
     },
     "flagCode": "VG",
@@ -3882,7 +3891,7 @@
     "code": "VIR",
     "capital": "Charlotte Amalie",
     "location": {
-      "lat": -18,
+      "lat": 18,
       "long": -64
     },
     "flagCode": "VI",
@@ -3966,8 +3975,8 @@
     "code": "YEM",
     "capital": "Sanaa",
     "location": {
-      "lat": -15,
-      "long": -44
+      "lat": 15,
+      "long": 44
     },
     "flagCode": "YE",
     "colors": [

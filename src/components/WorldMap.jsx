@@ -50,8 +50,8 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
-  const lockedOnCode = lockedOn?.lockedOn;
+export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false }) {
+  const lockedOnCode = lockedOn;
   
   // State management
   const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
@@ -67,14 +67,19 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
     
     handleCountryClick: (geo) => {
       if (!disabled) {
-        console.log(geo.properties.NAME);
-        setSelectedCountry(geo.properties.ISO_A3);
-        setMapSelectedCountry(geo.properties.ISO_A3);
+        const countryCode = getCountryCode(geo);
+        if (!incorrectCountries.includes(countryCode)) {
+          // console.log(geo.properties.NAME);
+          setSelectedCountry(countryCode);
+          setMapSelectedCountry(countryCode);
+        }
       }
     },
     
     handleCountryHover: (countryCode) => {
-      setHoveredCountry(countryCode);
+      if (!incorrectCountries.includes(countryCode)) {
+        setHoveredCountry(countryCode);
+      }
     },
     
     handleCountryHoverLeave: () => {
@@ -86,25 +91,46 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
       setResetKey(prev => prev + 1);
     },
     
-    getCountryStyle: (isSelected, isHovered, countryCode) => ({
-      default: {
-        fill: isSelected ? "#646cff" : "#D6D6DA",
-        stroke: "#FFFFFF",
-        strokeWidth: 0.5,
-        outline: "none",
-      },
-      hover: {
-        fill: isSelected ? "#535bf2" : "#F53",
-      },
-    }),
+    getCountryStyle: (isSelected, isHovered, countryCode) => {
+      const isIncorrect = incorrectCountries.includes(countryCode);
+      const isCorrect = correctCountries.includes(countryCode);
+      
+      return {
+        default: {
+          fill: isCorrect ? "var(--color-correct)" : 
+                isIncorrect ? "var(--color-incorrect)" :
+                isSelected ? "var(--color-selected)" : "#D6D6DA",
+          stroke: isCorrect ? "var(--color-correct-outline)" :
+                 isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
+          strokeWidth: 0.5,
+          outline: "none",
+        },
+        hover: {
+          fill: isCorrect ? "var(--color-correct)" :
+                isIncorrect ? "var(--color-incorrect)" :
+                isSelected ? "var(--color-selected)" : "var(--color-hover)",
+          stroke: isHovered && !isCorrect && !isIncorrect ? "var(--color-hover-outline)" : 
+                 isCorrect ? "var(--color-correct-outline)" :
+                 isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
+          strokeWidth: isHovered && !isCorrect && !isIncorrect ? 2 : 0.5,
+        },
+      };
+    },
     
-    getCircleStyle: (isSelected, isHovered) => ({
-      fill: isHovered ? (
-        isSelected ? "#535bf2" : "#F53"
-      ) : (
-        isSelected ? "#646cff" : "#FFA500"
-      ),
-    }),
+    getCircleStyle: (isSelected, isHovered, countryCode) => {
+      const isIncorrect = incorrectCountries.includes(countryCode);
+      const isCorrect = correctCountries.includes(countryCode);
+      
+      return {
+        fill: isCorrect ? "var(--color-correct)" :
+              isIncorrect ? "var(--color-incorrect)" :
+              isHovered ? (
+                isSelected ? "var(--color-selected)" : "var(--color-hover)"
+              ) : (
+                isSelected ? "var(--color-selected)" : "#FFA500"
+              ),
+      };
+    },
     
     showSubmitButton: true,
   };
@@ -144,18 +170,18 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
     
     getCountryStyle: (isSelected, isHovered, countryCode) => ({
       default: {
-        fill: lockedOnCode === countryCode ? "#008000" : "#D6D6DA",
-        stroke: "#FFFFFF",
-        strokeWidth: 0.5,
+        fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#D6D6DA",
+        stroke: lockedOnCode === countryCode ? "var(--color-correct-outline)" : "#FFFFFF",
+        strokeWidth: lockedOnCode === countryCode ? 1 : 0.5,
         outline: "none",
       },
-      hover: {
-        fill: lockedOnCode === countryCode ? "#008000" : "#D6D6DA",
-      },
+      // hover: {
+      //   fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#D6D6DA",
+      // },
     }),
     
     getCircleStyle: (isSelected, isHovered, countryCode) => ({
-      fill: lockedOnCode === countryCode ? "#008000" : "#FFA500",
+      fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#FFA500",
     }),
     
     showSubmitButton: false,
@@ -283,6 +309,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
                 const isSelected = mapSelectedCountry === countryCode;
                 
                 if (countryData.find(country => country.code === countryCode)) {
+                  const isIncorrect = incorrectCountries.includes(countryCode);
                   return (
                     <Geography
                       key={geo.rsmKey}
@@ -290,7 +317,10 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
                       onClick={() => handleCountryClick(geo)}
                       onMouseEnter={() => handleCountryHover(countryCode)}
                       onMouseLeave={() => handleCountryHoverLeave()}
-                      style={getCountryStyle(isSelected, isHovered, countryCode)}
+                      style={{
+                        ...getCountryStyle(isSelected, isHovered, countryCode),
+                        cursor: isIncorrect ? "not-allowed" : "pointer"
+                      }}
                     />
                   );
                 }
@@ -316,11 +346,15 @@ export function WorldMap({ lockedOn, onSubmitAnswer, disabled = false }) {
                     fill={getCircleStyle(isSelected, isHovered, countryCode).fill}
                     stroke="#fff"
                     strokeWidth={0.5}
-                    onClick={() => handleCountryClick(geo)}
+                    onClick={() => {
+                      if (!incorrectCountries.includes(countryCode)) {
+                        handleCountryClick(geo);
+                      }
+                    }}
                     onMouseEnter={() => handleCountryHover(countryCode)}
                     onMouseLeave={() => handleCountryHoverLeave()}
                     style={{
-                      cursor: "pointer",
+                      cursor: incorrectCountries.includes(countryCode) ? "not-allowed" : "pointer",
                       outline: "none",
                     }}
                   />
