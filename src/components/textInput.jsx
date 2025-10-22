@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
 import countries from '../data/country_data.json';
 
-export function TextCountryInput({ onSelect, resetKey }) {
+export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   React.useEffect(() => {
     if (resetKey) {
         setInput('');
         setSuggestions([]);
         setShowSuggestions(false);
+        setSelectedCountry(null);
     }
   }, [resetKey]);
+
+  // Reset when disabled (new prompt type)
+  React.useEffect(() => {
+    if (disabled) {
+        setSelectedCountry(null);
+    }
+  }, [disabled]);
   
   const handleSelect = (country) => {
     setInput(country.country);
+    setSelectedCountry(country);
     setSuggestions([]);
     setShowSuggestions(false);
-    if (onSelect) onSelect(country);
+  };
+
+  const handleSubmit = () => {
+    if (selectedCountry && onSelect) {
+      onSelect(selectedCountry);
+    }
   };
 
   const normalizeText = (text) => {
@@ -48,27 +63,46 @@ export function TextCountryInput({ onSelect, resetKey }) {
 
   return (
     <div style={{ position: 'relative', width: '100%' }}>
-      <input
-        type="text"
-        value={input}
-        onChange={handleChange}
-        placeholder="Type a country name..."
-        style={{ 
-          width: '100%', 
-          padding: '0.5rem', 
-          fontSize: '1rem', 
-          borderRadius: '4px', 
-          border: '1px solid #ccc',
-          backgroundColor: '#fff',
-          color: '#333',
-          cursor: 'text'
-        }}
-        // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
-        onFocus={() => input && setShowSuggestions(true)}
-        // onBlur: Hides suggestions when user clicks away from the input field
-        // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-      />
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+        <input
+          type="text"
+          value={input}
+          onChange={handleChange}
+          placeholder="Type a country name..."
+          disabled={disabled}
+          style={{ 
+            flex: 1,
+            padding: '0.5rem', 
+            fontSize: '1rem', 
+            borderRadius: '4px', 
+            border: '1px solid #ccc',
+            backgroundColor: disabled ? '#f5f5f5' : '#fff',
+            color: disabled ? '#999' : '#333',
+            cursor: disabled ? 'not-allowed' : 'text'
+          }}
+          // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
+          onFocus={() => input && setShowSuggestions(true)}
+          // onBlur: Hides suggestions when user clicks away from the input field
+          // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={!selectedCountry || disabled}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.9rem',
+            borderRadius: '4px',
+            border: '1px solid #007bff',
+            backgroundColor: selectedCountry && !disabled ? '#007bff' : '#f8f9fa',
+            color: selectedCountry && !disabled ? '#fff' : '#6c757d',
+            cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          Submit
+        </button>
+      </div>
       {showSuggestions && suggestions.length > 0 && (
         <ul style={{
           position: 'absolute',
@@ -79,7 +113,7 @@ export function TextCountryInput({ onSelect, resetKey }) {
           border: '1px solid #ccc',
           borderTop: 'none',
           minHeight: '40px', // Ensure at least one suggestion is visible
-          maxHeight: '200px',
+          maxHeight: '120px',
           overflowY: 'auto',
           zIndex: 10,
           margin: 0,
