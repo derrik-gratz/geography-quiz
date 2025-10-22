@@ -6,6 +6,9 @@ import allQuizSets from '../data/quiz_sets.json';
  * Handles quiz set filtering, prompt type validation, and daily challenge logic
  */
 export class CountryDataService {
+    // Static RNG instance for consistent daily challenge results
+    static _dailyRng = null;
+    static _lastRngDate = null;
     
     /**
      * Check if a country has a specific prompt type available
@@ -39,6 +42,7 @@ export class CountryDataService {
      * @returns {Array} Filtered and processed country data
      */
     static getEngineData(quizSet, selectedPromptTypes) {
+        // Create a consistent RNG for the entire operation
         const rng = this.dailyRng();
         let quizData;
 
@@ -132,18 +136,27 @@ export class CountryDataService {
     
     /**
      * Generate seeded random number generator for daily challenges
+     * Uses a cached RNG to ensure consistency across multiple calls on the same day
      * 
      * @returns {Function} Random number generator function
      */
     static dailyRng() {
         const today = new Date();
-        let seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-        return function() {
-            let t = seed += 0x6D2B79F5;
-            t = Math.imul(t ^ (t >>> 15), t | 1);
-            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-        };
+        const todayString = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+        
+        // Create new RNG if it's a new day or doesn't exist
+        if (!this._dailyRng || this._lastRngDate !== todayString) {
+            let seed = todayString;
+            this._dailyRng = function() {
+                let t = seed += 0x6D2B79F5;
+                t = Math.imul(t ^ (t >>> 15), t | 1);
+                t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+            };
+            this._lastRngDate = todayString;
+        }
+        
+        return this._dailyRng;
     }
     
     /**
