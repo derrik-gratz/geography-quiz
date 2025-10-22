@@ -73,6 +73,13 @@ export function useQuizEngine(countryData) {
                 const wasCompleted = isComplete();
                 const completionStatus = wasCompleted ? 'correct' : 'incorrect';
                 
+                // Calculate completion status per answer type
+                const answerCompletionStatus = {
+                    map: answers.map === currentPrompt.countryCode ? 'correct' : (answers.map ? 'incorrect' : 'unanswered'),
+                    text: answers.text === currentPrompt.countryCode ? 'correct' : (answers.text ? 'incorrect' : 'unanswered'),
+                    flag: answers.flag === currentPrompt.countryCode ? 'correct' : (answers.flag ? 'incorrect' : 'unanswered')
+                };
+                
                 // Update the last prompt in history with completion status
                 setPromptHistory(prev => {
                     const updated = [...prev];
@@ -81,6 +88,7 @@ export function useQuizEngine(countryData) {
                             ...updated[updated.length - 1],
                             promptType: currentPrompt.promptType, // Preserve the original prompt type
                             completionStatus,
+                            answerCompletionStatus,
                             finalAnswers: { ...answers },
                             finalAttempts: { ...attempts }
                         };

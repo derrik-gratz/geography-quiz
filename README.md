@@ -8,6 +8,13 @@
 
 - visual indicator of bad text guess, possibly log them too
 
+- aussie flag duplicates
+
+- if you generate prompt after getting one category right but not all, there are Xs for all categories
+
+- reset selected country after new prompt
+
+- reset color filter after prompt?
 
 - mobile layout
 0

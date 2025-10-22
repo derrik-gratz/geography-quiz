@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * QuizPrompt Component
  * 
@@ -116,17 +118,6 @@ export function QuizPrompt({
             <div className="prompt-display">
                 {renderPromptContent()}
             </div>
-            
-            {/* Quiz end modal */}
-            {isQuizFinished && (
-                <div className="quiz-end-modal">
-                    <div className="modal-content">
-                        <h2>🎉 Quiz Finished! 🎉</h2>
-                        <p>Congratulations! You've completed all {totalCountries} countries in this quiz set.</p>
-                        <button onClick={resetQuiz}>Start New Quiz</button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

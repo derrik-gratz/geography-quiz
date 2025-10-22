@@ -49,7 +49,7 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false }) {
+export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey }) {
   const lockedOnCode = lockedOn;
   
   // State management
@@ -65,7 +65,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
     getDefaultViewWindow: () => ({ coordinates: [0, 0], zoom: 1.5 }),
     
     handleCountryClick: (geo) => {
-      if (!disabled) {
+      if (!disabled && correctCountries.length === 0) {
         const countryCode = getCountryCode(geo);
         if (!incorrectCountries.includes(countryCode)) {
           // console.log(geo.properties.NAME);
@@ -76,7 +76,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
     },
     
     handleCountryHover: (countryCode) => {
-      if (!incorrectCountries.includes(countryCode)) {
+      if (!incorrectCountries.includes(countryCode) && correctCountries.length === 0) {
         setHoveredCountry(countryCode);
       }
     },
@@ -111,7 +111,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
           stroke: isHovered && !isCorrect && !isIncorrect ? "var(--color-hover-outline)" : 
                  isCorrect ? "var(--color-correct-outline)" :
                  isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
-          strokeWidth: isHovered && !isCorrect && !isIncorrect ? 2 : 0.5,
+          strokeWidth: isHovered && !isCorrect && !isIncorrect ? 1 : 0.5,
         },
       };
     },
@@ -196,13 +196,13 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
     setViewWindow(defaultView);
   }, [lockedOnCode]);
 
-  // Reset map selection when disabled or resetKey changes
+  // Reset map selection when disabled or promptResetKey changes
   useEffect(() => {
-    if (disabled || resetKey) {
+    if (disabled || promptResetKey) {
       setMapSelectedCountry(null);
       setSelectedCountry(null);
     }
-  }, [disabled, resetKey]);
+  }, [disabled, promptResetKey]);
 
   // Handle map submission
   const handleMapSubmit = () => {

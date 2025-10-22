@@ -1,6 +1,6 @@
 [
     {
-        "name": "test",
+        "name": "Test",
         "country_codes": [
             "USA",
             "CAN",
@@ -8,11 +8,168 @@
         ]
     },
     {
-        "name": "test2",
+        "name": "Test 2",
         "country_codes": [
             "RUS",
             "CHN",
             "IND"
+        ]
+    },
+    {
+        "name": "Europe",
+        "country_codes": [
+            "FRA",
+            "DEU",
+            "GBR",
+            "ITA",
+            "ESP",
+            "POL",
+            "NLD",
+            "BEL",
+            "CHE",
+            "AUT",
+            "SWE",
+            "NOR",
+            "DNK",
+            "FIN",
+            "IRL",
+            "PRT",
+            "GRC",
+            "CZE",
+            "HUN",
+            "ROU"
+        ]
+    },
+    {
+        "name": "Asia",
+        "country_codes": [
+            "CHN",
+            "IND",
+            "JPN",
+            "KOR",
+            "THA",
+            "VNM",
+            "PHL",
+            "IDN",
+            "MYS",
+            "SGP",
+            "MMR",
+            "KHM",
+            "LAO",
+            "BGD",
+            "PAK",
+            "LKA",
+            "NPL",
+            "BTN",
+            "MNG",
+            "KAZ"
+        ]
+    },
+    {
+        "name": "Africa",
+        "country_codes": [
+            "NGA",
+            "ETH",
+            "EGY",
+            "ZAF",
+            "KEN",
+            "TZA",
+            "UGA",
+            "GHA",
+            "MOZ",
+            "MDG",
+            "CMR",
+            "CIV",
+            "NER",
+            "BFA",
+            "MLI",
+            "AGO",
+            "MAR",
+            "DZA",
+            "TUN",
+            "LBY"
+        ]
+    },
+    {
+        "name": "South America",
+        "country_codes": [
+            "BRA",
+            "ARG",
+            "CHL",
+            "PER",
+            "COL",
+            "VEN",
+            "ECU",
+            "BOL",
+            "PRY",
+            "URY",
+            "GUY",
+            "SUR"
+        ]
+    },
+    {
+        "name": "North America",
+        "country_codes": [
+            "USA",
+            "CAN",
+            "MEX",
+            "GTM",
+            "CUB",
+            "HND",
+            "NIC",
+            "CRI",
+            "PAN",
+            "JAM",
+            "HTI",
+            "DOM",
+            "BLZ",
+            "SLV"
+        ]
+    },
+    {
+        "name": "Caribbean",
+        "country_codes": [
+            "CUB",
+            "JAM",
+            "HTI",
+            "DOM",
+            "TTO",
+            "BHS",
+            "BRB",
+            "LCA",
+            "VCT",
+            "GRD",
+            "ATG",
+            "DMA",
+            "KNA",
+            "TCA",
+            "ABW",
+            "CUW",
+            "SXM",
+            "BES"
+        ]
+    },
+    {
+        "name": "Oceania",
+        "country_codes": [
+            "AUS",
+            "NZL",
+            "FJI",
+            "PNG",
+            "SLB",
+            "VUT",
+            "NCL",
+            "PYF",
+            "TON",
+            "WSM",
+            "KIR",
+            "TUV",
+            "NRU",
+            "PLW",
+            "FSM",
+            "MHL",
+            "COK",
+            "NIU"
         ]
     }
 ]

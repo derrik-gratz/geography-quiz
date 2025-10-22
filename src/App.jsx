@@ -49,8 +49,19 @@ function App() {
         // Flag selection handled by onSelect callback
     };
 
+    // Simple seeded random function for consistent flag ordering
+    const seededRandom = (seed) => {
+        const x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+    };
+
     const displayCountryFlags = countryData
         .filter(country => country.flagCode && country.flagCode !== null)
+        .sort((a, b) => {
+            const seedA = seededRandom(a.code.charCodeAt(0) + a.code.charCodeAt(1) + a.code.charCodeAt(2));
+            const seedB = seededRandom(b.code.charCodeAt(0) + b.code.charCodeAt(1) + b.code.charCodeAt(2));
+            return seedA - seedB;
+        });
 
     // Track incorrect attempts for visual feedback - separate by input type
     const [incorrectFlags, setIncorrectFlags] = useState([]);
@@ -106,6 +117,8 @@ function App() {
                         requiredAnswerTypes={requiredAnswerTypes}
                         isComplete={isComplete()}
                         totalCountries={totalCountries}
+                        isQuizFinished={isQuizFinished}
+                        quizSetName={quizSet?.name || 'Geography Quiz'}
                     />
                 </div>
 
@@ -117,7 +130,7 @@ function App() {
                             <TextCountryInput
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'text', value: country });
-                                    // Text input doesn't need visual feedback on flags/map
+                                    return result; // Return result for feedback
                                 }}
                                 resetKey={currentPrompt?.countryCode}
                                 disabled={currentPrompt?.promptType === 'name'}
@@ -157,6 +170,7 @@ function App() {
                             incorrectCountries={incorrectMapCountries}
                             correctCountries={correctMapCountries}
                             disabled={currentPrompt?.promptType === 'location'}
+                            promptResetKey={currentPrompt?.countryCode}
                         />
                     </div>
                 </div>

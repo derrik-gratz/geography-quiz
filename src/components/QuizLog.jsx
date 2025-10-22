@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * QuizLog Component
  * 
  * Displays a scrollable table showing quiz progress with attempts per country
+ * 
  * Shows last 2-3 countries by default, can scroll to see full history
  * 
  * @param {Array} props.promptHistory - Array of completed prompts
@@ -22,17 +23,23 @@ export function QuizLog({
     currentPrompt, 
     requiredAnswerTypes = [], 
     isComplete = false,
-    totalCountries 
+    totalCountries,
+    isQuizFinished = false,
+    quizSetName = 'Geography Quiz'
 }) {
+    const [exportSuccess, setExportSuccess] = useState(false);
+    const [obscureNames, setObscureNames] = useState(false);
     // Create log entries for history
     // Treat all but the last history item as completed; the last one is the current prompt
+    // If quiz is finished, all items should be completed
     const historyEntries = promptHistory.map((prompt, index) => {
         const isLast = index === promptHistory.length - 1;
         return {
             country: prompt.countryData?.country || prompt.countryCode,
             promptType: prompt.promptType,
-            status: isLast ? 'in_progress' : 'completed',
+            status: (isLast && !isQuizFinished) ? 'in_progress' : 'completed',
             completionStatus: prompt.completionStatus || 'unknown',
+            answerCompletionStatus: prompt.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' },
             attempts: prompt.finalAttempts || { map: 0, text: 0, flag: 0 },
             answers: prompt.finalAnswers || {}
         };
@@ -85,10 +92,16 @@ export function QuizLog({
             return '📋';
         }
         if (entry.status === 'completed') {
-            // Show different indicators based on completion status
-            if (entry.completionStatus === 'correct') {
+            // Use per-type completion status instead of overall completion status
+            const answerKey = typeToKey[type];
+            const typeStatus = entry.answerCompletionStatus?.[answerKey];
+            
+            if (typeStatus === 'correct') {
                 return '✓';
-            } else if (entry.completionStatus === 'incorrect') {
+            } else if (typeStatus === 'incorrect') {
+                return '✗';
+            } else if (typeStatus === 'unanswered') {
+                // If the prompt is completed but a category is unanswered, treat it as incorrect
                 return '✗';
             }
             return '?';
@@ -114,13 +127,96 @@ export function QuizLog({
         return entry.attempts?.[type] || '-';
     };
 
+    // Export function to create simplified text format of results
+    const exportResults = () => {
+        const completedEntries = allEntries.filter(entry => entry.status === 'completed');
+        
+        let exportText = `${quizSetName} Results\n`;
+        // Count countries where at least 2 out of 3 categories were answered correctly
+        const correctCountries = completedEntries.filter(entry => {
+            const answerCompletionStatus = entry.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' };
+            const correctCount = Object.values(answerCompletionStatus).filter(status => status === 'correct').length;
+            return correctCount >= 2;
+        }).length;
+        
+        
+        exportText += `Correct: ${correctCountries} / ${totalCountries} countries\n\n`;
+        
+        exportText += `| Country | Map | Name | Flag |\n`;
+        exportText += `|---------|-----|------|------|\n`;
+        
+        completedEntries.forEach((entry, index) => {
+            const mapStatus = getAnswerStatus(entry, 'location');
+            const nameStatus = getAnswerStatus(entry, 'name');
+            const flagStatus = getAnswerStatus(entry, 'flag');
+            
+            const mapAttempts = getAttemptsDisplay(entry, 'map');
+            const nameAttempts = getAttemptsDisplay(entry, 'text');
+            const flagAttempts = getAttemptsDisplay(entry, 'flag');
+            
+            // Use index number if obscuring names, otherwise use country name
+            const countryDisplay = obscureNames ? `${index + 1}` : entry.country;
+            
+            exportText += `| ${countryDisplay} | ${mapStatus}(${mapAttempts}) | ${nameStatus}(${nameAttempts}) | ${flagStatus}(${flagAttempts}) |\n`;
+        });
+        
+        return exportText;
+    };
+
+    // Copy results to clipboard
+    const copyResultsToClipboard = async () => {
+        try {
+            const resultsText = exportResults();
+            await navigator.clipboard.writeText(resultsText);
+            setExportSuccess(true);
+            setTimeout(() => setExportSuccess(false), 1000); // Hide success message after 3 seconds
+            return true;
+        } catch (err) {
+            console.error('Failed to copy to clipboard:', err);
+            return false;
+        }
+    };
+
+
     return (
         <div className="quiz-log">
             <div className="quiz-log-header">
                 <h3>Quiz Progress</h3>
                 <div className="progress-summary">
-                    {Math.max(0, promptHistory.length - 1 + (isComplete ? 1 : 0))} / {totalCountries} completed
+                    {isQuizFinished 
+                        ? `${promptHistory.length} / ${totalCountries} completed`
+                        : `${Math.max(0, promptHistory.length - 1 + (isComplete ? 1 : 0))} / ${totalCountries} completed`
+                    }
                 </div>
+                {isQuizFinished && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+                            <input
+                                type="checkbox"
+                                checked={obscureNames}
+                                onChange={(e) => setObscureNames(e.target.checked)}
+                                style={{ margin: 0 }}
+                            />
+                           Hide country names
+                        </label>
+                        <button 
+                            onClick={copyResultsToClipboard}
+                            className="export-results-btn"
+                            style={{
+                                backgroundColor: exportSuccess ? '#28a745' : '#007bff',
+                                color: 'white',
+                                border: 'none',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                transition: 'background-color 0.2s'
+                            }}
+                        >
+                            {exportSuccess ? '✓ Copied!' : 'Export Results'}
+                        </button>
+                    </div>
+                )}
             </div>
             
             <div className="quiz-log-table-container">

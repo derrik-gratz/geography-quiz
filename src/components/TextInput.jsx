@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import countries from '../data/country_data.json';
 
-export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
+export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswerFeedback }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   React.useEffect(() => {
     if (resetKey) {
@@ -13,6 +14,7 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
         setSuggestions([]);
         setShowSuggestions(false);
         setSelectedCountry(null);
+        setIsCorrect(false);
     }
   }, [resetKey]);
 
@@ -20,6 +22,7 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
   React.useEffect(() => {
     if (disabled) {
         setSelectedCountry(null);
+        setIsCorrect(false);
     }
   }, [disabled]);
   
@@ -32,7 +35,13 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
 
   const handleSubmit = () => {
     if (selectedCountry && onSelect) {
-      onSelect(selectedCountry);
+      const result = onSelect(selectedCountry);
+      if (result && result.ok) {
+        setIsCorrect(true);
+      }
+      if (onAnswerFeedback) {
+        onAnswerFeedback(result);
+      }
     }
   };
 
@@ -69,41 +78,41 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false }) {
           value={input}
           onChange={handleChange}
           placeholder="Type a country name..."
-          disabled={disabled}
+          disabled={disabled || isCorrect}
           style={{ 
             flex: 1,
             padding: '0.5rem', 
             fontSize: '1rem', 
             borderRadius: '4px', 
             border: '1px solid #ccc',
-            backgroundColor: disabled ? '#f5f5f5' : '#fff',
-            color: disabled ? '#999' : '#333',
-            cursor: disabled ? 'not-allowed' : 'text'
+            backgroundColor: (disabled || isCorrect) ? '#f5f5f5' : '#fff',
+            color: (disabled || isCorrect) ? '#999' : '#333',
+            cursor: (disabled || isCorrect) ? 'not-allowed' : 'text'
           }}
           // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
-          onFocus={() => input && setShowSuggestions(true)}
+          onFocus={() => input && !isCorrect && setShowSuggestions(true)}
           // onBlur: Hides suggestions when user clicks away from the input field
           // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
           onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
         />
         <button
           onClick={handleSubmit}
-          disabled={!selectedCountry || disabled}
+          disabled={!selectedCountry || disabled || isCorrect}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
             border: '1px solid #007bff',
-            backgroundColor: selectedCountry && !disabled ? '#007bff' : '#f8f9fa',
-            color: selectedCountry && !disabled ? '#fff' : '#6c757d',
-            cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+            backgroundColor: isCorrect ? '#28a745' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
+            color: isCorrect ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
+            cursor: (selectedCountry && !disabled && !isCorrect) ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}
         >
-          Submit
+          {isCorrect ? 'Correct!' : 'Submit'}
         </button>
       </div>
-      {showSuggestions && suggestions.length > 0 && (
+      {showSuggestions && suggestions.length > 0 && !isCorrect && (
         <ul style={{
           position: 'absolute',
           left: 0,
