@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import countries from '../data/country_data.json';
 
-export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswerFeedback }) {
+export function TextCountryInput({ onSelect, promptResetKey, disabled = false }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
+  const [isWrong, setIsWrong] = useState(false);
 
   React.useEffect(() => {
-    if (resetKey) {
+    if (promptResetKey) {
         setInput('');
         setSuggestions([]);
         setShowSuggestions(false);
         setSelectedCountry(null);
         setIsCorrect(false);
     }
-  }, [resetKey]);
+  }, [promptResetKey]);
 
   // Reset when disabled (new prompt type)
   React.useEffect(() => {
@@ -25,6 +27,15 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswe
         setIsCorrect(false);
     }
   }, [disabled]);
+  
+  React.useEffect(() => {
+    setIsWrong(false);
+    setIsCorrect(false);
+    setSelectedCountry(null);
+    setInput('');
+    setSuggestions([]);
+    setShowSuggestions(false);
+  }, [promptResetKey]);
   
   const handleSelect = (country) => {
     setInput(country.country);
@@ -38,10 +49,18 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswe
       const result = onSelect(selectedCountry);
       if (result && result.ok) {
         setIsCorrect(true);
+      } else {
+        setIsWrong(true);
+        // Clear the incorrect state after 2 seconds to allow retry
+        setTimeout(() => {
+          setIsWrong(false);
+          setSelectedCountry(null);
+          setInput('');
+        }, 1000);
       }
-      if (onAnswerFeedback) {
-        onAnswerFeedback(result);
-      }
+      // if (onAnswerFeedback) {
+      //   onAnswerFeedback(result);
+      // }
     }
   };
 
@@ -85,9 +104,9 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswe
             fontSize: '1rem', 
             borderRadius: '4px', 
             border: '1px solid #ccc',
-            backgroundColor: (disabled || isCorrect) ? '#f5f5f5' : '#fff',
-            color: (disabled || isCorrect) ? '#999' : '#333',
-            cursor: (disabled || isCorrect) ? 'not-allowed' : 'text'
+            backgroundColor: (disabled || isCorrect || isWrong ) ? '#f5f5f5' : '#fff',
+            color: (disabled || isCorrect || isWrong ) ? '#999' : '#333',
+            cursor: (disabled || isCorrect || isWrong ) ? 'not-allowed' : 'text'
           }}
           // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
           onFocus={() => input && !isCorrect && setShowSuggestions(true)}
@@ -97,19 +116,19 @@ export function TextCountryInput({ onSelect, resetKey, disabled = false, onAnswe
         />
         <button
           onClick={handleSubmit}
-          disabled={!selectedCountry || disabled || isCorrect}
+          disabled={!selectedCountry || disabled || isCorrect || isWrong }
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
             border: '1px solid #007bff',
-            backgroundColor: isCorrect ? '#28a745' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
+            backgroundColor: isCorrect ? '#28a745' : isWrong? '#dc3545' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
             color: isCorrect ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
-            cursor: (selectedCountry && !disabled && !isCorrect) ? 'pointer' : 'not-allowed',
+            cursor: (selectedCountry && !disabled && !isCorrect && !isWrong) ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}
         >
-          {isCorrect ? 'Correct!' : 'Submit'}
+          {isCorrect ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
         </button>
       </div>
       {showSuggestions && suggestions.length > 0 && !isCorrect && (
