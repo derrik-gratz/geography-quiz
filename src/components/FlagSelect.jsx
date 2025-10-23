@@ -42,6 +42,7 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
         if (selectedCountry && onSelect && correctCountries.length === 0) {
             onSelect(selectedCountry);
         }
+        setSelectedCountry(null);
     };
 
     const handleColorClick = (color) => {
