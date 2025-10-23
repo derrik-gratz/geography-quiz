@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import countries from '../data/country_data.json';
 
-export function TextCountryInput({ onSelect, promptResetKey, disabled = false }) {
+export function TextCountryInput({ onSelect, promptResetKey, disabled = false, incorrectCountries = [] }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -38,6 +38,10 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false })
   }, [promptResetKey]);
   
   const handleSelect = (country) => {
+    // Don't allow selection of incorrect countries
+    if (incorrectCountries.includes(country.code)) {
+      return;
+    }
     setInput(country.country);
     setSelectedCountry(country);
     setSuggestions([]);
@@ -80,8 +84,22 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false })
         const allAliases = [c.country, ...(Array.isArray(c.aliases) ? c.aliases : [])].filter(Boolean);
         const matches = allAliases.map(name => normalizeText(name)).some(name => name.includes(normalizedInput));
         return matches;
+      });
+      
+      // Sort suggestions: correct countries first, then incorrect countries at the bottom
+      const sortedSuggestions = filtered.sort((a, b) => {
+        const aIsIncorrect = incorrectCountries.includes(a.code);
+        const bIsIncorrect = incorrectCountries.includes(b.code);
+        
+        // If one is incorrect and the other isn't, put the correct one first
+        if (aIsIncorrect && !bIsIncorrect) return 1;
+        if (!aIsIncorrect && bIsIncorrect) return -1;
+        
+        // If both are the same type (both correct or both incorrect), maintain original order
+        return 0;
       }).slice(0, 10);
-      setSuggestions(filtered);
+      
+      setSuggestions(sortedSuggestions);
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
@@ -148,40 +166,47 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false })
           padding: 0,
           listStyle: 'none',
         }}>
-          {suggestions.map(country => (
-            <li
-              key={country.code}
-              onMouseDown={() => handleSelect(country)}
-              style={{ 
-                padding: '0.5rem', 
-                cursor: 'pointer',
-                color: 'black',
-                borderBottom: '1px solid #eee',
-                minHeight: '40px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                backgroundColor: 'transparent'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#f0f0f0';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-            >
-              <div>{country.country}</div>
-              {country.aliases && country.aliases.length > 0 && (
-                <div style={{ 
-                  fontSize: '0.8rem', 
-                  color: '#666', 
-                  fontStyle: 'italic' 
-                }}>
-                  Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
-                </div>
-              )}
-            </li>
-          ))}
+          {suggestions.map(country => {
+            const isIncorrect = incorrectCountries.includes(country.code);
+            return (
+              <li
+                key={country.code}
+                onMouseDown={() => handleSelect(country)}
+                style={{ 
+                  padding: '0.5rem', 
+                  cursor: isIncorrect ? 'not-allowed' : 'pointer',
+                  color: isIncorrect ? '#999' : 'black',
+                  borderBottom: '1px solid #eee',
+                  minHeight: '40px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  backgroundColor: 'transparent',
+                  opacity: isIncorrect ? 0.5 : 1,
+                  textDecoration: isIncorrect ? 'line-through' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isIncorrect) {
+                    e.currentTarget.style.backgroundColor = '#f0f0f0';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
+              >
+                <div>{country.country}</div>
+                {country.aliases && country.aliases.length > 0 && (
+                  <div style={{ 
+                    fontSize: '0.8rem', 
+                    color: isIncorrect ? '#bbb' : '#666', 
+                    fontStyle: 'italic' 
+                  }}>
+                    Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
