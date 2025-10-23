@@ -220,7 +220,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
   const getCircleStyle = behaviors.getCircleStyle;
   const showSubmitButton = behaviors.showSubmitButton;
 
-  function getCircleRadius(baseRadius = 4) {
+  function getCircleRadius(baseRadius = 3) {
     return baseRadius / Math.sqrt(viewWindow.zoom);
   }
 
@@ -291,6 +291,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
         <ZoomableGroup
           key={resetKey}
           center={viewWindow.coordinates}
+          maxZoom={12}
           zoom={viewWindow.zoom}
           onMoveEnd={({ zoom, coordinates }) => {
             if (!lockedOnCode) {
@@ -327,15 +328,20 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
             }
           </Geographies>
           <Geographies geography={tinyGeoUrl}>
-            {({ geographies, projection }) =>
-              geographies.map((geo) => {
+            {({ geographies, projection }) => {
+              // Separate circles into regular and special (selected/prompted) groups
+              const regularCircles = [];
+              const specialCircles = [];
+              
+              geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
                 const isSelected = mapSelectedCountry === countryCode;
                 const isHovered = hoveredCountry === countryCode;
+                const isPrompted = lockedOnCode === countryCode;
                 const [centroid_x, centroid_y] = getCentroid(geo);
                 const [cx, cy] = projection([centroid_x, centroid_y]);
 
-                return (
+                const circleElement = (
                   <circle
                     key={geo.rsmKey}
                     cx={cx}
@@ -343,7 +349,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
                     r={getCircleRadius()}
                     fill={getCircleStyle(isSelected, isHovered, countryCode).fill}
                     stroke="#fff"
-                    strokeWidth={0.5}
+                    strokeWidth={getCircleRadius() * .1}
                     onClick={() => {
                       if (!incorrectCountries.includes(countryCode)) {
                         handleCountryClick(geo);
@@ -357,8 +363,18 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
                     }}
                   />
                 );
-              })
-            }
+
+                // Add to special group if selected, hovered, or prompted
+                if (isSelected || isHovered || isPrompted) {
+                  specialCircles.push(circleElement);
+                } else {
+                  regularCircles.push(circleElement);
+                }
+              });
+
+              // Render regular circles first, then special circles on top
+              return [...regularCircles, ...specialCircles];
+            }}
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
