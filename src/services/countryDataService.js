@@ -6,9 +6,6 @@ import allQuizSets from '../data/quiz_sets.json';
  * Handles quiz set filtering, prompt type validation, and daily challenge logic
  */
 export class CountryDataService {
-    // Static RNG instance for consistent daily challenge results
-    static _dailyRng = null;
-    static _lastRngDate = null;
     
     /**
      * Check if a country has a specific prompt type available
@@ -66,7 +63,7 @@ export class CountryDataService {
      */
     static filterDailyChallenge(allCountryData, rng) {
         const dailyChallengeCount = 5;
-        const shuffledCountryData = allCountryData.sort((a, b) => rng() - 0.5);
+        const shuffledCountryData = this.shuffleWithSeed(allCountryData, rng);
         const subsetCountryData = shuffledCountryData.slice(0, dailyChallengeCount);
 
         return subsetCountryData.map(country => {
@@ -136,38 +133,39 @@ export class CountryDataService {
     
     /**
      * Generate seeded random number generator for daily challenges
-     * Uses a cached RNG to ensure consistency across multiple calls on the same day
+     * Uses the current date as seed to ensure same challenge for all users on the same day
      * 
      * @returns {Function} Random number generator function
      */
     static dailyRng() {
         const today = new Date();
         const todayString = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-        
-        // Create new RNG if it's a new day or doesn't exist
-        if (!this._dailyRng || this._lastRngDate !== todayString) {
-            let seed = todayString;
-            this._dailyRng = function() {
-                let t = seed += 0x6D2B79F5;
-                t = Math.imul(t ^ (t >>> 15), t | 1);
-                t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-            };
-            this._lastRngDate = todayString;
-        }
-        
-        return this._dailyRng;
+        let seed = todayString;
+        return function() {
+            let t = seed += 0x6D2B79F5;
+            t = Math.imul(t ^ (t >>> 15), t | 1);
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
     }
     
     /**
-     * Shuffle countries with a seed for consistent ordering
+     * Shuffle countries with a seed for consistent ordering using Fisher-Yates algorithm
      * 
      * @param {Array} quizData - Array of country objects
      * @param {Function} rng - Random number generator
      * @returns {Array} Shuffled country data
      */
     static shuffleWithSeed(quizData, rng) {
-        const shuffledCountryData = quizData.sort((a, b) => rng() - 0.5);
+        // Create a copy to avoid mutating the original array
+        const shuffledCountryData = [...quizData];
+        
+        // Fisher-Yates shuffle algorithm
+        for (let i = shuffledCountryData.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [shuffledCountryData[i], shuffledCountryData[j]] = [shuffledCountryData[j], shuffledCountryData[i]];
+        }
+        
         return shuffledCountryData;
     }
 }
