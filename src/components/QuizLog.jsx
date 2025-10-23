@@ -145,7 +145,7 @@ export function QuizLog({
         exportText += `| Country | Map | Name | Flag |\n`;
         exportText += `|---------|-----|------|------|\n`;
         
-        completedEntries.forEach((entry, index) => {
+        completedEntries.slice().reverse().forEach((entry, index) => {
             const mapStatus = getAnswerStatus(entry, 'location');
             const nameStatus = getAnswerStatus(entry, 'name');
             const flagStatus = getAnswerStatus(entry, 'flag');
