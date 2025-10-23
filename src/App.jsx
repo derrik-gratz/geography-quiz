@@ -66,12 +66,14 @@ function App() {
     // Track incorrect attempts for visual feedback - separate by input type
     const [incorrectFlags, setIncorrectFlags] = useState([]);
     const [incorrectMapCountries, setIncorrectMapCountries] = useState([]);
+    const [incorrectTextCountries, setIncorrectTextCountries] = useState([]);
     const [correctFlags, setCorrectFlags] = useState([]);
     const [correctMapCountries, setCorrectMapCountries] = useState([]);
     
     const clearHighlights = () => {
         setIncorrectFlags([]);
         setIncorrectMapCountries([]);
+        setIncorrectTextCountries([]);
         setCorrectFlags([]);
         setCorrectMapCountries([]);
     };
@@ -130,10 +132,14 @@ function App() {
                             <TextCountryInput
                                 onSelect={(country) => {
                                     const result = submitAnswer({ type: 'text', value: country });
+                                    if (result.correctCode) {
+                                        setIncorrectTextCountries(prev => [...prev, country.code]);
+                                    }
                                     return result; // Return result for feedback
                                 }}
-                                resetKey={currentPrompt?.countryCode}
+                                promptResetKey={currentPrompt?.countryCode}
                                 disabled={currentPrompt?.promptType === 'name'}
+                                incorrectCountries={incorrectTextCountries}
                             />
                         </div>
                         <div className="flag-input-container">
