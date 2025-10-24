@@ -222,6 +222,7 @@ p {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  justify-content: flex-start; /* Align content to top */
 }
 
 .color-picker {
@@ -247,9 +248,10 @@ p {
   width: 100%;
   margin: 0 auto;
   overflow-y: auto;
-  flex: 1;
+  flex: 0 0 auto; /* Don't grow or shrink, just take needed space */
   min-height: 0; /* Allow flex item to shrink */
   padding: 0 10px; /* Reduced horizontal padding */
+  max-height: 100%; /* Allow scrolling if needed */
 }
 
 .flag-icon {
