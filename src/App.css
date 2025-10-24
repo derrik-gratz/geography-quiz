@@ -94,6 +94,7 @@
   box-shadow: 0 2px 4px var(--shadow-color);
   display: flex;
   flex-direction: column;
+  max-height: 500px;
   gap: 2px;
 }
 
@@ -112,17 +113,11 @@
   display: flex;
   gap: 15px;
   height: 200px; /* Fixed height for input controls */
-}
-
-.text-input-container,
-.flag-input-container {
-  flex: 1; /* Equal width */
-  display: flex;
-  flex-direction: column;
+  max-height: 500px;
 }
 
 .text-input-container {
-  min-width: 0; /* Allow text input to shrink */
+  min-width: 200px; /* Allow text input to shrink */
   background: var(--background-secondary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
