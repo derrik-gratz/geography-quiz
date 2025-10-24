@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import countries from '../data/country_data.json';
 
-export function TextCountryInput({ onSelect, promptResetKey, disabled = false, incorrectCountries = [] }) {
+export function TextCountryInput({ onSelect, promptResetKey, disabled = false, incorrectCountries = [], correctAnswer = null }) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -36,6 +36,24 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
     setSuggestions([]);
     setShowSuggestions(false);
   }, [promptResetKey]);
+
+  // Show correct answer when provided (give up scenario)
+  React.useEffect(() => {
+    if (correctAnswer) {
+      setInput(correctAnswer.country || correctAnswer);
+      setIsCorrect(true);
+      setSelectedCountry(correctAnswer);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    } else {
+      // Reset when correctAnswer becomes null (new prompt)
+      setIsCorrect(false);
+      setSelectedCountry(null);
+      setInput('');
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [correctAnswer]);
   
   const handleSelect = (country) => {
     // Don't allow selection of incorrect countries
@@ -110,6 +128,22 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+      <button
+          onClick={handleSubmit}
+          disabled={!selectedCountry || disabled || isCorrect || isWrong }
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.9rem',
+            borderRadius: '4px',
+            border: '1px solid #007bff',
+            backgroundColor: isCorrect ? '#28a745' : isWrong? '#dc3545' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
+            color: isCorrect ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
+            cursor: (selectedCountry && !disabled && !isCorrect && !isWrong) ? 'pointer' : 'not-allowed',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          {correctAnswer ? 'Answer:' :isCorrect ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
+        </button>
         <input
           type="text"
           value={input}
@@ -132,22 +166,7 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
           // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
           onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
         />
-        <button
-          onClick={handleSubmit}
-          disabled={!selectedCountry || disabled || isCorrect || isWrong }
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.9rem',
-            borderRadius: '4px',
-            border: '1px solid #007bff',
-            backgroundColor: isCorrect ? '#28a745' : isWrong? '#dc3545' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
-            color: isCorrect ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
-            cursor: (selectedCountry && !disabled && !isCorrect && !isWrong) ? 'pointer' : 'not-allowed',
-            whiteSpace: 'nowrap'
-          }}
-        >
-          {isCorrect ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
-        </button>
+        
       </div>
       {showSuggestions && suggestions.length > 0 && !isCorrect && (
         <ul style={{

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 /**
  * QuizPrompt Component
@@ -20,8 +20,29 @@ export function QuizPrompt({
     isQuizFinished, 
     totalCountries, 
     currentProgress,
-    showNiceMessage = false
+    showNiceMessage = false,
+    onGiveUp
 }) {
+    const [hasGivenUp, setHasGivenUp] = useState(false);
+
+    // Reset give up state when prompt changes
+    useEffect(() => {
+        setHasGivenUp(false);
+    }, [currentPrompt?.countryCode]);
+
+    const handleGiveUp = () => {
+        setHasGivenUp(true);
+        
+        // Notify parent component about give up
+        if (onGiveUp) {
+            onGiveUp(currentPrompt);
+        }
+        
+        // Auto-generate next prompt after delay
+        setTimeout(() => {
+            generatePrompt();
+        }, 3000); // 3 second delay
+    };
     const formatLatitude = (lat) => {
         const absLat = Math.abs(lat);
         const direction = lat >= 0 ? 'N' : 'S';
@@ -98,14 +119,34 @@ export function QuizPrompt({
     return (
         <div className="quiz-prompt">
             {/* Quiz controls */}
-            <div className="quiz-controls">
-                <button 
-                    onClick={generatePrompt} 
-                    disabled={isQuizFinished}
-                    className="generate-prompt-btn"
-                >
-                    {isQuizFinished ? 'Quiz Finished!' : 'Generate Prompt'}
-                </button>
+                <div className="quiz-controls">
+                    {!currentPrompt && !isQuizFinished &&(
+                        <button 
+                            onClick={generatePrompt} 
+                            disabled={isQuizFinished || hasGivenUp}
+                            className="generate-prompt-btn"
+                        >
+                            {isQuizFinished ? 'Quiz Finished!' : 'Generate Prompt'}
+                        </button>
+                )}
+                
+                {currentPrompt && !isQuizFinished && !hasGivenUp && (
+                    <button 
+                        onClick={handleGiveUp} 
+                        className="give-up-btn"
+                        style={{
+                            backgroundColor: '#dc3545',
+                            color: 'white',
+                            border: '1px solid #dc3545',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            marginLeft: '8px'
+                        }}
+                    >
+                        Give Up
+                    </button>
+                )}
                 
                 {isQuizFinished && (
                     <button onClick={resetQuiz} className="reset-quiz-btn">

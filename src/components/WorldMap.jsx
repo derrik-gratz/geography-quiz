@@ -49,7 +49,7 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey }) {
+export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey, giveUp = false }) {
   const lockedOnCode = lockedOn;
   
   // State management
@@ -195,6 +195,22 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
     setDefaultViewWindow(defaultView);
     setViewWindow(defaultView);
   }, [lockedOnCode]);
+
+  // Zoom to correct country when user gives up
+  useEffect(() => {
+    if (giveUp && correctCountries.length > 0) {
+      const correctCountryCode = correctCountries[correctCountries.length - 1]; // Get the most recent correct country
+      const country = countryData.find(country => country.code === correctCountryCode);
+      if (country && country.location) {
+        const giveUpView = { 
+          coordinates: [country.location.long, country.location.lat], 
+          zoom: 8
+        };
+        setViewWindow(giveUpView);
+        setResetKey(prev => prev + 1); // Force re-render to apply zoom
+      }
+    }
+  }, [giveUp, correctCountries]);
 
   // Reset map selection when disabled or promptResetKey changes
   useEffect(() => {

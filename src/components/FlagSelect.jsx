@@ -21,7 +21,7 @@ const availableColors = [
     { name: "orange", color: "#ffa500" }
 ]
 
-export function FlagSelect({ onSelect, displayCountries, incorrectCountries = [], correctCountries = [], disabled = false }) {
+export function FlagSelect({ onSelect, displayCountries, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey }) {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
     
@@ -37,6 +37,11 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
             setSelectedCountry(null);
         }
     }, [disabled, correctCountries.length]);
+
+    // Reset flag filters when prompt changes
+    React.useEffect(() => {
+        setSelectedColors([]);
+    }, [promptResetKey]);
 
     const handleSubmit = () => {
         if (selectedCountry && onSelect && correctCountries.length === 0) {
@@ -55,6 +60,12 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
     }
 
     const filteredCountries = displayCountries.filter(country => {
+        // If there are correct countries, only show the correct ones
+        if (correctCountries.length > 0) {
+            return correctCountries.includes(country.code);
+        }
+        
+        // Otherwise, apply color filtering as normal
         return selectedColors.length === 0 ?
             true :
             selectedColors.every(color => country.colors.includes(color));
@@ -97,17 +108,21 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
                         marginLeft: '10px'
                     }}
                 >
-                    Submit Flag
+                    {correctCountries.length > 0 ? 'Answer:' : 'Submit Flag'}
                 </button>
-                <span className="color-filter">Filter by color:</span>
-                {availableColors.map(color =>
-                    <button 
-                        key={color.name}
-                        className={`color-filter-button ${selectedColors.includes(color.name) ? "selected" : ""}`}
-                        onClick={() => handleColorClick(color.name)}
-                        style={{ backgroundColor: color.color }}
-                        title={color.name}
-                    ></button>
+                {correctCountries.length === 0 && (
+                    <>
+                        <span className="color-filter">Filter by color:</span>
+                        {availableColors.map(color =>
+                            <button 
+                                key={color.name}
+                                className={`color-filter-button ${selectedColors.includes(color.name) ? "selected" : ""}`}
+                                onClick={() => handleColorClick(color.name)}
+                                style={{ backgroundColor: color.color }}
+                                title={color.name}
+                            ></button>
+                        )}
+                    </>
                 )}
             </div>
             <div className="flag-grid">

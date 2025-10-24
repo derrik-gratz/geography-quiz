@@ -70,12 +70,16 @@ function App() {
     const [correctFlags, setCorrectFlags] = useState([]);
     const [correctMapCountries, setCorrectMapCountries] = useState([]);
     
+    // Track give up state
+    const [hasGivenUp, setHasGivenUp] = useState(false);
+    
     const clearHighlights = () => {
         setIncorrectFlags([]);
         setIncorrectMapCountries([]);
         setIncorrectTextCountries([]);
         setCorrectFlags([]);
         setCorrectMapCountries([]);
+        setHasGivenUp(false);
     };
 
     // Clear highlights when current prompt changes
@@ -107,6 +111,27 @@ function App() {
                             totalCountries={totalCountries}
                             currentProgress={promptHistory.length}
                             showNiceMessage={showNiceMessage}
+                            onGiveUp={(prompt) => {
+                                // Handle give up - show correct answers in all input fields
+                                if (prompt && prompt.countryCode) {
+                                    setHasGivenUp(true);
+                                    
+                                    // Add correct answers to all input types that aren't the current prompt type
+                                    if (prompt.promptType !== 'text') {
+                                        // If not a text prompt, show correct text answer (we'll need to add text highlighting)
+                                        // For now, just add to flags as a placeholder
+                                        setCorrectFlags(prev => [...prev, prompt.countryCode]);
+                                    }
+                                    if (prompt.promptType !== 'flag') {
+                                        // If not a flag prompt, show correct flag answer
+                                        setCorrectFlags(prev => [...prev, prompt.countryCode]);
+                                    }
+                                    if (prompt.promptType !== 'location') {
+                                        // If not a location prompt, show correct map answer
+                                        setCorrectMapCountries(prev => [...prev, prompt.countryCode]);
+                                    }
+                                }
+                            }}
                         />
                     </div>
                     
@@ -140,6 +165,7 @@ function App() {
                                 promptResetKey={currentPrompt?.countryCode}
                                 disabled={currentPrompt?.promptType === 'name'}
                                 incorrectCountries={incorrectTextCountries}
+                                correctAnswer={hasGivenUp && currentPrompt?.promptType !== 'text' ? currentPrompt?.countryData : null}
                             />
                         </div>
                         <div className="flag-input-container">
@@ -157,6 +183,7 @@ function App() {
                                 correctCountries={correctFlags}
                                 clearHighlights={clearHighlights}
                                 disabled={currentPrompt?.promptType === 'flag'}
+                                promptResetKey={currentPrompt?.countryCode}
                             />
                         </div>
                     </div>
@@ -177,6 +204,7 @@ function App() {
                             correctCountries={correctMapCountries}
                             disabled={currentPrompt?.promptType === 'location'}
                             promptResetKey={currentPrompt?.countryCode}
+                            giveUp={hasGivenUp}
                         />
                     </div>
                 </div>
