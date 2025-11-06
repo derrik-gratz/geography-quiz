@@ -22,32 +22,34 @@ export function QuizConfig({
     return (
         <div className="quiz-config">
             <div className="config-row">
-                <div className="config-group">
-                    <label>Prompt types:</label>
-                    <div className="prompt-types">
-                        {selectedPromptTypes.length === 0 && (
-                            <div className="warning-message">
-                                <p>Select at least one prompt type.</p>
-                            </div>
-                        )}
-                        {PROMPT_TYPES.map(type => (
-                            <label key={type} className="prompt-type-checkbox">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedPromptTypes.includes(type)}
-                                    onChange={() => {
-                                        if (selectedPromptTypes.includes(type)) {
-                                            setSelectedPromptTypes(selectedPromptTypes.filter(t => t !== type));
-                                        } else {
-                                            setSelectedPromptTypes([...selectedPromptTypes, type]);
-                                        }
-                                    }}
-                                />
-                                {type.charAt(0).toUpperCase() + type.slice(1)}
-                            </label>
-                        ))}
+                {quizSet !== 'Daily challenge' && (
+                    <div className="config-group">
+                        <label>Prompt types:</label>
+                        <div className="prompt-types">
+                            {selectedPromptTypes.length === 0 && (
+                                <div className="warning-message">
+                                    <p>Select at least one prompt type.</p>
+                                </div>
+                            )}
+                            {PROMPT_TYPES.map(type => (
+                                <label key={type} className="prompt-type-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedPromptTypes.includes(type)}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedPromptTypes([...selectedPromptTypes, type]);
+                                            } else {
+                                                setSelectedPromptTypes(selectedPromptTypes.filter(t => t !== type));
+                                            }
+                                        }}
+                                    />
+                                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                                </label>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
                 
                 <div className="config-group">
                     <label htmlFor="quiz-set">Quiz Set:</label>
@@ -56,13 +58,13 @@ export function QuizConfig({
                         value={quizSet || ''} 
                         onChange={(e) => setQuizSet(e.target.value || null)}
                     >
-                        <option value="all">All countries</option>
                         <option value="Daily challenge">Daily challenge</option>
                         {availableQuizSets.map(set => (
                             <option key={set.name} value={set.name}>
                                 {set.name}
                             </option>
                         ))}
+                        <option value="all">All countries</option>
                     </select>
                 </div>
             </div>
