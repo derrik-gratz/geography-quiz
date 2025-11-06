@@ -28,7 +28,7 @@ export function QuizLog({
     quizSetName = 'Geography Quiz'
 }) {
     const [exportSuccess, setExportSuccess] = useState(false);
-    const [obscureNames, setObscureNames] = useState(false);
+    const [obscureNames, setObscureNames] = useState(true);
     // Create log entries for history
     // Treat all but the last history item as completed; the last one is the current prompt
     // If quiz is finished, all items should be completed
