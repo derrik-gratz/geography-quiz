@@ -41,7 +41,7 @@ export function QuizPrompt({
         // Auto-generate next prompt after delay
         setTimeout(() => {
             generatePrompt();
-        }, 3000); // 3 second delay
+        }, 4000);
     };
     const formatLatitude = (lat) => {
         const absLat = Math.abs(lat);

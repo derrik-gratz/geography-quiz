@@ -13,8 +13,7 @@ export const PROMPT_TYPES = ['name', 'flag', 'location'];
 export function useQuizConfig() {
     const availableQuizSets = quizSets;
 
-    // State for quiz set selection (null = no selection, 'all' = all countries)
-    const [quizSet, setQuizSet] = useState(null);
+    const [quizSet, setQuizSet] = useState('Daily challenge');
     
     // State for selected prompt types (defaults to all available types)
     const [selectedPromptTypes, setSelectedPromptTypes] = useState(PROMPT_TYPES);
