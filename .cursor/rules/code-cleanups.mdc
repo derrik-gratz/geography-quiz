@@ -1,0 +1,17 @@
+---
+description: For prompts such as "clean this code" or "organize this code".
+globs:
+alwaysApply: false
+---
+
+When asked to clean up code, conform to standard React quidelines. E.g.:
+
+React components should follow this layout:
+
+    Props interface at top
+    Component as named export
+    Styles at bottom
+
+Additionally, suggest how code can be moved to improve rendering speed or otherwise conform best-practices for web dev.
+
+Add comments that explain how concepts like State etc are being managed. 
