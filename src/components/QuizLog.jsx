@@ -132,15 +132,14 @@ export function QuizLog({
         const completedEntries = allEntries.filter(entry => entry.status === 'completed');
         
         let exportText = `${quizSetName} Results\n`;
-        // Count countries where at least 2 out of 3 categories were answered correctly
-        const correctCountries = completedEntries.filter(entry => {
+        const correct = completedEntries.reduce((sum, entry) => {
             const answerCompletionStatus = entry.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' };
             const correctCount = Object.values(answerCompletionStatus).filter(status => status === 'correct').length;
-            return correctCount >= 2;
-        }).length;
+            return sum + (correctCount / 2);
+        }, 0);
         
         
-        exportText += `Correct: ${correctCountries} / ${totalCountries} countries\n\n`;
+        exportText += `Correct: ${correct} / ${totalCountries} countries\n\n`;
         
         exportText += `| Country | Map | Name | Flag |\n`;
         exportText += `|---------|-----|------|------|\n`;
