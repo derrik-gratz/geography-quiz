@@ -11,7 +11,8 @@
     "flagCode": "AW",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Afghanistan",
@@ -29,7 +30,8 @@
       "red",
       "green",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Angola",
@@ -46,7 +48,8 @@
     "colors": [
       "black",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Anguilla",
@@ -60,7 +63,8 @@
     "flagCode": "AI",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Aland",
@@ -74,7 +78,8 @@
       "long": 20
     },
     "flagCode": "AX",
-    "colors": []
+    "colors": [],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Albania",
@@ -90,7 +95,8 @@
     "flagCode": "AL",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Andorra",
@@ -108,7 +114,8 @@
       "blue",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "United Arab Emirates",
@@ -127,7 +134,8 @@
       "white",
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Argentina",
@@ -144,7 +152,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Armenia",
@@ -162,7 +171,8 @@
       "red",
       "blue",
       "orange"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "American Samoa",
@@ -177,7 +187,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Antarctica",
@@ -192,7 +203,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "French Southern Territories",
@@ -207,7 +219,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Antigua and Barbuda",
@@ -224,7 +237,8 @@
     "colors": [
       "red",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Australia",
@@ -240,7 +254,8 @@
     "flagCode": "AU",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Austria",
@@ -257,7 +272,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Azerbaijan",
@@ -275,7 +291,8 @@
       "blue",
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Burundi",
@@ -292,7 +309,8 @@
     "colors": [
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Belgium",
@@ -310,7 +328,8 @@
       "red",
       "black",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Benin",
@@ -328,7 +347,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bonaire",
@@ -367,7 +387,8 @@
     "colors": [
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bangladesh",
@@ -384,7 +405,8 @@
     "colors": [
       "green",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bulgaria",
@@ -415,7 +437,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bahamas",
@@ -432,7 +455,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bosnia and Herzegovina",
@@ -447,7 +471,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Barthelemy",
@@ -465,7 +490,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Belarus",
@@ -482,7 +508,8 @@
     "colors": [
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Belize",
@@ -496,7 +523,8 @@
     "flagCode": "BZ",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bermuda",
@@ -510,7 +538,8 @@
     "flagCode": "BM",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bolivia",
@@ -528,7 +557,8 @@
       "red",
       "yellow",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Brazil",
@@ -545,7 +575,8 @@
     "colors": [
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Barbados",
@@ -560,7 +591,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Brunei Darussalam",
@@ -576,7 +608,8 @@
     "flagCode": "BN",
     "colors": [
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bhutan",
@@ -593,7 +626,8 @@
     "colors": [
       "orange",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Botswana",
@@ -609,7 +643,8 @@
     "flagCode": "BW",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Central African Republic",
@@ -629,7 +664,8 @@
       "yellow",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Canada",
@@ -644,7 +680,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Switzerland",
@@ -661,7 +698,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Chile",
@@ -679,7 +717,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "China",
@@ -695,7 +734,8 @@
     "flagCode": "CN",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Ivory Coast",
@@ -713,7 +753,8 @@
       "orange",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cameroon",
@@ -731,7 +772,8 @@
       "green",
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Democratic Republic of the Congo",
@@ -745,7 +787,8 @@
     "flagCode": "CD",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Republic of the Congo",
@@ -761,7 +804,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cook Islands",
@@ -777,7 +821,8 @@
     "flagCode": "CK",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Colombia",
@@ -795,7 +840,8 @@
       "yellow",
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Comoros",
@@ -811,7 +857,8 @@
     "flagCode": "KM",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cabo Verde",
@@ -827,7 +874,8 @@
     "flagCode": "CV",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Costa Rica",
@@ -843,7 +891,8 @@
     "flagCode": "CR",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cuba",
@@ -860,7 +909,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Curaçao",
@@ -876,7 +926,8 @@
     "flagCode": "CW",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cayman Islands",
@@ -890,7 +941,8 @@
     "flagCode": "KY",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cyprus",
@@ -907,7 +959,8 @@
     "colors": [
       "orange",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Czech Republic",
@@ -925,7 +978,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "France",
@@ -943,7 +997,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Germany",
@@ -961,7 +1016,8 @@
       "black",
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Djibouti",
@@ -979,7 +1035,8 @@
       "white",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Dominica",
@@ -995,7 +1052,8 @@
     "flagCode": "DM",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Denmark",
@@ -1010,7 +1068,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Dominican Republic",
@@ -1028,7 +1087,8 @@
       "red",
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Algeria",
@@ -1045,7 +1105,8 @@
     "colors": [
       "green",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Ecuador",
@@ -1061,7 +1122,8 @@
     "flagCode": "EC",
     "colors": [
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Egypt",
@@ -1079,7 +1141,8 @@
       "black",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Eritrea",
@@ -1097,7 +1160,8 @@
       "red",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Western Sahara",
@@ -1108,7 +1172,8 @@
       "lat": 24,
       "long": -14
     },
-    "colors": []
+    "colors": [],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Spain",
@@ -1125,7 +1190,8 @@
     "colors": [
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Estonia",
@@ -1143,7 +1209,8 @@
       "black",
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Ethiopia",
@@ -1162,7 +1229,8 @@
       "yellow",
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Finland",
@@ -1178,7 +1246,8 @@
     "flagCode": "FI",
     "colors": [
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Fiji",
@@ -1194,7 +1263,8 @@
     "flagCode": "FJ",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Malvinas",
@@ -1210,7 +1280,8 @@
     "flagCode": "FK",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Faroe Islands",
@@ -1225,7 +1296,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Micronesia",
@@ -1260,7 +1332,8 @@
       "green",
       "yellow",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "United Kingdom",
@@ -1278,7 +1351,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Georgia",
@@ -1295,7 +1369,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guernsey",
@@ -1311,7 +1386,8 @@
       "white",
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Ghana",
@@ -1329,7 +1405,8 @@
       "red",
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Gibraltar",
@@ -1344,7 +1421,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guinea",
@@ -1362,7 +1440,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "The Gambia",
@@ -1380,7 +1459,8 @@
       "red",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guinea-Bissau",
@@ -1398,7 +1478,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Equatorial Guinea",
@@ -1417,7 +1498,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Greece",
@@ -1434,7 +1516,8 @@
     "colors": [
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Grenada",
@@ -1450,7 +1533,8 @@
       "red",
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Greenland",
@@ -1465,7 +1549,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guatemala",
@@ -1482,7 +1567,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guam",
@@ -1496,7 +1582,8 @@
     "flagCode": "GU",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Guyana",
@@ -1514,7 +1601,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Hong Kong",
@@ -1529,7 +1617,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Heard Island and McDonald Islands",
@@ -1545,7 +1634,8 @@
     "flagCode": "HM",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Honduras",
@@ -1561,7 +1651,8 @@
     "flagCode": "HN",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Croatia",
@@ -1579,7 +1670,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Haiti",
@@ -1596,7 +1688,8 @@
     "colors": [
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Hungary",
@@ -1614,7 +1707,8 @@
       "red",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Indonesia",
@@ -1631,7 +1725,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Isle of Man",
@@ -1645,7 +1740,8 @@
     "flagCode": "IM",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "India",
@@ -1663,13 +1759,14 @@
       "orange",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "The British Indian Ocean Territory",
     "aliases": [],
     "code": "IOT",
-    "capital": "Administered from",
+    "capital": "",
     "location": {
       "lat": 7,
       "long": 72
@@ -1697,7 +1794,8 @@
       "white",
       "green",
       "orange"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Iran",
@@ -1715,7 +1813,8 @@
       "green",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Iraq",
@@ -1733,7 +1832,8 @@
       "red",
       "white",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Iceland",
@@ -1748,7 +1848,8 @@
     "colors": [
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Israel",
@@ -1765,7 +1866,8 @@
     "colors": [
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Italy",
@@ -1783,7 +1885,8 @@
       "red",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Jamaica",
@@ -1799,7 +1902,8 @@
       "green",
       "yellow",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Jersey",
@@ -1814,7 +1918,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Jordan",
@@ -1833,7 +1938,8 @@
       "white",
       "green",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Japan",
@@ -1848,7 +1954,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Kazakhstan",
@@ -1864,7 +1971,8 @@
     "flagCode": "KZ",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Kenya",
@@ -1882,7 +1990,8 @@
       "red",
       "black",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Kyrgyzstan",
@@ -1898,7 +2007,8 @@
     "flagCode": "KG",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Cambodia",
@@ -1915,7 +2025,8 @@
     "colors": [
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Kiribati",
@@ -1933,7 +2044,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Kitts and Nevis",
@@ -1951,7 +2063,8 @@
       "red",
       "black",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "South Korea",
@@ -1967,7 +2080,8 @@
     "flagCode": "KR",
     "colors": [
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Kuwait",
@@ -1986,7 +2100,8 @@
       "white",
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Laos",
@@ -2003,7 +2118,8 @@
     "colors": [
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Lebanon",
@@ -2020,7 +2136,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Liberia",
@@ -2038,7 +2155,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Libya",
@@ -2056,7 +2174,8 @@
       "black",
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Lucia",
@@ -2070,7 +2189,8 @@
     "flagCode": "LC",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Liechtenstein",
@@ -2087,7 +2207,8 @@
     "colors": [
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Sri Lanka",
@@ -2104,7 +2225,8 @@
     "colors": [
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Lesotho",
@@ -2122,7 +2244,8 @@
       "blue",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Lithuania",
@@ -2140,7 +2263,8 @@
       "red",
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Luxembourg",
@@ -2158,7 +2282,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Latvia",
@@ -2174,7 +2299,8 @@
     "flagCode": "LV",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Macao",
@@ -2190,7 +2316,8 @@
     "flagCode": "MO",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Martin",
@@ -2205,7 +2332,8 @@
     "colors": [
       "yellow",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Morocco",
@@ -2221,7 +2349,8 @@
     "flagCode": "MA",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Monaco",
@@ -2238,7 +2367,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Moldova",
@@ -2256,7 +2386,8 @@
       "red",
       "yellow",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Madagascar",
@@ -2274,7 +2405,8 @@
       "red",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Maldives",
@@ -2291,7 +2423,8 @@
     "colors": [
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mexico",
@@ -2309,7 +2442,8 @@
       "green",
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Marshall Islands",
@@ -2325,7 +2459,8 @@
     "flagCode": "MH",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Macedonia",
@@ -2342,7 +2477,8 @@
     "colors": [
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mali",
@@ -2360,7 +2496,8 @@
       "red",
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Malta",
@@ -2377,7 +2514,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Myanmar",
@@ -2395,7 +2533,8 @@
       "red",
       "yellow",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Montenegro",
@@ -2410,7 +2549,8 @@
     "colors": [
       "red",
       "orange"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mongolia",
@@ -2425,7 +2565,8 @@
     "colors": [
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Northern Mariana Islands",
@@ -2441,7 +2582,8 @@
     "flagCode": "MP",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mozambique",
@@ -2460,7 +2602,8 @@
       "yellow",
       "green",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mauritania",
@@ -2477,7 +2620,8 @@
     "colors": [
       "green",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Montserrat",
@@ -2491,7 +2635,8 @@
     "flagCode": "MS",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Martinique",
@@ -2507,7 +2652,8 @@
       "red",
       "green",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Mauritius",
@@ -2526,7 +2672,8 @@
       "green",
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Malawi",
@@ -2544,7 +2691,8 @@
       "red",
       "green",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Malaysia",
@@ -2560,7 +2708,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Namibia",
@@ -2578,7 +2727,8 @@
       "red",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "New Caledonia",
@@ -2594,7 +2744,8 @@
       "red",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Niger",
@@ -2612,7 +2763,8 @@
       "orange",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Norfolk Island",
@@ -2645,7 +2797,8 @@
     "colors": [
       "green",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Nicaragua",
@@ -2662,7 +2815,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Niue",
@@ -2678,7 +2832,8 @@
     "flagCode": "NU",
     "colors": [
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Netherlands",
@@ -2696,7 +2851,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Nepal",
@@ -2713,7 +2869,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Nauru",
@@ -2729,7 +2886,8 @@
     "flagCode": "NR",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "New Zealand",
@@ -2745,7 +2903,8 @@
     "flagCode": "NZ",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Norway",
@@ -2761,7 +2920,8 @@
     "flagCode": "NO",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Oman",
@@ -2779,7 +2939,8 @@
       "red",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Pakistan",
@@ -2796,7 +2957,8 @@
     "colors": [
       "green",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Panama",
@@ -2814,7 +2976,8 @@
       "white",
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Pitcairn",
@@ -2828,7 +2991,8 @@
     "flagCode": "PN",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Peru",
@@ -2845,7 +3009,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Philippines",
@@ -2863,7 +3028,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Palau",
@@ -2880,7 +3046,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Papua New Guinea",
@@ -2897,7 +3064,8 @@
     "colors": [
       "black",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Poland",
@@ -2914,7 +3082,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Puerto Rico",
@@ -2930,7 +3099,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "North Korea",
@@ -2947,7 +3117,8 @@
     "colors": [
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Portugal",
@@ -2964,7 +3135,8 @@
     "colors": [
       "red",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Paraguay",
@@ -2982,7 +3154,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Palestine",
@@ -3001,7 +3174,8 @@
       "white",
       "black",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "French Polynesia",
@@ -3016,7 +3190,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Qatar",
@@ -3033,7 +3208,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Romania",
@@ -3049,7 +3225,8 @@
       "blue",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Russia",
@@ -3067,7 +3244,8 @@
       "white",
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Rwanda",
@@ -3085,7 +3263,8 @@
       "blue",
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saudi Arabia",
@@ -3101,7 +3280,8 @@
     "flagCode": "SA",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Sudan",
@@ -3120,7 +3300,8 @@
       "white",
       "black",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Senegal",
@@ -3138,7 +3319,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Singapore",
@@ -3155,7 +3337,8 @@
     "colors": [
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "South Georgia and the South Sandwich Islands",
@@ -3169,7 +3352,8 @@
     "flagCode": "GS",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Helena, Ascension and Tristan da Cunha",
@@ -3183,7 +3367,8 @@
     "flagCode": "SH",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Solomon Islands",
@@ -3198,7 +3383,8 @@
     "colors": [
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Sierra Leone",
@@ -3216,7 +3402,8 @@
       "blue",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "El Salvador",
@@ -3233,7 +3420,8 @@
     "colors": [
       "blue",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "San Marino",
@@ -3250,7 +3438,8 @@
     "colors": [
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Somalia",
@@ -3266,7 +3455,8 @@
     "flagCode": "SO",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Pierre and Miquelon",
@@ -3282,7 +3472,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Serbia",
@@ -3300,7 +3491,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "South Sudan",
@@ -3320,7 +3512,8 @@
       "black",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Sao Tome and Principe",
@@ -3339,7 +3532,8 @@
       "green",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Republic of Suriname",
@@ -3356,7 +3550,8 @@
     "colors": [
       "green",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Slovakia",
@@ -3374,7 +3569,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Slovenia",
@@ -3392,7 +3588,8 @@
       "white",
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Sweden",
@@ -3409,7 +3606,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Eswatini",
@@ -3427,7 +3625,8 @@
       "blue",
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Martin",
@@ -3442,7 +3641,8 @@
     "colors": [
       "yellow",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Seychelles",
@@ -3462,7 +3662,8 @@
       "blue",
       "yellow",
       "greem"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Syria",
@@ -3480,7 +3681,8 @@
       "green",
       "white",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Turks and Caicos Islands",
@@ -3494,7 +3696,8 @@
     "flagCode": "TC",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Chad",
@@ -3512,7 +3715,8 @@
       "blue",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Togo",
@@ -3529,7 +3733,8 @@
     "colors": [
       "green",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Thailand",
@@ -3547,7 +3752,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tajikistan",
@@ -3565,7 +3771,8 @@
       "red",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tokelau",
@@ -3580,7 +3787,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Turkmenistan",
@@ -3594,7 +3802,8 @@
     "flagCode": "TM",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Timor-Leste",
@@ -3610,7 +3819,8 @@
     "flagCode": "TL",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tonga",
@@ -3626,7 +3836,8 @@
     "flagCode": "TO",
     "colors": [
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Trinidad and Tobago",
@@ -3643,7 +3854,8 @@
     "colors": [
       "red",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tunisia",
@@ -3660,7 +3872,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Turkiye",
@@ -3679,7 +3892,8 @@
     "colors": [
       "red",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tuvalu",
@@ -3693,7 +3907,8 @@
     "flagCode": "TV",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Taiwan",
@@ -3711,7 +3926,8 @@
     "colors": [
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Tanzania",
@@ -3729,7 +3945,8 @@
       "green",
       "black",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Uganda",
@@ -3747,7 +3964,8 @@
       "black",
       "yellow",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Ukraine",
@@ -3764,7 +3982,8 @@
     "colors": [
       "blue",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Uruguay",
@@ -3781,7 +4000,8 @@
     "colors": [
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "United States of America",
@@ -3799,7 +4019,8 @@
       "red",
       "white",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Uzbekistan",
@@ -3817,7 +4038,8 @@
       "blue",
       "white",
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Vatican City",
@@ -3834,7 +4056,8 @@
     "colors": [
       "white",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Saint Vincent",
@@ -3852,7 +4075,8 @@
       "yellow",
       "green",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Venezuela",
@@ -3870,7 +4094,8 @@
       "yellow",
       "blue",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Virgin Islands (British)",
@@ -3884,7 +4109,8 @@
     "flagCode": "VG",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Virgin Islands (U.S.)",
@@ -3898,7 +4124,8 @@
     "flagCode": "VI",
     "colors": [
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Vietnam",
@@ -3915,7 +4142,8 @@
     "colors": [
       "red",
       "yellow"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Vanuatu",
@@ -3933,7 +4161,8 @@
       "red",
       "green",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Wallis and Futuna",
@@ -3949,7 +4178,8 @@
       "blue",
       "white",
       "red"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Samoa",
@@ -3966,7 +4196,8 @@
     "colors": [
       "red",
       "blue"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Yemen",
@@ -3984,7 +4215,8 @@
       "red",
       "white",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "South Africa",
@@ -4003,7 +4235,8 @@
       "red",
       "blue",
       "black"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Zambia",
@@ -4019,7 +4252,8 @@
     "flagCode": "ZM",
     "colors": [
       "green"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Zimbabwe",
@@ -4039,6 +4273,7 @@
       "black",
       "yellow",
       "white"
-    ]
+    ],
+    "availablePrompts": ["name", "flag", "location"]
   }
 ]

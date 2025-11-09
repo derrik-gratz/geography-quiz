@@ -1,7 +1,7 @@
 [
     {
         "name": "Test",
-        "country_codes": [
+        "countryCodes": [
             "USA",
             "CAN",
             "MEX"
@@ -9,7 +9,7 @@
     },
     {
         "name": "Test 2",
-        "country_codes": [
+        "countryCodes": [
             "RUS",
             "CHN",
             "IND"
@@ -17,7 +17,7 @@
     },
     {
         "name": "Europe",
-        "country_codes": [
+        "countryCodes": [
             "FRA",
             "DEU",
             "GBR",
@@ -42,7 +42,7 @@
     },
     {
         "name": "Asia",
-        "country_codes": [
+        "countryCodes": [
             "CHN",
             "IND",
             "JPN",
@@ -67,7 +67,7 @@
     },
     {
         "name": "Africa",
-        "country_codes": [
+        "countryCodes": [
             "NGA",
             "ETH",
             "EGY",
@@ -92,7 +92,7 @@
     },
     {
         "name": "South America",
-        "country_codes": [
+        "countryCodes": [
             "BRA",
             "ARG",
             "CHL",
@@ -109,7 +109,7 @@
     },
     {
         "name": "North America",
-        "country_codes": [
+        "countryCodes": [
             "USA",
             "CAN",
             "MEX",
@@ -128,7 +128,7 @@
     },
     {
         "name": "Caribbean",
-        "country_codes": [
+        "countryCodes": [
             "CUB",
             "JAM",
             "HTI",
@@ -151,7 +151,7 @@
     },
     {
         "name": "Oceania",
-        "country_codes": [
+        "countryCodes": [
             "AUS",
             "NZL",
             "FJI",
