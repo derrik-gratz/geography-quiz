@@ -145,7 +145,7 @@ function App() {
                         isComplete={isComplete()}
                         totalCountries={totalCountries}
                         isQuizFinished={isQuizFinished}
-                        quizSetName={quizSet?.name || 'Geography Quiz'}
+                        quizSetName={quizSet || 'Geography Quiz'}
                     />
                 </div>
 
