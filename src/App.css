@@ -112,7 +112,7 @@
 .input-row {
   display: flex;
   gap: 15px;
-  height: 200px; /* Fixed height for input controls */
+  height: 200px; /* Increased height to match flag container */
   max-height: 500px;
 }
 
@@ -137,7 +137,7 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  height: 200px; /* Match input-row height */
+  height: 200px; /* Increased height to show more flags */
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -243,10 +243,9 @@ p {
   width: 100%;
   margin: 0 auto;
   overflow-y: auto;
-  flex: 0 0 auto; /* Don't grow or shrink, just take needed space */
+  flex: 1; /* Take remaining space to allow scrolling */
   min-height: 0; /* Allow flex item to shrink */
   padding: 0 10px; /* Reduced horizontal padding */
-  max-height: 100%; /* Allow scrolling if needed */
 }
 
 .flag-icon {
