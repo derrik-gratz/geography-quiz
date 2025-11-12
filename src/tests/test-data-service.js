@@ -1,4 +1,4 @@
-import { filterAvailableData } from '../services/countryDataService.js';
+import { filterCountryData } from '../services/filterCountryData.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -34,7 +34,7 @@ const testConfigs = [
 testConfigs.forEach(test => {
     console.log(`\n=== Testing: ${test.name} ===`);
     try {
-        const result = filterAvailableData(test.userConfig, countryData);
+        const result = filterCountryData(test.userConfig, countryData);
         console.log(`Result count: ${result.length}`);
         console.log(`First 3 countries:`, result.slice(0, 3).map(c => ({
             code: c.code,

@@ -1,5 +1,6 @@
 import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '../data/quiz_sets.json' with { type: 'json' };
+import { seededRNG, getDailySeed } from './dailyRNG.js'
 
 const dailyChallengeLength = 5; 
 
@@ -27,38 +28,17 @@ function shuffleArray(data, seed) {
         return [];
     }
     
-    // Create a seeded RNG function from the seed number
-    let rngState = typeof seed === 'number' ? seed : Date.now();
-    const rng = () => {
-        let t = rngState += 0x6D2B79F5;
-        t = Math.imul(t ^ (t >>> 15), t | 1);
-        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-        rngState = t;
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-    
     // Create a copy to avoid mutating the original array
     const shuffledData = [...data];
     for (let i = shuffledData.length - 1; i > 0; i--) {
-        const j = Math.floor(rng() * (i + 1));
+        const j = Math.floor(seededRNG(seed) * (i + 1));
         [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
     }
     return shuffledData;
 }
 
-function getDailySeed() {
-    const today = new Date();
-    return today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
-}
-
-export function generatePrompt(availableCountryData, userConfig) {
-
-}
-
-export function validateAnswer() {}
-
 // Handle user configs to filter data for prompts
-export function filterAvailableData(userConfig, countryData) {
+export function filterCountryData(userConfig, countryData) {
     const selectedSet = userConfig.quizSet;
     let filteredCountryData = countryData;
     // Quiz set filtering
@@ -71,13 +51,13 @@ export function filterAvailableData(userConfig, countryData) {
         filteredCountryData = shuffleArray(countryData, dailySeed).slice(0, dailyChallengeLength);
 
         // 1 prompt type, randomly selected
-        filteredCountryData = filteredCountryData.map(country => {
-            const selectedPromptType = shuffleArray(country.availablePrompts, dailySeed)[0];
-            return {
-                ...country,
-                availablePrompts: [selectedPromptType]
-            };
-        })
+        // filteredCountryData = filteredCountryData.map(country => {
+        //     const selectedPromptType = shuffleArray(country.availablePrompts, dailySeed)[0];
+        //     return {
+        //         ...country,
+        //         availablePrompts: [selectedPromptType]
+        //     };
+        // })
         return filteredCountryData;
     } else if (selectedSet.name !== 'all') {
         const quizSetData = quizSets.find(q => q.name === selectedSet.name);
@@ -88,6 +68,8 @@ export function filterAvailableData(userConfig, countryData) {
             // filteredCountryData = countryData;
         }
     }
+
+    filteredCountryData = shuffleArray(filteredCountryData, Date.now());
     
     
 
@@ -104,7 +86,6 @@ export function filterAvailableData(userConfig, countryData) {
         })
     }
     
-    filteredCountryData = shuffleArray(filteredCountryData, Math.random() * 1000000);
     return filteredCountryData;
 }
 
