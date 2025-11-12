@@ -1,4 +1,4 @@
-import countryData from '../data/country_data.json' with { type: 'json' };
+// import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '../data/quiz_sets.json' with { type: 'json' };
 import { seededRNG, getDailySeed } from './dailyRNG.js'
 

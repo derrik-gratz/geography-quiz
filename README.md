@@ -1,11 +1,14 @@
 # Roadmap
 
+implement quiz looping hook. needs to call filtered data based on user config, then iterate through available countries and use generatePrompt in quizEngine.js. Also needs to have some record of userSubmissions, which will be validated with checkSubmission.
+
 Continue building data filtering service
 
 Does filtering from ui component/user input need to be a hook, not a service? consider this, or can I just trigger it on config change. Start here next time.
 
 Build quiz engine
   - possibly a as a hook not service. Services are pure logic functions with no react dependencies (no state). Hooks use state
+
 
 # Housekeeping
 
