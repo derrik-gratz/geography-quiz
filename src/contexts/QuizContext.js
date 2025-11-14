@@ -2,6 +2,8 @@ export function createInitialQuizState() {
     return {
       quizSet: null,
       selectedPromptTypes: ['location', 'name', 'flag'],
+      quizCountryData: [],
+      quizCountryDataIndex: 0,
       totalCountries: 0,
       currentPrompt: null,
       currentPromptStatus: {
@@ -20,8 +22,12 @@ export function quizReducer(state, action){
             return { ...state, quizSet: action.payload };
         case 'SET_SELECTED_PROMPT_TYPES':
             return { ...state, selectedPromptTypes: action.payload };
-        case 'BEGIN_QUIZ':
-            return { ...state, totalCountries: action.payload };
+        case 'SET_QUIZ_DATA':
+            return { ...state,
+                quizCountryData: action.payload,
+                totalCountries: action.payload.length,
+                quizCountryDataIndex: 0 
+            };
         case 'PROMPT_GENERATED':
             // type and country
             const { prompt } = action.payload;
@@ -49,12 +55,13 @@ export function quizReducer(state, action){
             };
         case 'PROMPT_FINISHED':
             return { ...state,
+                quizCountryDataIndex: state.quizCountryDataIndex + 1,
                 promptHistory: [
-                    ...state.currentPrompt.country,    
-                    ...Object.values(state.currentPromptAttempts).map(status => ({
+                    ...state.quizCountryData[state.quizCountryDataIndex].country,    
+                    ...Object.values(state.currentPromptStatus).map(status => ({
                         ...status,
                         // If they didn't make an attempt the status was null
-                        status: status.status === 'correct' ? 'completed' : 'incorrect',
+                        status: status.status? status.status : 'incorrect',
                         n_attempts: status.n_attempts,
                         attempts: status.attempts
                     }))
@@ -65,7 +72,7 @@ export function quizReducer(state, action){
                 isQuizFinished: true
             };
         case 'RESET_QUIZ':
-            return structuredClone(initialQuizState);
+            return structuredClone(createInitialQuizState());
         default:
             return state;
     }

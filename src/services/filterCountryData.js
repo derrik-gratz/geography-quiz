@@ -21,7 +21,7 @@ function hasPromptType(country, promptType) {
 
 
 // Shuffle array using Fisher-Yates algorithm
-function shuffleArray(data, seed) {
+export function shuffleArray(data, seed) {
     // Ensure data is an array
     if (!Array.isArray(data)) {
         console.error('shuffleArray: data must be an array', data);
@@ -38,13 +38,13 @@ function shuffleArray(data, seed) {
 }
 
 // Handle user configs to filter data for prompts
-export function filterCountryData(userConfig, countryData) {
-    const selectedSet = userConfig.quizSet;
+export function filterCountryData(state, countryData) {
     let filteredCountryData = countryData;
     // Quiz set filtering
-    if (!selectedSet) {
+    if (!state.quizSet) {
         console.error(`No quiz set selected for filtering`);
-    } else if (selectedSet.name === 'Daily challenge') {
+        return [];
+    } else if (state.quizSet === 'Daily challenge') {
         // Maybe a little unelegant in here with the early return, but doesn't have a prompt type config
         const dailySeed = getDailySeed();
 
@@ -57,15 +57,16 @@ export function filterCountryData(userConfig, countryData) {
         //         ...country,
         //         availablePrompts: [selectedPromptType]
         //     };
-        // })
+        // })...
         return filteredCountryData;
-    } else if (selectedSet.name !== 'all') {
-        const quizSetData = quizSets.find(q => q.name === selectedSet.name);
+    } else if (state.quizSet !== 'all') {
+        const quizSetData = quizSets.find(q => q.name === state.quizSet);
         if (quizSetData) {
             filteredCountryData = countryData.filter(country => quizSetData.countryCodes.includes(country.code));
         } else {
-            console.error(`Invalid quiz set: ${selectedSet}`);
+            console.error(`Invalid quiz set: ${state.quizSet}`);
             // filteredCountryData = countryData;
+            return [];
         }
     }
 
@@ -74,14 +75,13 @@ export function filterCountryData(userConfig, countryData) {
     
 
     // Filter by prompt types
-    const selectedPromptTypes = userConfig.promptTypes;
-    if (selectedPromptTypes && selectedPromptTypes.length > 0) {
+    if (state.selectedPromptTypes && state.selectedPromptTypes.length > 0) {
         filteredCountryData = filteredCountryData.filter(country => {
             if (country.availablePrompts) {
-                return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
+                return country.availablePrompts.some(type => state.selectedPromptTypes.includes(type));
             } else {
                 // redundant, should be specified in country data, but safety
-                return selectedPromptTypes.some(type => hasPromptType(country, type));
+                return state.selectedPromptTypes.some(type => hasPromptType(country, type));
             }
         })
     }
