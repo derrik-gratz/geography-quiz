@@ -54,17 +54,25 @@ export function quizReducer(state, action){
                 },
             };
         case 'PROMPT_FINISHED':
+            const status = state.currentPromptStatus;
+            const promptTypes = ['location', 'name', 'flag'];
+            const statusEntries = {};
+            promptTypes.forEach(type => {
+                statusEntries[type] = {
+                    status: status[type].status ?? 'incorrect',
+                    n_attempts: status[type].n_attempts,
+                    attempts: status[type].attempts
+                };
+            });
+            
             return { ...state,
                 quizCountryDataIndex: state.quizCountryDataIndex + 1,
                 promptHistory: [
-                    ...state.quizCountryData[state.quizCountryDataIndex].country,    
-                    ...Object.values(state.currentPromptStatus).map(status => ({
-                        ...status,
-                        // If they didn't make an attempt the status was null
-                        status: status.status? status.status : 'incorrect',
-                        n_attempts: status.n_attempts,
-                        attempts: status.attempts
-                    }))
+                    ...state.promptHistory,
+                    {
+                        country: state.quizCountryData[state.quizCountryDataIndex].country,
+                        ...statusEntries
+                    }
                 ]
             };
         case 'QUIZ_COMPLETED':
