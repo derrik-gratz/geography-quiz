@@ -29,7 +29,7 @@ export function QuizProvider({ children }) {
 
     const submitAnswer = (submissionType, submissionValue) => {
         const evaluation = checkSubmission(state.quizCountryData[state.quizCountryDataIndex], submissionType, submissionValue);
-        dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation.isCorrect } });
+        dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation } });
         const promptCompleted = checkPromptCompletion(state);
         if (promptCompleted) {
             dispatch({ type: 'PROMPT_FINISHED' });
