@@ -14,6 +14,8 @@ export function checkSubmission(promptCountryData, submissionType, submissionVal
 }
 
 export function checkPromptCompletion(quizContext){
+    // haven't figured out how give ups will be handled. 
+    // So far, possible state is null from default, prompted, incorrect, or correct.
     return Object.values(quizContext.currentPromptStatus).every(status => 
         status.status !== null && status.status !== 'incorrect'
     );

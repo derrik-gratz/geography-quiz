@@ -80,7 +80,7 @@ export function quizReducer(state, action){
                 isQuizFinished: true
             };
         case 'RESET_QUIZ':
-            return structuredClone(createInitialQuizState());
+            return createInitialQuizState();
         default:
             return state;
     }
