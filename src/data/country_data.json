@@ -1356,9 +1356,7 @@
   },
   {
     "country": "Georgia",
-    "aliases": [
-      "Georgia"
-    ],
+    "aliases": [],
     "code": "GEO",
     "capital": "Tbilisi",
     "location": {
