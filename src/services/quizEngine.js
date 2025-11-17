@@ -10,7 +10,7 @@ export function checkSubmission(promptCountryData, submissionType, submissionVal
     } else if (submissionType === 'location'){
         isCorrect = promptCountryData?.code === submissionValue;
     }
-    return { type: submissionType, value: submissionValue, isCorrect: isCorrect };
+    return isCorrect;
 }
 
 export function checkPromptCompletion(quizContext){
@@ -39,7 +39,7 @@ export function generatePrompt(quizContext){
 
     switch (selectedPromptType) {
         case 'location':
-            return { type: 'location', value: countryData.location };
+            return { type: 'location', value: { code: countryData.code,lat: countryData.location.lat, long: countryData.location.long } };
         case 'name':
             return { type: 'name', value: countryData.country };
         case 'flag':
