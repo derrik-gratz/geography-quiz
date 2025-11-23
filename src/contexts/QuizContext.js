@@ -65,15 +65,31 @@ export function quizReducer(state, action){
                 };
             });
             
-            return { ...state,
-                quizCountryDataIndex: state.quizCountryDataIndex + 1,
-                promptHistory: [
-                    ...state.promptHistory,
-                    {
-                        country: state.quizCountryData[state.quizCountryDataIndex].country,
-                        ...statusEntries
-                    }
-                ]
+            const newIndex = state.quizCountryDataIndex + 1;
+            const currentCountry = state.quizCountryData[state.quizCountryDataIndex];
+            if (!currentCountry) {
+                console.error('Cannot finish prompt: invalid country index');
+                return state; // Return unchanged state
+            }
+            const newPromptHistory = [
+                ...state.promptHistory,
+                {
+                    country: currentCountry.country,
+                    ...statusEntries
+                }
+            ];
+            
+            
+            return {
+                ...state,
+                quizCountryDataIndex: newIndex,
+                promptHistory: newPromptHistory,
+                currentPrompt: null,
+                currentPromptStatus: {
+                    location: { status: null, n_attempts: 0, attempts: [] },
+                    name: { status: null, n_attempts: 0, attempts: [] },
+                    flag: { status: null, n_attempts: 0, attempts: [] }
+                },
             };
         case 'QUIZ_COMPLETED':
             return { ...state,
