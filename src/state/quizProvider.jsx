@@ -1,70 +1,14 @@
-import React, { createContext, useReducer, useContext, useCallback, useEffect } from 'react';
-import { createInitialQuizState, quizReducer } from './QuizContext.js';
-import { filterCountryData } from '../services/FilterCountryData.js';
-import countryData from '../data/country_data.json';
-import { checkSubmission, checkPromptCompletion, checkQuizCompletion, generatePrompt } from '../services/QuizEngine.js';
+import React, { createContext, useReducer, useEffect } from 'react';
+import { createInitialQuizState, quizReducer } from './quizContext.js'; 
+import { checkPromptCompletion, checkQuizCompletion, generatePrompt } from '../services/quizEngine.js';
 
-const QuizContext = createContext();
+export const QuizContext = createContext();
 
 export function QuizProvider({ children }) {
     const [state, dispatch] = useReducer(quizReducer, createInitialQuizState());
-
-    const startQuiz = useCallback(() => {
-        // dispatch({ type: 'RESET_QUIZ' });
-        if (!state.quizSet) {
-            console.error('Cannot start quiz: quizSet is not selected');
-            return;
-        }
-        
-        if (!state.selectedPromptTypes || state.selectedPromptTypes.length === 0) {
-            console.error('Cannot start quiz: no prompt types selected');
-            return;
-        }
-
-        const quizData = filterCountryData(state.quizSet, state.selectedPromptTypes, countryData);
-        dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-
-        // // State isn't updated yet, have to pass manually
-        // const promptContext = {
-        //     quizSet: state.quizSet,
-        //     selectedPromptTypes: state.selectedPromptTypes,
-        //     quizCountryData: quizData,
-        //     quizCountryDataIndex: 0
-        // };
-        
-        // const prompt = generatePrompt(promptContext);
-        // if (prompt) {
-        //     dispatch({ type: 'PROMPT_GENERATED', payload: { prompt } });
-        // }
-    }, [state.quizSet, state.selectedPromptTypes, dispatch]);
-
-
-    // Only at end of quiz, reverts to initial state
-    const resetQuiz = useCallback(() => {
-        dispatch({ type: 'RESET_QUIZ' });
-    }, [dispatch]);
-
     // todo: pass reset inputs to children?
     // const resetInputs = () => {
     // }
-
-    const setQuizSet = useCallback((quizSet) => {
-        dispatch({ type: 'SET_QUIZ_SET', payload: quizSet });
-    }, [dispatch]);
-
-    const setSelectedPromptTypes = useCallback((selectedPromptTypes) => {
-        dispatch({ type: 'SET_SELECTED_PROMPT_TYPES', payload: selectedPromptTypes });
-    }, [dispatch]);
-
-    const submitAnswer = useCallback((submissionType, submissionValue) => {
-        if (!state.quizCountryData || state.quizCountryData.length === 0 || state.quizCountryDataIndex >= state.quizCountryData.length) {
-            console.error('Cannot submit answer: invalid quiz state');
-            return;
-        }
-
-        const evaluation = checkSubmission(state.quizCountryData[state.quizCountryDataIndex], submissionType, submissionValue);
-        dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation } });
-    }, [state.quizCountryData, state.quizCountryDataIndex, dispatch]);
 
     // Monitor for prompt completion
     useEffect(() => {
@@ -95,7 +39,7 @@ export function QuizProvider({ children }) {
             return;
         }
 
-        // If quiz not complete and no current prompt, generate one
+        // If quiz not complete and no current prompt and countryData exists (meaning quiz has started)
         if (!state.currentPrompt && !state.isQuizFinished && state.quizCountryDataIndex < state.quizCountryData.length) {
             const prompt = generatePrompt(state);
             if (prompt) {
@@ -113,20 +57,12 @@ export function QuizProvider({ children }) {
         state.selectedPromptTypes,        // ✅ For generatePrompt
         dispatch  
     ]);
-    
-    const giveUpPrompt = useCallback(() => {
-        dispatch({ type: 'PROMPT_FINISHED'})
-    }, [dispatch]);
         
 
     return (
-        <QuizContext.Provider value={{ state, dispatch, submitAnswer, giveUpPrompt, startQuiz, resetQuiz, setQuizSet, setSelectedPromptTypes }}>
+        <QuizContext.Provider value={{ state, dispatch }}>
             {children}
         </QuizContext.Provider>
     );
 };
-
-export function useQuiz() {
-    return useContext(QuizContext);
-}
 

@@ -1,6 +1,6 @@
 // import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '../data/quiz_sets.json' with { type: 'json' };
-import { seededRNG, getDailySeed } from './DailyRNG.js'
+import { seededRNG, getDailySeed } from './dailyRNG.js'
 
 const dailyChallengeLength = 5; 
 
