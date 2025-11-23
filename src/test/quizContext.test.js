@@ -1,6 +1,6 @@
 // quizContext.test.js - Pure reducer tests
 import { describe, it, expect } from 'vitest';
-import { createInitialQuizState, quizReducer } from '../contexts/QuizContext.js';
+import { createInitialQuizState, quizReducer } from '../state/quizContext.js';
 
 describe('quizReducer', () => {
     it('should initialize with correct default state', () => {

@@ -1,5 +1,5 @@
 import { filterCountryData, shuffleArray } from './filterCountryData.js';
-import { getDailySeed } from './DailyRNG.js';
+import { getDailySeed } from './dailyRNG.js';
 
 export function checkSubmission(promptCountryData, submissionType, submissionValue){
     let isCorrect = false;

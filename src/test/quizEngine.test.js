@@ -1,6 +1,6 @@
 // src/tests/quizEngine.test.js
 import { describe, it, expect } from 'vitest';
-import { checkSubmission, checkPromptCompletion, generatePrompt, checkQuizCompletion } from '../services/QuizEngine.js';
+import { checkSubmission, checkPromptCompletion, generatePrompt, checkQuizCompletion } from '../services/quizEngine.js';
 
 const mockCountryData = [{
     "country": "United States of America",
