@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext, useCallback, useEffect } from 'react';
-import { createInitialQuizState, quizReducer } from '../contexts/QuizContext.js';
+import { createInitialQuizState, quizReducer } from './QuizContext.js';
 import { filterCountryData } from '../services/FilterCountryData.js';
 import countryData from '../data/country_data.json';
 import { checkSubmission, checkPromptCompletion, checkQuizCompletion, generatePrompt } from '../services/QuizEngine.js';
