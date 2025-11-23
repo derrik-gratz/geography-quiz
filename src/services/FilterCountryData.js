@@ -4,21 +4,6 @@ import { seededRNG, getDailySeed } from './DailyRNG.js'
 
 const dailyChallengeLength = 5; 
 
-// redundant check to see if country can fulfill prompt type, which should be specified in the country data
-function hasPromptType(country, promptType) {
-    switch (promptType) {
-        case 'name':
-            return country.country && country.country.trim() !== '';
-        case 'location':
-            return country.location?.lat != null && country.location?.long != null;
-        case 'flag':
-            return country.flagCode && country.flagCode !== null;
-        default:
-            return false;
-    }
-}
-
-
 
 // Shuffle array using Fisher-Yates algorithm
 export function shuffleArray(data, seed) {
@@ -77,16 +62,9 @@ export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
     // Filter by prompt types
     if (selectedPromptTypes && selectedPromptTypes.length > 0) {
         filteredCountryData = filteredCountryData.filter(country => {
-            if (country.availablePrompts) {
-                return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
-            } else {
-                // redundant, should be specified in country data, but safety
-                console.log('Country missing availablePrompts:', country);
-                return selectedPromptTypes.some(type => hasPromptType(country, type));
-            }
+            return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
         })
     }
-    
     return filteredCountryData;
 }
 
