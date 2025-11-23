@@ -81,6 +81,7 @@ export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
                 return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
             } else {
                 // redundant, should be specified in country data, but safety
+                console.log('Country missing availablePrompts:', country);
                 return selectedPromptTypes.some(type => hasPromptType(country, type));
             }
         })

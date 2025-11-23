@@ -41,15 +41,15 @@ export function quizReducer(state, action){
             };
         case 'ANSWER_SUBMITTED':
             // type, value, and isCorrect
-            const { answer } = action.payload;
+            const { type, value, isCorrect } = action.payload;
             return { ...state,
                 currentPromptStatus: {
                     ...state.currentPromptStatus,
-                    [answer.type]: { 
-                        ...state.currentPromptStatus[answer.type],
-                        status: answer.isCorrect ? 'correct' : 'incorrect',
-                        n_attempts: state.currentPromptStatus[answer.type].n_attempts + 1,
-                        attempts: [...state.currentPromptStatus[answer.type].attempts, { value: answer.value, isCorrect: answer.isCorrect }] 
+                    [type]: { 
+                        ...state.currentPromptStatus[type],
+                        status: isCorrect ? 'correct' : 'incorrect',
+                        n_attempts: state.currentPromptStatus[type].n_attempts + 1,
+                        attempts: [...state.currentPromptStatus[type].attempts, { value, isCorrect }] 
                     }
                 },
             };

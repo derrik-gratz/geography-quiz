@@ -47,6 +47,7 @@ describe('quizReducer', () => {
     it('should handle ANSWER_SUBMITTED and update status', () => {
         const state = {
             ...createInitialQuizState(),
+            currentPrompt: { type: 'name', value: 'USA' },
             currentPromptStatus: {
                 location: { status: null, n_attempts: 0, attempts: [] },
                 name: { status: 'prompted', n_attempts: 0, attempts: [] },

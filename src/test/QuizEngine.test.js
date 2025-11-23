@@ -57,7 +57,6 @@ const mockQuizContext = {
 }
 
 const currentPromptData = mockQuizContext.quizCountryData[mockQuizContext.quizCountryDataIndex];
-console.log(currentPromptData);
 
 describe('checkSubmission', () => {
 

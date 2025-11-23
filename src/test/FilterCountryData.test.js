@@ -1,47 +1,38 @@
+import { describe, it, expect } from 'vitest';
 import { filterCountryData } from '../services/FilterCountryData.js';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import countryData from '../data/country_data.json' with { type: 'json' };
+import quizSets from '../data/quiz_sets.json' with { type: 'json' };
 
-// Get current directory for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Read JSON files
-const countryData = JSON.parse(
-    fs.readFileSync(join(__dirname, '../data/country_data.json'), 'utf-8')
-);
+const europeQuizSet = quizSets.find(q => q.name === 'Europe');
 
 // Test configurations
-const testConfigs = [
-    {
-        name: 'Daily challenge',
-        userConfig: {
-            quizSet: { name: 'Daily challenge' },
-            promptTypes: []
-        }
-    },
-    {
-        name: 'All countries',
-        userConfig: {
-            quizSet: { name: 'all' },
-            promptTypes: ['name', 'flag']
-        }
-    }
-];
+const mockState = {
+    quizSet: 'Europe',
+      selectedPromptTypes: ['location', 'name', 'flag'],
+      quizCountryData: [],
+      quizCountryDataIndex: 0,
+      totalCountries: 0,
+      currentPrompt: null,
+      currentPromptStatus: {
+        location: { status: null, n_attempts: 0, attempts: [] },
+        name: { status: null, n_attempts: 0, attempts: [] },
+        flag: { status: null, n_attempts: 0, attempts: [] }
+      },
+      promptHistory: [],
+      isQuizFinished: false
+};
 
-// Run tests
-testConfigs.forEach(test => {
-    console.log(`\n=== Testing: ${test.name} ===`);
-    try {
-        const result = filterCountryData(test.userConfig, countryData);
-        console.log(`Result count: ${result.length}`);
-        console.log(`First 3 countries:`, result.slice(0, 3).map(c => ({
-            code: c.code,
-            country: c.country,
-            availablePrompts: c.availablePrompts
-        })));
-    } catch (error) {
-        console.error('Error:', error.message);
-    }
+describe('filterCountryData', () => {
+    it('should filter country data correctly', () => {
+        const result = filterCountryData("Europe", ['location', 'name', 'flag'], countryData);
+        expect(result.length).toBeGreaterThan(0);
+        expect(result.length).toBeLessThanOrEqual(europeQuizSet.countryCodes.length);
+    });
+    it('if the selected prompt types are not available, a country should not be included', () => {
+        const result = filterCountryData('all', ['flag'], countryData);
+        expect(result.length).toBeGreaterThan(0);
+        // console.log(result);
+        expect(result.every(country => country.availablePrompts.includes('flag'))).toBe(true);
+        // expect(result.length).toBeLessThanOrEqual(countryData.length);
+    });
 });

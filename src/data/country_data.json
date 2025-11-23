@@ -420,7 +420,8 @@
       "long": 25
     },
     "flagCode": "BG",
-    "colors": []
+    "colors": [],
+    "availablePrompts": ["name", "flag", "location"]
   },
   {
     "country": "Bahrain",
