@@ -1,4 +1,4 @@
-import { filterCountryData } from '../services/filterCountryData.js';
+import { filterCountryData } from '../services/FilterCountryData.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
