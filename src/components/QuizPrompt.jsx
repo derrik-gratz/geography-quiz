@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useQuiz } from '../hooks/useQuiz';
+import { useQuizActions } from '../hooks/useQuizActions';
 
-/**
- * QuizPrompt Component
- * 
- * Renders the current quiz prompt (display only, no user input)
- * 
- * @param {Object|null} props.currentPrompt - Current prompt object from quiz engine
- * @param {Function} props.generatePrompt - Function to generate new prompt
- * @param {Function} props.resetQuiz - Function to reset quiz
- * @param {boolean} props.isQuizFinished - Whether quiz is complete
- * @param {number} props.totalCountries - Total countries in current quiz set
- * @param {number} props.currentProgress - Current progress count
- * @returns {JSX.Element} Quiz prompt display interface
- */
-export function QuizPrompt({ 
-    currentPrompt, 
-    generatePrompt, 
-    resetQuiz, 
-    isQuizFinished, 
-    totalCountries, 
-    currentProgress,
-    showNiceMessage = false,
-    onGiveUp
-}) {
-    const [hasGivenUp, setHasGivenUp] = useState(false);
+// {state.quizStatus === 'not_started' && (
+//     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
+// )}
+// {state.quizStatus === 'in_progress' && (
+//     <button className="quiz-config__give-up-button" onClick={handleGiveUp}>Give up</button>
+// )}
+// {state.quizStatus === 'completed' && (
+//     <button className="quiz-config__start-button" onClick={resetQuiz}>New quiz</button>
+// )}
+
+export function QuizPrompt({}) {
+    const { state } = useQuiz();
+    const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
 
     // Reset give up state when prompt changes
     useEffect(() => {
@@ -55,7 +46,9 @@ export function QuizPrompt({
         return `${absLon.toFixed(1)}°${direction}`;
       };
 
-
+    const isStartDisabled = state.quizStatus === 'not_started' && (!state.quizSet || !state.selectedPromptTypes || state.selectedPromptTypes.length === 0);
+    const promptCompleted = state.currentPromptStatus.map(input_type => input_type.status === 'prompted' || input_type.status === 'correct').every(status => status);
+    
     const renderPromptContent = () => {
         if (showNiceMessage) {
             return (
@@ -66,14 +59,41 @@ export function QuizPrompt({
                 </div>
             );
         }
-
-        if (!currentPrompt) {
-            return (
-                <div className="prompt-placeholder">
-                    <p>Click "Generate Prompt" to start the quiz!</p>
-                </div>
-            );
-        }
+        if (!state.currentPrompt) {
+            if (state.quizStatus === 'not_started') {
+                    // return (
+                    //     <div className="prompt-content__no-config">
+                    //         <p>Select a quiz set and prompt types.</p>
+                    //     </div>
+                    // );
+                return (
+                    <button 
+                        className="quiz-prompt__start-quiz-button" 
+                        onClick={startQuiz}
+                        disabled={isStartDisabled}
+                    >
+                        Start quiz
+                    </button>
+                );
+            } else if (state.quizStatus === 'in_progress') {
+                
+                return (
+                    <button 
+                        className="quiz-prompt__give-up-button" 
+                        onClick={giveUpPrompt}
+                        disabled={promptCompleted}
+                    >
+                        {promptCompleted ? 'Complete!' : 'Give up'}
+                    </button>
+                );
+            } else if (state.quizStatus === 'completed') {
+                return (
+                    <button className="quiz-config__start-button" onClick={resetQuiz}>New quiz</button>
+                );
+            }
+            
+                
+        } 
 
         const { promptType, countryCode, countryData } = currentPrompt;
 

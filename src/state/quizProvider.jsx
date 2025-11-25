@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js'; 
 import { checkPromptCompletion, checkQuizCompletion, generatePrompt } from '../services/quizEngine.js';
 
@@ -11,31 +11,37 @@ export function QuizProvider({ children }) {
     // }
 
     // Monitor for prompt completion
-    useEffect(() => {
-        if (!state.currentPrompt) {
-            return;
-        }
-        const promptCompleted = checkPromptCompletion(state);
-        if (promptCompleted) {
-            dispatch({ type: 'PROMPT_FINISHED' });
-        }
-    }, [
-        state.currentPromptStatus.location.status, 
-        state.currentPromptStatus.name.status, 
-        state.currentPromptStatus.flag.status, 
-        state.currentPrompt,
-        dispatch
-    ]);
+    // const quizCountryData = useMemo(() => {
+    //     return getQuizCountryData(state.quizSet);
+    // }, [state.quizSet, state.selectedPromptTypes]);
+
+    const currentPromptData = useMemo(() => {
+        return state.quizCountryData[state.quizCountryDataIndex];
+    }, [state.quizCountryData, state.quizCountryDataIndex]);
+
+    const totalCountries = useMemo(() => {
+        return state.quizCountryData.length;
+    }, [state.quizCountryData]);
+
+    const promptCompleted = useMemo(() => {
+        if (!state.currentPrompt) return false;
+        return checkPromptCompletion(state);
+    }, [state.currentPrompt, state.currentPromptStatus]);
+    useEffect(() => promptCompleted && dispatch({ type: 'PROMPT_FINISHED' }), [promptCompleted]);
+
+    const isQuizFinished = useMemo(() => {
+        return checkQuizCompletion(state);
+    }, [state.quizCountryDataIndex, state.quizCountryData]);
+    useEffect(() => isQuizFinished && dispatch({ type: 'QUIZ_COMPLETED' }), [isQuizFinished]);
 
     // monitor for prompt generation if there is no current prompt
     useEffect(() => {
-        if (!state.quizCountryData || state.quizCountryData.length === 0) {
+        if (isQuizFinished) {
             return;
         }
-
-        const quizCompleted = checkQuizCompletion(state);
-        if (quizCompleted) {
-            dispatch({ type: 'QUIZ_COMPLETED' });
+    
+        // Also check bounds to prevent invalid index access
+        if (state.quizCountryDataIndex >= state.quizCountryData.length) {
             return;
         }
 
@@ -47,15 +53,13 @@ export function QuizProvider({ children }) {
             }
         }
     }, [
-        state.quizCountryData.length,     // ✅ Checks if quiz data exists
-        state.promptHistory.length,       // ✅ For checkQuizCompletion
-        state.totalCountries,             // ✅ For checkQuizCompletion
-        state.currentPrompt,              // ✅ Checks if prompt is null
-        state.isQuizFinished,             // ✅ Prevents generation if finished
-        state.quizCountryDataIndex,       // ✅ Checks if more prompts available
-        state.quizSet,                    // ✅ For generatePrompt
-        state.selectedPromptTypes,        // ✅ For generatePrompt
-        dispatch  
+        isQuizFinished,  // Derived completion status
+        state.currentPrompt,
+        state.quizCountryDataIndex,
+        state.quizCountryData.length,  // Include length to catch bounds issues
+        state.quizSet,
+        state.selectedPromptTypes,
+        dispatch
     ]);
         
 

@@ -4,7 +4,7 @@ export function createInitialQuizState() {
       selectedPromptTypes: ['location', 'name', 'flag'],
       quizCountryData: [],
       quizCountryDataIndex: 0,
-      totalCountries: 0,
+    //   totalCountries: 0,
       currentPrompt: null,
       currentPromptStatus: {
         location: { status: null, n_attempts: 0, attempts: [] },
@@ -12,7 +12,7 @@ export function createInitialQuizState() {
         flag: { status: null, n_attempts: 0, attempts: [] }
       },
       promptHistory: [],
-      isQuizFinished: false
+      quizStatus: 'not_started'
     };
   }
 
@@ -25,11 +25,10 @@ export function quizReducer(state, action){
         case 'SET_QUIZ_DATA':
             return { ...state,
                 quizCountryData: action.payload,
-                totalCountries: action.payload.length,
+                // totalCountries: action.payload.length,
                 quizCountryDataIndex: 0 
             };
         case 'PROMPT_GENERATED':
-            // type and country
             const { prompt } = action.payload;
             return { ...state,
                 currentPrompt: prompt,
@@ -38,6 +37,10 @@ export function quizReducer(state, action){
                     name: { status: prompt.type === 'name' ? 'prompted' : null, n_attempts: 0, attempts: [] }, 
                     flag: { status: prompt.type === 'flag' ? 'prompted' : null, n_attempts: 0, attempts: [] } 
                 },
+            };
+        case 'START_QUIZ':
+            return { ...state,
+                quizStatus: 'in_progress'
             };
         case 'ANSWER_SUBMITTED':
             // type, value, and isCorrect
@@ -93,7 +96,7 @@ export function quizReducer(state, action){
             };
         case 'QUIZ_COMPLETED':
             return { ...state,
-                isQuizFinished: true
+                quizStatus: 'completed'
             };
         case 'RESET_QUIZ':
             return createInitialQuizState();

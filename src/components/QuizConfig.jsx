@@ -29,10 +29,10 @@ export function QuizConfig() {
     return (
         <div className="quiz-config">
             <div className="quiz-config__quiz-set">              
-                <label className="quiz-config__label">Quiz Set:</label>
+                <label htmlFor="quiz-set-select">Quiz Set:</label>
                 <select 
                     id="quiz-set-select"
-                    className="quiz-config__select"
+                    className="quiz-config__quiz-set-dropdown"
                     value={quizSet || ''} 
                     onChange={(e) => setQuizSet(e.target.value || null)}
                 >
@@ -48,7 +48,7 @@ export function QuizConfig() {
             <div className="quiz-config__prompt-types">
                 {quizSet && quizSet !== 'Daily challenge' && (
                     <>
-                        <label className="quiz-config__label">Prompt types:</label>
+                        <label htmlFor="prompt-types-select">Prompt types:</label>
                         {selectedPromptTypes.length === 0 && (
                             <div className="quiz-config__warning">
                                 <p className="quiz-config__warning-text">Select at least one prompt type.</p>

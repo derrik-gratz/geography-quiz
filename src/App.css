@@ -33,20 +33,21 @@
   gap: 1rem;
 }
 
+.quiz-config label {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 600;
+}
+
 .quiz-config__quiz-set {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
 }
 
-.quiz-config__label {
-  color: var(--text-primary);
-  font-weight: 600;
-  margin: 0;
-  font-size: 0.9rem;
-}
 
-.quiz-config__select {
+.quiz-config__quiz-set-dropdown {
   background-color: var(--background-primary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
