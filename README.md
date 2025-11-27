@@ -1,5 +1,13 @@
 # Roadmap
 
+major states:
+  inactive, receiving user config
+  active, receiving user input
+  reviewing, showing user history but not accepting input
+    could tie this to learning mode where you can still click other countries, but doesn't log the inputs
+    so review mode CAN have history shown (and a correct answer shown), but has no submit functionality
+      yellow for selected in review, still standard correct/incorrect color scheme
+
 how to handle give ups? 
   with prompt, there is a brief window where the generic prompt content triggers, but that is quickly overwriten by the event watcher which generates the next prompt. Need to add a sleep condition
   Prompt entry components need to be aware that the prompt is given up, so they can show the correct answer
