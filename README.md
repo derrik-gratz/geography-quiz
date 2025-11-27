@@ -1,6 +1,9 @@
 # Roadmap
 
-TODO: think about how prompt state should be managed. Part of quizContext? computed? What else should be moved out of quizContext? Do all
+how to handle give ups? 
+  with prompt, there is a brief window where the generic prompt content triggers, but that is quickly overwriten by the event watcher which generates the next prompt. Need to add a sleep condition
+  Prompt entry components need to be aware that the prompt is given up, so they can show the correct answer
+  Where to manage this state? Should it be a 'quizStatus?'
 
 # Housekeeping
 

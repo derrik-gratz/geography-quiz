@@ -51,8 +51,8 @@ export function generatePrompt(quizContext){
 
 export function checkQuizCompletion(quizContext){
     // If no country data, quiz can't be finished
-    if (!quizContext.countryData?.length) {
+    if (!quizContext.quizCountryData?.length) {
         return false;
     }
-    return quizContext.countryDataIndex >= quizContext.countryData.length;
+    return quizContext.quizCountryDataIndex >= quizContext.quizCountryData.length;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
 import { QuizConfig } from './components/QuizConfig.jsx';
+import { QuizPrompt } from './components/QuizPrompt.jsx';
 
 /**
  * Main App component for the Geography Quiz application
@@ -12,8 +13,11 @@ function App() {
             <div className="app">
                 <main className="app-main">
                     <div className="left-column">
-                        <div className="quiz-control-panel">
+                        <div className="quiz-config-panel">
                             <QuizConfig />
+                        </div>
+                        <div className="quiz-prompt-panel">
+                            <QuizPrompt />
                         </div>
                     </div>
                 </main>

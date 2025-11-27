@@ -29,7 +29,7 @@ export function useQuizActions() {
 
         const quizData = filterCountryData(state.quizSet, state.selectedPromptTypes, countryData);
         dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-
+        dispatch({ type: 'START_QUIZ' });
         // // State isn't updated yet, have to pass manually
         // const promptContext = {
         //     quizSet: state.quizSet,
