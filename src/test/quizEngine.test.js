@@ -1,6 +1,6 @@
 // src/tests/quizEngine.test.js
 import { describe, it, expect } from 'vitest';
-import { checkSubmission, checkPromptCompletion, generatePrompt, checkQuizCompletion } from '../services/quizEngine.js';
+import { checkSubmission, checkPromptCompletion, generatePromptType, derivePromptValue, checkQuizCompletion } from '../services/quizEngine.js';
 
 const mockCountryData = [{
     "country": "United States of America",
@@ -175,34 +175,45 @@ describe('checkPromptCompletion', () => {
     });
 });
 
-describe('generatePrompt', () => {
-    it('generate a random prompt when selected', () => {
+describe('generatePromptType', () => {
+    it('generate a random prompt type when selected', () => {
         for (let i = 0; i < 10; i++) {
-            const result = generatePrompt(mockQuizContext);
-            expect(result).toBeDefined();
-            expect(['location', 'name', 'flag']).toContain(result.type);
-            if (result.type === 'name') {
-                expect(result.value).toBe('United States of America');
-            } else if (result.type === 'location') {
-                expect(result.value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
-            } else if (result.type === 'flag') {
-                expect(result.value).toBe('US');
+            const promptType = generatePromptType(mockQuizContext);
+            expect(promptType).toBeDefined();
+            expect(['location', 'name', 'flag']).toContain(promptType);
+            
+            // Derive the value to verify it works
+            const countryData = mockQuizContext.quizData[mockQuizContext.quiz.prompt.quizDataIndex];
+            const value = derivePromptValue(countryData, promptType);
+            expect(value).toBeDefined();
+            
+            if (promptType === 'name') {
+                expect(value).toBe('United States of America');
+            } else if (promptType === 'location') {
+                expect(value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
+            } else if (promptType === 'flag') {
+                expect(value).toBe('US');
             }
         }
     });
-    it('generate a location prompt for regular quiz set', () => {
+    
+    it('generate a location prompt type for regular quiz set', () => {
         mockQuizContext.config.selectedPromptTypes = ['location'];
-        const result = generatePrompt(mockQuizContext);
+        const promptType = generatePromptType(mockQuizContext);
         
-        expect(result).toBeDefined();
-        expect(result.type).toBe('location');
-        expect(result.value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
+        expect(promptType).toBeDefined();
+        expect(promptType).toBe('location');
+        
+        // Verify value derivation
+        const countryData = mockQuizContext.quizData[mockQuizContext.quiz.prompt.quizDataIndex];
+        const value = derivePromptValue(countryData, promptType);
+        expect(value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
     });
 
     it('Daily challenge repeats should be identical', async () => {       
-        const result1 = generatePrompt(mockQuizContext);
+        const result1 = generatePromptType(mockQuizContext);
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const result2 = generatePrompt(mockQuizContext);
+        const result2 = generatePromptType(mockQuizContext);
         
         expect(result1).toEqual(result2);
     });
@@ -211,11 +222,11 @@ describe('generatePrompt', () => {
         mockQuizContext.config.selectedPromptTypes = ['name', 'flag'];
         
         for (let i = 0; i < 10; i++) {
-            const result = generatePrompt(mockQuizContext);
+            const promptType = generatePromptType(mockQuizContext);
             
-            expect(result).toBeDefined();
-            expect(['name', 'flag']).toContain(result.type);
-            expect(result.type).not.toBe('location');
+            expect(promptType).toBeDefined();
+            expect(['name', 'flag']).toContain(promptType);
+            expect(promptType).not.toBe('location');
         }
     });
 
@@ -239,10 +250,48 @@ describe('generatePrompt', () => {
         
           mockQuizContext.quizData = limitedCountryData;
         
-        const result = generatePrompt(mockQuizContext);
-        expect(result).toBeDefined();
-        expect(result.type).toBe('name');
-        expect(result.value).toBe('Georgia');
+        const promptType = generatePromptType(mockQuizContext);
+        expect(promptType).toBeDefined();
+        expect(promptType).toBe('name');
+        
+        // Verify value derivation
+        const countryData = limitedCountryData[0];
+        const value = derivePromptValue(countryData, promptType);
+        expect(value).toBe('Georgia');
+    });
+});
+
+describe('derivePromptValue', () => {
+    const testCountryData = {
+        country: 'United States of America',
+        code: 'USA',
+        location: { lat: 40, long: -100 },
+        flagCode: 'US'
+    };
+    
+    it('should derive location value correctly', () => {
+        const value = derivePromptValue(testCountryData, 'location');
+        expect(value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
+    });
+    
+    it('should derive name value correctly', () => {
+        const value = derivePromptValue(testCountryData, 'name');
+        expect(value).toBe('United States of America');
+    });
+    
+    it('should derive flag value correctly', () => {
+        const value = derivePromptValue(testCountryData, 'flag');
+        expect(value).toBe('US');
+    });
+    
+    it('should return null for invalid prompt type', () => {
+        const value = derivePromptValue(testCountryData, 'invalid');
+        expect(value).toBeNull();
+    });
+    
+    it('should return null for null country data', () => {
+        const value = derivePromptValue(null, 'name');
+        expect(value).toBeNull();
     });
 });
 

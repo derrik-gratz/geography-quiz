@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js'; 
-import { checkPromptCompletion, checkQuizCompletion, generatePrompt } from '../services/quizEngine.js';
+import { checkPromptCompletion, checkQuizCompletion, generatePromptType, derivePromptValue } from '../services/quizEngine.js';
 
 export const QuizContext = createContext();
 
@@ -16,30 +16,36 @@ export function QuizProvider({ children }) {
     // }, [state.quizSet, state.selectedPromptTypes]);
 
     const currentPromptData = useMemo(() => {
-        return state.quizCountryData[state.quizCountryDataIndex];
-    }, [state.quizCountryData, state.quizCountryDataIndex]);
+        if (!state.quizData || state.quiz.prompt.quizDataIndex >= state.quizData.length) {
+            return null;
+        }
+        return state.quizData[state.quiz.prompt.quizDataIndex];
+    }, [state.quizData, state.quiz.prompt.quizDataIndex]);
 
     const totalCountries = useMemo(() => {
-        return state.quizCountryData.length;
-    }, [state.quizCountryData]);
+        return state.quizData.length;
+    }, [state.quizData]);
 
     const promptCompleted = useMemo(() => {
-        if (!state.currentPrompt) return false;
+        if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
+            return false;
+        }
         return checkPromptCompletion(state);
-    }, [state.currentPrompt, state.currentPromptStatus]);
+    }, [state.quiz.prompt.type, state.quiz.prompt.status, state.quiz.prompt.guesses]);
+    
     useEffect(() => {
-        if (promptCompleted) {
+        if (promptCompleted && state.quiz.status === 'active') {
             dispatch({ type: 'PROMPT_FINISHED' });
         }
-    }, [promptCompleted]);
+    }, [promptCompleted, state.quiz.status]);
 
     const isQuizFinished = useMemo(() => {
-        // console.log('isQuizFinished check triggered', state);
-        // console.log(checkQuizCompletion(state));
-        // console.log(state.quizCountryDataIndex);
-        // console.log(state.quizCountryData.length);
-        return checkQuizCompletion(state);
-    }, [state.quizCountryDataIndex, state.quizCountryData]);
+        if (state.quiz.status === 'active') {
+            return checkQuizCompletion(state);
+        }
+        return false;
+    }, [state.quiz.status, state.quiz.prompt.quizDataIndex, state.quizData]);
+    
     useEffect(() => {
         if (isQuizFinished) {
             dispatch({ type: 'QUIZ_COMPLETED' });
@@ -51,23 +57,26 @@ export function QuizProvider({ children }) {
         if (isQuizFinished) {
             return;
         }
-    
-        // Also check bounds to prevent invalid index access
-        if (state.quizCountryDataIndex >= state.quizCountryData.length) {
+        if (state.quiz.prompt.quizDataIndex >= state.quizData.length) {
             return;
         }
-        // If quiz not complete and no current prompt and countryData exists (meaning quiz has started)
-        if (!state.currentPrompt && state.quizStatus==='in_progress' && state.quizCountryDataIndex < state.quizCountryData.length) {
-            const prompt = generatePrompt(state);
-            if (prompt) {
-                dispatch({ type: 'PROMPT_GENERATED', payload: { prompt } });
+        
+        // Only generate if in active mode, no current prompt, and quiz is in progress
+        if (!state.quiz.prompt.type && 
+            state.quiz.status === 'active' && 
+            state.quiz.prompt.quizDataIndex < state.quizData.length) {
+            const promptType = generatePromptType(state);
+            if (promptType && currentPromptData) {
+                dispatch({ type: 'PROMPT_GENERATED', payload: { promptType } });
             }
         }
     }, [
-        state.quizStatus,
-        state.currentPrompt,
-        state.quizCountryDataIndex,
-        state.quizCountryData, 
+        isQuizFinished,
+        state.quiz.status,
+        state.quiz.prompt.type,
+        state.quiz.prompt.quizDataIndex,
+        state.quizData,
+        currentPromptData,
         dispatch
     ]);
         

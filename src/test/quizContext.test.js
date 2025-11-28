@@ -54,10 +54,10 @@ describe('quizReducer', () => {
 
     it('should handle PROMPT_GENERATED and set appropriate status', () => {
         const state = createInitialQuizState();
-        const prompt = { type: 'name', value: 'USA' };
+        const promptType = 'name';
         const newState = quizReducer(state, { 
             type: 'PROMPT_GENERATED', 
-            payload: { prompt } 
+            payload: { promptType } 
         });
         expect(newState.quiz.prompt.type).toBe('name');
         expect(newState.quiz.prompt.status).toBe('in_progress');

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'; // useState, useEffect,
 import { useQuiz } from '../hooks/useQuiz';
 import { useQuizActions } from '../hooks/useQuizActions';
+import { derivePromptValue } from '../services/quizEngine.js';
 
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -13,7 +14,7 @@ import { useQuizActions } from '../hooks/useQuizActions';
 // )}
 
 export function QuizPrompt({}) {
-    const { state, promptCompleted, isQuizFinished } = useQuiz();
+    const { state, promptCompleted, isQuizFinished, currentPromptData } = useQuiz();
     const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
 
     // Reset give up state when prompt changes
@@ -47,16 +48,31 @@ export function QuizPrompt({}) {
       };
 
     const isStartDisabled = useMemo(() => {
-        return state.quizStatus === 'not_started' && 
-               (!state.quizSet || !state.selectedPromptTypes || state.selectedPromptTypes.length === 0);
-    }, [state.quizStatus, state.quizSet, state.selectedPromptTypes]);   
+        return state.quiz.status === 'not_started' && 
+               (!state.config.quizSet || !state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0);
+    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes]);   
 
     const successfulCompletion = useMemo(() => 
-        Object.values(state.currentPromptStatus).every(
-            input_type => input_type.status === 'prompted' || input_type.status === 'correct'
+        Object.values(state.quiz.prompt.guesses).every(
+            guess => guess.status === 'prompted' || guess.status === 'complete'
         ),
-        [state.currentPromptStatus]
+        [state.quiz.prompt.guesses]
     );
+    
+    // Reconstruct prompt object from state for display
+    const currentPrompt = useMemo(() => {
+        if (!state.quiz.prompt.type || !currentPromptData) {
+            return null;
+        }
+        const promptValue = derivePromptValue(currentPromptData, state.quiz.prompt.type);
+        if (!promptValue) {
+            return null;
+        }
+        return {
+            type: state.quiz.prompt.type,
+            value: promptValue
+        };
+    }, [state.quiz.prompt.type, currentPromptData]);
 
 
     const displayPrompt = (prompt) => {
@@ -72,33 +88,47 @@ export function QuizPrompt({}) {
 
     const promptContent = useMemo(() => {
         let promptText = '';
-        if (state.quizStatus === 'not_started' && isStartDisabled) {
+        if (state.quiz.status === 'not_started' && isStartDisabled) {
             promptText = 'Configure quiz settings';
-        } else if (state.quizStatus === 'not_started' && !isStartDisabled) {
+        } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
             promptText = 'Start quiz';
-        } else if (state.quizStatus === 'in_progress' && promptCompleted) {
+        } else if (state.quiz.status === 'active' && promptCompleted) {
             if (successfulCompletion) {
                 promptText = 'Prompt complete';
             } else {
                 promptText = 'Prompt incorrect';
             }
-        } else if (state.quizStatus === 'in_progress' && !promptCompleted) {
-            if (state.currentPrompt) {
-                promptText = displayPrompt(state.currentPrompt);
-                return promptText;
+        } else if (state.quiz.status === 'active' && !promptCompleted) {
+            if (currentPrompt) {
+                return displayPrompt(currentPrompt);
             } else {
                 promptText = 'Unknown prompt state';
             }
-        } else if (state.quizStatus === 'completed') {
+        } else if (state.quiz.status === 'reviewing') {
+            // Review mode - show appropriate content based on reviewType
+            if (state.quiz.reviewType === 'auto' && currentPrompt) {
+                return displayPrompt(currentPrompt);
+            } else if (state.quiz.reviewType === 'history' && state.quiz.reviewIndex !== null) {
+                const historyEntry = state.quiz.history[state.quiz.reviewIndex];
+                if (historyEntry && currentPromptData) {
+                    return <span className="prompt-name">{currentPromptData.country}</span>;
+                }
+                promptText = 'Reviewing past prompt';
+            } else if (state.quiz.reviewType === 'learning' && currentPromptData) {
+                return <span className="prompt-name">{currentPromptData.country}</span>;
+            } else {
+                promptText = 'Review mode';
+            }
+        } else if (state.quiz.status === 'completed') {
             promptText = 'Quiz Finished!';
         } else {
             promptText = 'Unknown prompt state';
         }
         return <span className="prompt-content__generic-text">{promptText}</span>;
-    }, [state.quizStatus, state.currentPrompt, isStartDisabled, promptCompleted, successfulCompletion]);
+    }, [state.quiz.status, state.quiz.reviewType, state.quiz.reviewIndex, state.quiz.history, currentPrompt, currentPromptData, isStartDisabled, promptCompleted, successfulCompletion]);
 
     const promptButton = useMemo(() => {
-        if (state.quizStatus === 'not_started') {
+        if (state.quiz.status === 'not_started') {
             return (
                 <button 
                     className="quiz-prompt__start-quiz-button" 
@@ -108,7 +138,7 @@ export function QuizPrompt({}) {
                     Start quiz
                 </button>
             );
-        } else if (state.quizStatus === 'in_progress') {
+        } else if (state.quiz.status === 'active') {
             return (
                 <button 
                     className="quiz-prompt__give-up-button" 
@@ -118,7 +148,7 @@ export function QuizPrompt({}) {
                     Give up
                 </button>
             );
-        } else if (state.quizStatus === 'completed') {
+        } else if (state.quiz.status === 'completed') {
             return (
                 <button 
                     className="quiz-config__reset-quiz-button" 
@@ -128,8 +158,9 @@ export function QuizPrompt({}) {
                 </button>
             );
         }
+        // Review mode - no button shown
         return null;
-    }, [state.quizStatus, promptCompleted, isStartDisabled, startQuiz, giveUpPrompt, resetQuiz]);
+    }, [state.quiz.status, promptCompleted, isStartDisabled, startQuiz, giveUpPrompt, resetQuiz]);
 
 
     return (

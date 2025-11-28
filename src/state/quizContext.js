@@ -107,7 +107,7 @@ export function quizReducer(state, action){
             };
             
         case 'PROMPT_GENERATED':
-            const { prompt } = action.payload;
+            const { promptType } = action.payload;
             return { 
                 ...state,
                 quiz: {
@@ -117,21 +117,21 @@ export function quizReducer(state, action){
                     reviewIndex: null,
                     prompt: {
                         status: 'in_progress',
-                        type: prompt.type,
+                        type: promptType,
                         quizDataIndex: state.quiz.prompt.quizDataIndex,
                         guesses: {
                             location: { 
-                                status: prompt.type === 'location' ? 'prompted' : 'incomplete', 
+                                status: promptType === 'location' ? 'prompted' : 'incomplete', 
                                 n_attempts: 0, 
                                 attempts: [] 
                             },
                             name: { 
-                                status: prompt.type === 'name' ? 'prompted' : 'incomplete', 
+                                status: promptType === 'name' ? 'prompted' : 'incomplete', 
                                 n_attempts: 0, 
                                 attempts: [] 
                             }, 
                             flag: { 
-                                status: prompt.type === 'flag' ? 'prompted' : 'incomplete', 
+                                status: promptType === 'flag' ? 'prompted' : 'incomplete', 
                                 n_attempts: 0, 
                                 attempts: [] 
                             } 

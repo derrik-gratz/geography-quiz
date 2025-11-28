@@ -17,42 +17,38 @@ export function useQuizActions() {
     }, [dispatch]);
 
     const startQuiz = useCallback(() => {
-        if (!state.quizSet) {
+        if (!state.config.quizSet) {
             console.error('Cannot start quiz: quizSet is not selected');
             return;
         }
         
-        if (!state.selectedPromptTypes || state.selectedPromptTypes.length === 0) {
+        if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
             console.error('Cannot start quiz: no prompt types selected');
             return;
         }
 
-        const quizData = filterCountryData(state.quizSet, state.selectedPromptTypes, countryData);
+        const quizData = filterCountryData(state.config.quizSet, state.config.selectedPromptTypes, countryData);
         dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
         dispatch({ type: 'START_QUIZ' });
-        // // State isn't updated yet, have to pass manually
-        // const promptContext = {
-        //     quizSet: state.quizSet,
-        //     selectedPromptTypes: state.selectedPromptTypes,
-        //     quizCountryData: quizData,
-        //     quizCountryDataIndex: 0
-        // };
-        
-        // const prompt = generatePrompt(promptContext);
-        // if (prompt) {
-        //     dispatch({ type: 'PROMPT_GENERATED', payload: { prompt } });
-        // }
-    }, [state.quizSet, state.selectedPromptTypes, dispatch]);
+    }, [state.config.quizSet, state.config.selectedPromptTypes, dispatch]);
 
     const submitAnswer = useCallback((submissionType, submissionValue) => {
-        if (!state.quizCountryData || state.quizCountryData.length === 0 || state.quizCountryDataIndex >= state.quizCountryData.length) {
+        // Only allow submission in active mode
+        if (state.quiz.status !== 'active') {
+            console.warn('Cannot submit answer: not in active mode');
+            return;
+        }
+        
+        if (!state.quizData || state.quizData.length === 0 || 
+            state.quiz.prompt.quizDataIndex >= state.quizData.length) {
             console.error('Cannot submit answer: invalid quiz state');
             return;
         }
 
-        const evaluation = checkSubmission(state.quizCountryData[state.quizCountryDataIndex], submissionType, submissionValue);
+        const currentCountryData = state.quizData[state.quiz.prompt.quizDataIndex];
+        const evaluation = checkSubmission(currentCountryData, submissionType, submissionValue);
         dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation } });
-    }, [state.quizCountryData, state.quizCountryDataIndex, dispatch]);
+    }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, dispatch]);
 
     const giveUpPrompt = useCallback(() => {
         dispatch({ type: 'PROMPT_FINISHED'})

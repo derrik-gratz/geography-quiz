@@ -21,7 +21,7 @@ export function checkPromptCompletion(quizContext){
     );
 }
 
-export function generatePrompt(quizContext){
+export function generatePromptType(quizContext){
     // Use new nested state structure
     if (!quizContext.quizData || quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length) {
         return null;
@@ -40,15 +40,35 @@ export function generatePrompt(quizContext){
         seed = Date.now();
     }
 
-    const selectedPromptType = shuffleArray(promptOptions, seed)[0];
+    if (promptOptions.length === 0) {
+        return null;
+    }
 
-    switch (selectedPromptType) {
+    const selectedPromptType = shuffleArray(promptOptions, seed)[0];
+    return selectedPromptType;
+}
+
+/**
+ * Derives the prompt value from country data and prompt type.
+ * 
+ * @param {Object} countryData - Country data object
+ * @param {string} promptType - Prompt type: 'location' | 'name' | 'flag'
+ * @returns {Object|null} Prompt value object or null if invalid
+ */
+export function derivePromptValue(countryData, promptType){
+    if (!countryData || !promptType) {
+        return null;
+    }
+    
+    switch (promptType) {
         case 'location':
-            return { type: 'location', value: { code: countryData.code, lat: countryData.location.lat, long: countryData.location.long } };
+            return { code: countryData.code, lat: countryData.location.lat, long: countryData.location.long };
         case 'name':
-            return { type: 'name', value: countryData.country };
+            return countryData.country;
         case 'flag':
-            return { type: 'flag', value: countryData.flagCode };
+            return countryData.flagCode;
+        default:
+            return null;
     }
 }
 
