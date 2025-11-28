@@ -2,22 +2,43 @@
 import { describe, it, expect } from 'vitest';
 import { createInitialQuizState, quizReducer } from '../state/quizContext.js';
 
+
+const exampleQuizData = [{
+    "country": "Mexico",
+    "aliases": [
+      "United Mexican States"
+    ],
+    "code": "MEX",
+    "capital": "Mexico City",
+    "location": {
+      "lat": 23,
+      "long": -102
+    },
+    "flagCode": "MX",
+    "colors": [
+      "green",
+      "red",
+      "white"
+    ],
+    "availablePrompts": ["name", "flag", "location"]
+  }]
+
 describe('quizReducer', () => {
     it('should initialize with correct default state', () => {
         const state = createInitialQuizState();
-        expect(state.quizSet).toBeNull();
-        expect(state.quizCountryData).toEqual([]);
-        expect(state.promptHistory).toEqual([]);
-        expect(state.selectedPromptTypes).toEqual(['location', 'name', 'flag']);
+        expect(state.config.quizSet).toBeNull();
+        expect(state.quizData).toEqual([]);
+        expect(state.quiz.history).toEqual([]);
+        expect(state.config.selectedPromptTypes).toEqual(['location', 'name', 'flag']);
+        expect(state.quiz.status).toBe('not_started');
     });
 
     it('should handle SET_QUIZ_SET action', () => {
         const state = createInitialQuizState();
         const newState = quizReducer(state, { type: 'SET_QUIZ_SET', payload: 'Europe' });
-        expect(newState.quizSet).toBe('Europe');
-        expect(newState.quizCountryData).toEqual([]);
-        expect(newState.totalCountries).toBe(0);
-        expect(newState.quizCountryDataIndex).toBe(0);
+        expect(newState.config.quizSet).toBe('Europe');
+        expect(newState.quizData).toEqual([]);
+        expect(newState.quiz.prompt.quizDataIndex).toBe(0);
     });
 
     it('should handle SET_QUIZ_DATA and reset index to 0', () => {
@@ -27,9 +48,8 @@ describe('quizReducer', () => {
             type: 'SET_QUIZ_DATA', 
             payload: quizData 
         });
-        expect(newState.quizCountryData).toEqual(quizData);
-        expect(newState.totalCountries).toBe(2);
-        expect(newState.quizCountryDataIndex).toBe(0);
+        expect(newState.quizData).toEqual(quizData);
+        expect(newState.quiz.prompt.quizDataIndex).toBe(0);
     });
 
     it('should handle PROMPT_GENERATED and set appropriate status', () => {
@@ -39,73 +59,108 @@ describe('quizReducer', () => {
             type: 'PROMPT_GENERATED', 
             payload: { prompt } 
         });
-        expect(newState.currentPrompt).toEqual(prompt);
-        expect(newState.currentPromptStatus.name.status).toBe('prompted');
-        expect(newState.currentPromptStatus.location.status).toBeNull();
+        expect(newState.quiz.prompt.type).toBe('name');
+        expect(newState.quiz.prompt.status).toBe('in_progress');
+        expect(newState.quiz.status).toBe('active');
+        expect(newState.quiz.prompt.guesses.name.status).toBe('prompted');
+        expect(newState.quiz.prompt.guesses.location.status).toBe('incomplete');
     });
 
     it('should handle ANSWER_SUBMITTED and update status', () => {
         const state = {
             ...createInitialQuizState(),
-            currentPrompt: { type: 'name', value: 'USA' },
-            currentPromptStatus: {
-                location: { status: null, n_attempts: 0, attempts: [] },
-                name: { status: 'prompted', n_attempts: 0, attempts: [] },
-                flag: { status: null, n_attempts: 0, attempts: [] }
+            quizData: exampleQuizData,
+            quiz: {
+                ...createInitialQuizState().quiz,
+                prompt: {
+                    status: 'in_progress',
+                    type: 'name',
+                    quizDataIndex: 0,
+                    guesses: {
+                        location: { status: null, n_attempts: 0, attempts: [] },
+                        name: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        flag: { status: null, n_attempts: 0, attempts: [] }
+                    }
+                }
             }
         };
         
         const newState = quizReducer(state, {
             type: 'ANSWER_SUBMITTED',
-            payload: { type: 'flag', value: 'US', isCorrect: true }
+            payload: { type: 'flag', value: 'MX', isCorrect: true }
         });
         
-        expect(newState.currentPromptStatus.flag.status).toBe('correct');
-        expect(newState.currentPromptStatus.flag.n_attempts).toBe(1);
-        expect(newState.currentPromptStatus.flag.attempts).toHaveLength(1);
+        expect(newState.quiz.prompt.guesses.flag.status).toBe('complete');
+        expect(newState.quiz.prompt.guesses.flag.n_attempts).toBe(1);
+        expect(newState.quiz.prompt.guesses.flag.attempts).toHaveLength(1);
+        expect(newState.quiz.prompt.guesses.flag.attempts[0]).toBe('MX');
     });
 
     it('should handle PROMPT_FINISHED and add to history', () => {
         const state = {
             ...createInitialQuizState(),
-            quizCountryData: [{ country: 'USA', code: 'USA' }],
-            quizCountryDataIndex: 0,
-            currentPromptStatus: {
-                location: { status: 'prompted', n_attempts: 0, attempts: ['USA'] },
-                name: { status: 'correct', n_attempts: 1, attempts: ['United States'] },
-                flag: { status: 'correct', n_attempts: 1, attempts: ['US'] }
+            quizData: exampleQuizData,
+            quiz: {
+                ...createInitialQuizState().quiz,
+                prompt: {
+                    status: 'in_progress',
+                    type: 'name',
+                    quizDataIndex: 0,
+                    guesses: {
+                        location: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        name: { status: 'complete', n_attempts: 1, attempts: ['Mexico'] },
+                        flag: { status: 'complete', n_attempts: 1, attempts: ['MX'] }
+                    }
+                }
             }
         };
         
         const newState = quizReducer(state, { type: 'PROMPT_FINISHED' });
         
-        expect(newState.quizCountryDataIndex).toBe(1);
-        expect(newState.promptHistory).toHaveLength(1);
-        expect(newState.promptHistory[0].country).toBe('USA');
-        expect(newState.currentPrompt).toBeNull();
+        expect(newState.quiz.prompt.quizDataIndex).toBe(1);
+        expect(newState.quiz.history).toHaveLength(1);
+        expect(newState.quiz.history[0].quizDataIndex).toBe(0);
+        expect(newState.quiz.history[0].name.status).toBe('complete');
+        expect(newState.quiz.prompt.status).toBeNull();
+        expect(newState.quiz.status).toBe('reviewing');
+        expect(newState.quiz.reviewType).toBe('auto');
     });
 
     it('should handle QUIZ_COMPLETED', () => {
         const state = {
             ...createInitialQuizState(),
-            quizCountryData: [{ country: 'USA', code: 'USA' }],
-            quizCountryDataIndex: 1,
-            currentPromptStatus: {
-                location: { status: 'prompted', n_attempts: 0, attempts: ['USA'] },
-                name: { status: 'correct', n_attempts: 1, attempts: ['United States'] },
-                flag: { status: 'correct', n_attempts: 1, attempts: ['US'] }
+            quizData: exampleQuizData,
+            quiz: {
+                ...createInitialQuizState().quiz,
+                prompt: {
+                    status: 'in_progress',
+                    type: 'name',
+                    quizDataIndex: 1,
+                    guesses: {
+                        location: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        name: { status: 'complete', n_attempts: 1, attempts: ['Mexico'] },
+                        flag: { status: 'complete', n_attempts: 1, attempts: ['MX'] }
+                    }
+                }
             }
         };
         const newState = quizReducer(state, { type: 'QUIZ_COMPLETED' });
-        expect(newState.isQuizFinished).toBe(true);
+        expect(newState.quiz.status).toBe('completed');
+        expect(newState.quiz.reviewType).toBeNull();
     });
 
     it('should handle RESET_QUIZ and return initial state', () => {
         const state = {
             ...createInitialQuizState(),
-            quizSet: 'Europe',
-            quizCountryData: [{ country: 'France' }],
-            isQuizFinished: true
+            config: {
+                ...createInitialQuizState().config,
+                quizSet: 'Europe'
+            },
+            quizData: [{ country: 'France' }],
+            quiz: {
+                ...createInitialQuizState().quiz,
+                status: 'completed'
+            }
         };
         const newState = quizReducer(state, { type: 'RESET_QUIZ' });
         expect(newState).toEqual(createInitialQuizState());

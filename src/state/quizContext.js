@@ -1,106 +1,246 @@
+/**
+ * Creates the initial quiz state structure.
+ * 
+ * @returns {Object} Initial quiz state with all fields set to default values
+ * 
+ * @typedef {Object} QuizState
+ * @property {Object} config - Quiz configuration
+ * @property {string|null} config.quizSet - Selected quiz set name (e.g., 'Daily challenge', 'Europe', 'all', or null)
+ * @property {string[]} config.selectedPromptTypes - Array of prompt types: 'location', 'name', 'flag'
+ * @property {string} config.gameMode - Game mode: 'quiz' (normal quiz) or 'sandbox' (learning mode)
+ * 
+ * @property {Array<Object>} quizData - Filtered country data for current quiz set
+ * 
+ * @property {Object} quiz - Current quiz state
+ * @property {string} quiz.status - Quiz status: 'not_started' | 'active' | 'reviewing' | 'completed'
+ * @property {string|null} quiz.reviewType - Review type when status is 'reviewing': 'auto' | 'learning' | 'history' | null
+ *   - 'auto': Automatic review after prompt completion (with delays)
+ *   - 'learning': Sandbox mode where user clicks inputs to see correct answers
+ *   - 'history': User reviewing a past prompt from history
+ * @property {number|null} quiz.reviewIndex - Index into quiz.history array when reviewType is 'history', null otherwise
+ * 
+ * @property {Object} quiz.prompt - Current prompt state
+ * @property {string|null} quiz.prompt.status - Prompt status: 'in_progress' | 'completed' | 'failed' | null
+ * @property {string|null} quiz.prompt.type - Prompt type: 'location' | 'name' | 'flag' | null
+ * @property {number} quiz.prompt.quizDataIndex - Index into quizData array for current/selected country
+ *   - For active prompts: points to current country being quizzed
+ *   - For learning mode: points to selected country in quizData (may be temporarily added)
+ * 
+ * @property {Object} quiz.prompt.guesses - User guesses for current prompt
+ * @property {Object} quiz.prompt.guesses.location - Location guess state
+ * @property {string|null} quiz.prompt.guesses.location.status - Status: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
+ *   - 'prompted': This type is the active prompt (user must answer)
+ *   - 'incomplete': User hasn't answered yet (not the active prompt type)
+ *   - 'completed': User answered correctly
+ *   - 'failed': User answered incorrectly or gave up
+ *   - null: No status yet (initial state)
+ * @property {number} quiz.prompt.guesses.location.n_attempts - Number of attempts for this type
+ * @property {Array<Object>} quiz.prompt.guesses.location.attempts - Array of attempt objects: { value: any, isCorrect: boolean }
+ * 
+ * @property {Object} quiz.prompt.guesses.name - Name guess state (same structure as location)
+ * @property {Object} quiz.prompt.guesses.flag - Flag guess state (same structure as location)
+ * 
+ * @property {Array<Object>} quiz.history - Array of completed prompts
+ * @property {number} quiz.history[].quizDataIndex - Index into quizData for the country that was quizzed
+ * @property {Object} quiz.history[].location - Location guess state for this history entry (same structure as prompt.guesses.location)
+ * @property {Object} quiz.history[].name - Name guess state for this history entry
+ * @property {Object} quiz.history[].flag - Flag guess state for this history entry
+ */
 export function createInitialQuizState() {
     return {
-      quizSet: null,
-      selectedPromptTypes: ['location', 'name', 'flag'],
-      quizCountryData: [],
-      quizCountryDataIndex: 0,
-    //   totalCountries: 0,
-      currentPrompt: null,
-      currentPromptStatus: {
-        location: { status: null, n_attempts: 0, attempts: [] },
-        name: { status: null, n_attempts: 0, attempts: [] },
-        flag: { status: null, n_attempts: 0, attempts: [] }
-      },
-      promptHistory: [],
-      quizStatus: 'not_started'
+        config: {
+            quizSet: null,
+            selectedPromptTypes: ['location', 'name', 'flag'],
+            gameMode: 'quiz'
+        },
+        quizData: [],
+        quiz: {
+            status: 'not_started',
+            reviewType: null,
+            reviewIndex: null,
+            prompt: {
+                status: null,
+                type: null,
+                quizDataIndex: 0,
+                guesses: {
+                    location: { status: null, n_attempts: 0, attempts: [] },
+                    name: { status: null, n_attempts: 0, attempts: [] },
+                    flag: { status: null, n_attempts: 0, attempts: [] }
+                }
+            },
+            history: []
+        }
     };
-  }
+}
 
 export function quizReducer(state, action){
     switch(action.type){
         case 'SET_QUIZ_SET':
-            return { ...state, quizSet: action.payload };
-        case 'SET_SELECTED_PROMPT_TYPES':
-            return { ...state, selectedPromptTypes: action.payload };
-        case 'SET_QUIZ_DATA':
-            return { ...state,
-                quizCountryData: action.payload,
-                // totalCountries: action.payload.length,
-                quizCountryDataIndex: 0 
+            return { 
+                ...state, 
+                config: { 
+                    ...state.config, 
+                    quizSet: action.payload 
+                } 
             };
+            
+        case 'SET_SELECTED_PROMPT_TYPES':
+            return { 
+                ...state, 
+                config: { 
+                    ...state.config, 
+                    selectedPromptTypes: action.payload 
+                } 
+            };
+            
+        case 'SET_QUIZ_DATA':
+            return { 
+                ...state,
+                quizData: action.payload,
+                quiz: {
+                    ...state.quiz,
+                    prompt: {
+                        ...state.quiz.prompt,
+                        quizDataIndex: 0
+                    }
+                }
+            };
+            
         case 'PROMPT_GENERATED':
             const { prompt } = action.payload;
-            return { ...state,
-                currentPrompt: prompt,
-                currentPromptStatus: { 
-                    location: { status: prompt.type === 'location' ? 'prompted' : null, n_attempts: 0, attempts: [] },
-                    name: { status: prompt.type === 'name' ? 'prompted' : null, n_attempts: 0, attempts: [] }, 
-                    flag: { status: prompt.type === 'flag' ? 'prompted' : null, n_attempts: 0, attempts: [] } 
-                },
-            };
-        case 'START_QUIZ':
-            return { ...state,
-                quizStatus: 'in_progress'
-            };
-        case 'ANSWER_SUBMITTED':
-            // type, value, and isCorrect
-            const { type, value, isCorrect } = action.payload;
-            return { ...state,
-                currentPromptStatus: {
-                    ...state.currentPromptStatus,
-                    [type]: { 
-                        ...state.currentPromptStatus[type],
-                        status: isCorrect ? 'correct' : 'incorrect',
-                        n_attempts: state.currentPromptStatus[type].n_attempts + 1,
-                        attempts: [...state.currentPromptStatus[type].attempts, { value, isCorrect }] 
+            return { 
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    status: 'active',
+                    reviewType: null,
+                    reviewIndex: null,
+                    prompt: {
+                        status: 'in_progress',
+                        type: prompt.type,
+                        quizDataIndex: state.quiz.prompt.quizDataIndex,
+                        guesses: {
+                            location: { 
+                                status: prompt.type === 'location' ? 'prompted' : 'incomplete', 
+                                n_attempts: 0, 
+                                attempts: [] 
+                            },
+                            name: { 
+                                status: prompt.type === 'name' ? 'prompted' : 'incomplete', 
+                                n_attempts: 0, 
+                                attempts: [] 
+                            }, 
+                            flag: { 
+                                status: prompt.type === 'flag' ? 'prompted' : 'incomplete', 
+                                n_attempts: 0, 
+                                attempts: [] 
+                            } 
+                        }
                     }
-                },
+                }
             };
+            
+        case 'START_QUIZ':
+            return { 
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    status: 'active',
+                    reviewType: null,
+                    reviewIndex: null
+                }
+            };
+            
+        case 'ANSWER_SUBMITTED':
+            const { type, value, isCorrect } = action.payload;
+            return { 
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    prompt: {
+                        ...state.quiz.prompt,
+                        guesses: {
+                            ...state.quiz.prompt.guesses,
+                            [type]: { 
+                                ...state.quiz.prompt.guesses[type],
+                                status: isCorrect ? 'complete' : 'incomplete',
+                                n_attempts: state.quiz.prompt.guesses[type].n_attempts + 1,
+                                attempts: [...state.quiz.prompt.guesses[type].attempts, value] 
+                            }
+                        }
+                    }
+                }
+            };
+            
         case 'PROMPT_FINISHED':
-            const status = state.currentPromptStatus;
+            const guesses = state.quiz.prompt.guesses;
             const promptTypes = ['location', 'name', 'flag'];
             const statusEntries = {};
             promptTypes.forEach(type => {
                 statusEntries[type] = {
-                    status: status[type].status ?? 'incorrect',
-                    n_attempts: status[type].n_attempts,
-                    attempts: status[type].attempts
+                    status: guesses[type].status ?? 'failed',
+                    n_attempts: guesses[type].n_attempts,
+                    attempts: guesses[type].attempts
                 };
             });
             
-            const newIndex = state.quizCountryDataIndex + 1;
-            const currentCountry = state.quizCountryData[state.quizCountryDataIndex];
+            const currentCountry = state.quizData[state.quiz.prompt.quizDataIndex];
             if (!currentCountry) {
                 console.error('Cannot finish prompt: invalid country index');
-                return state; // Return unchanged state
+                return state;
             }
-            const newPromptHistory = [
-                ...state.promptHistory,
-                {
-                    country: currentCountry.country,
-                    ...statusEntries
-                }
-            ];
             
+            const newHistoryEntry = {
+                quizDataIndex: state.quiz.prompt.quizDataIndex,
+                ...statusEntries
+            };
             
             return {
                 ...state,
-                quizCountryDataIndex: newIndex,
-                promptHistory: newPromptHistory,
-                currentPrompt: null,
-                currentPromptStatus: {
-                    location: { status: null, n_attempts: 0, attempts: [] },
-                    name: { status: null, n_attempts: 0, attempts: [] },
-                    flag: { status: null, n_attempts: 0, attempts: [] }
-                },
+                quiz: {
+                    ...state.quiz,
+                    status: 'reviewing',
+                    reviewType: 'auto',
+                    reviewIndex: null,
+                    prompt: {
+                        status: null,
+                        type: null,
+                        quizDataIndex: state.quiz.prompt.quizDataIndex + 1,
+                        guesses: {
+                            location: { status: null, n_attempts: 0, attempts: [] },
+                            name: { status: null, n_attempts: 0, attempts: [] },
+                            flag: { status: null, n_attempts: 0, attempts: [] }
+                        }
+                    },
+                    history: [...state.quiz.history, newHistoryEntry]
+                }
             };
+            
         case 'QUIZ_COMPLETED':
-            return { ...state,
-                quizStatus: 'completed'
+            return { 
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    status: 'completed',
+                    reviewType: null,
+                    reviewIndex: null,
+                    prompt: {
+                        status: null,
+                        type: null,
+                        quizDataIndex: 0,
+                        guesses: {
+                            location: { status: null, n_attempts: 0, attempts: [] },
+                            name: { status: null, n_attempts: 0, attempts: [] },
+                            flag: { status: null, n_attempts: 0, attempts: [] }
+                        }
+                    }
+                }
             };
+            
         case 'RESET_QUIZ':
             return createInitialQuizState();
+            
         default:
             return state;
     }
-  }
+}

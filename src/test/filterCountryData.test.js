@@ -5,21 +5,29 @@ import quizSets from '../data/quiz_sets.json' with { type: 'json' };
 
 const europeQuizSet = quizSets.find(q => q.name === 'Europe');
 
-// Test configurations
 const mockState = {
-    quizSet: 'Europe',
-      selectedPromptTypes: ['location', 'name', 'flag'],
-      quizCountryData: [],
-      quizCountryDataIndex: 0,
-      totalCountries: 0,
-      currentPrompt: null,
-      currentPromptStatus: {
-        location: { status: null, n_attempts: 0, attempts: [] },
-        name: { status: null, n_attempts: 0, attempts: [] },
-        flag: { status: null, n_attempts: 0, attempts: [] }
-      },
-      promptHistory: [],
-      isQuizFinished: false
+    config: {
+        quizSet: 'Europe',
+        selectedPromptTypes: ['location', 'name', 'flag'],
+        gameMode: 'quiz'
+    },
+    quizData: [],
+    quiz: {
+        status: 'not_started',
+        reviewType: null,
+        reviewIndex: null,
+        prompt: {
+            status: null,
+            type: null,
+            quizDataIndex: 0,
+            guesses: {
+                location: { status: null, n_attempts: 0, attempts: [] },
+                name: { status: null, n_attempts: 0, attempts: [] },
+                flag: { status: null, n_attempts: 0, attempts: [] }
+            }
+        },
+        history: []
+    }
 };
 
 describe('filterCountryData', () => {

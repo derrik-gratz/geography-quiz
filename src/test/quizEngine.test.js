@@ -41,22 +41,31 @@ const mockCountryData = [{
     "availablePrompts": ["name", "flag", "location"]
 }];
 const mockQuizContext = {
-    quizSet: "Test Set",
-    selectedPromptTypes: ['location', 'name', 'flag'],
-    quizCountryData: mockCountryData,
-    quizCountryDataIndex: 0,
-    totalCountries: 2,
-    currentPrompt: { type: 'name', value: 'United States of America'},
-    currentPromptStatus: {
-      location: { status: null, n_attempts: 0, attempts: [] },
-      name: { status: 'prompted', n_attempts: 0, attempts: [] },
-      flag: { status: null, n_attempts: 0, attempts: [] }
+    config: {
+        quizSet: "Test Set",
+        selectedPromptTypes: ['location', 'name', 'flag'],
+        gameMode: 'quiz'
     },
-    promptHistory: [],
-    isQuizFinished: false
+    quizData: mockCountryData,
+    quiz: {
+        status: 'active',
+        reviewType: null,
+        reviewIndex: null,
+        prompt: {
+            status: 'in_progress',
+            type: 'name',
+            quizDataIndex: 0,
+            guesses: {
+                location: { status: null, n_attempts: 0, attempts: [] },
+                name: { status: 'prompted', n_attempts: 0, attempts: [] },
+                flag: { status: null, n_attempts: 0, attempts: [] }
+            }
+        },
+        history: []
+    }
 }
 
-const currentPromptData = mockQuizContext.quizCountryData[mockQuizContext.quizCountryDataIndex];
+const currentPromptData = mockQuizContext.quizData[mockQuizContext.quiz.prompt.quizDataIndex];
 
 describe('checkSubmission', () => {
 
@@ -100,13 +109,17 @@ describe('checkSubmission', () => {
 });
 
 describe('checkPromptCompletion', () => {
-    // Based on current logic: !== null && !== 'incorrect'
-    it('return true when all statuses are correct', () => {
+    // Based on current logic: !== null && !== 'incomplete' && !== 'failed'
+    it('return true when all statuses are complete', () => {
         const quizContext = {
-            currentPromptStatus: {
-                location: { status: 'prompted', n_attempts: 0, attempts: [] },
-                name: { status: 'correct', n_attempts: 1, attempts: ['United States of America'] },
-                flag: { status: 'correct', n_attempts: 1, attempts: ['USA'] }
+            quiz: {
+                prompt: {
+                    guesses: {
+                        location: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        name: { status: 'complete', n_attempts: 1, attempts: ['United States of America'] },
+                        flag: { status: 'complete', n_attempts: 1, attempts: ['USA'] }
+                    }
+                }
             }
         };
         const result = checkPromptCompletion(quizContext);
@@ -115,22 +128,30 @@ describe('checkPromptCompletion', () => {
 
     it('return false when any status is null', () => {
         const quizContext = {
-            currentPromptStatus: {
-                location: { status: 'prompted', n_attempts: 0, attempts: [] },
-                name: { status: null, n_attempts: 0, attempts: [] },
-                flag: { status: 'correct', n_attempts: 1, attempts: ['USA'] }
+            quiz: {
+                prompt: {
+                    guesses: {
+                        location: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        name: { status: null, n_attempts: 0, attempts: [] },
+                        flag: { status: 'complete', n_attempts: 1, attempts: ['USA'] }
+                    }
+                }
             }
         };
         const result = checkPromptCompletion(quizContext);
         expect(result).toBe(false);
     });
 
-    it('return false when any status is incorrect', () => {
+    it('return false when any status is incomplete', () => {
         const quizContext = {
-            currentPromptStatus: {
-                location: { status: 'prompted', n_attempts: 0, attempts: [] },
-                name: { status: 'incorrect', n_attempts: 2, attempts: ['Canada', 'Uzbekistan'] },
-                flag: { status: 'correct', n_attempts: 1, attempts: ['USA'] }
+            quiz: {
+                prompt: {
+                    guesses: {
+                        location: { status: 'prompted', n_attempts: 0, attempts: [] },
+                        name: { status: 'incomplete', n_attempts: 2, attempts: ['Canada', 'Uzbekistan'] },
+                        flag: { status: 'complete', n_attempts: 1, attempts: ['USA'] }
+                    }
+                }
             }
         };
         const result = checkPromptCompletion(quizContext);
@@ -139,10 +160,14 @@ describe('checkPromptCompletion', () => {
 
     it('should return false when all statuses are null', () => {
         const quizContext = {
-            currentPromptStatus: {
-                location: { status: null, n_attempts: 0, attempts: [] },
-                name: { status: null, n_attempts: 0, attempts: [] },
-                flag: { status: null, n_attempts: 0, attempts: [] }
+            quiz: {
+                prompt: {
+                    guesses: {
+                        location: { status: null, n_attempts: 0, attempts: [] },
+                        name: { status: null, n_attempts: 0, attempts: [] },
+                        flag: { status: null, n_attempts: 0, attempts: [] }
+                    }
+                }
             }
         };
         const result = checkPromptCompletion(quizContext);
@@ -166,7 +191,7 @@ describe('generatePrompt', () => {
         }
     });
     it('generate a location prompt for regular quiz set', () => {
-        mockQuizContext.selectedPromptTypes = ['location'];
+        mockQuizContext.config.selectedPromptTypes = ['location'];
         const result = generatePrompt(mockQuizContext);
         
         expect(result).toBeDefined();
@@ -183,7 +208,7 @@ describe('generatePrompt', () => {
     });
 
     it('should filter prompt types based on selectedPromptTypes', () => {
-        mockQuizContext.selectedPromptTypes = ['name', 'flag'];
+        mockQuizContext.config.selectedPromptTypes = ['name', 'flag'];
         
         for (let i = 0; i < 10; i++) {
             const result = generatePrompt(mockQuizContext);
@@ -212,7 +237,7 @@ describe('generatePrompt', () => {
             "availablePrompts": ["name"]
           }];
         
-          mockQuizContext.quizCountryData = limitedCountryData;
+          mockQuizContext.quizData = limitedCountryData;
         
         const result = generatePrompt(mockQuizContext);
         expect(result).toBeDefined();
@@ -222,32 +247,24 @@ describe('generatePrompt', () => {
 });
 
 describe('checkQuizCompletion', () => {
-    it('should return true when promptHistory length equals totalCountries', () => {
-        mockQuizContext.promptHistory = [
-            { country: 'United States of America', 
-                location: {status: 'prompted', n_attempts: 0, attempts: []},
-                name: {status: 'correct', n_attempts: 1, attempts: ['United States of America']},
-                flag: {status: 'correct', n_attempts: 1, attempts: ['US']}
-            }, 
-            { country: 'Uzbekistan', 
-                location: {status: 'correct', n_attempts: 1, attempts: ['UZB']},
-                name: {status: 'prompted', n_attempts: 0, attempts: []},
-                flag: {status: 'correct', n_attempts: 1, attempts: ['UZ']}
-            }
-        ];
+    it('should return true when quizDataIndex equals quizData length', () => {
+        mockQuizContext.quiz.prompt.quizDataIndex = 2;
         const result = checkQuizCompletion(mockQuizContext);
         expect(result).toBe(true);
     });
 
-    it('return false when promptHistory length is less than totalCountries', () => {
-        mockQuizContext.promptHistory = [
-            { country: 'United States of America', 
-                location: {status: 'prompted', n_attempts: 0, attempts: []},
-                name: {status: 'correct', n_attempts: 1, attempts: ['United States of America']},
-                flag: {status: 'correct', n_attempts: 1, attempts: ['US']}
-            }
-        ];
+    it('return false when quizDataIndex is less than quizData length', () => {
+        mockQuizContext.quiz.prompt.quizDataIndex = 1;
         const result = checkQuizCompletion(mockQuizContext);
         expect(result).toBe(false);
-    });  
+    });
+    
+    it('should return false when quizData is empty', () => {
+        const emptyContext = {
+            ...mockQuizContext,
+            quizData: []
+        };
+        const result = checkQuizCompletion(emptyContext);
+        expect(result).toBe(false);
+    });
 });
