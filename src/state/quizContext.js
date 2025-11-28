@@ -74,6 +74,7 @@ export function createInitialQuizState() {
 }
 
 export function quizReducer(state, action){
+    const PROMPT_TYPES = ['location', 'name', 'flag'];
     switch(action.type){
         case 'SET_QUIZ_SET':
             return { 
@@ -171,12 +172,35 @@ export function quizReducer(state, action){
                     }
                 }
             };
+        case 'GIVE_UP': { // separate scope for guesses
+            const guesses = state.quiz.prompt.guesses;
+            
+            // Update guesses: set incomplete or null to 'failed'
+            const updatedGuesses = {};
+            PROMPT_TYPES.forEach(type => {
+                const currentStatus = guesses[type].status;
+                updatedGuesses[type] = {
+                    ...guesses[type],
+                    status: (currentStatus === 'incomplete' || currentStatus === null) ? 'failed' : currentStatus
+                };
+            });
+        
+            return {
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    prompt: {
+                        ...state.quiz.prompt,
+                        guesses: updatedGuesses
+                    }
+                }
+            };
+        };
             
         case 'PROMPT_FINISHED':
             const guesses = state.quiz.prompt.guesses;
-            const promptTypes = ['location', 'name', 'flag'];
             const statusEntries = {};
-            promptTypes.forEach(type => {
+            PROMPT_TYPES.forEach(type => {
                 statusEntries[type] = {
                     status: guesses[type].status ?? 'failed',
                     n_attempts: guesses[type].n_attempts,
@@ -201,7 +225,7 @@ export function quizReducer(state, action){
                     ...state.quiz,
                     status: 'reviewing',
                     reviewType: 'auto',
-                    reviewIndex: null,
+                    reviewIndex: state.quiz.history.length,
                     prompt: {
                         status: null,
                         type: null,
@@ -213,6 +237,26 @@ export function quizReducer(state, action){
                         }
                     },
                     history: [...state.quiz.history, newHistoryEntry]
+                }
+            };
+        case 'REVIEW_COMPLETED':
+            return {
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    status: 'active',
+                    reviewType: null,
+                    reviewIndex: null
+                }
+            };
+        case 'MANUAL_REVIEW_INITIATED':
+            return {
+                ...state,
+                quiz: {
+                    ...state.quiz,
+                    status: 'reviewing',
+                    reviewType: 'history',
+                    reviewIndex: action.payload,
                 }
             };
             

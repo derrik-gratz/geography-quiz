@@ -1,5 +1,8 @@
 # Roadmap
 
+Separate promptCompleted logic and autoReview states. it should go
+check prompt completion > initiate auto review > end auto review > complete prompt
+
 major states:
   inactive, receiving user config
   active, receiving user input

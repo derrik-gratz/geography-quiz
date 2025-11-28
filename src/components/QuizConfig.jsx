@@ -17,7 +17,7 @@ export function QuizConfig() {
     const { state } = useQuiz();
     const { setQuizSet, setSelectedPromptTypes } = useQuizActions();
 
-    const { quizSet, selectedPromptTypes } = state;
+    const { quizSet, selectedPromptTypes } = state.config;
 
     const handlePromptTypeChange = (type, checked) => {
         if (checked) {
