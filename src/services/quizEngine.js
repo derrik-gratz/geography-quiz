@@ -16,24 +16,27 @@ export function checkSubmission(promptCountryData, submissionType, submissionVal
 export function checkPromptCompletion(quizContext){
     // haven't figured out how give ups will be handled. 
     // So far, possible state is null from default, prompted, incorrect, or correct.
-    return Object.values(quizContext.currentPromptStatus).every(status => 
-        status.status !== null && status.status !== 'incorrect'
+    return Object.values(quizContext.quiz.prompt.guesses).every(status => 
+        status.status !== null && status.status !== 'incomplete'
     );
 }
 
 export function generatePrompt(quizContext){
-    if (!quizContext.quizCountryData || quizContext.quizCountryDataIndex >= quizContext.quizCountryData.length) {
+    // Use new nested state structure
+    if (!quizContext.quizData || quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length) {
         return null;
     }
-    const countryData = quizContext.quizCountryData[quizContext.quizCountryDataIndex];
+    const countryData = quizContext.quizData[quizContext.quiz.prompt.quizDataIndex];
     let promptOptions = ['location', 'name', 'flag'];
     let seed;
     // select prompt type by quiz set, fixed for daily challenge
-    if (quizContext.quizSet === 'Daily challenge'){
+    if (quizContext.config.quizSet === 'Daily challenge'){
         promptOptions = countryData.availablePrompts;
         seed = getDailySeed();
     } else {
-        promptOptions = countryData.availablePrompts.filter(prompt => quizContext.selectedPromptTypes.includes(prompt));
+        promptOptions = countryData.availablePrompts.filter(prompt => 
+            quizContext.config.selectedPromptTypes.includes(prompt)
+        );
         seed = Date.now();
     }
 
@@ -41,7 +44,7 @@ export function generatePrompt(quizContext){
 
     switch (selectedPromptType) {
         case 'location':
-            return { type: 'location', value: { code: countryData.code,lat: countryData.location.lat, long: countryData.location.long } };
+            return { type: 'location', value: { code: countryData.code, lat: countryData.location.lat, long: countryData.location.long } };
         case 'name':
             return { type: 'name', value: countryData.country };
         case 'flag':
@@ -51,8 +54,8 @@ export function generatePrompt(quizContext){
 
 export function checkQuizCompletion(quizContext){
     // If no country data, quiz can't be finished
-    if (!quizContext.quizCountryData?.length) {
+    if (!quizContext.quizData?.length) {
         return false;
     }
-    return quizContext.quizCountryDataIndex >= quizContext.quizCountryData.length;
+    return quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length;
 }
