@@ -84,7 +84,14 @@ export function quizReducer(state, action){
                     quizSet: action.payload 
                 } 
             };
-            
+        case "SET_GAME_MODE":
+            return {
+                ...state,
+                config: {
+                    ...state.config,
+                    gameMode: action.payload
+                }
+            };
         case 'SET_SELECTED_PROMPT_TYPES':
             return { 
                 ...state, 

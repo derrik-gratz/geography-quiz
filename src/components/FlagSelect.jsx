@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-
-/**
- * FlagSelect Component
- * 
- * Displays a grid of country flags for user selection
- * Returns country code when a flag is clicked
- * 
- * @param {Function} props.onSelect - Callback when a flag is selected
- * @param {Array} props.displayCountries - Array of countries to display
- * @returns {JSX.Element} Flag selection interface
- */
+import React, { useState, useMemo, useEffect } from 'react';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
+import countryData from '../data/country_data.json';
+import quizSets from '../data/quiz_sets.json';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -21,33 +14,60 @@ const availableColors = [
     { name: "orange", color: "#ffa500" }
 ]
 
-export function FlagSelect({ onSelect, displayCountries, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey }) {
+export function FlagSelect() {
+    const { state } = useQuiz();
+    const { submitAnswer } = useQuizActions();
+
+    let guesses = null;
+    let disabled = false;
+    let correctCountryFlagCode = null;
+
+    if (state.config.gameMode === 'sandbox') {
+        disabled = false; 
+    } else if (state.config.gameMode === 'quiz') {
+        if (state.quiz.status === 'active') {
+            guesses = state.quiz.prompt.guesses.flag;
+            disabled = guesses?.status !== 'incomplete';
+            correctCountryFlagCode = state.quizData[state.quiz.prompt.quizDataIndex]?.flagCode;
+        } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
+            const historyEntry = state.quiz.history[state.quiz.reviewIndex];
+            guesses = historyEntry?.flag;
+            disabled = true;
+            correctCountryFlagCode = state.quizData[historyEntry.quizDataIndex]?.flagCode;
+        }
+    }
+
+    // Note: attempts array stores values directly (flag codes), not objects
+    const incorrectCountries = useMemo(() => {
+        if (!guesses || !guesses.attempts) return [];
+        // Filter out the correct answer if it exists
+        return guesses.attempts.filter(attempt => attempt !== correctCountryFlagCode);
+    }, [guesses?.attempts, correctCountryFlagCode]);
+
+
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
+
     
     const handleFlagClick = (country) => {
-        if (!disabled && !incorrectCountries.includes(country.code) && correctCountries.length === 0) {
+        if (!disabled && !incorrectCountries.includes(country.flagCode)) {
             setSelectedCountry(country);
         }
     };
 
-    // Reset when disabled (new prompt type) or when correct countries are submitted
+    // Reset when prompt changes or when disabled
     React.useEffect(() => {
-        if (disabled || correctCountries.length > 0) {
+        if (disabled) {
             setSelectedCountry(null);
+            setSelectedColors([]);
         }
-    }, [disabled, correctCountries.length]);
-
-    // Reset flag filters when prompt changes
-    React.useEffect(() => {
-        setSelectedColors([]);
-    }, [promptResetKey]);
+    }, [disabled, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
-        if (selectedCountry && onSelect && correctCountries.length === 0) {
-            onSelect(selectedCountry);
+        if (selectedCountry && !disabled) {
+            submitAnswer('flag', selectedCountry.flagCode);
+            setSelectedCountry(null);
         }
-        setSelectedCountry(null);
     };
 
     const handleColorClick = (color) => {
@@ -59,32 +79,47 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
         })
     }
 
-    const filteredCountries = displayCountries.filter(country => {
-        // If there are correct countries, only show the correct ones
-        if (correctCountries.length > 0) {
-            return correctCountries.includes(country.code);
-        }
-        
-        // Otherwise, apply color filtering as normal
-        return selectedColors.length === 0 ?
-            true :
-            selectedColors.every(color => country.colors.includes(color));
-    });
+    // Get all countries with flags as base
+    const allCountries = useMemo(() => {
+        return countryData.filter(country => country.flagCode);
+    }, []);
+
+    // Single filtering function
+    const filteredCountries = useMemo(() => {
+        return allCountries.filter(country => {
+            // If review mode (disabled), only show guessed + correct flags
+            if (disabled) {
+                const guessedFlagCodes = guesses?.attempts || [];
+                return country.flagCode === correctCountryFlagCode || guessedFlagCodes.includes(country.flagCode);
+            }
+
+            // If sandbox mode, filter by quiz set
+            if (state.config.gameMode === 'sandbox') {
+                if (state.config.quizSet && state.config.quizSet !== 'all') {
+                    const quizSetData = quizSets.find(q => q.name === state.config.quizSet);
+                    if (quizSetData) {
+                        return quizSetData.countryCodes.includes(country.code);
+                    }
+                }
+                return true;
+            }
+            
+            // Active prompt: all flags visible, with optional color filtering
+            if (selectedColors.length === 0) {
+                return true;
+            }
+            return selectedColors.every(color => country.colors?.includes(color));
+        });
+    }, [allCountries, disabled, guesses?.attempts, correctCountryFlagCode, state.config.gameMode, state.config.quizSet, selectedColors]);
 
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
-        
-        if (selectedCountry?.code === country.code) {
-            className += ' selected';
-        }
-        if (correctCountries.includes(country.code)) {
+        if (country.flagCode === correctCountryFlagCode) {
             className += ' correct';
-        }
-        if (incorrectCountries.includes(country.code)) {
+        } else if (incorrectCountries.includes(country.flagCode)) {
             className += ' incorrect';
-        }
-        if (correctCountries.length > 0) {
-            className += ' disabled';
+        } else if (selectedCountry?.code === country.code) {
+            className += ' selected';
         }
         
         return className;
@@ -95,22 +130,22 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
             <div className="color-picker">
                 <button
                     onClick={handleSubmit}
-                    disabled={!selectedCountry || disabled || correctCountries.length > 0}
+                    disabled={!selectedCountry || disabled }
                     style={{
                         padding: '0.3rem 0.8rem',
                         fontSize: '0.8rem',
                         borderRadius: '4px',
-                        border: `1px solid ${selectedCountry && !disabled && correctCountries.length === 0 ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
-                        backgroundColor: selectedCountry && !disabled && correctCountries.length === 0 ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
-                        color: selectedCountry && !disabled && correctCountries.length === 0 ? '#fff' : 'var(--color-disabled)',
-                        cursor: selectedCountry && !disabled && correctCountries.length === 0 ? 'pointer' : 'not-allowed',
+                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
+                        backgroundColor: selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
+                        color: selectedCountry && !disabled ? '#fff' : 'var(--color-disabled)',
+                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
                         whiteSpace: 'nowrap',
                         marginLeft: '10px'
                     }}
                 >
-                    {correctCountries.length > 0 ? 'Answer:' : 'Submit Flag'}
+                    {disabled ? 'Answer:' : 'Submit Flag'}
                 </button>
-                {correctCountries.length === 0 && (
+                {!disabled && (
                     <>
                         <span className="color-filter">Filter by color:</span>
                         {availableColors.map(color =>
@@ -133,10 +168,10 @@ export function FlagSelect({ onSelect, displayCountries, incorrectCountries = []
                         onClick={() => handleFlagClick(country)}
                         role="button"
                         tabIndex={0}
-                        aria-label={`Select ${country.name || country.code} flag`}
+                        aria-label={`Select ${country.country || country.code} flag`}
                         style={{
-                            opacity: disabled || incorrectCountries.includes(country.code) || correctCountries.length > 0 ? 0.6 : 1,
-                            cursor: disabled || incorrectCountries.includes(country.code) || correctCountries.length > 0 ? 'not-allowed' : 'pointer'
+                            opacity: disabled || incorrectCountries.includes(country.flagCode) ? 0.6 : 1,
+                            cursor: disabled || incorrectCountries.includes(country.flagCode) ? 'not-allowed' : 'pointer'
                         }}
                     />
                 ))}

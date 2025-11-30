@@ -11,6 +11,27 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+/* App Layout */
+.app-main {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.right-column {
+  flex: 0 0 auto;
+  min-width: 300px;
+}
+
 /* Dark mode colors */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -33,12 +54,12 @@
   gap: 1rem;
 }
 
-.quiz-config label {
+/* .quiz-config label {
   color: var(--text-primary);
   font-size: 0.9rem;
   margin: 0;
   font-weight: 600;
-}
+} */
 
 .quiz-config__quiz-set {
   display: flex;

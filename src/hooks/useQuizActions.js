@@ -16,6 +16,18 @@ export function useQuizActions() {
         dispatch({ type: 'SET_SELECTED_PROMPT_TYPES', payload: selectedPromptTypes });
     }, [dispatch]);
 
+    const handlePromptTypeChange = (type, checked) => {
+        if (checked) {
+            setSelectedPromptTypes([state.config.selectedPromptTypes, type]);
+        } else {
+            setSelectedPromptTypes(state.config.selectedPromptTypes.filter(t => t !== type));
+        }
+    };
+
+    const setGameMode = useCallback((gameMode) => {
+        dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
+    }, [dispatch]);
+
     const startQuiz = useCallback(() => {
         if (!state.config.quizSet) {
             console.error('Cannot start quiz: quizSet is not selected');
@@ -61,6 +73,8 @@ export function useQuizActions() {
     return {
         setQuizSet,
         setSelectedPromptTypes,
+        handlePromptTypeChange,
+        setGameMode,
         startQuiz,
         submitAnswer,
         giveUpPrompt,

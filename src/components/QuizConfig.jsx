@@ -15,41 +15,79 @@ const PROMPT_TYPES = ['location', 'name', 'flag'];
 
 export function QuizConfig() {
     const { state } = useQuiz();
-    const { setQuizSet, setSelectedPromptTypes } = useQuizActions();
+    const { setQuizSet, handlePromptTypeChange, setGameMode } = useQuizActions();
 
-    const { quizSet, selectedPromptTypes } = state.config;
+    const { quizSet, selectedPromptTypes, gameMode } = state.config;
 
-    const handlePromptTypeChange = (type, checked) => {
-        if (checked) {
-            setSelectedPromptTypes([...selectedPromptTypes, type]);
-        } else {
-            setSelectedPromptTypes(selectedPromptTypes.filter(t => t !== type));
-        }
-    };
     return (
         <div className="quiz-config">
+            {state.quiz.status === 'not_started' && (
+                <div className="quiz-config__game-mode-select">
+                    <label htmlFor="game-mode-select">Game mode:</label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="game-mode"
+                            className="quiz-config__game-mode-input"
+                            value="sandbox"
+                            checked={gameMode === 'sandbox'}
+                            onChange={(e) => setGameMode(e.target.checked ? 'sandbox' : 'quiz')}
+                        />
+                        Sandbox
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="game-mode"
+                            className="quiz-config__game-mode-input"
+                            value="quiz"
+                            checked={gameMode === 'quiz'}
+                            onChange={(e) => setGameMode(e.target.checked ? 'quiz' : 'sandbox')}
+                        />
+                        Normal
+                    </label>
+                </div>
+            )}
             <div className="quiz-config__quiz-set">              
                 <label htmlFor="quiz-set-select">Quiz Set:</label>
                 <select 
                     id="quiz-set-select"
                     className="quiz-config__quiz-set-dropdown"
-                    value={quizSet || ''} 
+                    value={quizSet || (gameMode === 'quiz' ? 'Daily challenge' : 'all') || ''} 
                     onChange={(e) => setQuizSet(e.target.value || null)}
                 >
-                    <option value="Daily challenge">Daily challenge</option>
-                    {quizSets.map(set => (
-                        <option key={set.name} value={set.name}>
-                            {set.name}
-                        </option>
-                    ))}
-                    <option value="all">All countries</option>
+                    {gameMode === 'quiz' ? (
+                        <>
+                            <option value="Daily challenge">
+                                Daily challenge
+                            </option>
+                            {quizSets.map(set => (
+                                <option key={set.name} value={set.name}>
+                                    {set.name}
+                                </option>
+                            ))}
+                            <option value="all">All countries</option>
+                        </>
+                    ) : (gameMode === 'sandbox' ? (
+                        <>
+                            <option value="all">
+                                All countries
+                            </option>
+                            {quizSets.map(set => (
+                                <option key={set.name} value={set.name}>
+                                    {set.name}
+                                </option>
+                            ))}
+                        </>
+                    ) : (null))}
+                
                 </select>
             </div>
             <div className="quiz-config__prompt-types">
-                {quizSet && quizSet !== 'Daily challenge' && (
+                {quizSet && quizSet !== 'Daily challenge' && gameMode === 'quiz' &&(
                     <>
                         <label htmlFor="prompt-types-select">Prompt types:</label>
-                        {selectedPromptTypes.length === 0 && (
+                        {state.config.selectedPromptTypes.length === 0 && (
                             <div className="quiz-config__warning">
                                 <p className="quiz-config__warning-text">Select at least one prompt type.</p>
                             </div>
@@ -60,7 +98,7 @@ export function QuizConfig() {
                                     <input
                                         type="checkbox"
                                         className="quiz-config__checkbox-input"
-                                        checked={selectedPromptTypes.includes(type)}
+                                        checked={state.config.selectedPromptTypes.includes(type)}
                                         onChange={(e) => {handlePromptTypeChange(type, e.target.checked)}}
                                     />
                                     {type.charAt(0).toUpperCase() + type.slice(1)}

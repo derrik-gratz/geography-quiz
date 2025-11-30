@@ -2,6 +2,7 @@ import React from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
 import { QuizConfig } from './components/QuizConfig.jsx';
 import { QuizPrompt } from './components/QuizPrompt.jsx';
+import { FlagSelect } from './components/FlagSelect.jsx';
 
 /**
  * Main App component for the Geography Quiz application
@@ -19,6 +20,9 @@ function App() {
                         <div className="quiz-prompt-panel">
                             <QuizPrompt />
                         </div>
+                    </div>
+                    <div className="right-column">
+                        <FlagSelect />
                     </div>
                 </main>
             </div>

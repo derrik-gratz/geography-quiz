@@ -48,9 +48,12 @@ export function QuizPrompt({}) {
       };
 
     const isStartDisabled = useMemo(() => {
+        if (state.config.gameMode === 'sandbox') {
+            return false;
+        }
         return state.quiz.status === 'not_started' && 
                (!state.config.quizSet || !state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0);
-    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes]);   
+    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode]);   
 
     const successfulCompletion = useMemo(() => 
         Object.values(state.quiz.prompt.guesses).every(
@@ -88,7 +91,9 @@ export function QuizPrompt({}) {
 
     const promptContent = useMemo(() => {
         let promptText = '';
-        if (state.quiz.status === 'not_started' && isStartDisabled) {
+        if (state.config.gameMode === 'sandbox') {
+            promptText = 'Click any input to explore country data';
+        } else if (state.quiz.status === 'not_started' && isStartDisabled) {
             promptText = 'Configure quiz settings';
         } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
             promptText = 'Start quiz';
@@ -128,6 +133,9 @@ export function QuizPrompt({}) {
     }, [state.quiz.status, state.quiz.reviewType, state.quiz.reviewIndex, state.quiz.history, currentPrompt, currentPromptData, isStartDisabled, promptCompleted, successfulCompletion]);
 
     const promptButton = useMemo(() => {
+        if (state.config.gameMode === 'sandbox') {
+            return null;
+        }
         if (state.quiz.status === 'not_started') {
             return (
                 <button 
