@@ -25,11 +25,13 @@
   gap: 1rem;
   flex: 1;
   min-width: 300px;
+  max-width: 500px;
 }
 
 .right-column {
   flex: 0 0 auto;
   min-width: 300px;
+  max-width: 1000px;
 }
 
 /* Dark mode colors */
@@ -120,7 +122,6 @@
   cursor: pointer;
 }
 
-/* Dark mode adjustments for warning */
 @media (prefers-color-scheme: dark) {
   .quiz-config__warning {
     background-color: #3d2f00;
@@ -131,3 +132,14 @@
     color: #ffd54f;
   }
 }
+
+/* Flag select */
+.flag-select {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
