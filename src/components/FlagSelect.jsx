@@ -127,8 +127,9 @@ export function FlagSelect() {
 
     return (
         <div className="flag-select">
-            <div className="color-picker">
+            <div className="flag-select__controls">
                 <button
+                    className="flag-select__submit-button"
                     onClick={handleSubmit}
                     disabled={!selectedCountry || disabled }
                     style={{
@@ -138,29 +139,29 @@ export function FlagSelect() {
                         border: `1px solid ${selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
                         backgroundColor: selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
                         color: selectedCountry && !disabled ? '#fff' : 'var(--color-disabled)',
-                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
-                        whiteSpace: 'nowrap',
-                        marginLeft: '10px'
+                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
                     }}
                 >
-                    {disabled ? 'Answer:' : 'Submit Flag'}
+                    {disabled ? 'Answer:' : <>Submit<br />Flag</>}
                 </button>
-                {!disabled && (
-                    <>
-                        <span className="color-filter">Filter by color:</span>
-                        {availableColors.map(color =>
-                            <button 
-                                key={color.name}
-                                className={`color-filter-button ${selectedColors.includes(color.name) ? "selected" : ""}`}
-                                onClick={() => handleColorClick(color.name)}
-                                style={{ backgroundColor: color.color }}
-                                title={color.name}
-                            ></button>
-                        )}
-                    </>
-                )}
+                <div className="flag-select__color-picker">
+                    {!disabled && (
+                        <>
+                            <span className="color-filter__label">Filter by colors:</span>
+                            {availableColors.map(color =>
+                                <button 
+                                    key={color.name}
+                                    className={`flag-select__color-filter-color ${selectedColors.includes(color.name) ? "selected" : ""}`}
+                                    onClick={() => handleColorClick(color.name)}
+                                    style={{ backgroundColor: color.color }}
+                                    title={color.name}
+                                ></button>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
-            <div className="flag-grid">
+            <div className="flag-select__flag-grid">
                 {filteredCountries.map((country) => (
                     <span
                         key={country.code}
