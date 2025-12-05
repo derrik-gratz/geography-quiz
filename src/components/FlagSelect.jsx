@@ -19,7 +19,7 @@ export function FlagSelect() {
     const { submitAnswer } = useQuizActions();
 
     let guesses = null;
-    let disabled = false;
+    let disabled = true;
     let correctCountryFlagCode = null;
 
     if (state.config.gameMode === 'sandbox') {
@@ -57,10 +57,10 @@ export function FlagSelect() {
 
     // Reset when prompt changes or when disabled
     React.useEffect(() => {
-        if (disabled) {
-            setSelectedCountry(null);
-            setSelectedColors([]);
-        }
+        // if (disabled) {
+        setSelectedCountry(null);
+        setSelectedColors([]);
+        // }
     }, [disabled, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
