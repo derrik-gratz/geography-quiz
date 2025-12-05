@@ -71,15 +71,12 @@ export function TextInput() {
   React.useEffect(() => {
     if (isWrongGuess) {
       setIsWrong(true);
-      
-      // Clear isWrong after 1 second and clear the input/selected country
       const timeoutId = setTimeout(() => {
         setIsWrong(false);
         setInput('');
         setSelectedCountry(null);
       }, 1000);
 
-      // Cleanup timeout on unmount or when dependencies change
       return () => {
         clearTimeout(timeoutId);
       };
@@ -127,22 +124,19 @@ export function TextInput() {
   // 2. Disabled with nothing highlighted (initial/other disabled states)
   // 3. Enabled for user input (active quiz)
   // 4. Temporarily timed out, displaying incorrect guess
+  // 5. sandbox
   React.useEffect(() => {
-    // State 1: Disabled with correct answer shown (review mode)
     if (componentStatus === 'reviewing' && correctCountry) {
       setInput(correctCountry);
       setSelectedCountry(correctCountry);
       setSuggestions([]);
       setShowSuggestions(false);
     }
-    // State 4: Temporarily timed out, showing incorrect guess (use selectedCountry)
     else if (componentStatus === 'active' && isWrong && selectedCountry) {
       setInput(selectedCountry);
       setSuggestions([]);
       setShowSuggestions(false);
     }
-    // State 2: Disabled with nothing (not reviewing, just disabled)
-    // Clear input when in disabled state (unless showing correct answer or wrong guess)
     else if (componentStatus === 'disabled') {
       setInput('');
       setSelectedCountry(null);
@@ -152,27 +146,6 @@ export function TextInput() {
     // State 3: Enabled - don't override user input, let handleChange manage it
     // No action needed, user can type freely
   }, [componentStatus, correctCountry, isWrong, selectedCountry]);
-
-
-  // const handleSubmit = () => {
-  //   if (selectedCountry && onSelect) {
-  //     const result = onSelect(selectedCountry);
-  //     if (result && result.ok) {
-  //       setIsCorrect(true);
-  //     } else {
-  //       setIsWrong(true);
-  //       // Clear the incorrect state after 2 seconds to allow retry
-  //       setTimeout(() => {
-  //         setIsWrong(false);
-  //         setSelectedCountry(null);
-  //         setInput('');
-  //       }, 1000);
-  //     }
-  //     // if (onAnswerFeedback) {
-  //     //   onAnswerFeedback(result);
-  //     // }
-  //   }
-  // };
 
   const normalizeText = (text) => {
     return text
