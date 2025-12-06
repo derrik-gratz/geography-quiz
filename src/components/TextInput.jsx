@@ -2,14 +2,12 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import countryData from '../data/country_data.json';
+import { usePromptState } from '../hooks/usePromptState.js';
 
 export function TextInput() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
-
-  let guesses = null;
-  let disabled = true;
-  let correctCountry = null;
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = usePromptState('name');
 
   
   const [input, setInput] = useState('');
@@ -17,44 +15,6 @@ export function TextInput() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
-
-  if (state.config.gameMode === 'sandbox') {
-    disabled = false; 
-  } else if (state.config.gameMode === 'quiz') {
-    if (state.quiz.status === 'active') {
-      guesses = state.quiz.prompt.guesses.name;
-      disabled = guesses?.status !== 'incomplete';
-      correctCountry = state.quizData[state.quiz.prompt.quizDataIndex]?.name;
-    } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-      const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-      guesses = historyEntry?.name;
-      disabled = true;
-      correctCountry = state.quizData[historyEntry.quizDataIndex]?.name;
-    }
-  }
-
-  const incorrectCountries = useMemo(() => {
-    if (!guesses || !guesses.attempts) return [];
-    return guesses.attempts.filter(attempt => attempt !== correctCountry);
-  }, [guesses?.attempts, correctCountry]);
-
-  // Determine if we're in review mode (should show correct answer)
-  const componentStatus = useMemo(() => {
-    if (state.config.gameMode === 'sandbox') {
-      return 'sandbox';
-    } else if (state.config.gameMode === 'quiz') {
-      if (state.quiz.status === 'not_started' || state.quiz.status === 'completed') {
-        return 'disabled';
-      } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-        return 'reviewing';
-      } else if (guesses && guesses.status === 'incomplete'){
-        // guesses.attempts && guesses.attempts.length > 0 && guesses.attempts[guesses.attempts.length - 1] !== correctCountry) {
-        return 'active';
-      } 
-    }
-    return 'unknown';
-  }, [state.quiz.status, state.quiz.reviewIndex, guesses?.status, guesses?.attempts, correctCountry]);
-
 
   // Compute if the last guess was wrong
   const isWrongGuess = useMemo(() => {
@@ -65,7 +25,7 @@ export function TextInput() {
       }
     }
     return false;
-  }, [componentStatus, guesses?.attempts, guesses?.status, correctCountry, guesses?.attempts.length]);
+  }, [componentStatus, guesses?.attempts, guesses?.status, correctValue, guesses?.attempts.length]);
 
   // Handle wrong guess timeout - show incorrect guess for 1 second
   React.useEffect(() => {
@@ -89,7 +49,7 @@ export function TextInput() {
 
   
   const handleCountryClick = (country) => {
-    if (!disabled && !incorrectCountries.includes(country)) {
+    if (!disabled && !incorrectValues.includes(country)) {
       setInput(country.country);
       setSelectedCountry(country.country);
       setSuggestions([]);
@@ -126,9 +86,9 @@ export function TextInput() {
   // 4. Temporarily timed out, displaying incorrect guess
   // 5. sandbox
   React.useEffect(() => {
-    if (componentStatus === 'reviewing' && correctCountry) {
-      setInput(correctCountry);
-      setSelectedCountry(correctCountry);
+    if (componentStatus === 'reviewing' && correctValue) {
+      setInput(correctValue);
+      setSelectedCountry(correctValue);
       setSuggestions([]);
       setShowSuggestions(false);
     }
@@ -145,7 +105,7 @@ export function TextInput() {
     }
     // State 3: Enabled - don't override user input, let handleChange manage it
     // No action needed, user can type freely
-  }, [componentStatus, correctCountry, isWrong, selectedCountry]);
+  }, [componentStatus, correctValue, isWrong, selectedCountry]);
 
   const normalizeText = (text) => {
     return text
@@ -167,8 +127,8 @@ export function TextInput() {
       
       // Sort suggestions: correct countries first, then incorrect countries at the bottom
       const sortedSuggestions = filtered.sort((a, b) => {
-        const aIsIncorrect = incorrectCountries.includes(a.country);
-        const bIsIncorrect = incorrectCountries.includes(b.country);
+        const aIsIncorrect = incorrectValues.includes(a.country);
+        const bIsIncorrect = incorrectValues.includes(b.country);
         
         // If one is incorrect and the other isn't, put the correct one first
         if (aIsIncorrect && !bIsIncorrect) return 1;
@@ -256,7 +216,7 @@ export function TextInput() {
           listStyle: 'none',
         }}>
           {suggestions.map(country => {
-            const isIncorrect = incorrectCountries.includes(country.country);
+            const isIncorrect = incorrectValues.includes(country.country);
             return (
               <li
                 key={country.code}

@@ -3,6 +3,7 @@ import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import countryData from '../data/country_data.json';
 import quizSets from '../data/quiz_sets.json';
+import { usePromptState } from '../hooks/usePromptState.js';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -17,40 +18,14 @@ const availableColors = [
 export function FlagSelect() {
     const { state } = useQuiz();
     const { submitAnswer } = useQuizActions();
-
-    let guesses = null;
-    let disabled = true;
-    let correctCountryFlagCode = null;
-
-    if (state.config.gameMode === 'sandbox') {
-        disabled = false; 
-    } else if (state.config.gameMode === 'quiz') {
-        if (state.quiz.status === 'active') {
-            guesses = state.quiz.prompt.guesses.flag;
-            disabled = guesses?.status !== 'incomplete';
-            correctCountryFlagCode = state.quizData[state.quiz.prompt.quizDataIndex]?.flagCode;
-        } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-            const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-            guesses = historyEntry?.flag;
-            disabled = true;
-            correctCountryFlagCode = state.quizData[historyEntry.quizDataIndex]?.flagCode;
-        }
-    }
-
-    // Note: attempts array stores values directly (flag codes), not objects
-    const incorrectCountries = useMemo(() => {
-        if (!guesses || !guesses.attempts) return [];
-        // Filter out the correct answer if it exists
-        return guesses.attempts.filter(attempt => attempt !== correctCountryFlagCode);
-    }, [guesses?.attempts, correctCountryFlagCode]);
-
+    const { guesses, correctValue, disabled, componentStatus, incorrectValues } = usePromptState('flag');
 
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
 
     
     const handleFlagClick = (country) => {
-        if (!disabled && !incorrectCountries.includes(country.flagCode)) {
+        if (!disabled && !incorrectValues.includes(country.flagCode)) {
             setSelectedCountry(country);
         }
     };
@@ -90,7 +65,7 @@ export function FlagSelect() {
             // If review mode (disabled), only show guessed + correct flags
             if (disabled) {
                 const guessedFlagCodes = guesses?.attempts || [];
-                return country.flagCode === correctCountryFlagCode || guessedFlagCodes.includes(country.flagCode);
+                return country.flagCode === correctValue || guessedFlagCodes.includes(country.flagCode);
             }
 
             // If sandbox mode, filter by quiz set
@@ -110,21 +85,19 @@ export function FlagSelect() {
             }
             return selectedColors.every(color => country.colors?.includes(color));
         });
-    }, [allCountries, disabled, guesses?.attempts, correctCountryFlagCode, state.config.gameMode, state.config.quizSet, selectedColors]);
+    }, [allCountries, disabled, guesses?.attempts, correctValue, state.config.gameMode, state.config.quizSet, selectedColors]);
 
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
-        if (country.flagCode === correctCountryFlagCode) {
+        if (country.flagCode === correctValue) {
             className += ' correct';
-        } else if (incorrectCountries.includes(country.flagCode)) {
+        } else if (incorrectValues.includes(country.flagCode)) {
             className += ' incorrect';
-        } else if (selectedCountry?.code === country.code) {
+        } else if (selectedCountry?.flagCode === country.flagCode) {
             className += ' selected';
         }
-        
         return className;
     };
-
     return (
         <div className="flag-select">
             <div className="flag-select__controls">
@@ -171,8 +144,8 @@ export function FlagSelect() {
                         tabIndex={0}
                         aria-label={`Select ${country.country || country.code} flag`}
                         style={{
-                            opacity: disabled || incorrectCountries.includes(country.flagCode) ? 0.6 : 1,
-                            cursor: disabled || incorrectCountries.includes(country.flagCode) ? 'not-allowed' : 'pointer'
+                            opacity: disabled || incorrectValues.includes(country.flagCode) ? 0.6 : 1,
+                            cursor: disabled || incorrectValues.includes(country.flagCode) ? 'not-allowed' : 'pointer'
                         }}
                     />
                 ))}
