@@ -59,15 +59,15 @@ export function FlagSelect() {
         return countryData.filter(country => country.flagCode);
     }, []);
 
-    const buttonText = useMemo(() => {
-        if (componentStatus === 'reviewing') {
-            return 'Answer:';
-        }
-        if (componentStatus === 'sandbox') {
-            return 'Submit Flag';
-        }
-        return 'Submit Flag';
-    }, [componentStatus]);
+    // const buttonText = useMemo(() => {
+    //     if (componentStatus === 'reviewing') {
+    //         return 'Answer:';
+    //     }
+    //     if (componentStatus === 'sandbox') {
+    //         return 'Submit Flag';
+    //     }
+    //     return 'Submit Flag';
+    // }, [componentStatus]);
 
     // Single filtering function
     const filteredCountries = useMemo(() => {
@@ -87,13 +87,12 @@ export function FlagSelect() {
                 }
                 return true;
             }
-            
+            if (componentStatus === 'prompting') {
+                return country.flagCode === correctValue;
+            }
             // Active prompt: all flags visible, with optional color filtering
             if (selectedColors.length === 0) {
                 return true;
-            }
-            if (componentStatus === 'prompting') {
-                return country.flagCode === correctValue;
             }
             if (componentStatus === 'active') {
                 return selectedColors.every(color => country.colors?.includes(color));
@@ -111,11 +110,11 @@ export function FlagSelect() {
         }
         
         return countries;
-    }, [allCountries, disabled, guesses?.attempts, correctValue, state.config.gameMode, state.config.quizSet, selectedColors]);
-
+    }, [allCountries, componentStatus, correctValue, state.config.quizSet, selectedColors]);
+    console.log(incorrectValues);
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
-        if (componentStatus === 'prompting' || componentStatus === 'reviewing') {
+        if (componentStatus !== 'active') {
             if (country.flagCode === correctValue) {
                 className += ' correct';
             }
@@ -172,7 +171,7 @@ export function FlagSelect() {
                         tabIndex={0}
                         aria-label={`Select ${country.country || country.code} flag`}
                         style={{
-                            opacity: disabled || incorrectValues.includes(country.flagCode) ? 0.6 : 1,
+                            // opacity: disabled || incorrectValues.includes(country.flagCode) ? 0.6 : 1,
                             cursor: disabled || incorrectValues.includes(country.flagCode) ? 'not-allowed' : 'pointer'
                         }}
                     />

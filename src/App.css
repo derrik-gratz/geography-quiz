@@ -267,6 +267,9 @@
 .flag-select__flag-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));  /* Smaller flags on mobile */
+  /* prevent stretching backgrounds when few flags */
+  align-items: start;
+  justify-items: start;
   overflow-y: auto;
   gap: 0.25rem;  /* Tighter spacing on mobile */
   padding: 0 5px;
@@ -277,6 +280,8 @@
 .flag-icon {
   font-size: var(--flag-icon-size);
   transition: all 0.2s ease;
+  border: 2px solid transparent;
+  border-radius: 4px;
 }
 
 /* Desktop Flag Select Styles */
@@ -317,34 +322,34 @@
 }
 
 .flag-icon:hover:not(.disabled) {
-  border-color: var(--color-hover-outline);
-  box-shadow: 0 0 0 2px var(--color-hover-outline);
-  background-color: var(--color-hover);
+  border-color: var(--input-option-hover);
+  /* box-shadow: 0 0 0 2px var(--color-hover-outline); */
+  background-color: var(--input-option-hover);
   /* transform: translateY(-2px); */
 }
 
 .flag-icon.selected {
-  border-color: var(--color-selected);
-  box-shadow: 0 0 0 2px var(--color-selected-outline);
-  background-color: var(--color-selected);
+  border-color: var(--input-option-selected);
+  /* box-shadow: 0 0 0 2px var(--color-selected); */
+  background-color: var(--input-option-selected);
   /* color: white; */
   transform: scale(1.1);
 }
 
 .flag-icon.correct {
-  border-color: var(--color-correct);
-  box-shadow: 0 0 0 2px var(--color-correct-outline);
-  background-color: var(--color-correct);
+  border-color: var(--input-option-correct);
+  /* box-shadow: 0 0 0 2px var(--color-correct); */
+  background-color: var(--input-option-correct);
   /* color: white; */
 }
 
 .flag-icon.incorrect {
-  border-color: var(--color-incorrect);
-  box-shadow: 0 0 0 2px var(--color-incorrect-outline);
-  background-color: var(--color-incorrect);
+  border-color: var(--input-option-incorrect);
+  /* box-shadow: 0 0 0 2px var(--color-incorrect); */
+  background-color: var(--input-option-incorrect);
   /* color: white; */
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 
