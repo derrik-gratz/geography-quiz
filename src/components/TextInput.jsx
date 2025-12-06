@@ -151,14 +151,19 @@ export function TextInput() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
       <button
           onClick={handleSubmit}
-          disabled={!selectedCountry || disabled }
+          disabled={!selectedCountry || disabled}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
-            border: '1px solid #007bff',
-            backgroundColor: guesses?.status === 'complete' ? '#28a745' : isWrong? '#dc3545' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
-            color: guesses?.status === 'complete' ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
+            border: guesses?.status === 'complete' ? '1px solid var(--color-correct-outline)' : 
+                    isWrong ? '1px solid var(--color-incorrect-outline)' :
+                    `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
+            backgroundColor: guesses?.status === 'complete' ? 'var(--color-correct)' : 
+                            isWrong ? 'var(--color-incorrect)' : 
+                            (selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'),
+            color: guesses?.status === 'complete' || isWrong ? '#fff' : 
+                   (selectedCountry && !disabled ? '#fff' : 'var(--text-primary)'),
             cursor: (selectedCountry && componentStatus === 'active') ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}

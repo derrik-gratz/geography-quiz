@@ -51,140 +51,141 @@ function getCentroid(geo){
   return null;
 }
 
+function getCountryViewWindow(countryCode) {
+  const countryData = allCountryData.find(country => country.code === countryCode);
+  if (countryData?.location) {
+    return { 
+      coordinates: [countryData.location.long, countryData.location.lat], 
+      zoom: 8
+    };
+  }
+  return { coordinates: [0, 0], zoom: 1 };
+}
+
 export function WorldMap() {
-  const {state } = useQuiz();
+  const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
 
-  let disabled = true;
-  let guesses = null;
-  let correctCountry = null;
-
-  if (state.config.gameMode === 'sandbox') {
-    disabled = false;
-  } else if (state.config.gameMode === 'quiz') {
-    if (state.quiz.status === 'active') {
-      guesses = state.quiz.prompt.guesses.location;
-      disabled = guesses?.status !== 'incomplete';
-      correctCountry = state.quizData[state.quiz.prompt.quizDataIndex]?.name;
-    } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-      const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-      guesses = historyEntry?.location;
-      disabled = true;
-      correctCountry = state.quizData[historyEntry.quizDataIndex]?.name;
+  // Determine component state based on game mode and quiz status
+  const { disabled, guesses, correctCountry } = useMemo(() => {
+    if (state.config.gameMode === 'sandbox') {
+      return { disabled: false, guesses: null, correctCountry: null };
     }
-  }
-
+    
+    if (state.config.gameMode === 'quiz') {
+      if (state.quiz.status === 'active') {
+        const locationGuesses = state.quiz.prompt.guesses.location;
+        return {
+          disabled: locationGuesses?.status !== 'incomplete',
+          guesses: locationGuesses,
+          correctCountry: state.quizData[state.quiz.prompt.quizDataIndex]?.code
+        };
+      }
+      
+      if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
+        const historyEntry = state.quiz.history[state.quiz.reviewIndex];
+        return {
+          disabled: true,
+          guesses: historyEntry?.location,
+          correctCountry: state.quizData[historyEntry.quizDataIndex]?.code
+        };
+      }
+    }
+    
+    return { disabled: true, guesses: null, correctCountry: null };
+  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, state.quiz.prompt, state.quiz.history, state.quizData]);
   const incorrectCountries = useMemo(() => {
-    if (!guesses || !guesses.attempts) return [];
+    if (!guesses?.attempts) return [];
     return guesses.attempts.filter(attempt => attempt !== correctCountry);
   }, [guesses?.attempts, correctCountry]);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
-  // const [hoveredCountry, setHoveredCountry] = useState(null);
+  const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
   const [viewWindow, setViewWindow] = useState(defaultViewWindow);
-  // const [hoveredCountry, setHoveredCountry] = useState(null);
-  // const [resetKey, setResetKey] = useState(0);
-  // const [mapSelectedCountry, setMapSelectedCountry] = useState(null);
-
-  React.useEffect(() => {
+  const [resetKey, setResetKey] = useState(0);
+  
+  // Reset selection and view when disabled
+  useEffect(() => {
     if (disabled) {
       setSelectedCountry(null);
       setViewWindow(defaultViewWindow);
     }
-  }, [disabled]);
-
-  const handleCountryClick = (geo) => {
-    if (!disabled) {
-      const countryCode = getCountryCode(geo);
-      if (!incorrectCountries.includes(countryCode)) {
-        setSelectedCountry(countryCode);
-      }
-    }
-  };
-
-  // const handleCountryHover = (countryCode) => {
-  //     if (!disabled && !incorrectCountries.includes(countryCode)) {
-  //     setHoveredCountry(countryCode);
-  //   }
-  // };
-
-  // const handleCountryHoverLeave = () => {
-  //   setHoveredCountry(null);
-  // };
-
-  const getCountryStyle = (countryCode, selectedCountry, incorrectCountries, correctCountry) => {
-    const isIncorrect = incorrectCountries.includes(countryCode);
-    const isCorrect = countryCode === correctCountry;
-    const isSelected = countryCode === selectedCountry;
-    return {
-      // default: {
-      fill: isCorrect ? "var(--color-correct)" : 
-            isIncorrect ? "var(--color-incorrect)" :
-            isSelected ? "var(--color-selected)" : "#D6D6DA",
-      stroke: isCorrect ? "var(--color-correct-outline)" :
-              isIncorrect ? "var(--color-incorrect-outline)" : 
-              isSelected ? "var(--color-selected-outline)" : "#FFFFFF",
-      strokeWidth: 0.2,
-      outline: "none",
-      // },
-      // hover: {
-      //   fill: isCorrect ? "var(--color-correct)" :
-      //         isIncorrect ? "var(--color-incorrect)" :
-      //         isSelected ? "var(--color-selected)" : "var(--color-hover)",
-      //   stroke: isHovered && !isCorrect && !isIncorrect ? "var(--color-hover-outline)" : 
-      //          isCorrect ? "var(--color-correct-outline)" :
-      //          isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
-      //   strokeWidth: isHovered && !isCorrect && !isIncorrect ? 1 : 0.5,
-      // },
-    };
-  };
-  const getCountryViewWindow = (countryCode) => {
-    const countryData = allCountryData.find(country => country.code === countryCode);
-    if (countryData && countryData.location) {
-      return { 
-        coordinates: [countryData.location.long, countryData.location.lat], 
-        zoom: 8
-      };
-    };
-    return { coordinates: [0, 0], zoom: 1 };
-  };
+  }, [disabled, defaultViewWindow]);
 
   const componentStatus = useMemo(() => {
     if (state.config.gameMode === 'sandbox') {
       return 'sandbox';
-    }  else if (state.config.gameMode === 'quiz') {
+    }
+    
+    if (state.config.gameMode === 'quiz') {
       if (state.quiz.status === 'not_started' || state.quiz.status === 'completed') {
         return 'disabled';
-      } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
+      }
+      if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
         return 'reviewing';
-      } else if (guesses && guesses.status === 'incomplete'){
-        // guesses.attempts && guesses.attempts.length > 0 && guesses.attempts[guesses.attempts.length - 1] !== correctCountry) {
+      }
+      if (guesses?.status === 'incomplete') {
         return 'active';
-      } else if (guesses && guesses.status === 'completed'){
-        // guesses.attempts && guesses.attempts.length > 0 && guesses.attempts[guesses.attempts.length - 1] !== correctCountry) {
+      }
+      if (guesses?.status === 'completed') {
         return 'completed';
-      } else if (guesses.status === 'prompted') {
+      }
+      if (guesses?.status === 'prompted') {
         return 'prompting';
       }
     }
+    
     return 'unknown';
-  }, [state.quiz.status, state.quiz.reviewIndex, guesses?.status, guesses?.attempts, correctCountry]);
+  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, guesses?.status]);
 
+  // Update view window based on component status
   useEffect(() => {
     let view = { coordinates: [0, 0], zoom: 1 };
-    if (componentStatus === 'reviewing') {
-      view = getCountryViewWindow(correctCountry)
-    } else if (componentStatus === 'prompting') {
-      view = getCountryViewWindow(correctCountry)
+    if ((componentStatus === 'reviewing' || componentStatus === 'prompting') && correctCountry) {
+      view = getCountryViewWindow(correctCountry);
     }
     setDefaultViewWindow(view);
     setViewWindow(view);
-  }, [componentStatus]);
+  }, [componentStatus, correctCountry]);
+
+  const handleCountryClick = (geo) => {
+    if (disabled) return;
+    const countryCode = getCountryCode(geo);
+    if (countryCode && !incorrectCountries.includes(countryCode)) {
+      setSelectedCountry(countryCode);
+    }
+  };
+
+  const getCountryStyle = (countryCode) => {
+    const isIncorrect = incorrectCountries.includes(countryCode);
+    const isCorrect = countryCode === correctCountry;
+    const isSelected = countryCode === selectedCountry;
+    const isHovered = countryCode === hoveredCountry;
+    
+    return {
+      fill: (componentStatus === 'reviewing' || componentStatus === 'completed') ? "var(--input-option-correct)" :
+            isCorrect ? "var(--input-option-correct)" : 
+            isIncorrect ? "var(--input-option-incorrect)" :
+            isSelected ? "var(--input-option-selected)" :
+            isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)",
+      stroke: (componentStatus === 'reviewing' || componentStatus === 'completed') ? "var(--input-option-correct-stroke)" :
+              isCorrect ? "var(--input-option-correct-stroke)" :
+              isIncorrect ? "var(--input-option-incorrect-stroke)" : 
+              isSelected ? "var(--input-option-selected-stroke)" :
+              isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)",
+      strokeWidth: 0.3,
+      outline: "none",
+    };
+  };
+
+  const getCircleRadius = (baseRadius = 3) => {
+    return baseRadius / Math.sqrt(viewWindow.zoom);
+  };
 
   const resetViewWindow = () => {
     setViewWindow(defaultViewWindow);
-    // setResetKey(prev => prev + 1);
+    setResetKey(prev => prev + 1);
   };
 
   const handleSubmit = () => {
@@ -192,56 +193,21 @@ export function WorldMap() {
       submitAnswer('location', selectedCountry);
     }
   };
-  // LOCKED MODE BEHAVIORS
-    
-    // handleCountryClick: (geo) => {
-    //   // No action in locked mode
-    // },
-    
-    // handleCountryHover: (countryCode) => {
-    //   // Disable hover effects in locked mode
-    //   setHoveredCountry(null);
 
-
-  // Select behavior based on lock state
- 
-
-  // Update viewWindow when lockedOnCode changes
-
-  // Zoom to correct country when user gives up
-  // useEffect(() => {
-  //   if (giveUp && correctCountries.length > 0) {
-  //     const correctCountryCode = correctCountries[correctCountries.length - 1]; // Get the most recent correct country
-  //     const country = countryData.find(country => country.code === correctCountryCode);
-  //     if (country && country.location) {
-  //       const giveUpView = { 
-  //         coordinates: [country.location.long, country.location.lat], 
-  //         zoom: 8
-  //       };
-  //       setViewWindow(giveUpView);
-  //       setResetKey(prev => prev + 1); // Force re-render to apply zoom
-  //     }
-  //   }
-  // }, [giveUp, correctCountries]);
-
-  // // Reset map selection when disabled or promptResetKey changes
-  // useEffect(() => {
-  //   if (disabled || promptResetKey) {
-  //     setMapSelectedCountry(null);
-  //     setSelectedCountry(null);
-  //   }
-  // }, [disabled, promptResetKey]);
-
-
-function getCircleRadius(baseRadius = 3) {
-  return baseRadius / Math.sqrt(viewWindow.zoom);
-}
-
-
+  const onMouseEnter = (countryCode) => {
+    if (!disabled && !incorrectCountries.includes(countryCode) && countryCode !== correctCountry) {
+      setHoveredCountry(countryCode);
+    }
+  };
+  const onMouseLeave = () => {
+    if (!disabled) {
+      setHoveredCountry(null);
+    }
+  };
+  
   return (
-    <div >
+    <div>
       <div style={{
-        // position: 'absolute',
         top: '5px',
         right: '5px',
         display: 'flex',
@@ -253,15 +219,14 @@ function getCircleRadius(baseRadius = 3) {
             onClick={handleSubmit}
             disabled={!selectedCountry || disabled}
             style={{
-              background: selectedCountry && !disabled ? 'rgba(26, 168, 31, 0.8)' : 'rgba(128, 128, 128, 0.8)',
-              color: 'white',
-              border: 'none',
               padding: '8px 12px',
-              borderRadius: '4px',
               fontSize: '14px',
               fontFamily: 'monospace',
-              cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
-              opacity: selectedCountry && !disabled ? 1 : 0.6
+              borderRadius: '4px',
+              border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
+              backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
+              color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
+              cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
             }}
             title="Submit map selection"
           >
@@ -298,7 +263,7 @@ function getCircleRadius(baseRadius = 3) {
         }}
       >
         <ZoomableGroup
-          // key={resetKey}
+          key={resetKey}
           center={viewWindow.coordinates}
           maxZoom={12}
           zoom={viewWindow.zoom}
@@ -314,11 +279,14 @@ function getCircleRadius(baseRadius = 3) {
               geographies.map((geo) => {
                 const countryCode = getCountryCode(geo);
                 // const isHovered = hoveredCountry === countryCode;
-                // const isSelected = selectedCountry === countryCode;
+                
                 
                 if (allCountryData.find(country => country.code === countryCode)) {
-                  // const isIncorrect = incorrectCountries.includes(countryCode);
-                  const countryStyle = getCountryStyle(countryCode, selectedCountry, incorrectCountries, correctCountry);
+                  const countryStyle = getCountryStyle(countryCode);
+                  const isIncorrect = incorrectCountries.includes(countryCode);
+                  const isSelected = selectedCountry === countryCode;
+                  const isCorrect = countryCode === correctCountry;
+
                   return (
                     <Geography
                       key={geo.rsmKey}
@@ -326,10 +294,12 @@ function getCircleRadius(baseRadius = 3) {
                       onClick={() => handleCountryClick(geo)}
                       fill={countryStyle.fill}
                       stroke={countryStyle.stroke}
-                      strokeWidth={countryStyle.strokeWidth}
-                      // onMouseEnter={() => handleCountryHover(countryCode)}
-                      // onMouseLeave={() => handleCountryHoverLeave()}
-                      cursor={incorrectCountries.includes(countryCode) ? "not-allowed" : "pointer"}
+                      strokeWidth={0.5} /*{countryStyle.strokeWidth}*/
+                      cursor={isIncorrect ? "not-allowed" : "pointer"}
+                      style={{
+                        default: { fill: countryStyle.fill },
+                        hover: (!disabled && !isIncorrect && !isCorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
+                      }}
                     />
                   );
                 }
@@ -339,20 +309,19 @@ function getCircleRadius(baseRadius = 3) {
           </Geographies>
           <Geographies geography={tinyGeoUrl}>
             {({ geographies, projection }) => {
-              // Separate circles into regular and special (selected/prompted) groups
               const regularCircles = [];
               const specialCircles = [];
               
               geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
                 const isSelected = selectedCountry === countryCode;
-                // const isHovered = hoveredCountry === countryCode;
                 const isIncorrect = incorrectCountries.includes(countryCode);
                 const isCorrect = countryCode === correctCountry;
                 
                 const [centroid_x, centroid_y] = getCentroid(geo);
                 const [cx, cy] = projection([centroid_x, centroid_y]);
-                const countryStyle = getCountryStyle(countryCode, selectedCountry, incorrectCountries, correctCountry);
+                const countryStyle = getCountryStyle(countryCode);
+                
                 const circleElement = (
                   <circle
                     key={geo.rsmKey}
@@ -367,16 +336,14 @@ function getCircleRadius(baseRadius = 3) {
                         handleCountryClick(geo);
                       }
                     }}
-                    // onMouseEnter={() => handleCountryHover(countryCode)}
-                    // onMouseLeave={() => handleCountryHoverLeave()}
+                    onMouseEnter={() => onMouseEnter(countryCode)}
+                    onMouseLeave={() => onMouseLeave()}
                     style={{
                       cursor: isIncorrect ? "not-allowed" : "pointer",
                       outline: "none",
                     }}
                   />
                 );
-
-                // Add to special group if selected, hovered, or prompted
                 if (isSelected || isCorrect) {
                   specialCircles.push(circleElement);
                 } else {
@@ -384,7 +351,6 @@ function getCircleRadius(baseRadius = 3) {
                 }
               });
 
-              // Render regular circles first, then special circles on top
               return [...regularCircles, ...specialCircles];
             }}
           </Geographies>

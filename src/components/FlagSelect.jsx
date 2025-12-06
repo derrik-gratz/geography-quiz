@@ -59,17 +59,26 @@ export function FlagSelect() {
         return countryData.filter(country => country.flagCode);
     }, []);
 
+    const buttonText = useMemo(() => {
+        if (componentStatus === 'reviewing') {
+            return 'Answer:';
+        }
+        if (componentStatus === 'sandbox') {
+            return 'Submit Flag';
+        }
+        return 'Submit Flag';
+    }, [componentStatus]);
+
     // Single filtering function
     const filteredCountries = useMemo(() => {
-        return allCountries.filter(country => {
-            // If review mode (disabled), only show guessed + correct flags
-            if (disabled) {
+        let countries = allCountries.filter(country => {
+            if (componentStatus === 'reviewing' || componentStatus === 'completed') {
                 const guessedFlagCodes = guesses?.attempts || [];
                 return country.flagCode === correctValue || guessedFlagCodes.includes(country.flagCode);
             }
 
             // If sandbox mode, filter by quiz set
-            if (state.config.gameMode === 'sandbox') {
+            if (componentStatus === 'sandbox') {
                 if (state.config.quizSet && state.config.quizSet !== 'all') {
                     const quizSetData = quizSets.find(q => q.name === state.config.quizSet);
                     if (quizSetData) {
@@ -83,15 +92,34 @@ export function FlagSelect() {
             if (selectedColors.length === 0) {
                 return true;
             }
-            return selectedColors.every(color => country.colors?.includes(color));
+            if (componentStatus === 'prompting') {
+                return country.flagCode === correctValue;
+            }
+            if (componentStatus === 'active') {
+                return selectedColors.every(color => country.colors?.includes(color));
+            }
+            return false;
         });
+        
+        // Sort so correct flag appears first
+        if (componentStatus === 'reviewing' || componentStatus === 'completed') {
+            countries.sort((a, b) => {
+                if (a.flagCode === correctValue) return -1;
+                if (b.flagCode === correctValue) return 1;
+                return 0;
+            });
+        }
+        
+        return countries;
     }, [allCountries, disabled, guesses?.attempts, correctValue, state.config.gameMode, state.config.quizSet, selectedColors]);
 
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
-        if (country.flagCode === correctValue) {
-            className += ' correct';
-        } else if (incorrectValues.includes(country.flagCode)) {
+        if (componentStatus === 'prompting' || componentStatus === 'reviewing') {
+            if (country.flagCode === correctValue) {
+                className += ' correct';
+            }
+        } if (incorrectValues.includes(country.flagCode)) {
             className += ' incorrect';
         } else if (selectedCountry?.flagCode === country.flagCode) {
             className += ' selected';
@@ -104,18 +132,18 @@ export function FlagSelect() {
                 <button
                     className="flag-select__submit-button"
                     onClick={handleSubmit}
-                    disabled={!selectedCountry || disabled }
+                    disabled={!selectedCountry || disabled}
                     style={{
                         padding: '0.3rem 0.8rem',
                         fontSize: '0.8rem',
                         borderRadius: '4px',
-                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled)'}`,
-                        backgroundColor: selectedCountry && !disabled ? 'var(--color-selected)' : 'var(--color-disabled-bg)',
-                        color: selectedCountry && !disabled ? '#fff' : 'var(--color-disabled)',
+                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
+                        backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
+                        color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
                         cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
                     }}
                 >
-                    {disabled ? 'Answer:' : <>Submit<br />Flag</>}
+                    <>Submit<br />Flag</>
                 </button>
                 <div className="flag-select__color-picker">
                     {!disabled && (

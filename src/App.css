@@ -7,19 +7,22 @@
   --background-primary: #ffffff;
   --background-secondary: #f8f9fa;
   --background-tertiary: #f5f5f5;
+  --background-contrast: #080808;
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
-  --color-hover: #fff3cd;
-  --color-hover-outline: #ffc107;
-  --color-selected: #007bff;
-  --color-selected-outline: #0056b3; 
-  --color-correct: #28a745; 
-  --color-correct-outline: #1e7e34;
-  --color-incorrect: #dc3545;
-  --color-incorrect-outline: #c82333;
-  --color-disabled: #6c757d;
-  --color-disabled-bg: #f8f9fa;
+  /* Interactive state colors - consistent across all components */
+  --submit-button-ready: #31b953;
+  --submit-button-not-ready: #6c757d;
+  --color-submit-button-outline: #00cc33;
+  --input-option-neutral: #f8f9fa;
+  --input-option-hover: #ddcb00;
+  --input-option-selected: #007bff;
+  --input-option-correct: #28a745;
+  --input-option-incorrect: #dc3545;
+  --input-option-disabled: #6c757d;
+  --map-default: #f8f9fa;
+  --map-default-outline: #e0e0e0;
   --flag-icon-size: 40px;  /* Mobile default */
 }
 
