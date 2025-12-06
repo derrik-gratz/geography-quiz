@@ -164,13 +164,11 @@ export function WorldMap() {
     const isHovered = countryCode === hoveredCountry;
     
     return {
-      fill: (componentStatus === 'reviewing' || componentStatus === 'completed') ? "var(--input-option-correct)" :
-            isCorrect ? "var(--input-option-correct)" : 
+      fill: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct)" :
             isIncorrect ? "var(--input-option-incorrect)" :
             isSelected ? "var(--input-option-selected)" :
             isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)",
-      stroke: (componentStatus === 'reviewing' || componentStatus === 'completed') ? "var(--input-option-correct-stroke)" :
-              isCorrect ? "var(--input-option-correct-stroke)" :
+      stroke: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct-stroke)" :
               isIncorrect ? "var(--input-option-incorrect-stroke)" : 
               isSelected ? "var(--input-option-selected-stroke)" :
               isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)",
