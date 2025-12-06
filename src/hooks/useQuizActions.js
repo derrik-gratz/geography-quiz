@@ -18,7 +18,7 @@ export function useQuizActions() {
 
     const handlePromptTypeChange = (type, checked) => {
         if (checked) {
-            setSelectedPromptTypes([state.config.selectedPromptTypes, type]);
+            setSelectedPromptTypes([...state.config.selectedPromptTypes, type]);
         } else {
             setSelectedPromptTypes(state.config.selectedPromptTypes.filter(t => t !== type));
         }
