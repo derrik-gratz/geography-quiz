@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuiz } from '../hooks/useQuiz.js';
 
 /**
  * QuizLog Component
@@ -17,115 +18,174 @@ import React, { useState } from 'react';
  * @returns {JSX.Element} Quiz log table interface
  */
 export function QuizLog({ 
-    promptHistory, 
-    attempts, 
-    answers, 
-    currentPrompt, 
-    requiredAnswerTypes = [], 
-    isComplete = false,
-    totalCountries,
-    isQuizFinished = false,
-    quizSetName = 'Geography Quiz'
+    // promptHistory, 
+    // attempts, 
+    // answers, 
+    // currentPrompt, 
+    // requiredAnswerTypes = [], 
+    // isComplete = false,
+    // totalCountries,
+    // isQuizFinished = false,
+    // quizSetName = 'Geography Quiz'
 }) {
+    const { state } = useQuiz();
     const [exportSuccess, setExportSuccess] = useState(false);
     const [obscureNames, setObscureNames] = useState(true);
-    // Create log entries for history
-    // Treat all but the last history item as completed; the last one is the current prompt
-    // If quiz is finished, all items should be completed
-    const historyEntries = promptHistory.map((prompt, index) => {
-        const isLast = index === promptHistory.length - 1;
-        return {
-            country: prompt.countryData?.country || prompt.countryCode,
-            promptType: prompt.promptType,
-            status: (isLast && !isQuizFinished) ? 'in_progress' : 'completed',
-            completionStatus: prompt.completionStatus || 'unknown',
-            answerCompletionStatus: prompt.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' },
-            attempts: prompt.finalAttempts || { map: 0, text: 0, flag: 0 },
-            answers: prompt.finalAnswers || {}
-        };
-    });
 
-    // Current question entry
-    const currentEntry = currentPrompt ? {
-        country: currentPrompt.countryData?.country || currentPrompt.countryCode,
-        promptType: currentPrompt.promptType,
-        status: isComplete ? 'completed' : 'in_progress',
-        attempts,
-        answers,
-        requiredTypes: requiredAnswerTypes
-    } : null;
-
-    // Combine entries without duplicating current prompt
-    let allEntries = historyEntries;
-    if (currentEntry) {
-        const lastIsSame = promptHistory.length > 0 &&
-            (promptHistory[promptHistory.length - 1]?.countryCode === currentPrompt.countryCode);
-        if (lastIsSame) {
-            // Replace the last history row with the current live row
-            allEntries = [
-                ...historyEntries.slice(0, Math.max(0, historyEntries.length - 1)),
-                currentEntry
-            ];
-        } else {
-            allEntries = [...historyEntries, currentEntry];
-        }
+    // Don't show quiz log if quiz hasn't started
+    if (state.quiz.status === 'not_started') {
+        return null;
     }
 
-    const getStatusIcon = (entry) => {
-        if (entry.status === 'completed') {
-            return '✅';
-        } else if (entry.status === 'in_progress') {
-            return '🔄';
-        }
-        return '⏳';
-    };
+    let allEntries = state.quiz.history;
+    if (state.quiz.status === 'active') {
+        allEntries = [...allEntries, state.quiz.prompt];
+    }
+    console.log(state);
+    console.log('allEntries', allEntries);
 
-    const getAnswerStatus = (entry, type) => {
-        // Map prompt types to answer keys
-        const typeToKey = {
-            'location': 'map',
-            'name': 'text', 
-            'flag': 'flag'
-        };
-        
-        if (type === entry.promptType) {
-            return '📋';
-        }
-        if (entry.status === 'completed') {
-            // Use per-type completion status instead of overall completion status
-            const answerKey = typeToKey[type];
-            const typeStatus = entry.answerCompletionStatus?.[answerKey];
-            
-            if (typeStatus === 'correct') {
-                return '✓';
-            } else if (typeStatus === 'incorrect') {
-                return '✗';
-            } else if (typeStatus === 'unanswered') {
-                // If the prompt is completed but a category is unanswered, treat it as incorrect
-                return '✗';
+    const promptScore = (entry) => {
+        return entry.map(type => {
+            if (type.status === 'completed') {
+                return false;
             }
-            return '?';
-        }
-        
-        const answerKey = typeToKey[type];
-        if (entry.answers && entry.answers[answerKey]) {
-            return '✓';
-        }
-        
-        if (entry.requiredTypes && entry.requiredTypes.includes(type)) {
-            return '?';
-        }
-        
-        return '-';
-    };
+        }).reduce((sum, status) => sum + status / 2, 0);
+    }
+    
+    const logEntries = (history, prompt) => {
+        const pastPrompts = history.map((entry) => {
+            const correctCountry = state.quizData[entry.quizDataIndex].country;
+            const score = promptScore(entry);
+            const guesses = {
+                location: (() => {
+                    const type = entry.location;
+                    const attemptCount = type?.attempts?.length || 0;
+                    return type?.status === 'prompted' ? '📋' :
+                        type?.status === 'incomplete' ? '❌/' + attemptCount :
+                        type?.status === 'completed' ? '✅/' + attemptCount : '❓';
+                })(),
+                name: (() => {
+                    const type = entry.name;
+                    const attemptCount = type?.attempts?.length || 0;
+                    return type?.status === 'prompted' ? '📋' :
+                        type?.status === 'incomplete' ? '❌/' + attemptCount :
+                        type?.status === 'completed' ? '✅/' + attemptCount : '❓';
+                })(),
+                flag: (() => {
+                    const type = entry.flag;
+                    const attemptCount = type?.attempts?.length || 0;
+                    return type?.status === 'prompted' ? '📋' :
+                        type?.status === 'incomplete' ? '❌/' + attemptCount :
+                        type?.status === 'completed' ? '✅/' + attemptCount : '❓';
+                })()
+            };
+            return { correctCountry, score, guesses };
+        });
+        return pastPrompts;
+    }
 
-    const getAttemptsDisplay = (entry, type) => {
-        if (entry.status === 'completed') {
-            return entry.attempts?.[type] || '-';
-        }
+    return (
+        <div className="quiz-log-table-container">
+                <table className="quiz-log-table">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            {/* <th>Prompt</th> */}
+                            {/* <th>Status</th> */}
+                            <th>Map</th>
+                            <th>Name</th>
+                            <th>Flag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {logEntries.reverse().map((correctCountry, score, guesses) => (
+                            <tr key={index} className={`log-entry ${entry.status} ${entry.completionStatus || ''}`}>
+                                <td className="country-name">
+                                    {entry.status === 'in_progress' ? "?" : entry.country}
+                                </td>
+                                {/* <td className="prompt-type">
+                                    {entry.promptType}
+                                </td> */}
+                                {/* <td className="status">
+                                    {getStatusIcon(entry)}
+                                </td> */}
+                                <td className="answer-cell">
+                                    <span className="answer-status">
+                                        {getAnswerStatus(entry, 'location')}
+                                    </span>
+                                    <span className="attempts">
+                                        ({getAttemptsDisplay(entry, 'map')})
+                                    </span>
+                                </td>
+                                <td className="answer-cell">
+                                    <span className="answer-status">
+                                        {getAnswerStatus(entry, 'name')}
+                                    </span>
+                                    <span className="attempts">
+                                        ({getAttemptsDisplay(entry, 'text')})
+                                    </span>
+                                </td>
+                                <td className="answer-cell">
+                                    <span className="answer-status">
+                                        {getAnswerStatus(entry, 'flag')}
+                                    </span>
+                                    <span className="attempts">
+                                        ({getAttemptsDisplay(entry, 'flag')})
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+    );
+    return null;
+    // const getAnswerStatus = (entry, type) => {
+    //     // Map prompt types to answer keys
+    //     const typeToKey = {
+    //         'location': 'map',
+    //         'name': 'text', 
+    //         'flag': 'flag'
+    //     };
         
-        return entry.attempts?.[type] || '-';
-    };
+    //     if (type === entry.promptType) {
+    //         return '📋';
+    //     }
+    //     if (entry.status === 'completed') {
+    //         // Use per-type completion status instead of overall completion status
+    //         const answerKey = typeToKey[type];
+    //         const typeStatus = entry.answerCompletionStatus?.[answerKey];
+            
+    //         if (typeStatus === 'correct') {
+    //             return '✓';
+    //         } else if (typeStatus === 'incorrect') {
+    //             return '✗';
+    //         } else if (typeStatus === 'unanswered') {
+    //             // If the prompt is completed but a category is unanswered, treat it as incorrect
+    //             return '✗';
+    //         }
+    //         return '?';
+    //     }
+        
+    //     const answerKey = typeToKey[type];
+    //     if (entry.answers && entry.answers[answerKey]) {
+    //         return '✓';
+    //     }
+        
+    //     if (entry.requiredTypes && entry.requiredTypes.includes(type)) {
+    //         return '?';
+    //     }
+        
+    //     return '-';
+    // };
+
+    // const getAttemptsDisplay = (entry, type) => {
+    //     if (entry.status === 'completed') {
+    //         return entry.attempts?.[type] || '-';
+    //     }
+        
+    //     return entry.attempts?.[type] || '-';
+    // };
 
     // Export function to create simplified text format of results
     const exportResults = () => {

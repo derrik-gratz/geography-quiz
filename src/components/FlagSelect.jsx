@@ -111,7 +111,6 @@ export function FlagSelect() {
         
         return countries;
     }, [allCountries, componentStatus, correctValue, state.config.quizSet, selectedColors]);
-    console.log(incorrectValues);
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
         if (componentStatus !== 'active') {
