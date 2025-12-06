@@ -4,7 +4,7 @@ import { QuizConfig } from './components/QuizConfig.jsx';
 import { QuizPrompt } from './components/QuizPrompt.jsx';
 import { FlagSelect } from './components/FlagSelect.jsx';
 import { TextInput } from './components/TextInput.jsx';
-
+import { WorldMap } from './components/WorldMap.jsx';
 /**
  * Main App component for the Geography Quiz application
  * Displays quiz configuration interface
@@ -25,7 +25,9 @@ function App() {
                     <div className="right-column">
                         <TextInput />
                         <FlagSelect />
+                        <WorldMap />
                     </div>
+
                 </main>
             </div>
         </QuizProvider>
