@@ -9,7 +9,7 @@ import { useQuiz } from './useQuiz.js';
  */
 export function usePromptState(guessType) {
   const { state } = useQuiz();
-  const correctField = guessType === 'name' ? 'name' : guessType === 'flag' ? 'flagCode' : guessType === 'location' ? 'code' : null;
+  const correctField = guessType === 'name' ? 'country' : guessType === 'flag' ? 'flagCode' : guessType === 'location' ? 'code' : null;
   const { guesses, correctValue, disabled } = useMemo(() => {
     let guesses = null;
     let correctValue = null;
