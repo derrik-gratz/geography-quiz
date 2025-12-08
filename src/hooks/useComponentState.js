@@ -7,7 +7,7 @@ import { useQuiz } from './useQuiz.js';
  * @param {string} guessType - The type of guess: 'name', 'flag', or 'location'
  * @returns {Object} Component state including guesses, correctValue, disabled, componentStatus, incorrectValues
  */
-export function usePromptState(guessType) {
+export function useComponentState(guessType) {
   const { state } = useQuiz();
   const correctField = guessType === 'name' ? 'country' : guessType === 'flag' ? 'flagCode' : guessType === 'location' ? 'code' : null;
   const { guesses, correctValue, disabled } = useMemo(() => {

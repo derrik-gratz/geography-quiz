@@ -3,7 +3,7 @@ import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import countryData from '../data/country_data.json';
 import quizSets from '../data/quiz_sets.json';
-import { usePromptState } from '../hooks/usePromptState.js';
+import { useComponentState } from '../hooks/useComponentState.js';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -18,7 +18,7 @@ const availableColors = [
 export function FlagSelect() {
     const { state } = useQuiz();
     const { submitAnswer } = useQuizActions();
-    const { guesses, correctValue, disabled, componentStatus, incorrectValues } = usePromptState('flag');
+    const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('flag');
 
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);

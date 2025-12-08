@@ -2,12 +2,12 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import countryData from '../data/country_data.json';
-import { usePromptState } from '../hooks/usePromptState.js';
+import { useComponentState } from '../hooks/useComponentState.js';
 
 export function TextInput() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
-  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = usePromptState('name');
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
 
   
   const [input, setInput] = useState('');
