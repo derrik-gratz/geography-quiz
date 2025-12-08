@@ -41,7 +41,6 @@ export function QuizProvider({ children }) {
             dispatch({ type: 'PROMPT_FINISHED' });
         }
     }, [promptCompleted, state.quiz.status]);
-    console.log(state.config.quizSet);
     useEffect(() => {
         if (state.quiz.status === 'reviewing' && state.quiz.reviewType === 'auto') {
             // Calculate delay: 1s for success, 3s for failure/give-up

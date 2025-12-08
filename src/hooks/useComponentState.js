@@ -14,7 +14,6 @@ export function useComponentState(guessType) {
     let guesses = null;
     let correctValue = null;
     let disabled = true;
-    console.log('correctField', correctField);
 
     if (state.config.gameMode === 'sandbox') {
       disabled = false;
