@@ -20,7 +20,8 @@ export function QuizConfig() {
     const { quizSet, selectedPromptTypes, gameMode } = state.config;
 
     return (
-        <div className="quiz-config">
+        <div className="quiz-config component-panel">
+            <h2 className="component-panel__title">Quiz Configuration</h2>
             {state.quiz.status === 'not_started' && (
                 <div className="quiz-config__game-mode-select">
                     <label htmlFor="game-mode-select">Game mode:</label>

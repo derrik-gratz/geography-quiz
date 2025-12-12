@@ -147,7 +147,8 @@ export function TextInput() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <div className="text-input component-panel" style={{ position: 'relative', width: '100%' }}>
+      <h2 className="component-panel__title">Country Name</h2>
       <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
       <button
           onClick={handleSubmit}

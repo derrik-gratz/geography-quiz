@@ -204,10 +204,12 @@ export function WorldMap() {
   };
   
   return (
-    <div>
+    <div className="world-map component-panel">
+      <h2 className="component-panel__title">World Map</h2>
       <div style={{
-        top: '5px',
-        right: '5px',
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
         display: 'flex',
         gap: '5px',
         zIndex: 1000

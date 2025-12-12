@@ -125,8 +125,9 @@ export function FlagSelect() {
         return className;
     };
     return (
-        <div className="flag-select">
-            <div className="flag-select__controls">
+        <div className="flag-select component-panel">
+            <h2 className="component-panel__title">Flag Selection</h2>
+            <div className="flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>
                 <button
                     className="flag-select__submit-button"
                     onClick={handleSubmit}
@@ -138,24 +139,27 @@ export function FlagSelect() {
                         border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
                         backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
                         color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
-                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
+                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+                        whiteSpace: 'nowrap'
                     }}
                 >
                     <>Submit<br />Flag</>
                 </button>
-                <div className="flag-select__color-picker">
+                <div className="flag-select__color-picker" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 auto', minWidth: 0 }}>
                     {!disabled && (
                         <>
-                            <span className="color-filter__label">Filter by colors:</span>
-                            {availableColors.map(color =>
-                                <button 
-                                    key={color.name}
-                                    className={`flag-select__color-filter-color ${selectedColors.includes(color.name) ? "selected" : ""}`}
-                                    onClick={() => handleColorClick(color.name)}
-                                    style={{ backgroundColor: color.color }}
-                                    title={color.name}
-                                ></button>
-                            )}
+                            <span className="color-filter__label" style={{ whiteSpace: 'normal', flexShrink: 0, minWidth: 'fit-content', maxWidth: 'none' }}>Filter by colors:</span>
+                            <div className="color-filter__colors" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', alignItems: 'center' }}>
+                                {availableColors.map(color =>
+                                    <button 
+                                        key={color.name}
+                                        className={`flag-select__color-filter-color ${selectedColors.includes(color.name) ? "selected" : ""}`}
+                                        onClick={() => handleColorClick(color.name)}
+                                        style={{ backgroundColor: color.color, flexShrink: 0 }}
+                                        title={color.name}
+                                    ></button>
+                                )}
+                            </div>
                         </>
                     )}
                 </div>

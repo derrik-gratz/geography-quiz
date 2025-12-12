@@ -172,7 +172,8 @@ export function QuizPrompt({}) {
 
 
     return (
-        <div className="quiz-prompt">
+        <div className="quiz-prompt component-panel">
+            <h2 className="component-panel__title">Prompt</h2>
             <div className="quiz-prompt__content">
                 {promptContent}
             </div>

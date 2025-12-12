@@ -129,34 +129,37 @@ export function QuizLog({
     };
 
     return (
-        <div className="quiz-log">
-            <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
-                <input
-                    type="checkbox"
-                    checked={obscureNames}
-                    onChange={(e) => setObscureNames(e.target.checked)}
-                    style={{ margin: 0 }}
-                />
-                Hide country names
-                </label>
-                <button 
-                    onClick={copyResultsToClipboard}
-                    className="quiz-log__export-btn"
-                    style={{
-                        backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        padding: '8px 16px',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.2s'
-                    }}
-                >
-                    {exportSuccess ? '✓ Copied!' : 'Export Results'}
-                </button>
-            </div>
+        <div className="quiz-log component-panel">
+            <h2 className="component-panel__title">Quiz Progress</h2>
+            {state.quiz.status === 'completed' && (
+                <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+                    <input
+                        type="checkbox"
+                        checked={obscureNames}
+                        onChange={(e) => setObscureNames(e.target.checked)}
+                        style={{ margin: 0 }}
+                    />
+                    Hide country names
+                    </label>
+                    <button 
+                        onClick={copyResultsToClipboard}
+                        className="quiz-log__export-btn"
+                        style={{
+                            backgroundColor: exportSuccess ? '#28a745' : '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.2s'
+                        }}
+                    >
+                        {exportSuccess ? '✓ Copied!' : 'Export Results'}
+                    </button>
+                </div>
+            )}
                 <table className="quiz-log-table">
                     <thead>
                         <tr>
