@@ -57,7 +57,7 @@ export function QuizPrompt({}) {
 
     const successfulCompletion = useMemo(() => 
         Object.values(state.quiz.prompt.guesses).every(
-            guess => guess.status === 'prompted' || guess.status === 'complete'
+            guess => guess.status === 'prompted' || guess.status === 'completed'
         ),
         [state.quiz.prompt.guesses]
     );

@@ -156,19 +156,19 @@ export function TextInput() {
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
-            border: guesses?.status === 'complete' ? '1px solid var(--input-option-correct)' : 
+            border: guesses?.status === 'completed' ? '1px solid var(--input-option-correct)' : 
                     isWrong ? '1px solid var(--input-option-incorrect)' :
                     `1px solid ${selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'}`,
-            backgroundColor: guesses?.status === 'complete' ? 'var(--input-option-correct)' : 
+            backgroundColor: guesses?.status === 'completed' ? 'var(--input-option-correct)' : 
                             isWrong ? 'var(--input-option-incorrect)' : 
                             (selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'),
-            color: guesses?.status === 'complete' || isWrong ? '#fff' : 
+            color: guesses?.status === 'completed' || isWrong ? '#fff' : 
                    (selectedCountry && !disabled ? '#fff' : 'var(--text-primary)'),
             cursor: (selectedCountry && componentStatus === 'active') ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}
         >
-          {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'complete' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
+          {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'completed' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
         </button>
         <input
           type="text"
@@ -203,7 +203,7 @@ export function TextInput() {
         />
         
       </div>
-      {showSuggestions && suggestions.length > 0 && guesses?.status !== 'complete' && (
+      {showSuggestions && suggestions.length > 0 && guesses?.status !== 'completed' && (
         <ul style={{
           position: 'absolute',
           left: 0,

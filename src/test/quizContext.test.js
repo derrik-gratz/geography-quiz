@@ -90,7 +90,7 @@ describe('quizReducer', () => {
             payload: { type: 'flag', value: 'MX', isCorrect: true }
         });
         
-        expect(newState.quiz.prompt.guesses.flag.status).toBe('complete');
+        expect(newState.quiz.prompt.guesses.flag.status).toBe('completed');
         expect(newState.quiz.prompt.guesses.flag.n_attempts).toBe(1);
         expect(newState.quiz.prompt.guesses.flag.attempts).toHaveLength(1);
         expect(newState.quiz.prompt.guesses.flag.attempts[0]).toBe('MX');
@@ -108,8 +108,8 @@ describe('quizReducer', () => {
                     quizDataIndex: 0,
                     guesses: {
                         location: { status: 'prompted', n_attempts: 0, attempts: [] },
-                        name: { status: 'complete', n_attempts: 1, attempts: ['Mexico'] },
-                        flag: { status: 'complete', n_attempts: 1, attempts: ['MX'] }
+                        name: { status: 'completed', n_attempts: 1, attempts: ['Mexico'] },
+                        flag: { status: 'completed', n_attempts: 1, attempts: ['MX'] }
                     }
                 }
             }
@@ -120,7 +120,7 @@ describe('quizReducer', () => {
         expect(newState.quiz.prompt.quizDataIndex).toBe(1);
         expect(newState.quiz.history).toHaveLength(1);
         expect(newState.quiz.history[0].quizDataIndex).toBe(0);
-        expect(newState.quiz.history[0].name.status).toBe('complete');
+        expect(newState.quiz.history[0].name.status).toBe('completed');
         expect(newState.quiz.prompt.status).toBeNull();
         expect(newState.quiz.status).toBe('reviewing');
         expect(newState.quiz.reviewType).toBe('auto');
@@ -138,8 +138,8 @@ describe('quizReducer', () => {
                     quizDataIndex: 1,
                     guesses: {
                         location: { status: 'prompted', n_attempts: 0, attempts: [] },
-                        name: { status: 'complete', n_attempts: 1, attempts: ['Mexico'] },
-                        flag: { status: 'complete', n_attempts: 1, attempts: ['MX'] }
+                        name: { status: 'completed', n_attempts: 1, attempts: ['Mexico'] },
+                        flag: { status: 'completed', n_attempts: 1, attempts: ['MX'] }
                     }
                 }
             }

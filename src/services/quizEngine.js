@@ -14,8 +14,9 @@ export function checkSubmission(promptCountryData, submissionType, submissionVal
 }
 
 export function checkPromptCompletion(quizContext){
-    // haven't figured out how give ups will be handled. 
-    // So far, possible state is null from default, prompted, incorrect, or correct.
+    // Check if all guesses have a status that indicates completion
+    // Status values: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
+    // A prompt is complete when all guesses are not null and not 'incomplete'
     return Object.values(quizContext.quiz.prompt.guesses).every(status => 
         status.status !== null && status.status !== 'incomplete'
     );
