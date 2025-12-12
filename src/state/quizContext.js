@@ -171,7 +171,7 @@ export function quizReducer(state, action){
                             ...state.quiz.prompt.guesses,
                             [type]: { 
                                 ...state.quiz.prompt.guesses[type],
-                                status: isCorrect ? 'complete' : 'incomplete',
+                                status: isCorrect ? 'completed' : 'incomplete',
                                 n_attempts: state.quiz.prompt.guesses[type].n_attempts + 1,
                                 attempts: [...state.quiz.prompt.guesses[type].attempts, value] 
                             }
