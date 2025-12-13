@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
 
 /**
  * QuizLog Component
@@ -31,6 +32,8 @@ export function QuizLog({
     const { state } = useQuiz();
     const [exportSuccess, setExportSuccess] = useState(false);
     const [obscureNames, setObscureNames] = useState(true);
+    const defaultCollapsed = useMemo(() => state.quiz.status === 'not_started', [state.quiz.status]);
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const promptScore = (entry) => {
         const types = ['location', 'name', 'flag'];
@@ -129,8 +132,17 @@ export function QuizLog({
     };
 
     return (
-        <div className="quiz-log component-panel">
-            <h2 className="component-panel__title">Quiz Progress</h2>
+        <div className={`quiz-log component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Quiz Progress' : 'Collapse Quiz Progress'}
+                >
+                    {isCollapsed ? '▶ Quiz Progress' : '▼ Quiz Progress'}
+                </button>
+            </div>
+            <div className="component-panel__content">
             {state.quiz.status === 'completed' && (
                 <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
@@ -190,6 +202,7 @@ export function QuizLog({
                         ))}
                     </tbody>
                 </table>
+            </div>
             </div>
     );
    

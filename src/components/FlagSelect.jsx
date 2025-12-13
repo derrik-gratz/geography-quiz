@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
 import countryData from '../data/country_data.json';
 import quizSets from '../data/quiz_sets.json';
 import { usePromptState } from '../hooks/usePromptState.js';
@@ -19,6 +20,9 @@ export function FlagSelect() {
     const { state } = useQuiz();
     const { submitAnswer } = useQuizActions();
     const { guesses, correctValue, disabled, componentStatus, incorrectValues } = usePromptState('flag');
+    // Collapse when flag is prompted (componentStatus === 'prompting')
+    const defaultCollapsed = useMemo(() => componentStatus === 'prompting', [componentStatus]);
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
@@ -125,8 +129,17 @@ export function FlagSelect() {
         return className;
     };
     return (
-        <div className="flag-select component-panel">
-            <h2 className="component-panel__title">Flag Selection</h2>
+        <div className={`flag-select component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Flag Selection' : 'Collapse Flag Selection'}
+                >
+                    {isCollapsed ? '▶ Flag Selection' : '▼ Flag Selection'}
+                </button>
+            </div>
+            <div className="component-panel__content">
             <div className="flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>
                 <button
                     className="flag-select__submit-button"
@@ -179,6 +192,7 @@ export function FlagSelect() {
                         }}
                     />
                 ))}
+            </div>
             </div>
         </div>
     );

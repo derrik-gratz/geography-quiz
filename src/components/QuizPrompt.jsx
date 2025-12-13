@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'; // useState, useEffect,
 import { useQuiz } from '../hooks/useQuiz';
 import { useQuizActions } from '../hooks/useQuizActions';
+import { useCollapsible } from '../hooks/useCollapsible';
 import { derivePromptValue } from '../services/quizEngine.js';
 
 // {state.quizStatus === 'not_started' && (
@@ -16,6 +17,9 @@ import { derivePromptValue } from '../services/quizEngine.js';
 export function QuizPrompt({}) {
     const { state, promptCompleted, isQuizFinished, currentPromptData } = useQuiz();
     const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
+    // Expand when quiz not started, collapse otherwise
+    const defaultCollapsed = false; //state.quiz.status !== 'not_started';
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     // Reset give up state when prompt changes
     // useEffect(() => {
@@ -172,13 +176,23 @@ export function QuizPrompt({}) {
 
 
     return (
-        <div className="quiz-prompt component-panel">
-            <h2 className="component-panel__title">Prompt</h2>
+        <div className={`quiz-prompt component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Prompt' : 'Collapse Prompt'}
+                >
+                    {isCollapsed ? '▶ Prompt' : '▼ Prompt'}
+                </button>
+            </div>
+            <div className="component-panel__content">
             <div className="quiz-prompt__content">
                 {promptContent}
             </div>
             <div className="quiz-prompt__button">
                 {promptButton}
+            </div>
             </div>
         </div>
     );
