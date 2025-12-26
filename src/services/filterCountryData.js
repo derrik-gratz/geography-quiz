@@ -1,6 +1,6 @@
 // import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '../data/quiz_sets.json' with { type: 'json' };
-import { seededRNG, getDailySeed } from './dailyRNG.js'
+import { seededRNG, getDailySeed, createSeededRNG } from './dailyRNG.js'
 
 const dailyChallengeLength = 5; 
 
@@ -15,8 +15,9 @@ export function shuffleArray(data, seed) {
     
     // Create a copy to avoid mutating the original array
     const shuffledData = [...data];
+    const rng = createSeededRNG(seed);
     for (let i = shuffledData.length - 1; i > 0; i--) {
-        const j = Math.floor(seededRNG(seed) * (i + 1));
+        const j = Math.floor(rng() * (i + 1));
         [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
     }
     return shuffledData;

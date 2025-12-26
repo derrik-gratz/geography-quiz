@@ -10,6 +10,10 @@ make learning mode selection in one field highlight in other fields. Then un-sel
 
 - Only countries with flags should be included. West sahara is in the game but has no flag.
 
+- Bounding boxes still appearing on some browsers
+
+- Redundant flags showing in flag select (FR)
+
 # Future feature plans
 
 - Learning mode: selecting an answer in one window displays the answers in the other one. 

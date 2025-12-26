@@ -15,3 +15,15 @@ export function seededRNG(seed){
     rngState = t;
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
+
+export function createSeededRNG(seed) {
+    let state = typeof seed === 'number' ? seed : Date.now();
+    
+    return function() {
+        let t = state += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        state = t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
