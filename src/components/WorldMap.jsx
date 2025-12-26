@@ -144,7 +144,12 @@ export function WorldMap() {
   };
 
   const onMouseEnter = (countryCode) => {
-    if (!disabled && !incorrectValues.includes(countryCode) && countryCode !== correctValue) {
+    // Allow hovering on correct country when component is active
+    if (!disabled && !incorrectValues.includes(countryCode)) {
+      // Only allow hover on correct country if component is active
+      if (countryCode === correctValue && componentStatus !== 'active') {
+        return; // Don't hover correct country when not active
+      }
       setHoveredCountry(countryCode);
     }
   };
@@ -258,7 +263,7 @@ export function WorldMap() {
                       cursor={isIncorrect ? "not-allowed" : "pointer"}
                       style={{
                         default: { fill: countryStyle.fill },
-                        hover: (!disabled && !isIncorrect && !isCorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
+                        hover: (!disabled && !isIncorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
                       }}
                     />
                   );
@@ -271,6 +276,7 @@ export function WorldMap() {
             {({ geographies, projection }) => {
               const regularCircles = [];
               const specialCircles = [];
+              const lowPriorityCircles = [];
               
               geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
@@ -304,14 +310,18 @@ export function WorldMap() {
                     }}
                   />
                 );
-                if (isSelected || isCorrect) {
+                
+                // Prioritize: incorrect (bottom) -> regular -> selected/correct (top)
+                if (isIncorrect) {
+                  lowPriorityCircles.push(circleElement);
+                } else if (isSelected || isCorrect) {
                   specialCircles.push(circleElement);
                 } else {
                   regularCircles.push(circleElement);
                 }
               });
 
-              return [...regularCircles, ...specialCircles];
+              return [...lowPriorityCircles, ...regularCircles, ...specialCircles];
             }}
           </Geographies>
         </ZoomableGroup>
