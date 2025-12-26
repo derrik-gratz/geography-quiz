@@ -333,6 +333,13 @@
   }
 }
 
+/* Quiz Prompt*/
+.quiz-prompt__content {
+  font-size: 1.2rem;
+}
+.quiz-prompt__content .prompt-flag {
+  font-size: 4rem;
+}
 /* Flag select*/
 
 .flag-select .component-panel__content {

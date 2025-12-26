@@ -187,7 +187,7 @@ export function QuizPrompt({}) {
                 </button>
             </div>
             <div className="component-panel__content">
-            <div className="quiz-prompt__content">
+            <div className="quiz-prompt__content" style={{ textAlign: 'center' }}>
                 {promptContent}
             </div>
             <div className="quiz-prompt__button">
