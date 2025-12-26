@@ -24,11 +24,16 @@
   --map-default: #f8f9fa;
   --map-default-outline: #e0e0e0;
   --flag-icon-size: 40px;  /* Mobile default */
+
+  --component-panel-success-color: #28a74650;
+  --component-panel-failure-color: #dc354650;
+  --component-panel-incomplete-color: #ffc10750;
+  --component-panel-prompting-color: #6c757d50;
 }
 
 /* Component Panel Styles - Border and Title */
 .component-panel {
-  border: 1px solid var(--border-color);
+  border: 4px solid var(--border-color);
   border-radius: 8px;
   padding: 1rem;
   background-color: var(--background-primary);
@@ -85,6 +90,46 @@
 .component-panel__toggle-button:focus {
   outline: 2px solid var(--input-option-selected);
   outline-offset: 2px;
+}
+
+.component-panel.status-completed {
+  border-color: var(--component-panel-success-color);
+  /* background-color: var(--component-panel-success-color); Light green tint */
+}
+.component-panel.collapsed.status-completed {
+  /* border-color: var(--component-panel-success-color); */
+  background-color: var(--component-panel-success-color); /* Light green tint */
+}
+
+.component-panel.status-failed {
+  border-color: var(--component-panel-failure-color);
+  /* background-color: var(--component-panel-failure-color); Light red tint */
+}
+.component-panel.collapsed.status-failed {
+  /* border-color: var(--component-panel-success-color); */
+  background-color: var(--component-panel-failure-color); /* Light red tint */
+}
+
+.component-panel.status-active {
+  border-color: var(--component-panel-incomplete-color);
+  /* background-color: var(--component-panel-incomplete-color); Light yellow tint */
+}
+.component-panel.collapsed.status-active {
+  /* border-color: var(--component-panel-success-color); */
+  background-color: var(--component-panel-incomplete-color); /* Light yellow tint */
+}
+
+.component-panel.status-prompting {
+  border-color: var(--component-panel-prompting-color);
+  /* background-color: var(--component-panel-prompting-color);  */
+}
+
+.component-panel.status-reviewing,
+.component-panel.status-disabled,
+.component-panel.status-sandbox,
+.component-panel.status-unknown {
+  border-color: var(--border-color);
+  /* background-color: var(--background-primary); */
 }
 
 .component-panel__content {
@@ -288,13 +333,21 @@
   }
 }
 
-/* Flag select - mobile */
+/* Flag select*/
+
+.flag-select .component-panel__content {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between controls and grid */
+}
+
 .flag-select {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   min-height: calc(var(--flag-icon-size) * 2.5);
-  max-height: calc(var(--flag-icon-size) * 3.5);
+  /* max-height: calc(var(--flag-icon-size) * 3.5); */
   max-width: 100%;
 }
 
@@ -386,7 +439,7 @@
   .flag-select {
     gap: 1rem;
     min-height: calc(var(--flag-icon-size) * 2.5);
-    min-height: calc(var(--flag-icon-size) * 4);
+    /* m-height: calc(var(--flag-icon-size) * 4); */
     /* max-height: 300px; */
   }
 
@@ -415,7 +468,7 @@
     gap: 0.5rem;
     padding: 0 10px;
     min-height: calc(var(--flag-icon-size) * 2);
-    max-height: none;
+    max-height: calc(var(--flag-icon-size) * 3);
   }
 }
 

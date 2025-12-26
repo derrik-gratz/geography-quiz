@@ -68,7 +68,13 @@ export function WorldMap() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('location');
-  const defaultCollapsed = false; //useMemo(() => componentStatus === 'prompting', [componentStatus]);
+  const defaultCollapsed = useMemo(() => {
+    if (componentStatus === 'prompting') return false;
+    if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
+      return true;
+    }
+    return false;
+  }, [componentStatus, state.quiz.status]);
   const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -149,7 +155,7 @@ export function WorldMap() {
   };
   
   return (
-    <div className={`world-map component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+    <div className={`world-map component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="component-panel__title-container">
         <button 
           className="component-panel__toggle-button" 

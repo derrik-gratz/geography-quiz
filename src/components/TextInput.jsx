@@ -9,8 +9,14 @@ export function TextInput() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
-  // Collapse when name is prompted (componentStatus === 'prompting')
-  const defaultCollapsed = useMemo(() => componentStatus === 'prompting', [componentStatus]);
+  // Collapse when name is prompted, or when completed/failed while prompt is still active
+  const defaultCollapsed = useMemo(() => {
+    if (componentStatus === 'prompting') return true;
+    if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
+      return true;
+    }
+    return false;
+  }, [componentStatus, state.quiz.status]);
   const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   
@@ -146,7 +152,7 @@ export function TextInput() {
   };
 
   return (
-    <div className={`text-input component-panel ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative', width: '100%' }}>
+    <div className={`text-input component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative', width: '100%' }}>
       <div className="component-panel__title-container">
         <button 
           className="component-panel__toggle-button" 
