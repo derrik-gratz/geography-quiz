@@ -264,6 +264,7 @@ export function WorldMap() {
                       style={{
                         default: { fill: countryStyle.fill },
                         hover: (!disabled && !isIncorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
+                        outline: "none", // some browsers have ugly border
                       }}
                     />
                   );
