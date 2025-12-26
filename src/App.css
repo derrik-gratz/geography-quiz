@@ -306,6 +306,7 @@
 .right-column {
   width: 100%;
   min-width: 0;  /* Allow shrinking */
+  gap: 0;
 }
 
 /* Desktop Layout */
@@ -466,6 +467,7 @@
   flex-direction: column;
   gap: 0.75rem; /* Space between controls and grid */
 }
+
 
 .flag-select {
   display: flex;
