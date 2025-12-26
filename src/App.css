@@ -285,6 +285,33 @@
   overflow: hidden;
 }
 
+/* World Map - Remove focus outlines from SVG elements */
+.world-map svg path:focus,
+.world-map svg path:focus-visible,
+.world-map svg circle:focus,
+.world-map svg circle:focus-visible {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Also target react-simple-maps Geography components */
+.world-map svg path[class*="rsm-geography"]:focus,
+.world-map svg path[class*="rsm-geography"]:focus-visible {
+  outline: none !important;
+}
+
+/* Remove any box-shadow that might appear on focus */
+.world-map svg path:focus,
+.world-map svg circle:focus {
+  box-shadow: none !important;
+}
+
+/* Prevent focus outline on the entire map container */
+.world-map:focus,
+.world-map:focus-visible {
+  outline: none;
+}
+
 /* App Layout - Mobile First */
 .app-main {
   display: flex;
