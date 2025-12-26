@@ -177,141 +177,39 @@ export function QuizLog({
                     </button>
                 </div>
             )}
-                <table className="quiz-log-table">
-                    <thead>
-                        <tr>
-                            <th>Country</th>
-                            {/* <th>Prompt</th> */}
-                            {/* <th>Status</th> */}
-                            <th>Map</th>
-                            <th>Name</th>
-                            <th>Flag</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {logEntries.slice().reverse().map((entry, index) => (
-                            <tr key={index} className="log-entry">
-                                <td className="country-name">
-                                    {entry.correctCountry}
-                                </td>
-                                <td className="answer-cell">
-                                    {entry.guesses.location}
-                                </td>
-                                <td className="answer-cell">
-                                    {entry.guesses.name}
-                                </td>
-                                <td className="answer-cell">
-                                    {entry.guesses.flag}
-                                </td>
+                <div className="quiz-log-table-container">
+                    <table className="quiz-log-table">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                {/* <th>Prompt</th> */}
+                                {/* <th>Status</th> */}
+                                <th>Map</th>
+                                <th>Name</th>
+                                <th>Flag</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {logEntries.slice().reverse().map((entry, index) => (
+                                <tr key={index} className="log-entry">
+                                    <td className="country-name">
+                                        {entry.correctCountry}
+                                    </td>
+                                    <td className="answer-cell">
+                                        {entry.guesses.location}
+                                    </td>
+                                    <td className="answer-cell">
+                                        {entry.guesses.name}
+                                    </td>
+                                    <td className="answer-cell">
+                                        {entry.guesses.flag}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            </div>
+        </div>
     );
-   
-
-    // return (
-    //     <div className="quiz-log">
-    //         <div className="quiz-log-header">
-    //             <h3>Quiz Progress</h3>
-    //             <div className="progress-summary">
-    //                 {isQuizFinished 
-    //                     ? `${promptHistory.length} / ${totalCountries} completed`
-    //                     : `${Math.max(0, promptHistory.length - 1 + (isComplete ? 1 : 0))} / ${totalCountries} completed`
-    //                 }
-    //             </div>
-    //             {isQuizFinished && (
-    //                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
-    //                     <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
-    //                         <input
-    //                             type="checkbox"
-    //                             checked={obscureNames}
-    //                             onChange={(e) => setObscureNames(e.target.checked)}
-    //                             style={{ margin: 0 }}
-    //                         />
-    //                        Hide country names
-    //                     </label>
-    //                     <button 
-    //                         onClick={copyResultsToClipboard}
-    //                         className="export-results-btn"
-    //                         style={{
-    //                             backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-    //                             color: 'white',
-    //                             border: 'none',
-    //                             padding: '8px 16px',
-    //                             borderRadius: '4px',
-    //                             fontSize: '14px',
-    //                             cursor: 'pointer',
-    //                             transition: 'background-color 0.2s'
-    //                         }}
-    //                     >
-    //                         {exportSuccess ? '✓ Copied!' : 'Export Results'}
-    //                     </button>
-    //                 </div>
-    //             )}
-    //         </div>
-            
-    //         <div className="quiz-log-table-container">
-    //             <table className="quiz-log-table">
-    //                 <thead>
-    //                     <tr>
-    //                         <th>Country</th>
-    //                         {/* <th>Prompt</th> */}
-    //                         {/* <th>Status</th> */}
-    //                         <th>Map</th>
-    //                         <th>Name</th>
-    //                         <th>Flag</th>
-    //                     </tr>
-    //                 </thead>
-    //                 <tbody>
-    //                     {allEntries.reverse().map((entry, index) => (
-    //                         <tr key={index} className={`log-entry ${entry.status} ${entry.completionStatus || ''}`}>
-    //                             <td className="country-name">
-    //                                 {entry.status === 'in_progress' ? "?" : entry.country}
-    //                             </td>
-    //                             {/* <td className="prompt-type">
-    //                                 {entry.promptType}
-    //                             </td> */}
-    //                             {/* <td className="status">
-    //                                 {getStatusIcon(entry)}
-    //                             </td> */}
-    //                             <td className="answer-cell">
-    //                                 <span className="answer-status">
-    //                                     {getAnswerStatus(entry, 'location')}
-    //                                 </span>
-    //                                 <span className="attempts">
-    //                                     ({getAttemptsDisplay(entry, 'map')})
-    //                                 </span>
-    //                             </td>
-    //                             <td className="answer-cell">
-    //                                 <span className="answer-status">
-    //                                     {getAnswerStatus(entry, 'name')}
-    //                                 </span>
-    //                                 <span className="attempts">
-    //                                     ({getAttemptsDisplay(entry, 'text')})
-    //                                 </span>
-    //                             </td>
-    //                             <td className="answer-cell">
-    //                                 <span className="answer-status">
-    //                                     {getAnswerStatus(entry, 'flag')}
-    //                                 </span>
-    //                                 <span className="attempts">
-    //                                     ({getAttemptsDisplay(entry, 'flag')})
-    //                                 </span>
-    //                             </td>
-    //                         </tr>
-    //                     ))}
-    //                 </tbody>
-    //             </table>
-    //         </div>
-            
-    //         {allEntries.length === 0 && (
-    //             <div className="no-entries">
-    //                 <p>No quiz questions yet. Click "Generate Prompt" to start!</p>
-    //             </div>
-    //         )}
-    //     </div>
-    // );
 }

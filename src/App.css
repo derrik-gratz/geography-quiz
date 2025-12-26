@@ -666,4 +666,31 @@
   text-align: center;
 }
 
+/* Quiz Log - Scrollable table container showing 5 rows */
+.quiz-log-table-container {
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: calc(2.5rem + 5 * 2.5rem); /* Header (~2.5rem) + 5 rows (~2.5rem each with padding) */
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+/* Ensure thead is sticky when scrolling */
+.quiz-log-table-container .quiz-log-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.quiz-log-table-container .quiz-log-table th {
+  background-color: var(--background-secondary);
+}
+
+.quiz-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none; /* Remove border since container has it */
+  margin: 0;
+}
+
 
