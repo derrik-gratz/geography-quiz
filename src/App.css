@@ -102,7 +102,7 @@
   flex-direction: column;
   gap: 10px;
   max-width: 800px; /* Increased from 350px */
-  overflow: hidden; /* Prevent content from overflowing */
+  /* overflow: ; Prevent content from overflowing */
 }
 
 /* Quiz Control Panel - Consolidated config and prompt */
