@@ -1,63 +1,5 @@
 [
     {
-        "name": "Test",
-        "countryCodes": [
-            "USA",
-            "CAN",
-            "MEX"
-        ]
-    },
-    {
-        "name": "Test 2",
-        "countryCodes": [
-            "RUS",
-            "CHN",
-            "TWN",
-            "CXR",
-            "CCK",
-            "CYP",
-            "GEO",
-            "PSE",
-            "HKG",
-            "IND",
-            "IDN",
-            "IRN",
-            "IRQ",
-            "ISR",
-            "JPN",
-            "KAZ",
-            "JOR",
-            "PRK",
-            "KOR",
-            "KWT",
-            "KGZ",
-            "LAO",
-            "LBN",
-            "MAC",
-            "MYS",
-            "MDV",
-            "MNG",
-            "OMN",
-            "NPL",
-            "PAK",
-            "PHL",
-            "TLS",
-            "QAT",
-            "RUS",
-            "SAU",
-            "SGP",
-            "VNM",
-            "SYR",
-            "TJK",
-            "THA",
-            "ARE",
-            "TUR",
-            "TKM",
-            "UZB",
-            "YEM"
-        ]
-    },
-    {
         "name": "Europe",
         "countryCodes": [
             "FRA",
@@ -206,7 +148,7 @@
     },
     {
         "name": "Middle East",
-        "country_codes": [
+        "countryCodes": [
             "BHR",
             "PSE",
             "IRN",
@@ -226,7 +168,7 @@
     },
     {
         "name": "Western Africa",
-        "country_codes": [
+        "countryCodes": [
             "CPV",
             "BEN",
             "GMB",
@@ -247,7 +189,7 @@
     },
     {
         "name": "Eastern Africa",
-        "country_codes": [
+        "countryCodes": [
             "IOT",
             "BDI",
             "COM",
@@ -271,7 +213,7 @@
     },
     {
         "name": "Central Africa",
-        "country_codes": [
+        "countryCodes": [
             "AGO",
             "CMR",
             "CAF",
@@ -285,7 +227,7 @@
     },
     {
         "name": "Southern Africa",
-        "country_codes": [
+        "countryCodes": [
             "LSO",
             "NAM",
             "SHN",
@@ -297,7 +239,7 @@
     },
     {
         "name": "Northern Africa",
-        "country_codes": [
+        "countryCodes": [
             "DZA",
             "LBY",
             "MAR",
@@ -308,7 +250,7 @@
     },
     {
         "name": "Central America",
-        "country_codes": [
+        "countryCodes": [
             "BLZ",
             "CRI",
             "SLV",
