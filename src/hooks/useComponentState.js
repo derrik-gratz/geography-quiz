@@ -10,7 +10,7 @@ import { useQuiz } from './useQuiz.js';
 export function useComponentState(guessType) {
   const { state } = useQuiz();
   const correctField = guessType === 'name' ? 'country' : guessType === 'flag' ? 'flagCode' : guessType === 'location' ? 'code' : null;
-  const { guesses, correctValue, disabled } = useMemo(() => {
+    const { guesses, correctValue, disabled } = useMemo(() => {
     let guesses = null;
     let correctValue = null;
     let disabled = true;
@@ -34,6 +34,7 @@ export function useComponentState(guessType) {
     return { guesses, correctValue, disabled };
   }, [
     state.config.gameMode,
+    state.config.quizSet,
     state.quiz.status,
     state.quiz.prompt.quizDataIndex,
     state.quiz.prompt.guesses,
@@ -52,6 +53,8 @@ export function useComponentState(guessType) {
         return 'disabled';
       } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
         return 'reviewing';
+      } else if (guesses && guesses.status === 'failed') {
+        return 'failed';
       } else if (guesses && guesses.status === 'incomplete') {
         return 'active';
       } else if (guesses && guesses.status === 'completed') {
