@@ -510,4 +510,40 @@
   opacity: 0.5;
 }
 
+/* Quiz Log Table Styles */
+.quiz-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+}
+
+.quiz-log-table th,
+.quiz-log-table td {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.quiz-log-table th {
+  background-color: var(--background-secondary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.quiz-log-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.quiz-log-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.quiz-log-table .country-name {
+  font-weight: 500;
+}
+
+.quiz-log-table .answer-cell {
+  text-align: center;
+}
+
 
