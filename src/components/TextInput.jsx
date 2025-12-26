@@ -21,20 +21,18 @@ export function TextInput() {
   const [isWrong, setIsWrong] = useState(false);
 
   // Compute if the last guess was wrong
-  const isWrongGuess = useMemo(() => {
+  React.useEffect(() => {
+    console.log(guesses);
     if (componentStatus === 'active') {
-      if (!guesses.attempts || guesses.attempts.length === 0) return false;
-      if (guesses.attempts.length > 0 && guesses.status === 'incomplete') {
-        return true;
+      if (guesses.attempts?.length > 0 && guesses.status === 'incomplete') {
+        setIsWrong(true);
       }
     }
-    return false;
-  }, [componentStatus, guesses?.attempts, guesses?.status, correctValue, guesses?.attempts.length]);
+  }, [componentStatus, guesses?.attempts, guesses?.status]);
 
   // Handle wrong guess timeout - show incorrect guess for 1 second
   React.useEffect(() => {
-    if (isWrongGuess) {
-      setIsWrong(true);
+    if (isWrong) {
       const timeoutId = setTimeout(() => {
         setIsWrong(false);
         setInput('');
@@ -44,12 +42,9 @@ export function TextInput() {
       return () => {
         clearTimeout(timeoutId);
       };
-    } else {
-      // If guess becomes correct or status changes, clear immediately
-      setIsWrong(false);
-    }
-  }, [isWrongGuess]);
-
+    } 
+  }, [isWrong]);
+  console.log(isWrong);
 
   
   const handleCountryClick = (country) => {
