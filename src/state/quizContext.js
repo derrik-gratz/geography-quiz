@@ -49,7 +49,7 @@
 export function createInitialQuizState() {
     return {
         config: {
-            quizSet: null,
+            quizSet: 'Daily challenge',
             selectedPromptTypes: ['location', 'name', 'flag'],
             gameMode: 'quiz'
         },
