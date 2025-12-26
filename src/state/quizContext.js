@@ -167,7 +167,6 @@ export function quizReducer(state, action){
             if (state.config.quizSet === 'Daily challenge' && newNAttempts === 5 && !isCorrect) {
                 newStatus = 'failed';
             }
-            console.log(newNAttempts, newStatus);
             return { 
                 ...state,
                 quiz: {
@@ -188,14 +187,14 @@ export function quizReducer(state, action){
             };
         case 'GIVE_UP': { // separate scope for guesses
             const guesses = state.quiz.prompt.guesses;
-            
             // Update guesses: set incomplete or null to 'failed'
             const updatedGuesses = {};
             PROMPT_TYPES.forEach(type => {
                 const currentStatus = guesses[type].status;
+                const finalStatus = (currentStatus === 'incomplete' || currentStatus === null) ? 'failed' : currentStatus;
                 updatedGuesses[type] = {
                     ...guesses[type],
-                    status: (currentStatus === 'incomplete' || currentStatus === null) ? 'failed' : currentStatus
+                    status: finalStatus
                 };
             });
         
