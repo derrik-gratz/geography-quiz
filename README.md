@@ -1,5 +1,7 @@
 # Roadmap
 
+make learning mode selection in one field highlight in other fields. Then un-selecting clears all
+
 # Housekeeping
 
 - Review 'available prompts' for countries with duplicate flags. Collapse flag redundant flag codes
@@ -8,11 +10,7 @@
 
 - Only countries with flags should be included. West sahara is in the game but has no flag.
 
-- Hovering the correct country doesn't highlight it, but incorrect countries does. 
-
 # Future feature plans
-
-- Limit daily challenge guesses to 5
 
 - Learning mode: selecting an answer in one window displays the answers in the other one. 
 
