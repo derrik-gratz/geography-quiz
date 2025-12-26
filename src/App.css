@@ -10,6 +10,124 @@
   --background-contrast: #080808;
   --border-color: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-bg: #d4edda;
+  --success-border: #c3e6cb;
+  --success-text: #155724;
+  
+  /* Interactive state colors - consistent across components */
+  --color-hover: #fff3cd; /* Light yellow for hovered items */
+  --color-hover-outline: #ffc107; /* Yellow outline for hover */
+  --color-selected: #007bff; /* Blue for selected items */
+  --color-selected-outline: #0056b3; /* Darker blue outline for selected */
+  --color-correct: #28a745; /* Green for correct answers */
+  --color-correct-outline: #1e7e34; /* Darker green outline for correct */
+  --color-incorrect: #dc3545; /* Red for incorrect answers */
+  --color-incorrect-outline: #c82333; /* Darker red outline for incorrect */
+  --color-disabled: #6c757d; /* Gray for disabled items */
+  --color-disabled-bg: #f8f9fa; /* Light gray background for disabled */
+}
+
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --background-primary: #2d2d2d;
+    --background-secondary: #3a3a3a;
+    --background-tertiary: #404040;
+    --border-color: #555555;
+    --border-dashed: #666666;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --success-bg: #1e4a2e;
+    --success-border: #2d5a3d;
+    --success-text: #a8e6c1;
+    
+    /* Dark mode interactive state colors */
+    --color-hover: #4a4a2a; /* Darker yellow for hovered items in dark mode */
+    --color-hover-outline: #ffc107; /* Same yellow outline */
+    --color-selected: #007bff; /* Same blue for selected items */
+    --color-selected-outline: #0056b3; /* Same darker blue outline */
+    --color-correct: #28a745; /* Same green for correct answers */
+    --color-correct-outline: #1e7e34; /* Same darker green outline */
+    --color-incorrect: #dc3545; /* Same red for incorrect answers */
+    --color-incorrect-outline: #c82333; /* Same darker red outline */
+    --color-disabled: #6c757d; /* Same gray for disabled items */
+    --color-disabled-bg: #404040; /* Darker background for disabled in dark mode */
+  }
+}
+
+.app {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Header removed */
+
+/* Main Layout - 2 Column Flexbox */
+.app-main {
+  display: flex;
+  gap: 20px;
+  width: 95vw; /* Fixed width for better centering */
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* Left Column - Controls and Results */
+.left-column {
+  flex: 0 0 500px; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 800px; /* Increased from 350px */
+  overflow: hidden; /* Prevent content from overflowing */
+}
+
+/* Quiz Control Panel - Consolidated config and prompt */
+.quiz-control-panel {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  gap: 2px;
+}
+
+
+/* Right Column - Interactive Elements */
+.right-column {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0; /* Allow flex item to shrink below content size */
+}
+
+/* Input Row - Text and Flag side by side */
+.input-row {
+  display: flex;
+  gap: 15px;
+  height: 200px; /* Increased height to match flag container */
+  max-height: 500px;
+}
+
+.text-input-container {
+  min-width: 200px; /* Allow text input to shrink */
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 200px; /* Match input-row height */
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
   /* Interactive state colors - consistent across all components */
   --submit-button-ready: #31b953;
