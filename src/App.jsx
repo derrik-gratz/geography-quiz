@@ -19,11 +19,11 @@ function App() {
                         <div className="quiz-config-panel">
                             <QuizConfig />
                         </div>
-                        <div className="quiz-prompt-panel">
-                            <QuizPrompt />
-                        </div>
                         <div className="quiz-log-panel">
                             <QuizLog />
+                        </div>
+                        <div className="quiz-prompt-panel">
+                            <QuizPrompt />
                         </div>
                     </div>
                     <div className="right-column">
