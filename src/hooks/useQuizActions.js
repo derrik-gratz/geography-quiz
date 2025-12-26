@@ -57,10 +57,23 @@ export function useQuizActions() {
             return;
         }
 
+        // Check Daily Challenge guess limit (5 attempts per field)
+        if (state.config.quizSet === 'Daily challenge') {
+            const guessState = state.quiz.prompt.guesses[submissionType];
+            const currentAttempts = guessState?.n_attempts || 0;
+            const currentStatus = guessState?.status;
+            
+            // Block if already at or over 5 attempts (unless already completed or failed)
+            if (currentAttempts >= 5 && currentStatus !== 'completed' && currentStatus !== 'failed') {
+                console.warn(`Cannot submit answer: 5 guess limit reached for ${submissionType}`);
+                return;
+            }
+        }
+
         const currentCountryData = state.quizData[state.quiz.prompt.quizDataIndex];
         const evaluation = checkSubmission(currentCountryData, submissionType, submissionValue);
         dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation } });
-    }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, dispatch]);
+    }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, state.config.quizSet, state.quiz.prompt.guesses, dispatch]);
 
     const giveUpPrompt = useCallback(() => {
         dispatch({ type: 'PROMPT_FINISHED'})

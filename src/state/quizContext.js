@@ -161,6 +161,13 @@ export function quizReducer(state, action){
             
         case 'ANSWER_SUBMITTED':
             const { type, value, isCorrect } = action.payload;
+            const newNAttempts = state.quiz.prompt.guesses[type].n_attempts + 1;
+            
+            let newStatus = isCorrect ? 'completed' : 'incomplete';
+            if (state.config.quizSet === 'Daily challenge' && newNAttempts === 5 && !isCorrect) {
+                newStatus = 'failed';
+            }
+            console.log(newNAttempts, newStatus);
             return { 
                 ...state,
                 quiz: {
@@ -171,8 +178,8 @@ export function quizReducer(state, action){
                             ...state.quiz.prompt.guesses,
                             [type]: { 
                                 ...state.quiz.prompt.guesses[type],
-                                status: isCorrect ? 'completed' : 'incomplete',
-                                n_attempts: state.quiz.prompt.guesses[type].n_attempts + 1,
+                                status: newStatus,
+                                n_attempts: newNAttempts,
                                 attempts: [...state.quiz.prompt.guesses[type].attempts, value] 
                             }
                         }
