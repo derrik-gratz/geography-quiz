@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
 import countryData from '../data/country_data.json';
 import { useComponentState } from '../hooks/useComponentState.js';
 
@@ -8,6 +9,9 @@ export function TextInput() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
+  // Collapse when name is prompted (componentStatus === 'prompting')
+  const defaultCollapsed = useMemo(() => componentStatus === 'prompting', [componentStatus]);
+  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   
   const [input, setInput] = useState('');
@@ -147,8 +151,18 @@ export function TextInput() {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+    <div className={`text-input component-panel ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative', width: '100%' }}>
+      <div className="component-panel__title-container">
+        <button 
+          className="component-panel__toggle-button" 
+          onClick={toggleCollapsed}
+          aria-label={isCollapsed ? 'Expand Country Name' : 'Collapse Country Name'}
+        >
+          {isCollapsed ? '▶ Country Name' : '▼ Country Name'}
+        </button>
+      </div>
+      <div className="component-panel__content" style={{ position: 'relative', overflow: 'visible' }}>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative' }}>
       <button
           onClick={handleSubmit}
           disabled={!selectedCountry || disabled}
@@ -156,20 +170,21 @@ export function TextInput() {
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
-            border: guesses?.status === 'complete' ? '1px solid var(--input-option-correct)' : 
+            border: guesses?.status === 'completed' ? '1px solid var(--input-option-correct)' : 
                     isWrong ? '1px solid var(--input-option-incorrect)' :
                     `1px solid ${selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'}`,
-            backgroundColor: guesses?.status === 'complete' ? 'var(--input-option-correct)' : 
+            backgroundColor: guesses?.status === 'completed' ? 'var(--input-option-correct)' : 
                             isWrong ? 'var(--input-option-incorrect)' : 
                             (selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'),
-            color: guesses?.status === 'complete' || isWrong ? '#fff' : 
+            color: guesses?.status === 'completed' || isWrong ? '#fff' : 
                    (selectedCountry && !disabled ? '#fff' : 'var(--text-primary)'),
             cursor: (selectedCountry && componentStatus === 'active') ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}
         >
-          {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'complete' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
+          {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'completed' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
         </button>
+        <div style={{ flex: 1, position: 'relative' }}>
         <input
           type="text"
           value={input}
@@ -177,7 +192,7 @@ export function TextInput() {
           placeholder="Type a country name..."
           disabled={disabled || isWrong}
           style={{ 
-            flex: 1,
+            width: '100%',
             padding: '0.5rem', 
             fontSize: '1rem', 
             borderRadius: '4px', 
@@ -201,9 +216,7 @@ export function TextInput() {
           // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
           onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
         />
-        
-      </div>
-      {showSuggestions && suggestions.length > 0 && guesses?.status !== 'complete' && (
+        {showSuggestions && suggestions.length > 0 && guesses?.status !== 'completed' && (
         <ul style={{
           position: 'absolute',
           left: 0,
@@ -215,10 +228,11 @@ export function TextInput() {
           minHeight: '40px', // Ensure at least one suggestion is visible
           maxHeight: '120px',
           overflowY: 'auto',
-          zIndex: 10,
+          zIndex: 1000,
           margin: 0,
           padding: 0,
           listStyle: 'none',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
         }}>
           {suggestions.map(country => {
             const isIncorrect = incorrectValues.includes(country.country);
@@ -262,7 +276,10 @@ export function TextInput() {
             );
           })}
         </ul>
-      )}
+        )}
+        </div>
+      </div>
+      </div>
     </div>
   );
 } 

@@ -133,7 +133,7 @@ describe('checkPromptCompletion', () => {
                     guesses: {
                         location: { status: 'prompted', n_attempts: 0, attempts: [] },
                         name: { status: null, n_attempts: 0, attempts: [] },
-                        flag: { status: 'complete', n_attempts: 1, attempts: ['USA'] }
+                        flag: { status: 'completed', n_attempts: 1, attempts: ['USA'] }
                     }
                 }
             }

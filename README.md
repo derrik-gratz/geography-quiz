@@ -1,31 +1,18 @@
 # Roadmap
 
-Separate promptCompleted logic and autoReview states. it should go
-check prompt completion > initiate auto review > end auto review > complete prompt
-
-major states:
-  inactive, receiving user config
-  active, receiving user input
-  reviewing, showing user history but not accepting input
-    could tie this to learning mode where you can still click other countries, but doesn't log the inputs
-    so review mode CAN have history shown (and a correct answer shown), but has no submit functionality
-      yellow for selected in review, still standard correct/incorrect color scheme
-
-how to handle give ups? 
-  with prompt, there is a brief window where the generic prompt content triggers, but that is quickly overwriten by the event watcher which generates the next prompt. Need to add a sleep condition
-  Prompt entry components need to be aware that the prompt is given up, so they can show the correct answer
-  Where to manage this state? Should it be a 'quizStatus?'
-
 # Housekeeping
 
-- Add a filtering step in the data filtering service to remove countries with no avialble prompt types in the json
-  - There may be temporary disables where I don't want to delete the data, but don't want it in the game for now. Or maybe this isn't needed, and can just use git tracking to get the data back when it's ready to be added.
-
-- Review 'available prompts' for countries with duplicate flags
+- Review 'available prompts' for countries with duplicate flags. Collapse flag redundant flag codes
 
 - Cleanup sets, make sure correct countries are included
 
+- Only countries with flags should be included. West sahara is in the game but has no flag.
+
+- Hovering the correct country doesn't highlight it, but incorrect countries does. 
+
 # Future feature plans
+
+- Limit daily challenge guesses to 5
 
 - Learning mode: selecting an answer in one window displays the answers in the other one. 
 

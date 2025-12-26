@@ -48,7 +48,7 @@ export function QuizProvider({ children }) {
             const lastHistoryEntry = state.quiz.history[state.quiz.history.length - 1];
             const wasSuccessful = lastHistoryEntry && 
                 Object.values(lastHistoryEntry).every(entry => 
-                    entry.status === 'prompted' || entry.status === 'complete'
+                    entry.status === 'prompted' || entry.status === 'completed'
                 );
             
             const delay = wasSuccessful ? 1000 : 3000;

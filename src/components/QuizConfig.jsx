@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuiz } from '../hooks/useQuiz';
 import { useQuizActions } from '../hooks/useQuizActions';
+import { useCollapsible } from '../hooks/useCollapsible';
 import quizSets from '../data/quiz_sets.json';
 
 /**
@@ -16,11 +17,24 @@ const PROMPT_TYPES = ['location', 'name', 'flag'];
 export function QuizConfig() {
     const { state } = useQuiz();
     const { setQuizSet, handlePromptTypeChange, setGameMode } = useQuizActions();
+    // Expand when quiz not started, collapse otherwise
+    const defaultCollapsed = state.quiz.status !== 'not_started';
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const { quizSet, selectedPromptTypes, gameMode } = state.config;
 
     return (
-        <div className="quiz-config">
+        <div className={`quiz-config component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Quiz Configuration' : 'Collapse Quiz Configuration'}
+                >
+                    {isCollapsed ? '▶ Quiz Configuration' : '▼ Quiz Configuration'}
+                </button>
+            </div>
+            <div className="component-panel__content">
             {state.quiz.status === 'not_started' && (
                 <div className="quiz-config__game-mode-select">
                     <label htmlFor="game-mode-select">Game mode:</label>
@@ -107,6 +121,7 @@ export function QuizConfig() {
                         </div>
                     </>
                 )}
+            </div>
             </div>
         </div>
     );

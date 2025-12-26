@@ -9,6 +9,7 @@ import {
 import allCountryData from '../data/country_data.json';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
 import { useComponentState } from '../hooks/useComponentState.js';
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
@@ -66,39 +67,9 @@ function getCountryViewWindow(countryCode) {
 export function WorldMap() {
   const { state } = useQuiz();
   const { submitAnswer } = useQuizActions();
-
-  // Determine component state based on game mode and quiz status
-  const { disabled, guesses, correctCountry } = useMemo(() => {
-    if (state.config.gameMode === 'sandbox') {
-      return { disabled: false, guesses: null, correctCountry: null };
-    }
-    
-    if (state.config.gameMode === 'quiz') {
-      if (state.quiz.status === 'active') {
-        const locationGuesses = state.quiz.prompt.guesses.location;
-        return {
-          disabled: locationGuesses?.status !== 'incomplete',
-          guesses: locationGuesses,
-          correctCountry: state.quizData[state.quiz.prompt.quizDataIndex]?.code
-        };
-      }
-      
-      if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-        const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-        return {
-          disabled: true,
-          guesses: historyEntry?.location,
-          correctCountry: state.quizData[historyEntry.quizDataIndex]?.code
-        };
-      }
-    }
-    
-    return { disabled: true, guesses: null, correctCountry: null };
-  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, state.quiz.prompt, state.quiz.history, state.quizData]);
-  const incorrectCountries = useMemo(() => {
-    if (!guesses?.attempts) return [];
-    return guesses.attempts.filter(attempt => attempt !== correctCountry);
-  }, [guesses?.attempts, correctCountry]);
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('location');
+  const defaultCollapsed = false; //useMemo(() => componentStatus === 'prompting', [componentStatus]);
+  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
@@ -114,53 +85,26 @@ export function WorldMap() {
     }
   }, [disabled, defaultViewWindow]);
 
-  const componentStatus = useMemo(() => {
-    if (state.config.gameMode === 'sandbox') {
-      return 'sandbox';
-    }
-    
-    if (state.config.gameMode === 'quiz') {
-      if (state.quiz.status === 'not_started' || state.quiz.status === 'completed') {
-        return 'disabled';
-      }
-      if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
-        return 'reviewing';
-      }
-      if (guesses?.status === 'incomplete') {
-        return 'active';
-      }
-      if (guesses?.status === 'completed') {
-        return 'completed';
-      }
-      if (guesses?.status === 'prompted') {
-        return 'prompting';
-      }
-    }
-    
-    return 'unknown';
-  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, guesses?.status]);
-
-  // Update view window based on component status
   useEffect(() => {
     let view = { coordinates: [0, 0], zoom: 1 };
-    if ((componentStatus === 'reviewing' || componentStatus === 'prompting') && correctCountry) {
-      view = getCountryViewWindow(correctCountry);
+    if ((componentStatus === 'reviewing' || componentStatus === 'prompting') && correctValue) {
+      view = getCountryViewWindow(correctValue);
     }
     setDefaultViewWindow(view);
     setViewWindow(view);
-  }, [componentStatus, correctCountry]);
+  }, [componentStatus, correctValue]);
 
   const handleCountryClick = (geo) => {
     if (disabled) return;
     const countryCode = getCountryCode(geo);
-    if (countryCode && !incorrectCountries.includes(countryCode)) {
+    if (countryCode && !incorrectValues.includes(countryCode)) {
       setSelectedCountry(countryCode);
     }
   };
 
   const getCountryStyle = (countryCode) => {
-    const isIncorrect = incorrectCountries.includes(countryCode);
-    const isCorrect = countryCode === correctCountry;
+    const isIncorrect = incorrectValues.includes(countryCode);
+    const isCorrect = countryCode === correctValue;
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
     
@@ -194,7 +138,7 @@ export function WorldMap() {
   };
 
   const onMouseEnter = (countryCode) => {
-    if (!disabled && !incorrectCountries.includes(countryCode) && countryCode !== correctCountry) {
+    if (!disabled && !incorrectValues.includes(countryCode) && countryCode !== correctValue) {
       setHoveredCountry(countryCode);
     }
   };
@@ -205,10 +149,21 @@ export function WorldMap() {
   };
   
   return (
-    <div>
+    <div className={`world-map component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+      <div className="component-panel__title-container">
+        <button 
+          className="component-panel__toggle-button" 
+          onClick={toggleCollapsed}
+          aria-label={isCollapsed ? 'Expand World Map' : 'Collapse World Map'}
+        >
+          {isCollapsed ? '▶ World Map' : '▼ World Map'}
+        </button>
+      </div>
+      <div className="component-panel__content">
       <div style={{
-        top: '5px',
-        right: '5px',
+        // position: 'absolute',
+        top: '1rem',
+        right: '1rem',
         display: 'flex',
         gap: '5px',
         zIndex: 1000
@@ -282,9 +237,9 @@ export function WorldMap() {
                 
                 if (allCountryData.find(country => country.code === countryCode)) {
                   const countryStyle = getCountryStyle(countryCode);
-                  const isIncorrect = incorrectCountries.includes(countryCode);
+                  const isIncorrect = incorrectValues.includes(countryCode);
                   const isSelected = selectedCountry === countryCode;
-                  const isCorrect = countryCode === correctCountry;
+                  const isCorrect = countryCode === correctValue;
 
                   return (
                     <Geography
@@ -314,8 +269,8 @@ export function WorldMap() {
               geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
                 const isSelected = selectedCountry === countryCode;
-                const isIncorrect = incorrectCountries.includes(countryCode);
-                const isCorrect = countryCode === correctCountry;
+                const isIncorrect = incorrectValues.includes(countryCode);
+                const isCorrect = countryCode === correctValue;
                 
                 const [centroid_x, centroid_y] = getCentroid(geo);
                 const [cx, cy] = projection([centroid_x, centroid_y]);
@@ -355,6 +310,7 @@ export function WorldMap() {
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
+      </div>
     </div>
   );
 }
