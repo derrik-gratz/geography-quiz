@@ -76,7 +76,7 @@ export function useQuizActions() {
     }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, state.config.quizSet, state.quiz.prompt.guesses, dispatch]);
 
     const giveUpPrompt = useCallback(() => {
-        dispatch({ type: 'PROMPT_FINISHED'})
+        dispatch({ type: 'GIVE_UP'})
     }, [dispatch]);
 
     const resetQuiz = useCallback(() => {
