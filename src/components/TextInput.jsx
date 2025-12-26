@@ -152,7 +152,7 @@ export function TextInput() {
   };
 
   return (
-    <div className={`text-input component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative', width: '100%' }}>
+    <div className={`text-input component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative' }}>
       <div className="component-panel__title-container">
         <button 
           className="component-panel__toggle-button" 
@@ -193,7 +193,7 @@ export function TextInput() {
           placeholder="Type a country name..."
           disabled={disabled || isWrong}
           style={{ 
-            width: '100%',
+            width: '95%',
             padding: '0.5rem', 
             fontSize: '1rem', 
             borderRadius: '4px', 

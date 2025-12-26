@@ -431,7 +431,7 @@
   gap: 0.25rem;  /* Tighter spacing on mobile */
   padding: 0 5px;
   min-height: calc(var(--flag-icon-size) * 2);
-  max-height: 250px;  /* Constrain height on mobile */
+  max-height: calc(var(--flag-icon-size) * 3);  /* Constrain height on mobile */
 }
 
 .flag-icon {
