@@ -28,7 +28,6 @@ export function TextInput() {
 
   // Compute if the last guess was wrong
   React.useEffect(() => {
-    console.log(guesses);
     if (componentStatus === 'active') {
       if (guesses.attempts?.length > 0 && guesses.status === 'incomplete') {
         setIsWrong(true);
@@ -50,7 +49,6 @@ export function TextInput() {
       };
     } 
   }, [isWrong]);
-  console.log(isWrong);
 
   
   const handleCountryClick = (country) => {

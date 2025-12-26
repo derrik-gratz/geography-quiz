@@ -34,7 +34,6 @@ export function generatePromptType(quizContext){
     if (quizContext.config.quizSet === 'Daily challenge'){
         promptOptions = countryData.availablePrompts;
         seed = getDailySeed() + quizContext.quiz.prompt.quizDataIndex * 1000;
-        console.log(seed);
     } else {
         promptOptions = countryData.availablePrompts.filter(prompt => 
             quizContext.config.selectedPromptTypes.includes(prompt)
