@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     ComposableMap,
     Geographies,
@@ -6,7 +6,11 @@ import {
     Graticule,
     ZoomableGroup
 } from "react-simple-maps";
-import countryData from '../data/country_data.json';
+import allCountryData from '../data/country_data.json';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
+import { useComponentState } from '../hooks/useComponentState.js';
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
 const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
@@ -49,226 +53,145 @@ function getCentroid(geo){
   return null;
 }
 
-export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], correctCountries = [], disabled = false, promptResetKey, giveUp = false }) {
-  const lockedOnCode = lockedOn;
-  
-  // State management
-  const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+function getCountryViewWindow(countryCode) {
+  const countryData = allCountryData.find(country => country.code === countryCode);
+  if (countryData?.location) {
+    return { 
+      coordinates: [countryData.location.long, countryData.location.lat], 
+      zoom: 8
+    };
+  }
+  return { coordinates: [0, 0], zoom: 1 };
+}
+
+export function WorldMap() {
+  const { state } = useQuiz();
+  const { submitAnswer } = useQuizActions();
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('location');
+  const defaultCollapsed = useMemo(() => {
+    if (componentStatus === 'prompting') return false;
+    if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
+      return true;
+    }
+    return false;
+  }, [componentStatus, state.quiz.status]);
+  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+  const [viewWindow, setViewWindow] = useState(defaultViewWindow);
   const [resetKey, setResetKey] = useState(0);
-  const [mapSelectedCountry, setMapSelectedCountry] = useState(null);
-
-  // UNLOCKED MODE BEHAVIORS
-  const unlockedBehaviors = {
-    getDefaultViewWindow: () => ({ coordinates: [0, 0], zoom: 1.5 }),
-    
-    handleCountryClick: (geo) => {
-      if (!disabled && correctCountries.length === 0) {
-        const countryCode = getCountryCode(geo);
-        if (!incorrectCountries.includes(countryCode)) {
-          // console.log(geo.properties.NAME);
-          setSelectedCountry(countryCode);
-          setMapSelectedCountry(countryCode);
-        }
-      }
-    },
-    
-    handleCountryHover: (countryCode) => {
-      if (!incorrectCountries.includes(countryCode) && correctCountries.length === 0) {
-        setHoveredCountry(countryCode);
-      }
-    },
-    
-    handleCountryHoverLeave: () => {
-      setHoveredCountry(null);
-    },
-    
-    resetViewWindow: function() {
-      setViewWindow(this.getDefaultViewWindow());
-      setResetKey(prev => prev + 1);
-    },
-    
-    getCountryStyle: (isSelected, isHovered, countryCode) => {
-      const isIncorrect = incorrectCountries.includes(countryCode);
-      const isCorrect = correctCountries.includes(countryCode);
-      
-      return {
-        default: {
-          fill: isCorrect ? "var(--color-correct)" : 
-                isIncorrect ? "var(--color-incorrect)" :
-                isSelected ? "var(--color-selected)" : "#D6D6DA",
-          stroke: isCorrect ? "var(--color-correct-outline)" :
-                 isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
-          strokeWidth: 0.5,
-          outline: "none",
-        },
-        hover: {
-          fill: isCorrect ? "var(--color-correct)" :
-                isIncorrect ? "var(--color-incorrect)" :
-                isSelected ? "var(--color-selected)" : "var(--color-hover)",
-          stroke: isHovered && !isCorrect && !isIncorrect ? "var(--color-hover-outline)" : 
-                 isCorrect ? "var(--color-correct-outline)" :
-                 isIncorrect ? "var(--color-incorrect-outline)" : "#FFFFFF",
-          strokeWidth: isHovered && !isCorrect && !isIncorrect ? 1 : 0.5,
-        },
-      };
-    },
-    
-    getCircleStyle: (isSelected, isHovered, countryCode) => {
-      const isIncorrect = incorrectCountries.includes(countryCode);
-      const isCorrect = correctCountries.includes(countryCode);
-      
-      return {
-        fill: isCorrect ? "var(--color-correct)" :
-              isIncorrect ? "var(--color-incorrect)" :
-              isHovered ? (
-                isSelected ? "var(--color-selected)" : "var(--color-hover)"
-              ) : (
-                isSelected ? "var(--color-selected)" : "#FFA500"
-              ),
-      };
-    },
-    
-    showSubmitButton: true,
-  };
-
-  // LOCKED MODE BEHAVIORS
-  const lockedBehaviors = {
-    getDefaultViewWindow: () => {
-      if (lockedOnCode) {
-        const country = countryData.find(country => country.code === lockedOnCode);
-        if (country && country.location) {
-          return { 
-            coordinates: [country.location.long, country.location.lat], 
-            zoom: 8
-          };
-        }
-      }
-      return { coordinates: [0, 0], zoom: 1 };
-    },
-    
-    handleCountryClick: (geo) => {
-      // No action in locked mode
-    },
-    
-    handleCountryHover: (countryCode) => {
-      // Disable hover effects in locked mode
-      setHoveredCountry(null);
-    },
-    
-    handleCountryHoverLeave: () => {
-      setHoveredCountry(null);
-    },
-    
-    resetViewWindow: function() {
-      setViewWindow(this.getDefaultViewWindow());
-      setResetKey(prev => prev + 1);
-    },
-    
-    getCountryStyle: (isSelected, isHovered, countryCode) => ({
-      default: {
-        fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#D6D6DA",
-        stroke: lockedOnCode === countryCode ? "var(--color-correct-outline)" : "#FFFFFF",
-        strokeWidth: lockedOnCode === countryCode ? 1 : 0.5,
-        outline: "none",
-      },
-      // hover: {
-      //   fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#D6D6DA",
-      // },
-    }),
-    
-    getCircleStyle: (isSelected, isHovered, countryCode) => ({
-      fill: lockedOnCode === countryCode ? "var(--color-correct)" : "#FFA500",
-    }),
-    
-    showSubmitButton: false,
-  };
-
-  // Select behavior based on lock state
-  const behaviors = lockedOnCode ? lockedBehaviors : unlockedBehaviors;
-
-  // Update viewWindow when lockedOnCode changes
+  
+  // Reset selection and view when disabled
   useEffect(() => {
-    const defaultView = behaviors.getDefaultViewWindow();
-    setDefaultViewWindow(defaultView);
-    setViewWindow(defaultView);
-  }, [lockedOnCode]);
-
-  // Zoom to correct country when user gives up
-  useEffect(() => {
-    if (giveUp && correctCountries.length > 0) {
-      const correctCountryCode = correctCountries[correctCountries.length - 1]; // Get the most recent correct country
-      const country = countryData.find(country => country.code === correctCountryCode);
-      if (country && country.location) {
-        const giveUpView = { 
-          coordinates: [country.location.long, country.location.lat], 
-          zoom: 8
-        };
-        setViewWindow(giveUpView);
-        setResetKey(prev => prev + 1); // Force re-render to apply zoom
-      }
-    }
-  }, [giveUp, correctCountries]);
-
-  // Reset map selection when disabled or promptResetKey changes
-  useEffect(() => {
-    if (disabled || promptResetKey) {
-      setMapSelectedCountry(null);
+    if (disabled) {
       setSelectedCountry(null);
+      setViewWindow(defaultViewWindow);
     }
-  }, [disabled, promptResetKey]);
+  }, [disabled, defaultViewWindow]);
 
-  // Handle map submission
-  const handleMapSubmit = () => {
-    if (mapSelectedCountry && onSubmitAnswer) {
-      onSubmitAnswer(mapSelectedCountry);
+  useEffect(() => {
+    let view = { coordinates: [0, 0], zoom: 1 };
+    if ((componentStatus === 'reviewing' || componentStatus === 'prompting') && correctValue) {
+      view = getCountryViewWindow(correctValue);
+    }
+    setDefaultViewWindow(view);
+    setViewWindow(view);
+  }, [componentStatus, correctValue]);
+
+  const handleCountryClick = (geo) => {
+    if (disabled) return;
+    const countryCode = getCountryCode(geo);
+    if (countryCode && !incorrectValues.includes(countryCode)) {
+      setSelectedCountry(countryCode);
     }
   };
 
-  // Assign behavior functions
-  const handleCountryClick = behaviors.handleCountryClick;
-  const handleCountryHover = behaviors.handleCountryHover;
-  const handleCountryHoverLeave = behaviors.handleCountryHoverLeave;
-  const resetViewWindow = behaviors.resetViewWindow.bind(behaviors);
-  const getCountryStyle = behaviors.getCountryStyle;
-  const getCircleStyle = behaviors.getCircleStyle;
-  const showSubmitButton = behaviors.showSubmitButton;
+  const getCountryStyle = (countryCode) => {
+    const isIncorrect = incorrectValues.includes(countryCode);
+    const isCorrect = countryCode === correctValue;
+    const isSelected = countryCode === selectedCountry;
+    const isHovered = countryCode === hoveredCountry;
+    
+    return {
+      fill: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct)" :
+            isIncorrect ? "var(--input-option-incorrect)" :
+            isSelected ? "var(--input-option-selected)" :
+            isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)",
+      stroke: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct-stroke)" :
+              isIncorrect ? "var(--input-option-incorrect-stroke)" : 
+              isSelected ? "var(--input-option-selected-stroke)" :
+              isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)",
+      strokeWidth: 0.3,
+      outline: "none",
+    };
+  };
 
-  function getCircleRadius(baseRadius = 3) {
+  const getCircleRadius = (baseRadius = 3) => {
     return baseRadius / Math.sqrt(viewWindow.zoom);
-  }
-
-  // Placeholder for evaluateSelection - you'll need to implement this
-  const evaluateSelection = (countryCode) => {
-    // TODO: Implement evaluation logic
   };
 
+  const resetViewWindow = () => {
+    setViewWindow(defaultViewWindow);
+    setResetKey(prev => prev + 1);
+  };
+
+  const handleSubmit = () => {
+    if (selectedCountry && !disabled) {
+      submitAnswer('location', selectedCountry);
+    }
+  };
+
+  const onMouseEnter = (countryCode) => {
+    // Allow hovering on correct country when component is active
+    if (!disabled && !incorrectValues.includes(countryCode)) {
+      // Only allow hover on correct country if component is active
+      if (countryCode === correctValue && componentStatus !== 'active') {
+        return; // Don't hover correct country when not active
+      }
+      setHoveredCountry(countryCode);
+    }
+  };
+  const onMouseLeave = () => {
+    if (!disabled) {
+      setHoveredCountry(null);
+    }
+  };
+  
   return (
-    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+    <div className={`world-map component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`}>
+      <div className="component-panel__title-container">
+        <button 
+          className="component-panel__toggle-button" 
+          onClick={toggleCollapsed}
+          aria-label={isCollapsed ? 'Expand World Map' : 'Collapse World Map'}
+        >
+          {isCollapsed ? '▶ World Map' : '▼ World Map'}
+        </button>
+      </div>
+      <div className="component-panel__content">
       <div style={{
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
+        // position: 'absolute',
+        top: '1rem',
+        right: '1rem',
         display: 'flex',
         gap: '5px',
         zIndex: 1000
       }}>
-        {!lockedOnCode && (
+        {componentStatus === 'active' && guesses?.status === 'incomplete' && (
           <button
-            onClick={handleMapSubmit}
-            disabled={!mapSelectedCountry || disabled}
+            onClick={handleSubmit}
+            disabled={!selectedCountry || disabled}
             style={{
-              background: mapSelectedCountry && !disabled ? 'rgba(26, 168, 31, 0.8)' : 'rgba(128, 128, 128, 0.8)',
-              color: 'white',
-              border: 'none',
               padding: '8px 12px',
-              borderRadius: '4px',
               fontSize: '14px',
               fontFamily: 'monospace',
-              cursor: mapSelectedCountry && !disabled ? 'pointer' : 'not-allowed',
-              opacity: mapSelectedCountry && !disabled ? 1 : 0.6
+              borderRadius: '4px',
+              border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
+              backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
+              color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
+              cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
             }}
             title="Submit map selection"
           >
@@ -310,7 +233,7 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
           maxZoom={12}
           zoom={viewWindow.zoom}
           onMoveEnd={({ zoom, coordinates }) => {
-            if (!lockedOnCode) {
+            if (!disabled) {
               setViewWindow({ coordinates, zoom });
             }
           }}
@@ -320,21 +243,27 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
             {({ geographies }) =>
               geographies.map((geo) => {
                 const countryCode = getCountryCode(geo);
-                const isHovered = hoveredCountry === countryCode;
-                const isSelected = mapSelectedCountry === countryCode;
+                // const isHovered = hoveredCountry === countryCode;
                 
-                if (countryData.find(country => country.code === countryCode)) {
-                  const isIncorrect = incorrectCountries.includes(countryCode);
+                
+                if (allCountryData.find(country => country.code === countryCode)) {
+                  const countryStyle = getCountryStyle(countryCode);
+                  const isIncorrect = incorrectValues.includes(countryCode);
+                  const isSelected = selectedCountry === countryCode;
+                  const isCorrect = countryCode === correctValue;
+
                   return (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
                       onClick={() => handleCountryClick(geo)}
-                      onMouseEnter={() => handleCountryHover(countryCode)}
-                      onMouseLeave={() => handleCountryHoverLeave()}
+                      fill={countryStyle.fill}
+                      stroke={countryStyle.stroke}
+                      strokeWidth={0.5} /*{countryStyle.strokeWidth}*/
+                      cursor={isIncorrect ? "not-allowed" : "pointer"}
                       style={{
-                        ...getCountryStyle(isSelected, isHovered, countryCode),
-                        cursor: isIncorrect ? "not-allowed" : "pointer"
+                        default: { fill: countryStyle.fill },
+                        hover: (!disabled && !isIncorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
                       }}
                     />
                   );
@@ -345,55 +274,59 @@ export function WorldMap({ lockedOn, onSubmitAnswer, incorrectCountries = [], co
           </Geographies>
           <Geographies geography={tinyGeoUrl}>
             {({ geographies, projection }) => {
-              // Separate circles into regular and special (selected/prompted) groups
               const regularCircles = [];
               const specialCircles = [];
+              const lowPriorityCircles = [];
               
               geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
-                const isSelected = mapSelectedCountry === countryCode;
-                const isHovered = hoveredCountry === countryCode;
-                const isPrompted = lockedOnCode === countryCode;
+                const isSelected = selectedCountry === countryCode;
+                const isIncorrect = incorrectValues.includes(countryCode);
+                const isCorrect = countryCode === correctValue;
+                
                 const [centroid_x, centroid_y] = getCentroid(geo);
                 const [cx, cy] = projection([centroid_x, centroid_y]);
-
+                const countryStyle = getCountryStyle(countryCode);
+                
                 const circleElement = (
                   <circle
                     key={geo.rsmKey}
                     cx={cx}
                     cy={cy}
                     r={getCircleRadius()}
-                    fill={getCircleStyle(isSelected, isHovered, countryCode).fill}
-                    stroke="#fff"
-                    strokeWidth={getCircleRadius() * .1}
+                    fill={countryStyle.fill}
+                    stroke={countryStyle.stroke}
+                    strokeWidth={countryStyle.strokeWidth}
                     onClick={() => {
-                      if (!incorrectCountries.includes(countryCode)) {
+                      if (!isIncorrect) {
                         handleCountryClick(geo);
                       }
                     }}
-                    onMouseEnter={() => handleCountryHover(countryCode)}
-                    onMouseLeave={() => handleCountryHoverLeave()}
+                    onMouseEnter={() => onMouseEnter(countryCode)}
+                    onMouseLeave={() => onMouseLeave()}
                     style={{
-                      cursor: incorrectCountries.includes(countryCode) ? "not-allowed" : "pointer",
+                      cursor: isIncorrect ? "not-allowed" : "pointer",
                       outline: "none",
                     }}
                   />
                 );
-
-                // Add to special group if selected, hovered, or prompted
-                if (isSelected || isHovered || isPrompted) {
+                
+                // Prioritize: incorrect (bottom) -> regular -> selected/correct (top)
+                if (isIncorrect) {
+                  lowPriorityCircles.push(circleElement);
+                } else if (isSelected || isCorrect) {
                   specialCircles.push(circleElement);
                 } else {
                   regularCircles.push(circleElement);
                 }
               });
 
-              // Render regular circles first, then special circles on top
-              return [...regularCircles, ...specialCircles];
+              return [...lowPriorityCircles, ...regularCircles, ...specialCircles];
             }}
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
+      </div>
     </div>
   );
 }

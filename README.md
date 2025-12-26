@@ -1,10 +1,14 @@
 # Roadmap
 
+make learning mode selection in one field highlight in other fields. Then un-selecting clears all
+
 # Housekeeping
 
-- Review 'available prompts' for countries with duplicate flags
+- Review 'available prompts' for countries with duplicate flags. Collapse flag redundant flag codes
 
 - Cleanup sets, make sure correct countries are included
+
+- Only countries with flags should be included. West sahara is in the game but has no flag.
 
 # Future feature plans
 
@@ -18,3 +22,11 @@
 
 - Create groups of countries for challenges. Also possibly blacklist common countries
 
+Changelog:
+
+2025-11-09: 
+- initiate remake, starting with countryDataService
+- 'availablePrompts' added to countryData.json
+- Added filtering based on config
+  - Daily challenge functionality implemented by filtering countries 'availablePrompts' to 1 random choice based on daily seed. 
+  - Confirmed proper use with src/tests/test-data-service.js. 

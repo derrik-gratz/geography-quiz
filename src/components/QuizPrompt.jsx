@@ -1,48 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react'; // useState, useEffect,
+import { useQuiz } from '../hooks/useQuiz';
+import { useQuizActions } from '../hooks/useQuizActions';
+import { useCollapsible } from '../hooks/useCollapsible';
+import { derivePromptValue } from '../services/quizEngine.js';
 
-/**
- * QuizPrompt Component
- * 
- * Renders the current quiz prompt (display only, no user input)
- * 
- * @param {Object|null} props.currentPrompt - Current prompt object from quiz engine
- * @param {Function} props.generatePrompt - Function to generate new prompt
- * @param {Function} props.resetQuiz - Function to reset quiz
- * @param {boolean} props.isQuizFinished - Whether quiz is complete
- * @param {number} props.totalCountries - Total countries in current quiz set
- * @param {number} props.currentProgress - Current progress count
- * @returns {JSX.Element} Quiz prompt display interface
- */
-export function QuizPrompt({ 
-    currentPrompt, 
-    generatePrompt, 
-    resetQuiz, 
-    isQuizFinished, 
-    totalCountries, 
-    currentProgress,
-    showNiceMessage = false,
-    onGiveUp
-}) {
-    const [hasGivenUp, setHasGivenUp] = useState(false);
+// {state.quizStatus === 'not_started' && (
+//     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
+// )}
+// {state.quizStatus === 'in_progress' && (
+//     <button className="quiz-config__give-up-button" onClick={handleGiveUp}>Give up</button>
+// )}
+// {state.quizStatus === 'completed' && (
+//     <button className="quiz-config__start-button" onClick={resetQuiz}>New quiz</button>
+// )}
+
+export function QuizPrompt({}) {
+    const { state, promptCompleted, isQuizFinished, currentPromptData } = useQuiz();
+    const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
+    // Expand when quiz not started, collapse otherwise
+    const defaultCollapsed = false; //state.quiz.status !== 'not_started';
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     // Reset give up state when prompt changes
-    useEffect(() => {
-        setHasGivenUp(false);
-    }, [currentPrompt?.countryCode]);
+    // useEffect(() => {
+    //     setHasGivenUp(false);
+    // }, [currentPrompt?.countryCode]);
 
-    const handleGiveUp = () => {
-        setHasGivenUp(true);
+    // const handleGiveUp = () => {
+    //     setHasGivenUp(true);
         
-        // Notify parent component about give up
-        if (onGiveUp) {
-            onGiveUp(currentPrompt);
-        }
+    //     // Notify parent component about give up
+    //     if (onGiveUp) {
+    //         onGiveUp(currentPrompt);
+    //     }
         
-        // Auto-generate next prompt after delay
-        setTimeout(() => {
-            generatePrompt();
-        }, 4000);
-    };
+    //     // Auto-generate next prompt after delay
+    //     setTimeout(() => {
+    //         generatePrompt();
+    //     }, 4000);
+    // };
     const formatLatitude = (lat) => {
         const absLat = Math.abs(lat);
         const direction = lat >= 0 ? 'N' : 'S';
@@ -55,109 +51,148 @@ export function QuizPrompt({
         return `${absLon.toFixed(1)}°${direction}`;
       };
 
-
-    const renderPromptContent = () => {
-        if (showNiceMessage) {
-            return (
-                <div className="prompt-content">
-                    <div className="prompt-name">
-                        Nice! 🎉
-                    </div>
-                </div>
-            );
+    const isStartDisabled = useMemo(() => {
+        if (state.config.gameMode === 'sandbox') {
+            return false;
         }
+        return state.quiz.status === 'not_started' && 
+               (!state.config.quizSet || !state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0);
+    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode]);   
 
-        if (!currentPrompt) {
-            return (
-                <div className="prompt-placeholder">
-                    <p>Click "Generate Prompt" to start the quiz!</p>
-                </div>
-            );
+    const successfulCompletion = useMemo(() => 
+        Object.values(state.quiz.prompt.guesses).every(
+            guess => guess.status === 'prompted' || guess.status === 'completed'
+        ),
+        [state.quiz.prompt.guesses]
+    );
+    
+    // Reconstruct prompt object from state for display
+    const currentPrompt = useMemo(() => {
+        if (!state.quiz.prompt.type || !currentPromptData) {
+            return null;
         }
+        const promptValue = derivePromptValue(currentPromptData, state.quiz.prompt.type);
+        if (!promptValue) {
+            return null;
+        }
+        return {
+            type: state.quiz.prompt.type,
+            value: promptValue
+        };
+    }, [state.quiz.prompt.type, currentPromptData]);
 
-        const { promptType, countryCode, countryData } = currentPrompt;
 
-        switch (promptType) {
-            case 'name':
-                return (
-                    <div className="prompt-content">
-                        {/* <h3>What is the name of this country?</h3> */}
-                        <div className="prompt-name">
-                            {countryData?.country || countryCode}
-                        </div>
-                    </div>
-                );
-            
-            case 'flag':
-                return (
-                    <div className="prompt-content">
-                        {/* <h3>Which country does this flag belong to?</h3> */}
-                        <span className={`prompt-flag fi fi-${countryData.flagCode.toLowerCase()}`}></span>
-                    </div>
-                );
-            
+    const displayPrompt = (prompt) => {
+        switch (prompt.type) {
             case 'location':
-                return (
-                    <div className="prompt-content">
-                        {/* <h3>Where is {countryData?.name || countryCode} located?</h3> */}
-                        <div className="prompt-location">
-                            { formatLatitude(countryData.location.lat) }, { formatLongitude(countryData.location.long) }
-                        </div>
-                    </div>
-                );
-            
-            default:
-                return (
-                    <div className="prompt-content">
-                        <p>Unknown prompt type: {promptType}</p>
-                        <p>Country: {countryCode}</p>
-                    </div>
-                );
+                return <span className="prompt-location">{formatLatitude(prompt.value.lat)}, {formatLongitude(prompt.value.long)}</span>;
+            case 'name':
+                return <span className="prompt-name">{prompt.value}</span>;
+            case 'flag':
+                return <span className={`prompt-flag fi fi-${prompt.value.toLowerCase()}`}></span>;
         }
-    };
+    }
+
+    const promptContent = useMemo(() => {
+        let promptText = '';
+        if (state.config.gameMode === 'sandbox') {
+            promptText = 'Click any input to explore country data';
+        } else if (state.quiz.status === 'not_started' && isStartDisabled) {
+            promptText = 'Configure quiz settings';
+        } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
+            promptText = 'Start quiz';
+        } else if (state.quiz.status === 'active' && promptCompleted) {
+            if (successfulCompletion) {
+                promptText = 'Prompt complete';
+            } else {
+                promptText = 'Prompt incorrect';
+            }
+        } else if (state.quiz.status === 'active' && !promptCompleted) {
+            if (currentPrompt) {
+                return displayPrompt(currentPrompt);
+            } else {
+                promptText = 'Unknown prompt state';
+            }
+        } else if (state.quiz.status === 'reviewing') {
+            // Review mode - show appropriate content based on reviewType
+            if (state.quiz.reviewType === 'auto' && currentPrompt) {
+                return displayPrompt(currentPrompt);
+            } else if (state.quiz.reviewType === 'history' && state.quiz.reviewIndex !== null) {
+                const historyEntry = state.quiz.history[state.quiz.reviewIndex];
+                if (historyEntry && currentPromptData) {
+                    return <span className="prompt-name">{currentPromptData.country}</span>;
+                }
+                promptText = 'Reviewing past prompt';
+            } else if (state.quiz.reviewType === 'learning' && currentPromptData) {
+                return <span className="prompt-name">{currentPromptData.country}</span>;
+            } else {
+                promptText = 'Review mode';
+            }
+        } else if (state.quiz.status === 'completed') {
+            promptText = 'Quiz Finished!';
+        } else {
+            promptText = 'Unknown prompt state';
+        }
+        return <span className="prompt-content__generic-text">{promptText}</span>;
+    }, [state.quiz.status, state.quiz.reviewType, state.quiz.reviewIndex, state.quiz.history, currentPrompt, currentPromptData, isStartDisabled, promptCompleted, successfulCompletion]);
+
+    const promptButton = useMemo(() => {
+        if (state.config.gameMode === 'sandbox') {
+            return null;
+        }
+        if (state.quiz.status === 'not_started') {
+            return (
+                <button 
+                    className="quiz-prompt__start-quiz-button" 
+                    onClick={startQuiz}
+                    disabled={isStartDisabled}
+                >
+                    Start quiz
+                </button>
+            );
+        } else if (state.quiz.status === 'active') {
+            return (
+                <button 
+                    className="quiz-prompt__give-up-button" 
+                    onClick={giveUpPrompt}
+                    disabled={promptCompleted}
+                >
+                    Give up
+                </button>
+            );
+        } else if (state.quiz.status === 'completed') {
+            return (
+                <button 
+                    className="quiz-config__reset-quiz-button" 
+                    onClick={resetQuiz}
+                >
+                    Reset quiz
+                </button>
+            );
+        }
+        // Review mode - no button shown
+        return null;
+    }, [state.quiz.status, promptCompleted, isStartDisabled, startQuiz, giveUpPrompt, resetQuiz]);
+
 
     return (
-        <div className="quiz-prompt">
-            {/* Quiz controls */}
-                <div className="quiz-controls">
-                    {!currentPrompt && !isQuizFinished &&(
-                        <button 
-                            onClick={generatePrompt} 
-                            disabled={isQuizFinished || hasGivenUp}
-                            className="generate-prompt-btn"
-                        >
-                            {isQuizFinished ? 'Quiz Finished!' : 'Generate Prompt'}
-                        </button>
-                )}
-                
-                {currentPrompt && !isQuizFinished && !hasGivenUp && (
-                    <button 
-                        onClick={handleGiveUp} 
-                        className="give-up-btn"
-                        style={{
-                            backgroundColor: '#dc3545',
-                            color: 'white',
-                            border: '1px solid #dc3545',
-                            padding: '8px 16px',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            marginLeft: '8px'
-                        }}
-                    >
-                        Give Up
-                    </button>
-                )}
-                
-                {isQuizFinished && (
-                    <button onClick={resetQuiz} className="reset-quiz-btn">
-                        Start New Quiz
-                    </button>
-                )}
+        <div className={`quiz-prompt component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Prompt' : 'Collapse Prompt'}
+                >
+                    {isCollapsed ? '▶ Prompt' : '▼ Prompt'}
+                </button>
             </div>
-            
-            {/* Current prompt display */}
-            <div className="prompt-display">
-                {renderPromptContent()}
+            <div className="component-panel__content">
+            <div className="quiz-prompt__content" style={{ textAlign: 'center' }}>
+                {promptContent}
+            </div>
+            <div className="quiz-prompt__button">
+                {promptButton}
+            </div>
             </div>
         </div>
     );

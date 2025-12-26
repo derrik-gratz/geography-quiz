@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
 
 /**
  * QuizLog Component
@@ -17,147 +19,105 @@ import React, { useState } from 'react';
  * @returns {JSX.Element} Quiz log table interface
  */
 export function QuizLog({ 
-    promptHistory, 
-    attempts, 
-    answers, 
-    currentPrompt, 
-    requiredAnswerTypes = [], 
-    isComplete = false,
-    totalCountries,
-    isQuizFinished = false,
-    quizSetName = 'Geography Quiz'
+    // promptHistory, 
+    // attempts, 
+    // answers, 
+    // currentPrompt, 
+    // requiredAnswerTypes = [], 
+    // isComplete = false,
+    // totalCountries,
+    // isQuizFinished = false,
+    // quizSetName = 'Geography Quiz'
 }) {
+    const { state } = useQuiz();
     const [exportSuccess, setExportSuccess] = useState(false);
     const [obscureNames, setObscureNames] = useState(true);
-    // Create log entries for history
-    // Treat all but the last history item as completed; the last one is the current prompt
-    // If quiz is finished, all items should be completed
-    const historyEntries = promptHistory.map((prompt, index) => {
-        const isLast = index === promptHistory.length - 1;
-        return {
-            country: prompt.countryData?.country || prompt.countryCode,
-            promptType: prompt.promptType,
-            status: (isLast && !isQuizFinished) ? 'in_progress' : 'completed',
-            completionStatus: prompt.completionStatus || 'unknown',
-            answerCompletionStatus: prompt.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' },
-            attempts: prompt.finalAttempts || { map: 0, text: 0, flag: 0 },
-            answers: prompt.finalAnswers || {}
-        };
-    });
+    const defaultCollapsed = useMemo(() => state.quiz.status === 'not_started', [state.quiz.status]);
+    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
-    // Current question entry
-    const currentEntry = currentPrompt ? {
-        country: currentPrompt.countryData?.country || currentPrompt.countryCode,
-        promptType: currentPrompt.promptType,
-        status: isComplete ? 'completed' : 'in_progress',
-        attempts,
-        answers,
-        requiredTypes: requiredAnswerTypes
-    } : null;
-
-    // Combine entries without duplicating current prompt
-    let allEntries = historyEntries;
-    if (currentEntry) {
-        const lastIsSame = promptHistory.length > 0 &&
-            (promptHistory[promptHistory.length - 1]?.countryCode === currentPrompt.countryCode);
-        if (lastIsSame) {
-            // Replace the last history row with the current live row
-            allEntries = [
-                ...historyEntries.slice(0, Math.max(0, historyEntries.length - 1)),
-                currentEntry
-            ];
-        } else {
-            allEntries = [...historyEntries, currentEntry];
+    const promptScore = (entry) => {
+        const types = ['location', 'name', 'flag'];
+        const completedCount = types.filter(type => entry[type]?.status === 'completed').length;
+        return completedCount / 2;
+    }
+    
+    // Always call useMemo - handle 'not_started' case inside
+    const logEntries = useMemo(() => {
+        // Return empty array if quiz hasn't started
+        if (state.quiz.status === 'not_started') {
+            return [];
         }
+        // console.log(state.quiz.history);
+        // console.log(state.quiz.prompt.guesses);
+        const parseGuesses = (guesses) => {
+            return {
+                location: guesses.location.status === 'prompted' ? '-' :
+                    guesses.location.status === 'incomplete' ? '?/' + guesses.location.attempts.length :
+                    guesses.location.status === 'failed' ? '✗/' + guesses.location.attempts.length :
+                    guesses.location.status === 'completed' ? '✓/' + guesses.location.attempts.length : '?',
+                name: guesses.name.status === 'prompted' ? '-' :
+                    guesses.name.status === 'incomplete' ? '?/' + guesses.name.attempts.length :
+                    guesses.name.status === 'failed' ? '✗/' + guesses.name.attempts.length :
+                    guesses.name.status === 'completed' ? '✓/' + guesses.name.attempts.length : '?',
+                flag: guesses.flag.status === 'prompted' ? '-' :
+                    guesses.flag.status === 'incomplete' ? '?/' + guesses.flag.attempts.length :
+                    guesses.flag.status === 'failed' ? '✗/' + guesses.flag.attempts.length :
+                    guesses.flag.status === 'completed' ? '✓/' + guesses.flag.attempts.length : '?'
+            }
+        }
+        const pastPrompts = state.quiz.history.map((entry) => {
+            const correctCountry = state.quizData[entry.quizDataIndex]?.country || '?';
+            const score = promptScore(entry);
+            const guesses = parseGuesses(entry);
+            return { correctCountry, score, guesses };
+        });
+        if (state.quiz.status === 'active') {
+            const currentPrompt = {
+                correctCountry: '?',
+                score: promptScore(state.quiz.prompt.guesses),
+                guesses: parseGuesses(state.quiz.prompt.guesses),
+            };
+            return [ ...pastPrompts, currentPrompt ];
+        }
+        return pastPrompts;
+    }, [state.quiz.history, state.quiz.status, state.quiz.prompt, state.quizData]);
+
+    // Don't show quiz log if quiz hasn't started
+    if (state.quiz.status === 'not_started') {
+        return null;
     }
 
-    const getStatusIcon = (entry) => {
-        if (entry.status === 'completed') {
-            return '✅';
-        } else if (entry.status === 'in_progress') {
-            return '🔄';
-        }
-        return '⏳';
-    };
-
-    const getAnswerStatus = (entry, type) => {
-        // Map prompt types to answer keys
-        const typeToKey = {
-            'location': 'map',
-            'name': 'text', 
-            'flag': 'flag'
-        };
-        
-        if (type === entry.promptType) {
-            return '📋';
-        }
-        if (entry.status === 'completed') {
-            // Use per-type completion status instead of overall completion status
-            const answerKey = typeToKey[type];
-            const typeStatus = entry.answerCompletionStatus?.[answerKey];
-            
-            if (typeStatus === 'correct') {
-                return '✓';
-            } else if (typeStatus === 'incorrect') {
-                return '✗';
-            } else if (typeStatus === 'unanswered') {
-                // If the prompt is completed but a category is unanswered, treat it as incorrect
-                return '✗';
-            }
-            return '?';
-        }
-        
-        const answerKey = typeToKey[type];
-        if (entry.answers && entry.answers[answerKey]) {
-            return '✓';
-        }
-        
-        if (entry.requiredTypes && entry.requiredTypes.includes(type)) {
-            return '?';
-        }
-        
-        return '-';
-    };
-
-    const getAttemptsDisplay = (entry, type) => {
-        if (entry.status === 'completed') {
-            return entry.attempts?.[type] || '-';
-        }
-        
-        return entry.attempts?.[type] || '-';
-    };
-
-    // Export function to create simplified text format of results
     const exportResults = () => {
-        const completedEntries = allEntries.filter(entry => entry.status === 'completed');
-        
-        let exportText = `${quizSetName} Results\n`;
-        const correct = completedEntries.reduce((sum, entry) => {
-            const answerCompletionStatus = entry.answerCompletionStatus || { map: 'unanswered', text: 'unanswered', flag: 'unanswered' };
-            const correctCount = Object.values(answerCompletionStatus).filter(status => status === 'correct').length;
-            return sum + (correctCount / 2);
+        let exportText = `${state.config.quizSet} Results\n`;
+        const score = logEntries.reduce((sum, entry) => {
+            return sum + entry.score;
         }, 0);
         
+        exportText += `Score: ${score} / ${state.quizData.length} countries\n\n`;
+        const entries = logEntries.slice().reverse();
+
+        const pad = (str, width) => String(str).padEnd(width, ' ');
+        const countryCol = Math.max(
+            'Country'.length,
+            ...entries.map(e => (obscureNames ? String(entries.length).length : e.correctCountry.length))
+        );
+        const mapCol = Math.max('Map'.length, ...entries.map(e => e.guesses.location.length));
+        const nameCol = Math.max('Name'.length, ...entries.map(e => e.guesses.name.length));
+        const flagCol = Math.max('Flag'.length, ...entries.map(e => e.guesses.flag.length));
         
-        exportText += `Correct: ${correct} / ${totalCountries} countries\n\n`;
+        // exportText += `| Country | Map | Name | Flag |\n`;
+        // exportText += `|---------|-----|------|------|\n`;
+        exportText += `| ${pad('Country', countryCol)} | ${pad('Map', mapCol)} | ${pad('Name', nameCol)} | ${pad('Flag', flagCol)} |\n`;
+        exportText += `|${'-'.repeat(countryCol + 2)}|${'-'.repeat(mapCol + 2)}|${'-'.repeat(nameCol + 2)}|${'-'.repeat(flagCol + 2)}|\n`;
         
-        exportText += `| Country | Map | Name | Flag |\n`;
-        exportText += `|---------|-----|------|------|\n`;
-        
-        completedEntries.slice().reverse().forEach((entry, index) => {
-            const mapStatus = getAnswerStatus(entry, 'location');
-            const nameStatus = getAnswerStatus(entry, 'name');
-            const flagStatus = getAnswerStatus(entry, 'flag');
-            
-            const mapAttempts = getAttemptsDisplay(entry, 'map');
-            const nameAttempts = getAttemptsDisplay(entry, 'text');
-            const flagAttempts = getAttemptsDisplay(entry, 'flag');
-            
-            // Use index number if obscuring names, otherwise use country name
-            const countryDisplay = obscureNames ? `${index + 1}` : entry.country;
-            
-            exportText += `| ${countryDisplay} | ${mapStatus}(${mapAttempts}) | ${nameStatus}(${nameAttempts}) | ${flagStatus}(${flagAttempts}) |\n`;
+        entries.forEach((entry, index) => {
+            const countryDisplay = obscureNames ? `${index + 1}` : entry.correctCountry;
+            exportText += `| ${pad(countryDisplay, countryCol)} | ${pad(entry.guesses.location, mapCol)} | ${pad(entry.guesses.name, nameCol)} | ${pad(entry.guesses.flag, flagCol)} |\n`;
         });
+        // logEntries.slice().reverse().forEach((entry, index) => {
+        //     const countryDisplay = obscureNames ? `${index + 1}` : entry.correctCountry;
+        //     exportText += `| ${countryDisplay} | ${entry.guesses.location} | ${entry.guesses.name} | ${entry.guesses.flag} |\n`;
+        // });
         
         return exportText;
     };
@@ -176,49 +136,47 @@ export function QuizLog({
         }
     };
 
-
     return (
-        <div className="quiz-log">
-            <div className="quiz-log-header">
-                <h3>Quiz Progress</h3>
-                <div className="progress-summary">
-                    {isQuizFinished 
-                        ? `${promptHistory.length} / ${totalCountries} completed`
-                        : `${Math.max(0, promptHistory.length - 1 + (isComplete ? 1 : 0))} / ${totalCountries} completed`
-                    }
-                </div>
-                {isQuizFinished && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
-                            <input
-                                type="checkbox"
-                                checked={obscureNames}
-                                onChange={(e) => setObscureNames(e.target.checked)}
-                                style={{ margin: 0 }}
-                            />
-                           Hide country names
-                        </label>
-                        <button 
-                            onClick={copyResultsToClipboard}
-                            className="export-results-btn"
-                            style={{
-                                backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-                                color: 'white',
-                                border: 'none',
-                                padding: '8px 16px',
-                                borderRadius: '4px',
-                                fontSize: '14px',
-                                cursor: 'pointer',
-                                transition: 'background-color 0.2s'
-                            }}
-                        >
-                            {exportSuccess ? '✓ Copied!' : 'Export Results'}
-                        </button>
-                    </div>
-                )}
+        <div className={`quiz-log component-panel ${isCollapsed ? 'collapsed' : ''}`}>
+            <div className="component-panel__title-container">
+                <button 
+                    className="component-panel__toggle-button" 
+                    onClick={toggleCollapsed}
+                    aria-label={isCollapsed ? 'Expand Quiz Progress' : 'Collapse Quiz Progress'}
+                >
+                    {isCollapsed ? '▶ Quiz Progress' : '▼ Quiz Progress'}
+                </button>
             </div>
-            
-            <div className="quiz-log-table-container">
+            <div className="component-panel__content">
+            {state.quiz.status === 'completed' && (
+                <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+                    <input
+                        type="checkbox"
+                        checked={obscureNames}
+                        onChange={(e) => setObscureNames(e.target.checked)}
+                        style={{ margin: 0 }}
+                    />
+                    Hide country names
+                    </label>
+                    <button 
+                        onClick={copyResultsToClipboard}
+                        className="quiz-log__export-btn"
+                        style={{
+                            backgroundColor: exportSuccess ? '#28a745' : '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            padding: '8px 16px',
+                            borderRadius: '4px',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.2s'
+                        }}
+                    >
+                        {exportSuccess ? '✓ Copied!' : 'Export Results'}
+                    </button>
+                </div>
+            )}
                 <table className="quiz-log-table">
                     <thead>
                         <tr>
@@ -231,52 +189,129 @@ export function QuizLog({
                         </tr>
                     </thead>
                     <tbody>
-                        {allEntries.reverse().map((entry, index) => (
-                            <tr key={index} className={`log-entry ${entry.status} ${entry.completionStatus || ''}`}>
+                        {logEntries.slice().reverse().map((entry, index) => (
+                            <tr key={index} className="log-entry">
                                 <td className="country-name">
-                                    {entry.status === 'in_progress' ? "?" : entry.country}
-                                </td>
-                                {/* <td className="prompt-type">
-                                    {entry.promptType}
-                                </td> */}
-                                {/* <td className="status">
-                                    {getStatusIcon(entry)}
-                                </td> */}
-                                <td className="answer-cell">
-                                    <span className="answer-status">
-                                        {getAnswerStatus(entry, 'location')}
-                                    </span>
-                                    <span className="attempts">
-                                        ({getAttemptsDisplay(entry, 'map')})
-                                    </span>
+                                    {entry.correctCountry}
                                 </td>
                                 <td className="answer-cell">
-                                    <span className="answer-status">
-                                        {getAnswerStatus(entry, 'name')}
-                                    </span>
-                                    <span className="attempts">
-                                        ({getAttemptsDisplay(entry, 'text')})
-                                    </span>
+                                    {entry.guesses.location}
                                 </td>
                                 <td className="answer-cell">
-                                    <span className="answer-status">
-                                        {getAnswerStatus(entry, 'flag')}
-                                    </span>
-                                    <span className="attempts">
-                                        ({getAttemptsDisplay(entry, 'flag')})
-                                    </span>
+                                    {entry.guesses.name}
+                                </td>
+                                <td className="answer-cell">
+                                    {entry.guesses.flag}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-            
-            {allEntries.length === 0 && (
-                <div className="no-entries">
-                    <p>No quiz questions yet. Click "Generate Prompt" to start!</p>
-                </div>
-            )}
-        </div>
+            </div>
     );
+   
+
+    // return (
+    //     <div className="quiz-log">
+    //         <div className="quiz-log-header">
+    //             <h3>Quiz Progress</h3>
+    //             <div className="progress-summary">
+    //                 {isQuizFinished 
+    //                     ? `${promptHistory.length} / ${totalCountries} completed`
+    //                     : `${Math.max(0, promptHistory.length - 1 + (isComplete ? 1 : 0))} / ${totalCountries} completed`
+    //                 }
+    //             </div>
+    //             {isQuizFinished && (
+    //                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
+    //                     <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+    //                         <input
+    //                             type="checkbox"
+    //                             checked={obscureNames}
+    //                             onChange={(e) => setObscureNames(e.target.checked)}
+    //                             style={{ margin: 0 }}
+    //                         />
+    //                        Hide country names
+    //                     </label>
+    //                     <button 
+    //                         onClick={copyResultsToClipboard}
+    //                         className="export-results-btn"
+    //                         style={{
+    //                             backgroundColor: exportSuccess ? '#28a745' : '#007bff',
+    //                             color: 'white',
+    //                             border: 'none',
+    //                             padding: '8px 16px',
+    //                             borderRadius: '4px',
+    //                             fontSize: '14px',
+    //                             cursor: 'pointer',
+    //                             transition: 'background-color 0.2s'
+    //                         }}
+    //                     >
+    //                         {exportSuccess ? '✓ Copied!' : 'Export Results'}
+    //                     </button>
+    //                 </div>
+    //             )}
+    //         </div>
+            
+    //         <div className="quiz-log-table-container">
+    //             <table className="quiz-log-table">
+    //                 <thead>
+    //                     <tr>
+    //                         <th>Country</th>
+    //                         {/* <th>Prompt</th> */}
+    //                         {/* <th>Status</th> */}
+    //                         <th>Map</th>
+    //                         <th>Name</th>
+    //                         <th>Flag</th>
+    //                     </tr>
+    //                 </thead>
+    //                 <tbody>
+    //                     {allEntries.reverse().map((entry, index) => (
+    //                         <tr key={index} className={`log-entry ${entry.status} ${entry.completionStatus || ''}`}>
+    //                             <td className="country-name">
+    //                                 {entry.status === 'in_progress' ? "?" : entry.country}
+    //                             </td>
+    //                             {/* <td className="prompt-type">
+    //                                 {entry.promptType}
+    //                             </td> */}
+    //                             {/* <td className="status">
+    //                                 {getStatusIcon(entry)}
+    //                             </td> */}
+    //                             <td className="answer-cell">
+    //                                 <span className="answer-status">
+    //                                     {getAnswerStatus(entry, 'location')}
+    //                                 </span>
+    //                                 <span className="attempts">
+    //                                     ({getAttemptsDisplay(entry, 'map')})
+    //                                 </span>
+    //                             </td>
+    //                             <td className="answer-cell">
+    //                                 <span className="answer-status">
+    //                                     {getAnswerStatus(entry, 'name')}
+    //                                 </span>
+    //                                 <span className="attempts">
+    //                                     ({getAttemptsDisplay(entry, 'text')})
+    //                                 </span>
+    //                             </td>
+    //                             <td className="answer-cell">
+    //                                 <span className="answer-status">
+    //                                     {getAnswerStatus(entry, 'flag')}
+    //                                 </span>
+    //                                 <span className="attempts">
+    //                                     ({getAttemptsDisplay(entry, 'flag')})
+    //                                 </span>
+    //                             </td>
+    //                         </tr>
+    //                     ))}
+    //                 </tbody>
+    //             </table>
+    //         </div>
+            
+    //         {allEntries.length === 0 && (
+    //             <div className="no-entries">
+    //                 <p>No quiz questions yet. Click "Generate Prompt" to start!</p>
+    //             </div>
+    //         )}
+    //     </div>
+    // );
 }

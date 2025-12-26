@@ -1,90 +1,116 @@
-import React, { useState } from 'react';
-import countries from '../data/country_data.json';
+import React, { useState, useMemo, useRef } from 'react';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useCollapsible } from '../hooks/useCollapsible.js';
+import countryData from '../data/country_data.json';
+import { useComponentState } from '../hooks/useComponentState.js';
 
-export function TextCountryInput({ onSelect, promptResetKey, disabled = false, incorrectCountries = [], correctAnswer = null }) {
+export function TextInput() {
+  const { state } = useQuiz();
+  const { submitAnswer } = useQuizActions();
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
+  // Collapse when name is prompted, or when completed/failed while prompt is still active
+  const defaultCollapsed = useMemo(() => {
+    if (componentStatus === 'prompting') return true;
+    if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
+      return true;
+    }
+    return false;
+  }, [componentStatus, state.quiz.status]);
+  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+
+  
   const [input, setInput] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [resetKey, setResetKey] = useState(0);
   const [isWrong, setIsWrong] = useState(false);
 
+  // Compute if the last guess was wrong
   React.useEffect(() => {
-    if (promptResetKey) {
-        setInput('');
-        setSuggestions([]);
-        setShowSuggestions(false);
-        setSelectedCountry(null);
-        setIsCorrect(false);
+    console.log(guesses);
+    if (componentStatus === 'active') {
+      if (guesses.attempts?.length > 0 && guesses.status === 'incomplete') {
+        setIsWrong(true);
+      }
     }
-  }, [promptResetKey]);
+  }, [componentStatus, guesses?.attempts, guesses?.status]);
 
-  // Reset when disabled (new prompt type)
+  // Handle wrong guess timeout - show incorrect guess for 1 second
   React.useEffect(() => {
-    if (disabled) {
+    if (isWrong) {
+      const timeoutId = setTimeout(() => {
+        setIsWrong(false);
+        setInput('');
         setSelectedCountry(null);
-        setIsCorrect(false);
-    }
-  }, [disabled]);
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    } 
+  }, [isWrong]);
+  console.log(isWrong);
+
   
+  const handleCountryClick = (country) => {
+    if (!disabled && !incorrectValues.includes(country)) {
+      setInput(country.country);
+      setSelectedCountry(country.country);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }
+
+  // Reset when prompt changes
   React.useEffect(() => {
-    setIsWrong(false);
-    setIsCorrect(false);
     setSelectedCountry(null);
     setInput('');
     setSuggestions([]);
     setShowSuggestions(false);
-  }, [promptResetKey]);
+    setIsWrong(false);
+  }, [state.quiz.prompt.quizDataIndex, state.quiz.status]);
 
-  // Show correct answer when provided (give up scenario)
-  React.useEffect(() => {
-    if (correctAnswer) {
-      setInput(correctAnswer.country || correctAnswer);
-      setIsCorrect(true);
-      setSelectedCountry(correctAnswer);
-      setSuggestions([]);
-      setShowSuggestions(false);
-    } else {
-      // Reset when correctAnswer becomes null (new prompt)
-      setIsCorrect(false);
-      setSelectedCountry(null);
-      setInput('');
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  }, [correctAnswer]);
   
-  const handleSelect = (country) => {
-    // Don't allow selection of incorrect countries
-    if (incorrectCountries.includes(country.code)) {
-      return;
+  const handleSubmit = () => {
+    if (selectedCountry && componentStatus === 'active') {
+      submitAnswer('name', selectedCountry);
+      // Don't clear selectedCountry here - let it persist to show wrong guess during timeout
     }
-    setInput(country.country);
-    setSelectedCountry(country);
-    setSuggestions([]);
-    setShowSuggestions(false);
   };
 
-  const handleSubmit = () => {
-    if (selectedCountry && onSelect) {
-      const result = onSelect(selectedCountry);
-      if (result && result.ok) {
-        setIsCorrect(true);
-      } else {
-        setIsWrong(true);
-        // Clear the incorrect state after 2 seconds to allow retry
-        setTimeout(() => {
-          setIsWrong(false);
-          setSelectedCountry(null);
-          setInput('');
-        }, 1000);
-      }
-      // if (onAnswerFeedback) {
-      //   onAnswerFeedback(result);
-      // }
+  // Get all countries with flags as base
+  const allCountries = useMemo(() => {
+    return countryData.filter(country => country.country);
+  }, []);
+
+  // Handle the 4 input states:
+  // 1. Disabled with correct answer shown (review mode)
+  // 2. Disabled with nothing highlighted (initial/other disabled states)
+  // 3. Enabled for user input (active quiz)
+  // 4. Temporarily timed out, displaying incorrect guess
+  // 5. sandbox
+  React.useEffect(() => {
+    if (componentStatus === 'reviewing' && correctValue) {
+      setInput(correctValue);
+      setSelectedCountry(correctValue);
+      setSuggestions([]);
+      setShowSuggestions(false);
     }
-  };
+    else if (componentStatus === 'active' && isWrong && selectedCountry) {
+      setInput(selectedCountry);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+    else if (componentStatus === 'disabled') {
+      setInput('');
+      setSelectedCountry(null);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+    // State 3: Enabled - don't override user input, let handleChange manage it
+    // No action needed, user can type freely
+  }, [componentStatus, correctValue, isWrong, selectedCountry]);
 
   const normalizeText = (text) => {
     return text
@@ -98,7 +124,7 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
     setInput(value);
     if (value.length > 0) {
       const normalizedInput = normalizeText(value);
-      const filtered = countries.filter(c => {
+      const filtered = allCountries.filter(c => {
         const allAliases = [c.country, ...(Array.isArray(c.aliases) ? c.aliases : [])].filter(Boolean);
         const matches = allAliases.map(name => normalizeText(name)).some(name => name.includes(normalizedInput));
         return matches;
@@ -106,8 +132,8 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
       
       // Sort suggestions: correct countries first, then incorrect countries at the bottom
       const sortedSuggestions = filtered.sort((a, b) => {
-        const aIsIncorrect = incorrectCountries.includes(a.code);
-        const bIsIncorrect = incorrectCountries.includes(b.code);
+        const aIsIncorrect = incorrectValues.includes(a.country);
+        const bIsIncorrect = incorrectValues.includes(b.country);
         
         // If one is incorrect and the other isn't, put the correct one first
         if (aIsIncorrect && !bIsIncorrect) return 1;
@@ -126,49 +152,72 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+    <div className={`text-input component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative' }}>
+      <div className="component-panel__title-container">
+        <button 
+          className="component-panel__toggle-button" 
+          onClick={toggleCollapsed}
+          aria-label={isCollapsed ? 'Expand Country Name' : 'Collapse Country Name'}
+        >
+          {isCollapsed ? '▶ Country Name' : '▼ Country Name'}
+        </button>
+      </div>
+      <div className="component-panel__content" style={{ position: 'relative', overflow: 'visible' }}>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative' }}>
       <button
           onClick={handleSubmit}
-          disabled={!selectedCountry || disabled || isCorrect || isWrong }
+          disabled={!selectedCountry || disabled}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.9rem',
             borderRadius: '4px',
-            border: '1px solid #007bff',
-            backgroundColor: isCorrect ? '#28a745' : isWrong? '#dc3545' : (selectedCountry && !disabled ? '#007bff' : '#f8f9fa'),
-            color: isCorrect ? '#fff' : (selectedCountry && !disabled ? '#fff' : '#6c757d'),
-            cursor: (selectedCountry && !disabled && !isCorrect && !isWrong) ? 'pointer' : 'not-allowed',
+            border: guesses?.status === 'completed' ? '1px solid var(--input-option-correct)' : 
+                    isWrong ? '1px solid var(--input-option-incorrect)' :
+                    `1px solid ${selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'}`,
+            backgroundColor: guesses?.status === 'completed' ? 'var(--input-option-correct)' : 
+                            isWrong ? 'var(--input-option-incorrect)' : 
+                            (selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'),
+            color: guesses?.status === 'completed' || isWrong ? '#fff' : 
+                   (selectedCountry && !disabled ? '#fff' : 'var(--text-primary)'),
+            cursor: (selectedCountry && componentStatus === 'active') ? 'pointer' : 'not-allowed',
             whiteSpace: 'nowrap'
           }}
         >
-          {correctAnswer ? 'Answer:' :isCorrect ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
+          {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'completed' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
         </button>
+        <div style={{ flex: 1, position: 'relative' }}>
         <input
           type="text"
           value={input}
           onChange={handleChange}
           placeholder="Type a country name..."
-          disabled={disabled || isCorrect}
+          disabled={disabled || isWrong}
           style={{ 
-            flex: 1,
+            width: '95%',
             padding: '0.5rem', 
             fontSize: '1rem', 
             borderRadius: '4px', 
             border: '1px solid #ccc',
-            backgroundColor: (disabled || isCorrect || isWrong ) ? '#f5f5f5' : '#fff',
-            color: (disabled || isCorrect || isWrong ) ? '#999' : '#333',
-            cursor: (disabled || isCorrect || isWrong ) ? 'not-allowed' : 'text'
+            // State 4: Temporarily wrong - red background
+            // State 1: Review mode - neutral/gray background
+            // State 2: Disabled - neutral/gray background  
+            // State 3: Enabled - white background
+            backgroundColor: isWrong ? '#fee' : (disabled ? '#f5f5f5' : '#fff'),
+            color: isWrong ? '#c33' : (disabled ? '#999' : '#333'),
+            cursor: (disabled || isWrong) ? 'not-allowed' : 'text'
           }}
           // onFocus: Shows suggestions when user clicks into the input field (if there's already text)
-          onFocus={() => input && !isCorrect && setShowSuggestions(true)}
+          // Only allow focus in enabled state (not disabled, not wrong, not complete)
+          onFocus={() => {
+            if (componentStatus === 'active' && input) {
+              setShowSuggestions(true);
+            }
+          }}
           // onBlur: Hides suggestions when user clicks away from the input field
           // setTimeout prevents suggestions from disappearing immediately when clicking on a suggestion
           onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
         />
-        
-      </div>
-      {showSuggestions && suggestions.length > 0 && !isCorrect && (
+        {showSuggestions && suggestions.length > 0 && guesses?.status !== 'completed' && (
         <ul style={{
           position: 'absolute',
           left: 0,
@@ -180,17 +229,18 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
           minHeight: '40px', // Ensure at least one suggestion is visible
           maxHeight: '120px',
           overflowY: 'auto',
-          zIndex: 10,
+          zIndex: 1000,
           margin: 0,
           padding: 0,
           listStyle: 'none',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
         }}>
           {suggestions.map(country => {
-            const isIncorrect = incorrectCountries.includes(country.code);
+            const isIncorrect = incorrectValues.includes(country.country);
             return (
               <li
                 key={country.code}
-                onMouseDown={() => handleSelect(country)}
+                onMouseDown={() => handleCountryClick(country)}
                 style={{ 
                   padding: '0.5rem', 
                   cursor: isIncorrect ? 'not-allowed' : 'pointer',
@@ -227,7 +277,10 @@ export function TextCountryInput({ onSelect, promptResetKey, disabled = false, i
             );
           })}
         </ul>
-      )}
+        )}
+        </div>
+      </div>
+      </div>
     </div>
   );
 } 
