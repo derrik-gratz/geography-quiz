@@ -47,16 +47,21 @@ export function QuizLog({
         if (state.quiz.status === 'not_started') {
             return [];
         }
+        // console.log(state.quiz.history);
+        // console.log(state.quiz.prompt.guesses);
         const parseGuesses = (guesses) => {
             return {
                 location: guesses.location.status === 'prompted' ? '-' :
-                    guesses.location.status === 'incomplete' ? 'X/' + guesses.location.attempts.length :
+                    guesses.location.status === 'incomplete' ? '?/' + guesses.location.attempts.length :
+                    guesses.location.status === 'failed' ? '✗/' + guesses.location.attempts.length :
                     guesses.location.status === 'completed' ? '✓/' + guesses.location.attempts.length : '?',
                 name: guesses.name.status === 'prompted' ? '-' :
-                    guesses.name.status === 'incomplete' ? 'X/' + guesses.name.attempts.length :
+                    guesses.name.status === 'incomplete' ? '?/' + guesses.name.attempts.length :
+                    guesses.name.status === 'failed' ? '✗/' + guesses.name.attempts.length :
                     guesses.name.status === 'completed' ? '✓/' + guesses.name.attempts.length : '?',
                 flag: guesses.flag.status === 'prompted' ? '-' :
-                    guesses.flag.status === 'incomplete' ? 'X/' + guesses.flag.attempts.length :
+                    guesses.flag.status === 'incomplete' ? '?/' + guesses.flag.attempts.length :
+                    guesses.flag.status === 'failed' ? '✗/' + guesses.flag.attempts.length :
                     guesses.flag.status === 'completed' ? '✓/' + guesses.flag.attempts.length : '?'
             }
         }
