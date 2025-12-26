@@ -5,6 +5,7 @@ import { useCollapsible } from '../hooks/useCollapsible.js';
 import countryData from '../data/country_data.json';
 import quizSets from '../data/quiz_sets.json';
 import { useComponentState } from '../hooks/useComponentState.js';
+import { shuffleArray } from '../services/filterCountryData.js';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -117,6 +118,8 @@ export function FlagSelect() {
                 if (b.flagCode === correctValue) return 1;
                 return 0;
             });
+        } else {
+            countries = shuffleArray(countries, 5324);
         }
         
         return countries;
