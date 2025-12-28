@@ -139,7 +139,9 @@ export function FlagSelect() {
         } if (incorrectValues.includes(country)) {
             className += ' incorrect';
         } else if (selectedFlag === country) {
-            className += ' selected';
+            const isSandbox = state.config.gameMode === 'sandbox';
+            console.log('Adding class:', isSandbox ? 'sandbox-selected' : 'selected', 'gameMode:', state.config.gameMode);
+            className += isSandbox ? ' sandbox-selected' : ' selected';
         }
         return className;
     };

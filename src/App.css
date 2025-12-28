@@ -641,6 +641,15 @@
   transform: scale(1.1);
 }
 
+.flag-icon.sandbox-selected {
+  border-color: var(--input-option-selected);
+  border-width: 6px;
+  /* box-shadow: 0 0 0 2px var(--color-selected); */
+  background-color: var(--input-option-selected);
+  /* color: white; */
+  transform: scale(1.05);
+}
+
 .flag-icon.correct {
   border-color: var(--input-option-correct);
   /* box-shadow: 0 0 0 2px var(--color-correct); */
