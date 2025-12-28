@@ -26,6 +26,15 @@ export function useQuizActions() {
 
     const setGameMode = useCallback((gameMode) => {
         dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
+        if (gameMode === 'sandbox') {
+            setQuizSet('all');
+            const quizData = filterCountryData('all', state.config.selectedPromptTypes, countryData);
+            dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+        }
+    }, [dispatch]);
+
+    const sandboxSelect = useCallback(({ inputType, countryValue }) => {
+        dispatch({ type: 'SANDBOX_SELECT', payload: { inputType, countryValue } });
     }, [dispatch]);
 
     const startQuiz = useCallback(() => {
@@ -88,6 +97,7 @@ export function useQuizActions() {
         setSelectedPromptTypes,
         handlePromptTypeChange,
         setGameMode,
+        sandboxSelect,
         startQuiz,
         submitAnswer,
         giveUpPrompt,

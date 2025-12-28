@@ -19,7 +19,7 @@ const availableColors = [
 
 export function FlagSelect() {
     const { state } = useQuiz();
-    const { submitAnswer } = useQuizActions();
+    const { submitAnswer, sandboxSelect } = useQuizActions();
     const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('flag');
     // Collapse when flag is prompted (componentStatus === 'prompting')
     const defaultCollapsed = useMemo(() => {
@@ -36,18 +36,24 @@ export function FlagSelect() {
 
     
     const handleFlagClick = (flag) => {
-        if (!disabled && !incorrectValues.includes(flag)) {
-            setSelectedFlag(flag);
+        if (state.config.gameMode === 'sandbox') {
+            sandboxSelect({ inputType: 'flag', countryValue: flag });
+        } else {
+            if (!disabled && !incorrectValues.includes(flag)) {
+                setSelectedFlag(flag);
+            }
         }
     };
 
     // Reset when prompt changes or when disabled
     React.useEffect(() => {
-        // if (disabled) {
-        setSelectedFlag(null);
-        setSelectedColors([]);
-        // }
-    }, [disabled, state.quiz.prompt.quizDataIndex]);
+        if (state.config.gameMode === 'sandbox') {
+            setSelectedFlag(state.quizData[state.quiz.prompt.quizDataIndex].flagCode);
+        } else {
+            setSelectedFlag(null);
+            setSelectedColors([]);
+        }
+    }, [disabled, state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
         if (selectedFlag && !disabled) {
@@ -123,6 +129,7 @@ export function FlagSelect() {
         const flags = [...new Set(countries.map(country => country.flagCode))];
         return flags;
     }, [allCountries, componentStatus, correctValue, state.config.quizSet, selectedColors]);
+
     const getFlagClassName = (country) => {
         let className = `flag-icon fi fi-${country.toLowerCase()}`;
         if (componentStatus !== 'active') {

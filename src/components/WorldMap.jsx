@@ -66,7 +66,7 @@ function getCountryViewWindow(countryCode) {
 
 export function WorldMap() {
   const { state } = useQuiz();
-  const { submitAnswer } = useQuizActions();
+  const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('location');
   const defaultCollapsed = useMemo(() => {
     if (componentStatus === 'prompting') return false;
@@ -92,6 +92,12 @@ export function WorldMap() {
   }, [disabled, defaultViewWindow]);
 
   useEffect(() => {
+    if (state.config.gameMode === 'sandbox' && state.quiz.prompt.quizDataIndex !== null) {
+      setSelectedCountry(state.quizData[state.quiz.prompt.quizDataIndex].code);
+    }
+  }, [state.config.gameMode, state.quiz.prompt.quizDataIndex]);
+
+  useEffect(() => {
     let view = { coordinates: [0, 0], zoom: 1 };
     if ((componentStatus === 'reviewing' || componentStatus === 'prompting') && correctValue) {
       view = getCountryViewWindow(correctValue);
@@ -103,8 +109,10 @@ export function WorldMap() {
   const handleCountryClick = (geo) => {
     if (disabled) return;
     const countryCode = getCountryCode(geo);
-    if (countryCode && !incorrectValues.includes(countryCode)) {
+    if (countryCode && !incorrectValues.includes(countryCode) && state.config.gameMode === 'quiz') {
       setSelectedCountry(countryCode);
+    } else if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
+      sandboxSelect({ inputType: 'location', countryValue: countryCode });
     }
   };
 

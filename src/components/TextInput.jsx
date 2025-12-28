@@ -7,7 +7,7 @@ import { useComponentState } from '../hooks/useComponentState.js';
 
 export function TextInput() {
   const { state } = useQuiz();
-  const { submitAnswer } = useQuizActions();
+  const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
   // Collapse when name is prompted, or when completed/failed while prompt is still active
   const defaultCollapsed = useMemo(() => {
@@ -50,24 +50,38 @@ export function TextInput() {
     } 
   }, [isWrong]);
 
-  
   const handleCountryClick = (country) => {
-    if (!disabled && !incorrectValues.includes(country)) {
-      setInput(country.country);
-      setSelectedCountry(country.country);
-      setSuggestions([]);
-      setShowSuggestions(false);
+    if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
+      // setInput(country.country);
+      // setSelectedCountry(country.country);
+      // setSuggestions([]);
+      // setShowSuggestions(false);
+      sandboxSelect({ inputType: 'name', countryValue: country.country });
+    } else if (state.quiz.gameMode === 'quiz') {
+      if (!disabled && !incorrectValues.includes(country)) {
+        setInput(country.country);
+        setSelectedCountry(country.country);
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
     }
   }
 
   // Reset when prompt changes
   React.useEffect(() => {
-    setSelectedCountry(null);
-    setInput('');
-    setSuggestions([]);
-    setShowSuggestions(false);
-    setIsWrong(false);
-  }, [state.quiz.prompt.quizDataIndex, state.quiz.status]);
+    if (state.config.gameMode === 'sandbox') {
+      setSelectedCountry(state.quizData[state.quiz.prompt.quizDataIndex].country);
+      setInput(state.quizData[state.quiz.prompt.quizDataIndex].country);
+      setSuggestions([]);
+      setShowSuggestions(false);
+    } else {  
+      setSelectedCountry(null);
+      setInput('');
+      setSuggestions([]);
+      setShowSuggestions(false);
+      setIsWrong(false);
+    }
+  }, [state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status]);
 
   
   const handleSubmit = () => {
@@ -82,13 +96,8 @@ export function TextInput() {
     return countryData.filter(country => country.country);
   }, []);
 
-  // Handle the 4 input states:
-  // 1. Disabled with correct answer shown (review mode)
-  // 2. Disabled with nothing highlighted (initial/other disabled states)
-  // 3. Enabled for user input (active quiz)
-  // 4. Temporarily timed out, displaying incorrect guess
-  // 5. sandbox
   React.useEffect(() => {
+    // Disabled with correct answer shown (review mode)
     if (componentStatus === 'reviewing' && correctValue) {
       setInput(correctValue);
       setSelectedCountry(correctValue);
@@ -96,6 +105,7 @@ export function TextInput() {
       setShowSuggestions(false);
     }
     else if (componentStatus === 'active' && isWrong && selectedCountry) {
+      //Temporarily timed out, displaying incorrect guess
       setInput(selectedCountry);
       setSuggestions([]);
       setShowSuggestions(false);
@@ -105,10 +115,17 @@ export function TextInput() {
       setSelectedCountry(null);
       setSuggestions([]);
       setShowSuggestions(false);
-    }
+    } //else if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
+    //   setInput(state.quizData[state.quiz.prompt.quizDataIndex].country);
+    //   setSelectedCountry(state.quizData[state.quiz.prompt.quizDataIndex].country);
+    //   setSuggestions([]);
+    //   setShowSuggestions(false);
+    // }
     // State 3: Enabled - don't override user input, let handleChange manage it
     // No action needed, user can type freely
-  }, [componentStatus, correctValue, isWrong, selectedCountry]);
+  }, [componentStatus, correctValue, isWrong, selectedCountry, state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex]);
+
+
 
   const normalizeText = (text) => {
     return text

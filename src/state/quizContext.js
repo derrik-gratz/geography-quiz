@@ -85,13 +85,26 @@ export function quizReducer(state, action){
                 } 
             };
         case "SET_GAME_MODE":
-            return {
-                ...state,
-                config: {
-                    ...state.config,
-                    gameMode: action.payload
-                }
-            };
+            if (action.payload === 'sandbox') {
+                return {
+                    ...state,
+                    config: {
+                        ...state.config,
+                        quizSet: 'all',
+                        gameMode: action.payload
+                    }
+                };
+            }
+            if (action.payload === 'quiz') {
+                return {
+                    ...state,
+                    config: {
+                        ...state.config,
+                        quizSet: 'Daily challenge',
+                        gameMode: action.payload
+                    }
+                };
+            }
         case 'SET_SELECTED_PROMPT_TYPES':
             return { 
                 ...state, 
@@ -296,7 +309,31 @@ export function quizReducer(state, action){
             
         case 'RESET_QUIZ':
             return createInitialQuizState();
-            
+        case 'SANDBOX_SELECT':
+            const { inputType, countryValue } = action.payload;
+            let selectedCountry = null;
+            if (inputType === 'location') {
+                selectedCountry = state.quizData.find(c => c.code === countryValue);
+            } else if (inputType === 'name') {
+                selectedCountry = state.quizData.find(c => c.country === countryValue);
+            } else if (inputType === 'flag') {
+                selectedCountry = state.quizData.find(c => c.flagCode === countryValue);
+            }
+            console.log('state', state);
+            console.log('selectedCountry', selectedCountry);
+            if (selectedCountry) {
+                return {
+                    ...state,
+                    quiz: {
+                        ...state.quiz,
+                        prompt: {
+                            ...state.quiz.prompt,
+                            quizDataIndex: state.quizData.indexOf(selectedCountry)
+                        }
+                    }
+                };
+            }
+            return state; // Return unchanged state if not found
         default:
             return state;
     }
