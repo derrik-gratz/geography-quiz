@@ -32,27 +32,27 @@ export function FlagSelect() {
     const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const [selectedColors, setSelectedColors] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedFlag, setSelectedFlag] = useState(null);
 
     
-    const handleFlagClick = (country) => {
-        if (!disabled && !incorrectValues.includes(country.flagCode)) {
-            setSelectedCountry(country);
+    const handleFlagClick = (flag) => {
+        if (!disabled && !incorrectValues.includes(flag)) {
+            setSelectedFlag(flag);
         }
     };
 
     // Reset when prompt changes or when disabled
     React.useEffect(() => {
         // if (disabled) {
-        setSelectedCountry(null);
+        setSelectedFlag(null);
         setSelectedColors([]);
         // }
     }, [disabled, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
-        if (selectedCountry && !disabled) {
-            submitAnswer('flag', selectedCountry.flagCode);
-            setSelectedCountry(null);
+        if (selectedFlag && !disabled) {
+            submitAnswer('flag', selectedFlag);
+            setSelectedFlag(null);
         }
     };
 
@@ -80,8 +80,7 @@ export function FlagSelect() {
     //     return 'Submit Flag';
     // }, [componentStatus]);
 
-    // Single filtering function
-    const filteredCountries = useMemo(() => {
+    const filteredFlags = useMemo(() => {
         let countries = allCountries.filter(country => {
             if (componentStatus === 'reviewing' || componentStatus === 'completed') {
                 const guessedFlagCodes = guesses?.attempts || [];
@@ -121,18 +120,18 @@ export function FlagSelect() {
         } else {
             countries = shuffleArray(countries, 5324);
         }
-        
-        return countries;
+        const flags = [...new Set(countries.map(country => country.flagCode))];
+        return flags;
     }, [allCountries, componentStatus, correctValue, state.config.quizSet, selectedColors]);
     const getFlagClassName = (country) => {
-        let className = `flag-icon fi fi-${country.flagCode.toLowerCase()}`;
+        let className = `flag-icon fi fi-${country.toLowerCase()}`;
         if (componentStatus !== 'active') {
-            if (country.flagCode === correctValue) {
+            if (country === correctValue) {
                 className += ' correct';
             }
-        } if (incorrectValues.includes(country.flagCode)) {
+        } if (incorrectValues.includes(country)) {
             className += ' incorrect';
-        } else if (selectedCountry?.flagCode === country.flagCode) {
+        } else if (selectedFlag === country) {
             className += ' selected';
         }
         return className;
@@ -153,15 +152,15 @@ export function FlagSelect() {
                 <button
                     className="flag-select__submit-button"
                     onClick={handleSubmit}
-                    disabled={!selectedCountry || disabled}
+                    disabled={!selectedFlag || disabled}
                     style={{
                         padding: '0.3rem 0.8rem',
                         fontSize: '0.8rem',
                         borderRadius: '4px',
-                        border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
-                        backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
-                        color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
-                        cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed',
+                        border: `1px solid ${selectedFlag && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
+                        backgroundColor: selectedFlag && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
+                        color: selectedFlag && !disabled ? '#fff' : 'var(--text-primary)',
+                        cursor: selectedFlag && !disabled ? 'pointer' : 'not-allowed',
                         whiteSpace: 'nowrap'
                     }}
                 >
@@ -187,17 +186,17 @@ export function FlagSelect() {
                 </div>
             </div>
             <div className="flag-select__flag-grid">
-                {filteredCountries.map((country) => (
+                {filteredFlags.map((flag) => (
                     <span
-                        key={country.code}
-                        className={getFlagClassName(country)}
-                        onClick={() => handleFlagClick(country)}
+                        key={flag}
+                        className={getFlagClassName(flag)}
+                        onClick={() => handleFlagClick(flag)}
                         role="button"
                         tabIndex={0}
-                        aria-label={`Select ${country.country || country.code} flag`}
+                        aria-label={`Select ${flag} flag`}
                         style={{
                             // opacity: disabled || incorrectValues.includes(country.flagCode) ? 0.6 : 1,
-                            cursor: disabled || incorrectValues.includes(country.flagCode) ? 'not-allowed' : 'pointer'
+                            cursor: disabled || incorrectValues.includes(flag) ? 'not-allowed' : 'pointer'
                         }}
                     />
                 ))}
