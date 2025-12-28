@@ -1165,18 +1165,6 @@
     "availablePrompts": ["name", "flag", "location"]
   },
   {
-    "country": "Western Sahara",
-    "aliases": [],
-    "code": "ESH",
-    "capital": "",
-    "location": {
-      "lat": 24,
-      "long": -14
-    },
-    "colors": [],
-    "availablePrompts": ["name", "flag", "location"]
-  },
-  {
     "country": "Spain",
     "aliases": [
       "Kingdom of Spain"
