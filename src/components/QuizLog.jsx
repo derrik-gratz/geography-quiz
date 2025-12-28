@@ -94,7 +94,7 @@ export function QuizLog({
         }, 0);
         
         exportText += `Score: ${score} / ${state.quizData.length} countries\n\n`;
-        const entries = logEntries.slice().reverse();
+        const entries = logEntries.slice(); //.reverse();
 
         const pad = (str, width) => String(str).padEnd(width, ' ');
         const countryCol = Math.max(
