@@ -57,7 +57,7 @@ export function TextInput() {
       // setSuggestions([]);
       // setShowSuggestions(false);
       sandboxSelect({ inputType: 'name', countryValue: country.country });
-    } else if (state.quiz.gameMode === 'quiz') {
+    } else if (state.config.gameMode === 'quiz') {
       if (!disabled && !incorrectValues.includes(country)) {
         setInput(country.country);
         setSelectedCountry(country.country);
