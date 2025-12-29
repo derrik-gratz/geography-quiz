@@ -6,6 +6,7 @@ import countryData from '../data/country_data.json';
 import quizSets from '../data/quiz_sets.json';
 import { useComponentState } from '../hooks/useComponentState.js';
 import { shuffleArray } from '../services/filterCountryData.js';
+import flagColors from '../data/flag_colors.json';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -86,6 +87,22 @@ export function FlagSelect() {
     //     return 'Submit Flag';
     // }, [componentStatus]);
 
+    const filterByQuizSet = (country) => {
+        if (state.config.quizSet && state.config.quizSet !== 'all') {
+            const quizSetData = quizSets.find(q => q.name === state.config.quizSet);
+            if (quizSetData) {
+                return quizSetData.countryCodes.includes(country.code);
+            }
+        }
+        return true;
+    }
+    const filterByColors = (country) => {
+        if (selectedColors.length > 0) {
+            return selectedColors.every(color => flagColors[color].includes(country.flagCode));
+        }
+        return true;
+    }
+
     const filteredFlags = useMemo(() => {
         let countries = allCountries.filter(country => {
             if (componentStatus === 'reviewing' || componentStatus === 'completed') {
@@ -95,13 +112,7 @@ export function FlagSelect() {
 
             // If sandbox mode, filter by quiz set
             if (componentStatus === 'sandbox') {
-                if (state.config.quizSet && state.config.quizSet !== 'all') {
-                    const quizSetData = quizSets.find(q => q.name === state.config.quizSet);
-                    if (quizSetData) {
-                        return quizSetData.countryCodes.includes(country.code);
-                    }
-                }
-                return true;
+                return filterByQuizSet(country) && filterByColors(country);
             }
             if (componentStatus === 'prompting') {
                 return country.flagCode === correctValue;
@@ -111,7 +122,8 @@ export function FlagSelect() {
                 return true;
             }
             if (componentStatus === 'active') {
-                return selectedColors.every(color => country.colors?.includes(color));
+                return filterByColors(country);
+                // return selectedColors.every(color => country.colors?.includes(color));
             }
             return false;
         });
@@ -140,7 +152,6 @@ export function FlagSelect() {
             className += ' incorrect';
         } else if (selectedFlag === country) {
             const isSandbox = state.config.gameMode === 'sandbox';
-            console.log('Adding class:', isSandbox ? 'sandbox-selected' : 'selected', 'gameMode:', state.config.gameMode);
             className += isSandbox ? ' sandbox-selected' : ' selected';
         }
         return className;
