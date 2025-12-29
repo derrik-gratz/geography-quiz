@@ -134,7 +134,7 @@ export function QuizPrompt({}) {
             promptText = 'Unknown prompt state';
         }
         return <span className="prompt-content__generic-text">{promptText}</span>;
-    }, [state.quiz.status, state.quiz.reviewType, state.quiz.reviewIndex, state.quiz.history, currentPrompt, currentPromptData, isStartDisabled, promptCompleted, successfulCompletion]);
+    }, [state.config.gameMode, state.quiz.status, state.quiz.reviewType, state.quiz.reviewIndex, state.quiz.history, currentPrompt, currentPromptData, isStartDisabled, promptCompleted, successfulCompletion]);
 
     const promptButton = useMemo(() => {
         if (state.config.gameMode === 'sandbox') {

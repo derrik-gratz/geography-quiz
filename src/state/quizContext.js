@@ -319,8 +319,6 @@ export function quizReducer(state, action){
             } else if (inputType === 'flag') {
                 selectedCountry = state.quizData.find(c => c.flagCode === countryValue);
             }
-            console.log('state', state);
-            console.log('selectedCountry', selectedCountry);
             if (selectedCountry) {
                 return {
                     ...state,
