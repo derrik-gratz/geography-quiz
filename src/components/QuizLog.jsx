@@ -88,7 +88,7 @@ export function QuizLog({
     }
 
     const exportResults = () => {
-        let exportText = `${state.config.quizSet} Results\n`;
+        let exportText = `\`\`\`${state.config.quizSet} Results\n`;
         const score = logEntries.reduce((sum, entry) => {
             return sum + entry.score;
         }, 0);
@@ -118,7 +118,7 @@ export function QuizLog({
         //     const countryDisplay = obscureNames ? `${index + 1}` : entry.correctCountry;
         //     exportText += `| ${countryDisplay} | ${entry.guesses.location} | ${entry.guesses.name} | ${entry.guesses.flag} |\n`;
         // });
-        
+        exportText += `\`\`\``;
         return exportText;
     };
 
