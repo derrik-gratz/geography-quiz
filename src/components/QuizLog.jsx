@@ -92,8 +92,23 @@ export function QuizLog({
         const score = logEntries.reduce((sum, entry) => {
             return sum + entry.score;
         }, 0);
+        exportText += `Score: ${score} / ${state.quizData.length} countries`;
+        if (state.config.quizSet === 'Daily Challenge') {
+            const skillScore = logEntries.reduce((sum, entry) => {
+                if (entry.guesses.flag.status === 'completed') {
+                    sum += 5 - entry.guesses.flag.attempts.length;
+                } else if (entry.guesses.name.status === 'completed') {
+                    sum += 5 - entry.guesses.name.attempts.length;
+                } else if (entry.guesses.location.status === 'completed') {
+                    sum += 5 - entry.guesses.location.attempts.length;
+                }
+                return sum;
+            }, 0);
+            exportText += `\t(${skillScore}/50)\n\n`;
+        } else {
+            exportText += `\n\n`;
+        }
         
-        exportText += `Score: ${score} / ${state.quizData.length} countries\n\n`;
         const entries = logEntries.slice(); //.reverse();
 
         const pad = (str, width) => String(str).padEnd(width, ' ');
