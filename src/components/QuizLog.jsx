@@ -93,7 +93,7 @@ export function QuizLog({
             return sum + entry.score;
         }, 0);
         exportText += `Score: ${score} / ${state.quizData.length} countries`;
-        if (state.config.quizSet === 'Daily Challenge') {
+        if (state.config.quizSet === 'Daily challenge') {
             const skillScore = logEntries.reduce((sum, entry) => {
                 if (entry.guesses.flag.status === 'completed') {
                     sum += 5 - entry.guesses.flag.attempts.length;
