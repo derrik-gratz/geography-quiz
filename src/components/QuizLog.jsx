@@ -2,6 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useCollapsible } from '../hooks/useCollapsible.js';
 
+const DAILY_CHALLENGE_GUESSES = 5;
+const DAILY_CHALLENGE_LENGTH = 5;
+
 /**
  * QuizLog Component
  * 
@@ -65,11 +68,25 @@ export function QuizLog({
                     guesses.flag.status === 'completed' ? '✓/' + guesses.flag.attempts.length : '?'
             }
         }
+        const calculateSkillScore = (guesses) => {
+            let sum = 0;
+            if (guesses.flag.status === 'completed') {
+                sum += 6 - guesses.flag.attempts.length;
+            } 
+            if (guesses.name.status === 'completed') {
+                sum += 6 - guesses.name.attempts.length;
+            } 
+            if (guesses.location.status === 'completed') {
+                sum += 6 - guesses.location.attempts.length;
+            }
+            return sum;
+        }
         const pastPrompts = state.quiz.history.map((entry) => {
             const correctCountry = state.quizData[entry.quizDataIndex]?.country || '?';
             const score = promptScore(entry);
             const guesses = parseGuesses(entry);
-            return { correctCountry, score, guesses };
+            const skillScore = calculateSkillScore(entry);
+            return { correctCountry, score, guesses, skillScore };
         });
         if (state.quiz.status === 'active') {
             const currentPrompt = {
@@ -95,16 +112,9 @@ export function QuizLog({
         exportText += `Score: ${score} / ${state.quizData.length} countries`;
         if (state.config.quizSet === 'Daily challenge') {
             const skillScore = logEntries.reduce((sum, entry) => {
-                if (entry.guesses.flag.status === 'completed') {
-                    sum += 5 - entry.guesses.flag.attempts.length;
-                } else if (entry.guesses.name.status === 'completed') {
-                    sum += 5 - entry.guesses.name.attempts.length;
-                } else if (entry.guesses.location.status === 'completed') {
-                    sum += 5 - entry.guesses.location.attempts.length;
-                }
-                return sum;
+                return sum + entry.skillScore;
             }, 0);
-            exportText += `\t(${skillScore}/50)\n\n`;
+            exportText += `\t(${skillScore}/${DAILY_CHALLENGE_GUESSES * 2 * DAILY_CHALLENGE_LENGTH})\n\n`;
         } else {
             exportText += `\n\n`;
         }
