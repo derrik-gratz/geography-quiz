@@ -148,6 +148,7 @@ export function WorldMap() {
   const handleSubmit = () => {
     if (selectedCountry && !disabled) {
       submitAnswer('location', selectedCountry);
+      setSelectedCountry(null);
     }
   };
 
