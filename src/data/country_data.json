@@ -1739,11 +1739,15 @@
     "code": "IOT",
     "capital": "",
     "location": {
-      "lat": 7,
+      "lat": -7,
       "long": 72
     },
     "flagCode": "IO",
-    "availablePrompts": []
+    "availablePrompts": [
+      "name",
+      "flag",
+      "location"
+    ]
   },
   {
     "country": "Ireland",

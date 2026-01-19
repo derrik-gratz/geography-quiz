@@ -26,6 +26,10 @@ export function shuffleArray(data, seed) {
 // Handle user configs to filter data for prompts
 export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
     let filteredCountryData = countryData;
+    //remove countries with no valid prompt types
+    filteredCountryData = countryData.filter(country => {
+        return country.availablePrompts.length > 0;
+    })
     // Quiz set filtering
     if (!quizSet) {
         console.error(`No quiz set selected for filtering`);
@@ -34,7 +38,7 @@ export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
         // Maybe a little unelegant in here with the early return, but doesn't have a prompt type config
         const dailySeed = getDailySeed();
 
-        filteredCountryData = shuffleArray(countryData, dailySeed).slice(0, dailyChallengeLength);
+        filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(0, dailyChallengeLength);
 
         // 1 prompt type, randomly selected
         // filteredCountryData = filteredCountryData.map(country => {
@@ -48,7 +52,7 @@ export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
     } else if (quizSet !== 'all') {
         const quizSetData = quizSets.find(q => q.name === quizSet);
         if (quizSetData) {
-            filteredCountryData = countryData.filter(country => quizSetData.countryCodes.includes(country.code));
+            filteredCountryData = filteredCountryData.filter(country => quizSetData.countryCodes.includes(country.code));
         } else {
             console.error(`Invalid quiz set: ${quizSet}`);
             // filteredCountryData = countryData;
