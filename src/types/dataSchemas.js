@@ -185,7 +185,7 @@ export function createEmptyModalityMatrix() {
 
 /**
  * Calculate skill score from correct/guesses
- * Skill score = correct ? (1 / guesses) : 0
+ * Skill score = correct ? (0.5 / guesses) : 0
  * @param {boolean} correct - Was answer correct?
  * @param {number} guesses - Number of guesses made
  * @returns {number} Skill score (0-1, higher is better)
@@ -194,5 +194,5 @@ export function calculateSkillScore(correct, guesses) {
   if (!correct || guesses <= 0) {
     return 0;
   }
-  return 1 / guesses; // Perfect score: 1 guess = 1.0, 2 guesses = 0.5, etc.
+  return (6 - guesses) / 10; // Perfect score: 0.5 guess = 0.5, 2 guesses = 0.5, etc.
 }

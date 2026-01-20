@@ -13,7 +13,7 @@ import {
 } from '../types/dataSchemas.js';
 
 const DB_NAME = 'geography_quiz_db';
-const DB_VERSION = 3; // Increment version for new schema
+const DB_VERSION = 4; // Increment version for new schema
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
@@ -182,28 +182,23 @@ export async function saveDailyChallenge(date, challengeData) {
         return modality && modality.correct === true;
       }).length;
       // Score per country: 0 = failed, 0.5 = partially correct, 1 = fully correct
-      if (completedCount === 0) return 0;
-      if (completedCount === 1 || completedCount === 2) return 0.5;
-      return 1; // completedCount === 3
+      return completedCount * 0.5;
     });
 
     // Calculate total score (sum of country scores)
     const score = guesses.reduce((sum, g) => sum + g, 0);
 
-    // Calculate skill score (average of correct/guesses ratios)
-    let totalSkill = 0;
-    let skillCount = 0;
+    // Calculate skill score
+    let skillScore = 0;
     challengeData.prompts.forEach(prompt => {
       ['name', 'flag', 'map'].forEach(modality => {
         const modalityData = prompt[modality];
         if (modalityData && modalityData.guesses !== null && modalityData.guesses > 0) {
           const skill = calculateSkillScore(modalityData.correct === true, modalityData.guesses);
-          totalSkill += skill;
-          skillCount++;
+          skillScore += skill;
         }
       });
     });
-    const skillScore = skillCount > 0 ? totalSkill / skillCount : 0;
 
     // Create score log entry
     const scoreLogEntry = {
