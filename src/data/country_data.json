@@ -964,9 +964,7 @@
   },
   {
     "country": "Czech Republic",
-    "aliases": [
-      "Czech Republic"
-    ],
+    "aliases": [],
     "code": "CZE",
     "capital": "Prague",
     "location": {
