@@ -1,57 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-    ComposableMap,
-    Geographies,
-    Geography,
-    Graticule,
-    ZoomableGroup
-} from "react-simple-maps";
+import { BaseMap } from './BaseMap.jsx';
 import allCountryData from '../data/country_data.json';
 import { useQuiz } from '../hooks/useQuiz.js';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import { useCollapsible } from '../hooks/useCollapsible.js';
 import { useComponentState } from '../hooks/useComponentState.js';
-
-const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
-const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
-
-function isValidCountryCode(code) {
-  return code && 
-  code !== "-99" && 
-  code.length === 3 && 
-  /^[A-Z]{3}$/.test(code);
-}
-
-function getCountryCode(geo) {
-  if (isValidCountryCode(geo.properties.ISO_A3)) {
-    return geo.properties.ISO_A3.trim();
-  } else if (isValidCountryCode(geo.properties.GU_A3)) {
-    return geo.properties.GU_A3.trim();
-  } else {
-    return null;
-  }
-}
-
-function getCentroid(geo){
-  if (!geo || !geo.geometry) return null;
-  if (geo.geometry.type === "Point") return geo.geometry.coordinates;
-  
-  // For Polygon or MultiPolygon, use simple centroid calculation
-  if (geo.geometry.type === "Polygon") {
-    const coords = geo.geometry.coordinates[0];
-    let x = 0, y = 0, n = coords.length;
-    coords.forEach(([lon, lat]) => { x += lon; y += lat; });
-    return [x / n, y / n];
-  }
-  if (geo.geometry.type === "MultiPolygon") {
-    // Use first polygon for centroid
-    const coords = geo.geometry.coordinates[0][0];
-    let x = 0, y = 0, n = coords.length;
-    coords.forEach(([lon, lat]) => { x += lon; y += lat; });
-    return [x / n, y / n];
-  }
-  return null;
-}
 
 function getCountryViewWindow(countryCode) {
   const countryData = allCountryData.find(country => country.code === countryCode);
@@ -80,14 +33,14 @@ export function WorldMap() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
-  const [viewWindow, setViewWindow] = useState(defaultViewWindow);
+  // const [viewWindow, setViewWindow] = useState(defaultViewWindow);
   const [resetKey, setResetKey] = useState(0);
   
   // Reset selection and view when disabled
   useEffect(() => {
     if (disabled) {
       setSelectedCountry(null);
-      setViewWindow(defaultViewWindow);
+      // setViewWindow(defaultViewWindow);
     }
   }, [disabled, defaultViewWindow]);
 
@@ -103,12 +56,12 @@ export function WorldMap() {
       view = getCountryViewWindow(correctValue);
     }
     setDefaultViewWindow(view);
-    setViewWindow(view);
+    // setViewWindow(view);
   }, [componentStatus, correctValue]);
 
-  const handleCountryClick = (geo) => {
+  const handleCountryClick = (countryCode) => {
     if (disabled) return;
-    const countryCode = getCountryCode(geo);
+    console.log('countryCode', countryCode);
     if (countryCode && !incorrectValues.includes(countryCode) && state.config.gameMode === 'quiz') {
       setSelectedCountry(countryCode);
     } else if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
@@ -116,34 +69,83 @@ export function WorldMap() {
     }
   };
 
+  const getCountryStyleLarge = (countryCode) => {
+    const isIncorrect = incorrectValues.includes(countryCode);
+    const isCorrect = countryCode === correctValue;
+    const isSelected = countryCode === selectedCountry;
+    const isHovered = countryCode === hoveredCountry;
+
+    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct)" :
+        isIncorrect ? "var(--input-option-incorrect)" :
+        isSelected ? "var(--input-option-selected)" :
+        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
+      );
+    };
+    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct-stroke)" :
+        isIncorrect ? "var(--input-option-incorrect-stroke)" :
+        isSelected ? "var(--input-option-selected-stroke)" :
+        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
+      );
+    }
+    
+    return {
+      style: {
+        default: {
+          fill: getColor(isCorrect, isIncorrect, isSelected, false),
+          stroke: getStroke(isCorrect, isIncorrect, isSelected, false),
+          strokeWidth: 0.3,
+          cursor: isIncorrect ? "not-allowed" : "pointer",
+          outline: "none"
+        },
+        hover: (!isIncorrect && (componentStatus === 'active')) ? {
+          fill: getColor(isCorrect, isIncorrect, isSelected, true),
+          stroke: getStroke(isCorrect, isIncorrect, isSelected, true),
+          strokeWidth: 0.5,
+          outline: "none"
+        } 
+        : {}
+      }
+        // pressed: {}
+      }
+
+    };
+
   const getCountryStyle = (countryCode) => {
     const isIncorrect = incorrectValues.includes(countryCode);
     const isCorrect = countryCode === correctValue;
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
-    
-    return {
-      fill: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct)" :
-            isIncorrect ? "var(--input-option-incorrect)" :
-            isSelected ? "var(--input-option-selected)" :
-            isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)",
-      stroke: (isCorrect && (componentStatus !== 'active')) ? "var(--input-option-correct-stroke)" :
-              isIncorrect ? "var(--input-option-incorrect-stroke)" : 
-              isSelected ? "var(--input-option-selected-stroke)" :
-              isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)",
-      strokeWidth: 0.3,
-      outline: "none",
+
+    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct)" :
+        isIncorrect ? "var(--input-option-incorrect)" :
+        isSelected ? "var(--input-option-selected)" :
+        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
+      );
     };
-  };
-
-  const getCircleRadius = (baseRadius = 3) => {
-    return baseRadius / Math.sqrt(viewWindow.zoom);
-  };
-
-  const resetViewWindow = () => {
-    setViewWindow(defaultViewWindow);
-    setResetKey(prev => prev + 1);
-  };
+    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct-stroke)" :
+        isIncorrect ? "var(--input-option-incorrect-stroke)" :
+        isSelected ? "var(--input-option-selected-stroke)" :
+        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
+      );
+    }
+    return {
+      style: {
+        fill: getColor(isCorrect, isIncorrect, isSelected, isHovered),
+        stroke: getStroke(isCorrect, isIncorrect, isSelected, isHovered),
+        strokeWidth: 0.3,
+        cursor: isIncorrect ? "not-allowed" : "pointer",
+        outline: "none"
+      }
+    }
+  }
 
   const handleSubmit = () => {
     if (selectedCountry && !disabled) {
@@ -166,6 +168,16 @@ export function WorldMap() {
       setHoveredCountry(null);
     }
   };
+
+  const getSmallCountryPriority = (countryCode) => {
+    if (incorrectValues.includes(countryCode)) {
+      return -1;
+    }
+    if (selectedCountry === countryCode) {
+      return 1;
+    }
+    return 0;
+  };
   
   return (
     <div className={`world-map component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`}>
@@ -179,19 +191,22 @@ export function WorldMap() {
         </button>
       </div>
       <div className="component-panel__content">
-      <div style={{
+      {/* <div style={{
         // position: 'absolute',
         top: '1rem',
         right: '1rem',
         display: 'flex',
         gap: '5px',
         zIndex: 1000
-      }}>
+      }}> */}
         {componentStatus === 'active' && guesses?.status === 'incomplete' && (
           <button
             onClick={handleSubmit}
             disabled={!selectedCountry || disabled}
             style={{
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
               padding: '8px 12px',
               fontSize: '14px',
               fontFamily: 'monospace',
@@ -206,135 +221,17 @@ export function WorldMap() {
             Submit Map
           </button>
         )}
-        <button
-          onClick={resetViewWindow}
-          style={{
-            background: 'rgba(0, 0, 0, 0.8)',
-            color: 'white',
-            border: 'none',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontSize: '14px',
-            fontFamily: 'monospace',
-            cursor: 'pointer'
-          }}
-          title="Reset view"
-        >
-          Reset View
-        </button>
-      </div>
-      <ComposableMap
-        projection="geoEqualEarth"
-        projectionConfig={{
-          scale: 147
-        }}
-        // onMouseMove={handleMouseMove}
-        // onMouseLeave={handleMouseLeave}
-        style={{
-          width: '100%',
-          height: '100%'
-        }}
-      >
-        <ZoomableGroup
-          key={resetKey}
-          center={viewWindow.coordinates}
-          maxZoom={12}
-          zoom={viewWindow.zoom}
-          onMoveEnd={({ zoom, coordinates }) => {
-            if (!disabled) {
-              setViewWindow({ coordinates, zoom });
-            }
-          }}
-        >
-          <Graticule stroke="#999" step={[20,20]} />
-          <Geographies geography={mainGeoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                const countryCode = getCountryCode(geo);
-                // const isHovered = hoveredCountry === countryCode;
-                
-                
-                if (allCountryData.find(country => country.code === countryCode)) {
-                  const countryStyle = getCountryStyle(countryCode);
-                  const isIncorrect = incorrectValues.includes(countryCode);
-                  const isSelected = selectedCountry === countryCode;
-                  const isCorrect = countryCode === correctValue;
-
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      onClick={() => handleCountryClick(geo)}
-                      fill={countryStyle.fill}
-                      stroke={countryStyle.stroke}
-                      strokeWidth={0.5} /*{countryStyle.strokeWidth}*/
-                      cursor={isIncorrect ? "not-allowed" : "pointer"}
-                      style={{
-                        default: { fill: countryStyle.fill },
-                        hover: (!disabled && !isIncorrect && !isSelected) ? { fill: "var(--input-option-hover)" } : { fill: countryStyle.fill },
-                        outline: "none", // some browsers have ugly border
-                      }}
-                    />
-                  );
-                }
-                return null;
-              })
-            }
-          </Geographies>
-          <Geographies geography={tinyGeoUrl}>
-            {({ geographies, projection }) => {
-              const regularCircles = [];
-              const specialCircles = [];
-              const lowPriorityCircles = [];
-              
-              geographies.forEach((geo) => {
-                const countryCode = getCountryCode(geo);
-                const isSelected = selectedCountry === countryCode;
-                const isIncorrect = incorrectValues.includes(countryCode);
-                const isCorrect = countryCode === correctValue;
-                
-                const [centroid_x, centroid_y] = getCentroid(geo);
-                const [cx, cy] = projection([centroid_x, centroid_y]);
-                const countryStyle = getCountryStyle(countryCode);
-                
-                const circleElement = (
-                  <circle
-                    key={geo.rsmKey}
-                    cx={cx}
-                    cy={cy}
-                    r={getCircleRadius()}
-                    fill={countryStyle.fill}
-                    stroke={countryStyle.stroke}
-                    strokeWidth={countryStyle.strokeWidth}
-                    onClick={() => {
-                      if (!isIncorrect) {
-                        handleCountryClick(geo);
-                      }
-                    }}
-                    onMouseEnter={() => onMouseEnter(countryCode)}
-                    onMouseLeave={() => onMouseLeave()}
-                    style={{
-                      cursor: isIncorrect ? "not-allowed" : "pointer",
-                      outline: "none",
-                    }}
-                  />
-                );
-                
-                // Prioritize: incorrect (bottom) -> regular -> selected/correct (top)
-                if (isIncorrect) {
-                  lowPriorityCircles.push(circleElement);
-                } else if (isSelected || isCorrect) {
-                  specialCircles.push(circleElement);
-                } else {
-                  regularCircles.push(circleElement);
-                }
-              });
-
-              return [...lowPriorityCircles, ...regularCircles, ...specialCircles];
-            }}
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
+        <BaseMap
+          onCountryHover={onMouseEnter}
+          onCountryHoverLeave={onMouseLeave}
+          onCountryClick={handleCountryClick}
+          getCountryStyle={getCountryStyle}
+          getSmallCountryPriority={getSmallCountryPriority}
+          disabled={disabled}
+          className="world-map__base-map"
+          initialView={defaultViewWindow}
+          showGraticule={false}
+        />
       </div>
     </div>
   );
