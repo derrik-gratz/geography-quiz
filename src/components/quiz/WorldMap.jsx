@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BaseMap } from './BaseMap.jsx';
-import allCountryData from '../data/country_data.json';
-import { useQuiz } from '../hooks/useQuiz.js';
-import { useQuizActions } from '../hooks/useQuizActions.js';
-import { useCollapsible } from '../hooks/useCollapsible.js';
-import { useComponentState } from '../hooks/useComponentState.js';
+import { BaseMap } from '../base/BaseMap.jsx';
+import allCountryData from '../../data/country_data.json';
+import { useQuiz } from '../../hooks/useQuiz.js';
+import { useQuizActions } from '../../hooks/useQuizActions.js';
+import { useCollapsible } from '../../hooks/useCollapsible.js';
+import { useComponentState } from '../../hooks/useComponentState.js';
 
 function getCountryViewWindow(countryCode) {
   const countryData = allCountryData.find(country => country.code === countryCode);
@@ -28,14 +28,43 @@ export function WorldMap() {
     }
     return false;
   }, [componentStatus, state.quiz.status]);
-  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
+  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
-  // const [viewWindow, setViewWindow] = useState(defaultViewWindow);
-  const [resetKey, setResetKey] = useState(0);
   
+  // color country based on state
+  const getCountryStyle = (countryCode) => {
+    const isIncorrect = incorrectValues.includes(countryCode);
+    const isCorrect = countryCode === correctValue && (componentStatus === 'completed' || componentStatus === 'prompting' || componentStatus === 'reviewing');
+    const isSelected = countryCode === selectedCountry;
+    const isHovered = countryCode === hoveredCountry;
+
+    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect ? "var(--input-option-correct)" :
+        isIncorrect ? "var(--input-option-incorrect)" :
+        isSelected ? "var(--input-option-selected)" :
+        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
+      );
+    };
+    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
+      return (
+        isCorrect ? "var(--input-option-correct-stroke)" :
+        isIncorrect ? "var(--input-option-incorrect-stroke)" :
+        isSelected ? "var(--input-option-selected-stroke)" :
+        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
+      );
+    }
+    return {
+      fill: getColor(isCorrect, isIncorrect, isSelected, isHovered),
+      stroke: getStroke(isCorrect, isIncorrect, isSelected, isHovered),
+      strokeWidth: 0.3,
+      cursor: isIncorrect ? "not-allowed" : "pointer",
+      outline: "none"
+    }
+  }
   // Reset selection and view when disabled
   useEffect(() => {
     if (disabled) {
@@ -56,96 +85,16 @@ export function WorldMap() {
       view = getCountryViewWindow(correctValue);
     }
     setDefaultViewWindow(view);
-    // setViewWindow(view);
   }, [componentStatus, correctValue]);
 
   const handleCountryClick = (countryCode) => {
     if (disabled) return;
-    console.log('countryCode', countryCode);
     if (countryCode && !incorrectValues.includes(countryCode) && state.config.gameMode === 'quiz') {
       setSelectedCountry(countryCode);
     } else if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
       sandboxSelect({ inputType: 'location', countryValue: countryCode });
     }
   };
-
-  const getCountryStyleLarge = (countryCode) => {
-    const isIncorrect = incorrectValues.includes(countryCode);
-    const isCorrect = countryCode === correctValue;
-    const isSelected = countryCode === selectedCountry;
-    const isHovered = countryCode === hoveredCountry;
-
-    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct)" :
-        isIncorrect ? "var(--input-option-incorrect)" :
-        isSelected ? "var(--input-option-selected)" :
-        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
-      );
-    };
-    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct-stroke)" :
-        isIncorrect ? "var(--input-option-incorrect-stroke)" :
-        isSelected ? "var(--input-option-selected-stroke)" :
-        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
-      );
-    }
-    
-    return {
-      style: {
-        default: {
-          fill: getColor(isCorrect, isIncorrect, isSelected, false),
-          stroke: getStroke(isCorrect, isIncorrect, isSelected, false),
-          strokeWidth: 0.3,
-          cursor: isIncorrect ? "not-allowed" : "pointer",
-          outline: "none"
-        },
-        hover: (!isIncorrect && (componentStatus === 'active')) ? {
-          fill: getColor(isCorrect, isIncorrect, isSelected, true),
-          stroke: getStroke(isCorrect, isIncorrect, isSelected, true),
-          strokeWidth: 0.5,
-          outline: "none"
-        } 
-        : {}
-      }
-        // pressed: {}
-      }
-
-    };
-
-  const getCountryStyle = (countryCode) => {
-    const isIncorrect = incorrectValues.includes(countryCode);
-    const isCorrect = countryCode === correctValue;
-    const isSelected = countryCode === selectedCountry;
-    const isHovered = countryCode === hoveredCountry;
-
-    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct)" :
-        isIncorrect ? "var(--input-option-incorrect)" :
-        isSelected ? "var(--input-option-selected)" :
-        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
-      );
-    };
-    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect && (componentStatus !== 'active') ? "var(--input-option-correct-stroke)" :
-        isIncorrect ? "var(--input-option-incorrect-stroke)" :
-        isSelected ? "var(--input-option-selected-stroke)" :
-        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
-      );
-    }
-    return {
-      style: {
-        fill: getColor(isCorrect, isIncorrect, isSelected, isHovered),
-        stroke: getStroke(isCorrect, isIncorrect, isSelected, isHovered),
-        strokeWidth: 0.3,
-        cursor: isIncorrect ? "not-allowed" : "pointer",
-        outline: "none"
-      }
-    }
-  }
 
   const handleSubmit = () => {
     if (selectedCountry && !disabled) {
@@ -172,11 +121,13 @@ export function WorldMap() {
   const getSmallCountryPriority = (countryCode) => {
     if (incorrectValues.includes(countryCode)) {
       return -1;
-    }
-    if (selectedCountry === countryCode) {
+    } else if (selectedCountry === countryCode) {
       return 1;
+    } else if (countryCode === correctValue && (componentStatus === 'completed' || componentStatus === 'prompting' || componentStatus === 'reviewing')) {
+      return 1;
+    } else {
+      return 0;
     }
-    return 0;
   };
   
   return (
@@ -230,7 +181,7 @@ export function WorldMap() {
           disabled={disabled}
           className="world-map__base-map"
           initialView={defaultViewWindow}
-          showGraticule={false}
+          showGraticule={true}
         />
       </div>
     </div>

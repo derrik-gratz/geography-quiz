@@ -4,10 +4,9 @@ import {
     Geographies,
     Geography,
     Graticule,
-    Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import allCountryData from '../data/country_data.json';
+import allCountryData from '../../data/country_data.json';
 // import { useQuiz } from '../hooks/useQuiz.js';
 // import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../hooks/useCollapsible.js';
@@ -158,8 +157,8 @@ export function BaseMap({
                     //   stroke={countryStyle.stroke}
                     //   cursor={countryStyle.cursor}
                       style={{
-                        default: {...countryStyle.style},
-                        hover: {...countryStyle.style}
+                        default: {...countryStyle},
+                        hover: {...countryStyle}
                       }}
                     />
                   );
@@ -172,6 +171,7 @@ export function BaseMap({
                 let lowPriorityCircles = [];
                 let regularCircles = [];
                 let specialCircles = [];
+                const currentRadius = getCircleRadius();
                 geographies.forEach((geo) => {
                     const countryCode = getCountryCode(geo);
                     const [centroid_x, centroid_y] = getCentroid(geo);
@@ -179,14 +179,14 @@ export function BaseMap({
                     const countryStyle = getCountryStyle(countryCode);
                     const circleElement = (
                         <circle
-                            key={geo.rsmKey}
+                            key={`${geo.rsmKey}-${viewWindow.zoom}`}
                             // geography={geo}
                             cx={cx}
                             cy={cy}
-                            fill={countryStyle.style.fill}
-                            stroke={countryStyle.style.stroke}
-                            strokeWidth={countryStyle.style.strokeWidth}
-                            r={getCircleRadius()}
+                            fill={countryStyle.fill}
+                            stroke={countryStyle.stroke}
+                            strokeWidth={countryStyle.strokeWidth}
+                            r={currentRadius}
                             onClick={() => onCountryClick(countryCode)}
                             onMouseEnter={() => onCountryHover(countryCode)}
                             onMouseLeave={() => onCountryHoverLeave()}

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'; // useState, useEffect,
-import { useQuiz } from '../hooks/useQuiz';
-import { useQuizActions } from '../hooks/useQuizActions';
-import { useCollapsible } from '../hooks/useCollapsible';
-import { derivePromptValue } from '../services/quizEngine.js';
+import { useQuiz } from '../../hooks/useQuiz.js';
+import { useQuizActions } from '../../hooks/useQuizActions.js';
+import { useCollapsible } from '../../hooks/useCollapsible.js';
+import { derivePromptValue } from '../../services/quizEngine.js';
 
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>

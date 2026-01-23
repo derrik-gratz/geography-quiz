@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
-import { QuizConfig } from './components/QuizConfig.jsx';
-import { QuizPrompt } from './components/QuizPrompt.jsx';
-import { FlagSelect } from './components/FlagSelect.jsx';
-import { TextInput } from './components/TextInput.jsx';
-import { WorldMap } from './components/WorldMap.jsx';
-import { QuizLog } from './components/QuizLog.jsx';
-import { ProfilePage } from './components/ProfilePage.jsx';
+import { QuizConfig } from './components/quiz/QuizConfig.jsx';
+import { QuizPrompt } from './components/quiz/QuizPrompt.jsx';
+import { FlagSelect } from './components/quiz/FlagSelect.jsx';
+import { TextInput } from './components/quiz/TextInput.jsx';
+import { WorldMap } from './components/quiz/WorldMap.jsx';
+import { QuizLog } from './components/quiz/QuizLog.jsx';
+import { ProfilePage } from './components/profile/ProfilePage.jsx';
 import { initStorage } from './services/storageService.js';
-import './components/ProfilePage.css';
+import './components/profile/ProfilePage.css';
 
 /**
  * Main App component for the Geography Quiz application

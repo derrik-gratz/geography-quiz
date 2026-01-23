@@ -3,11 +3,12 @@
  */
 import React, { useState, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { loadAllUserData, getUserMetadata } from '../services/storageService.js';
-import { calculateOverallStats } from '../services/statsService.js';
+import { loadAllUserData, getUserMetadata } from '../../services/storageService.js';
+import { calculateOverallStats } from '../../services/statsService.js';
 import { StatsCard, StatItem, ProgressBar } from './StatsCard.jsx';
-import { getModalityName } from '../types/dataSchemas.js';
-import allCountryData from '../data/country_data.json';
+import { getModalityName } from '../../types/dataSchemas.js';
+import allCountryData from '../../data/country_data.json';
+import { ProfileMap } from './ProfileMap.jsx';
 import './ProfilePage.css';
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
@@ -232,142 +233,142 @@ function ScoreTimeline({ scoreLog }) {
   );
 }
 
-/**
- * Map component for profile page showing country statistics
- * @param {Object} props
- * @param {Object} props.countryStats - Country statistics object keyed by country code
- */
-function CountryStatsMap({ countryStats }) {
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [hoveredCountry, setHoveredCountry] = useState(null);
-  const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
-  const [resetKey, setResetKey] = useState(0);
+// /**
+//  * Map component for profile page showing country statistics
+//  * @param {Object} props
+//  * @param {Object} props.countryStats - Country statistics object keyed by country code
+//  */
+// function CountryStatsMap({ countryStats }) {
+//   const [selectedCountry, setSelectedCountry] = useState(null);
+//   const [hoveredCountry, setHoveredCountry] = useState(null);
+//   const [viewWindow, setViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+//   const [resetKey, setResetKey] = useState(0);
 
-  const resetView = () => {
-    setViewWindow({ coordinates: [0, 0], zoom: 1 });
-    setResetKey(prev => prev + 1);
-  };
+//   const resetView = () => {
+//     setViewWindow({ coordinates: [0, 0], zoom: 1 });
+//     setResetKey(prev => prev + 1);
+//   };
 
-  const handleCountryClick = (geo) => {
-    const countryCode = getCountryCode(geo);
-    if (countryCode) {
-      setSelectedCountry(countryCode === selectedCountry ? null : countryCode);
-    }
-  };
+//   const handleCountryClick = (geo) => {
+//     const countryCode = getCountryCode(geo);
+//     if (countryCode) {
+//       setSelectedCountry(countryCode === selectedCountry ? null : countryCode);
+//     }
+//   };
 
-  const getCountryStyle = (countryCode) => {
-    const hasData = countryStats && countryStats[countryCode];
-    const isSelected = countryCode === selectedCountry;
-    const isHovered = countryCode === hoveredCountry;
+//   const getCountryStyle = (countryCode) => {
+//     const hasData = countryStats && countryStats[countryCode];
+//     const isSelected = countryCode === selectedCountry;
+//     const isHovered = countryCode === hoveredCountry;
     
-    if (isSelected) {
-      return {
-        fill: 'var(--color-selected)',
-        stroke: 'var(--color-selected-outline)',
-        strokeWidth: 0.5,
-        outline: 'none',
-      };
-    }
+//     if (isSelected) {
+//       return {
+//         fill: 'var(--color-selected)',
+//         stroke: 'var(--color-selected-outline)',
+//         strokeWidth: 0.5,
+//         outline: 'none',
+//       };
+//     }
     
-    if (isHovered) {
-      return {
-        fill: hasData ? 'var(--color-hover)' : 'var(--map-default)',
-        stroke: hasData ? 'var(--color-hover-outline)' : 'var(--map-default-outline)',
-        strokeWidth: 0.5,
-        outline: 'none',
-      };
-    }
+//     if (isHovered) {
+//       return {
+//         fill: hasData ? 'var(--color-hover)' : 'var(--map-default)',
+//         stroke: hasData ? 'var(--color-hover-outline)' : 'var(--map-default-outline)',
+//         strokeWidth: 0.5,
+//         outline: 'none',
+//       };
+//     }
 
-    return {
-      fill: hasData ? 'var(--color-correct)' : 'var(--map-default)',
-      stroke: hasData ? 'var(--color-correct-outline)' : 'var(--map-default-outline)',
-      strokeWidth: 0.3,
-      outline: 'none',
-      opacity: hasData ? 0.7 : 0.4,
-    };
-  };
+//     return {
+//       fill: hasData ? 'var(--color-correct)' : 'var(--map-default)',
+//       stroke: hasData ? 'var(--color-correct-outline)' : 'var(--map-default-outline)',
+//       strokeWidth: 0.3,
+//       outline: 'none',
+//       opacity: hasData ? 0.7 : 0.4,
+//     };
+//   };
 
-  const selectedCountryData = selectedCountry && countryStats && countryStats[selectedCountry];
-  const selectedCountryInfo = selectedCountry ? allCountryData.find(c => c.code === selectedCountry) : null;
+//   const selectedCountryData = selectedCountry && countryStats && countryStats[selectedCountry];
+//   const selectedCountryInfo = selectedCountry ? allCountryData.find(c => c.code === selectedCountry) : null;
 
-  return (
-    <div className="country-stats-map">
-      <div className="country-stats-map__header">
-        <div className="country-stats-map__legend">
-          <div className="country-stats-map__legend-item">
-            <span className="country-stats-map__legend-color" style={{ backgroundColor: 'var(--color-correct)' }}></span>
-            <span>Has data</span>
-          </div>
-          <div className="country-stats-map__legend-item">
-            <span className="country-stats-map__legend-color" style={{ backgroundColor: 'var(--map-default)', opacity: 0.4 }}></span>
-            <span>No data</span>
-          </div>
-        </div>
-        <button
-          onClick={resetView}
-          className="country-stats-map__reset-btn"
-        >
-          Reset View
-        </button>
-      </div>
-      <div className="country-stats-map__container">
-        <ComposableMap
-          projection="geoEqualEarth"
-          projectionConfig={{ scale: 147 }}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <ZoomableGroup
-            key={resetKey}
-            center={viewWindow.coordinates}
-            maxZoom={12}
-            zoom={viewWindow.zoom}
-            onMoveEnd={({ zoom, coordinates }) => {
-              setViewWindow({ coordinates, zoom });
-            }}
-          >
-            <Geographies geography={mainGeoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const countryCode = getCountryCode(geo);
-                  if (!countryCode) return null;
+//   return (
+//     <div className="country-stats-map">
+//       <div className="country-stats-map__header">
+//         <div className="country-stats-map__legend">
+//           <div className="country-stats-map__legend-item">
+//             <span className="country-stats-map__legend-color" style={{ backgroundColor: 'var(--color-correct)' }}></span>
+//             <span>Has data</span>
+//           </div>
+//           <div className="country-stats-map__legend-item">
+//             <span className="country-stats-map__legend-color" style={{ backgroundColor: 'var(--map-default)', opacity: 0.4 }}></span>
+//             <span>No data</span>
+//           </div>
+//         </div>
+//         <button
+//           onClick={resetView}
+//           className="country-stats-map__reset-btn"
+//         >
+//           Reset View
+//         </button>
+//       </div>
+//       <div className="country-stats-map__container">
+//         <ComposableMap
+//           projection="geoEqualEarth"
+//           projectionConfig={{ scale: 147 }}
+//           style={{ width: '100%', height: '100%' }}
+//         >
+//           <ZoomableGroup
+//             key={resetKey}
+//             center={viewWindow.coordinates}
+//             maxZoom={12}
+//             zoom={viewWindow.zoom}
+//             onMoveEnd={({ zoom, coordinates }) => {
+//               setViewWindow({ coordinates, zoom });
+//             }}
+//           >
+//             <Geographies geography={mainGeoUrl}>
+//               {({ geographies }) =>
+//                 geographies.map((geo) => {
+//                   const countryCode = getCountryCode(geo);
+//                   if (!countryCode) return null;
                   
-                  const style = getCountryStyle(countryCode);
+//                   const style = getCountryStyle(countryCode);
                   
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={style.fill}
-                      stroke={style.stroke}
-                      strokeWidth={style.strokeWidth}
-                      style={{
-                        default: style,
-                        hover: style,
-                        pressed: style,
-                        outline: 'none',
-                      }}
-                      onClick={() => handleCountryClick(geo)}
-                      onMouseEnter={() => setHoveredCountry(countryCode)}
-                      onMouseLeave={() => setHoveredCountry(null)}
-                    />
-                  );
-                })
-              }
-            </Geographies>
-          </ZoomableGroup>
-        </ComposableMap>
-      </div>
-      {selectedCountryData && selectedCountry && (
-        <div className="country-stats-map__details">
-          <h3 className="country-stats-map__details-title">
-            {selectedCountryInfo?.country || selectedCountry}
-          </h3>
-          <ModalityMatrixDisplay matrix={selectedCountryData.matrix} />
-        </div>
-      )}
-    </div>
-  );
-}
+//                   return (
+//                     <Geography
+//                       key={geo.rsmKey}
+//                       geography={geo}
+//                       fill={style.fill}
+//                       stroke={style.stroke}
+//                       strokeWidth={style.strokeWidth}
+//                       style={{
+//                         default: style,
+//                         hover: style,
+//                         pressed: style,
+//                         outline: 'none',
+//                       }}
+//                       onClick={() => handleCountryClick(geo)}
+//                       onMouseEnter={() => setHoveredCountry(countryCode)}
+//                       onMouseLeave={() => setHoveredCountry(null)}
+//                     />
+//                   );
+//                 })
+//               }
+//             </Geographies>
+//           </ZoomableGroup>
+//         </ComposableMap>
+//       </div>
+//       {selectedCountryData && selectedCountry && (
+//         <div className="country-stats-map__details">
+//           <h3 className="country-stats-map__details-title">
+//             {selectedCountryInfo?.country || selectedCountry}
+//           </h3>
+//           <ModalityMatrixDisplay matrix={selectedCountryData.matrix} />
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 /**
  * Display component for the 3x3 modality matrix
@@ -578,7 +579,7 @@ export function ProfilePage() {
 
         {userData?.countries && Object.keys(userData.countries).length > 0 && (
           <StatsCard title="Country Statistics Map">
-            <CountryStatsMap countryStats={userData.countries} />
+            <ProfileMap countryStats={userData.countries} />
           </StatsCard>
         )}
 

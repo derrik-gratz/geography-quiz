@@ -1,8 +1,8 @@
 import React from 'react';
-import { useQuiz } from '../hooks/useQuiz';
-import { useQuizActions } from '../hooks/useQuizActions';
-import { useCollapsible } from '../hooks/useCollapsible';
-import quizSets from '../data/quiz_sets.json';
+import { useQuiz } from '../../hooks/useQuiz';
+import { useQuizActions } from '../../hooks/useQuizActions';
+import { useCollapsible } from '../../hooks/useCollapsible';
+import quizSets from '../../data/quiz_sets.json';
 
 /**
  * QuizConfig Component

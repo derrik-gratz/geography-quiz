@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
-import { useCollapsible } from '../hooks/useCollapsible.js';
+import { useQuiz } from '../../hooks/useQuiz.js';
+import { useCollapsible } from '../../hooks/useCollapsible.js';
 
 /**
  * QuizLog Component
