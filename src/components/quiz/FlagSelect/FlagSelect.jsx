@@ -171,7 +171,7 @@ export function QuizFlagSelect() {
       }, [selectedFlag, guesses?.status, componentStatus, disabled]);
 
     return (
-        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Flag Selection" content={
+        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Flag Selection" classNames={componentStatus} content={
         <div className={`quiz-flag-select`}>
             {!disabled && (
             <div className="quiz-flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>

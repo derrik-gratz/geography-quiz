@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../base/BaseMap.jsx';
+import { BaseMap } from '../base/BaseMap/BaseMap.jsx';
 
 /**
  * Map component for profile page showing country statistics

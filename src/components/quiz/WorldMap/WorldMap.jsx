@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BaseMap } from '../../base/BaseMap.jsx';
+import { BaseMap } from '../../base/BaseMap/BaseMap.jsx';
 import allCountryData from '../../../data/country_data.json';
 import { useQuiz } from '../../../hooks/useQuiz.js';
 import { useQuizActions } from '../../../hooks/useQuizActions.js';
@@ -7,6 +7,7 @@ import { useQuizActions } from '../../../hooks/useQuizActions.js';
 import { useComponentState } from '../../../hooks/useComponentState.js';
 import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
 import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
+import './WorldMap.css';
 
 function getCountryViewWindow(countryCode) {
   const countryData = allCountryData.find(country => country.code === countryCode);
@@ -36,37 +37,25 @@ export function QuizWorldMap() {
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
   
-  // color country based on state
-  const getCountryStyle = (countryCode) => {
+  // Get country state (used for both className and style)
+  const getCountryState = (countryCode) => {
     const isIncorrect = incorrectValues.includes(countryCode);
     const isCorrect = countryCode === correctValue && (componentStatus === 'completed' || componentStatus === 'prompting' || componentStatus === 'reviewing');
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
 
-    const getColor = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect ? "var(--input-option-correct)" :
-        isIncorrect ? "var(--input-option-incorrect)" :
-        isSelected ? "var(--input-option-selected)" :
-        isHovered ? "var(--input-option-hover)" : "var(--input-option-neutral)"
-      );
-    };
-    const getStroke = (isCorrect, isIncorrect, isSelected, isHovered) => {
-      return (
-        isCorrect ? "var(--input-option-correct-stroke)" :
-        isIncorrect ? "var(--input-option-incorrect-stroke)" :
-        isSelected ? "var(--input-option-selected-stroke)" :
-        isHovered ? "var(--input-option-hover-stroke)" : "var(--map-default-outline)"
-      );
-    }
-    return {
-      fill: getColor(isCorrect, isIncorrect, isSelected, isHovered),
-      stroke: getStroke(isCorrect, isIncorrect, isSelected, isHovered),
-      strokeWidth: 0.3,
-      cursor: isIncorrect ? "not-allowed" : "pointer",
-      outline: "none"
-    }
+    if (isCorrect) return 'correct';
+    if (isIncorrect) return 'incorrect';
+    if (isSelected) return 'selected';
+    if (isHovered) return 'hovered';
+    return 'neutral';
   }
+
+  const getCountryClassName = (countryCode) => {
+    const state = getCountryState(countryCode);
+    return `quiz-world-map__country--${state}`;
+  }
+
   // Reset selection and view when disabled
   useEffect(() => {
     if (disabled) {
@@ -101,6 +90,7 @@ export function QuizWorldMap() {
   const handleSubmit = () => {
     if (selectedCountry && !disabled) {
       submitAnswer('location', selectedCountry);
+      setSelectedCountry(null);
     }
   };
 
@@ -139,13 +129,13 @@ export function QuizWorldMap() {
   }, [selectedCountry, guesses?.status, disabled, componentStatus]);
   
   return (
-    <CollapsibleContainer title="World Map" defaultCollapsed={defaultCollapsed} content={
+    <CollapsibleContainer title="World Map" defaultCollapsed={defaultCollapsed} classNames={componentStatus} content={
       <div className="quiz-world-map">
         <BaseMap
           onCountryHover={onMouseEnter}
           onCountryHoverLeave={onMouseLeave}
           onCountryClick={handleCountryClick}
-          getCountryStyle={getCountryStyle}
+          getCountryClassName={getCountryClassName}
           getSmallCountryPriority={getSmallCountryPriority}
           disabled={disabled}
           className="world-map__base-map"

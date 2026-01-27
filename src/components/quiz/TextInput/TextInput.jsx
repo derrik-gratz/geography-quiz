@@ -3,7 +3,7 @@ import { useQuiz } from '../../../hooks/useQuiz.js';
 import { useQuizActions } from '../../../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../hooks/useCollapsible.js';
 import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
-import { CountryTextEntry } from '../../base/CountryTextEntry.jsx';
+import { CountryTextEntry } from '../../base/CountryTextEntry/CountryTextEntry.jsx';
 import { useComponentState } from '../../../hooks/useComponentState.js';
 import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
 import './TextInput.css';
@@ -110,22 +110,10 @@ export function QuizTextInput() {
     }
   };
 
-  const getSuggestionStyle = (country) => {
+  // Get className for suggestions based on state
+  const getSuggestionClassName = (country) => {
     const isIncorrect = incorrectValues.includes(country.country);
-    return {
-      cursor: isIncorrect ? 'not-allowed' : 'pointer',
-      color: isIncorrect ? '#999' : 'black',
-      opacity: isIncorrect ? 0.5 : 1,
-      textDecoration: isIncorrect ? 'line-through' : 'none'
-    };
-  };
-
-  const getInputStyle = () => {
-    return {
-      backgroundColor: isWrong ? '#fee' : (disabled ? '#f5f5f5' : '#fff'),
-      color: isWrong ? '#c33' : (disabled ? '#999' : '#333'),
-      cursor: (disabled || isWrong) ? 'not-allowed' : 'text'
-    };
+    return isIncorrect ? 'quiz-text-input__suggestion--incorrect' : '';
   };
 
   const getSuggestionPriority = (a, b) => {
@@ -154,7 +142,7 @@ export function QuizTextInput() {
   return (
     <div className="quiz-text-input">
       <CollapsibleContainer defaultCollapsed={isCollapsed} title="Country Name" classNames={componentStatus} content={
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative', overflow: 'visible'}}>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative', overflow: 'visible', alignItems: 'center'}}>
           <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
           <CountryTextEntry
               value={input}
@@ -162,8 +150,7 @@ export function QuizTextInput() {
               onCountryClick={handleCountryClick}
               onCountryHover={handleCountryHover}
               onCountryHoverLeave={handleCountryHoverLeave}
-              getSuggestionStyle={getSuggestionStyle}
-              getInputStyle={getInputStyle}
+              getSuggestionClassName={getSuggestionClassName}
               disabled={disabled || isWrong}
               getSuggestionPriority={getSuggestionPriority}
               placeholder="Type a country name..."

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import countryData from '../../data/country_data.json';
+import countryData from '../../../data/country_data.json';
+import './CountryTextEntry.css';
 
 export function CountryTextEntry({ 
   value,
@@ -7,11 +8,10 @@ export function CountryTextEntry({
   onCountryClick,
   onCountryHover,
   onCountryHoverLeave,
-  getSuggestionStyle,
-  getInputStyle,
+  getSuggestionClassName,
   disabled,
   getSuggestionPriority,
-  placeholder,
+  defaultText,
   allowSuggestions
 }) {  
   const [internalInput, setInternalInput] = useState(value || '');
@@ -108,95 +108,38 @@ export function CountryTextEntry({
 //     }
 //   };
 
-  const defaultInputStyle = {
-    width: '95%',
-    padding: '0.5rem',
-    fontSize: '1rem',
-    borderRadius: '4px',
-    border: '1px solid #ccc'
-  };
-
-  const inputStyle = getInputStyle ? { ...defaultInputStyle, ...getInputStyle() } : defaultInputStyle;
-
-  const defaultSuggestionStyle = {
-    padding: '0.5rem',
-    color: 'var(--text-primary)',
-    borderBottom: '1px solid #eee',
-    minHeight: '40px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    backgroundColor: 'transparent',
-    width: '95%'
-  };
 
   return (
-    <div 
-      className="text-input component-panel__content" 
-      style={{ 
-        position: 'relative', 
-        overflow: 'visible', 
-        display: 'flex', 
-        gap: '8px', 
-        marginBottom: '8px', 
-        flex: 1,
-        position: 'relative' 
-      }}
-    >
-      <input
+    <div className="country-text-entry">
+      <input 
+        className="country-text-entry__input"
         type="text"
         value={inputValue}
         onChange={handleChange}
-        placeholder={placeholder || "Type a country name..."}
+        placeholder={defaultText || "Type a country name..."}
         disabled={disabled}
-        style={inputStyle}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
       {showSuggestions && (
-        <ul style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: '100%',
-          background: '#fff',
-          border: '1px solid #ccc',
-          borderTop: 'none',
-          minHeight: '40px', // Ensure at least one suggestion is visible
-          maxHeight: '120px',
-          overflowY: 'auto',
-          zIndex: 1000,
-          margin: 0,
-          padding: 0,
-          listStyle: 'none',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-        }}>
-          {suggestions.map(country => {
-            const suggestionStyle = getSuggestionStyle 
-              ? { ...defaultSuggestionStyle, ...getSuggestionStyle(country) }
-              : defaultSuggestionStyle;
-            
-            return (
-              <li
-                key={country.code}
-                onMouseDown={() => onCountryClick(country)}
-                style={suggestionStyle}
-                onMouseEnter={() => onCountryHover(country)}
-                onMouseLeave={() => onCountryHoverLeave()}
-              >
-                <div>{country.country}</div>
-                {country.aliases && country.aliases.length > 0 && (
-                  <div style={{ 
-                    fontSize: '0.8rem', 
-                    color: 'var(--text-secondary)', 
-                    fontStyle: 'italic' 
-                  }}>
-                    Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
-                  </div>
-                )}
-              </li>
-            );
-          })}
+        <ul className="country-text-entry__suggestions">
+          {suggestions.map(country => (
+            <li
+              key={country.code}
+              className={`country-text-entry__suggestion-item ${getSuggestionClassName(country)}`}
+              onMouseDown={() => onCountryClick(country)}
+              // style={getSuggestionItemStyle(country)}
+              onMouseEnter={() => onCountryHover(country)}
+              onMouseLeave={() => onCountryHoverLeave()}
+            >
+              <div>{country.country}</div>
+              {country.aliases && country.aliases.length > 0 && (
+                <div className="country-text-entry__suggestion-aliases">
+                  Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
+                </div>
+              )}
+            </li>
+          ))}
         </ul>
       )}
     </div>

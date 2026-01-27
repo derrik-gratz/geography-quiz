@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'; // useState, useEffect,
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
-import { useCollapsible } from '../../hooks/useCollapsible.js';
-import { derivePromptValue } from '../../services/quizEngine.js';
 
+import { derivePromptValue } from '../../services/quizEngine.js';
+import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
 // )}
@@ -19,7 +19,6 @@ export function QuizPrompt({}) {
     const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
     // Expand when quiz not started, collapse otherwise
     const defaultCollapsed = false; //state.quiz.status !== 'not_started';
-    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     // Reset give up state when prompt changes
     // useEffect(() => {
@@ -176,24 +175,15 @@ export function QuizPrompt({}) {
 
 
     return (
-        <div className={`quiz-prompt component-panel ${isCollapsed ? 'collapsed' : ''}`}>
-            <div className="component-panel__title-container">
-                <button 
-                    className="component-panel__toggle-button" 
-                    onClick={toggleCollapsed}
-                    aria-label={isCollapsed ? 'Expand Prompt' : 'Collapse Prompt'}
-                >
-                    {isCollapsed ? '▶ Prompt' : '▼ Prompt'}
-                </button>
+        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Quiz Prompt" content={
+            <div className="quiz-prompt">
+                <div className="quiz-prompt__content" style={{ textAlign: 'center' }}>
+                    {promptContent}
+                </div>
+                <div className="quiz-prompt__button">
+                    {promptButton}
+                </div>
             </div>
-            <div className="component-panel__content">
-            <div className="quiz-prompt__content" style={{ textAlign: 'center' }}>
-                {promptContent}
-            </div>
-            <div className="quiz-prompt__button">
-                {promptButton}
-            </div>
-            </div>
-        </div>
+        }/>
     );
 }

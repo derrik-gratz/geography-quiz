@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
     ComposableMap,
     Geographies,
@@ -6,11 +6,7 @@ import {
     Graticule,
     ZoomableGroup
 } from "react-simple-maps";
-import allCountryData from '../../data/country_data.json';
-// import { useQuiz } from '../hooks/useQuiz.js';
-// import { useQuizActions } from '../hooks/useQuizActions.js';
-// import { useCollapsible } from '../hooks/useCollapsible.js';
-// import { useComponentState } from '../hooks/useComponentState.js';
+import allCountryData from '../../../data/country_data.json';
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
 const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
@@ -68,7 +64,7 @@ export function BaseMap({
   onCountryHover,
   onCountryHoverLeave,
   onCountryClick,
-  getCountryStyle,
+  getCountryClassName,
   disabled,
   getSmallCountryPriority,
   className,
@@ -150,21 +146,20 @@ export function BaseMap({
                 const countryCode = getCountryCode(geo);
                 
                 if (allCountryData.find(country => country.code === countryCode)) {
-                  const countryStyle = getCountryStyle(countryCode);
+                  const countryClassName = `base-map__country ${getCountryClassName(countryCode)}`;
+                  
                   return (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
+                      className={countryClassName}
                       onClick={() => onCountryClick(countryCode)}
                       onMouseEnter={() => onCountryHover(countryCode)}
                       onMouseLeave={() => onCountryHoverLeave()}
-                    //   strokeWidth={countryStyle.strokeWidth || 0.5}
-                    //   fill={countryStyle.fill}
-                    //   stroke={countryStyle.stroke}
-                    //   cursor={countryStyle.cursor}
+                      strokeWidth='var(--stroke-width)'
                       style={{
-                        default: {...countryStyle},
-                        hover: {...countryStyle}
+                        default: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'},
+                        hover: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'}
                       }}
                     />
                   );
@@ -182,23 +177,22 @@ export function BaseMap({
                     const countryCode = getCountryCode(geo);
                     const [centroid_x, centroid_y] = getCentroid(geo);
                     const [cx, cy] = projection([centroid_x, centroid_y]);
-                    const countryStyle = getCountryStyle(countryCode);
+                    const countryClassName = `base-map__country base-map__small-country ${getCountryClassName(countryCode)}`;
+                    
                     const circleElement = (
                         <circle
                             key={`${geo.rsmKey}-${viewWindow.zoom}`}
-                            // geography={geo}
+                            className={countryClassName}
                             cx={cx}
                             cy={cy}
-                            fill={countryStyle.fill}
-                            stroke={countryStyle.stroke}
-                            strokeWidth={countryStyle.strokeWidth}
+                            fill='var(--fill)'
+                            stroke='var(--stroke)'
+                            // can't figure out how to specify this with CSS
+                            strokeWidth={0.3}
                             r={currentRadius}
                             onClick={() => onCountryClick(countryCode)}
                             onMouseEnter={() => onCountryHover(countryCode)}
                             onMouseLeave={() => onCountryHoverLeave()}
-                            style={{
-                                outline: "none"
-                            }}
                         />
                     );
                     const priority = getSmallCountryPriority ? getSmallCountryPriority(countryCode) : 'regular';

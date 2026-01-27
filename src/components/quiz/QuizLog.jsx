@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
-import { useCollapsible } from '../../hooks/useCollapsible.js';
+import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
 
 /**
  * QuizLog Component
@@ -33,7 +33,7 @@ export function QuizLog({
     const [exportSuccess, setExportSuccess] = useState(false);
     const [obscureNames, setObscureNames] = useState(true);
     const defaultCollapsed = useMemo(() => state.quiz.status === 'not_started', [state.quiz.status]);
-    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+    // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const promptScore = (entry) => {
         const types = ['location', 'name', 'flag'];
@@ -152,79 +152,70 @@ export function QuizLog({
     };
 
     return (
-        <div className={`quiz-log component-panel ${isCollapsed ? 'collapsed' : ''}`}>
-            <div className="component-panel__title-container">
-                <button 
-                    className="component-panel__toggle-button" 
-                    onClick={toggleCollapsed}
-                    aria-label={isCollapsed ? 'Expand Quiz Progress' : 'Collapse Quiz Progress'}
-                >
-                    {isCollapsed ? '▶ Quiz Progress' : '▼ Quiz Progress'}
-                </button>
-            </div>
-            <div className="component-panel__content">
-            {state.quiz.status === 'completed' && (
-                <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
-                    <input
-                        type="checkbox"
-                        checked={obscureNames}
-                        onChange={(e) => setObscureNames(e.target.checked)}
-                        style={{ margin: 0 }}
-                    />
-                    Hide country names
-                    </label>
-                    <button 
-                        onClick={copyResultsToClipboard}
-                        className="quiz-log__export-btn"
-                        style={{
-                            backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-                            color: 'white',
-                            border: 'none',
-                            padding: '8px 16px',
-                            borderRadius: '4px',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                            transition: 'background-color 0.2s'
-                        }}
-                    >
-                        {exportSuccess ? '✓ Copied!' : 'Export Results'}
-                    </button>
-                </div>
-            )}
-                <div className="quiz-log-table-container">
-                    <table className="quiz-log-table">
-                        <thead>
-                            <tr>
-                                <th>Country</th>
-                                {/* <th>Prompt</th> */}
-                                {/* <th>Status</th> */}
-                                <th>Map</th>
-                                <th>Name</th>
-                                <th>Flag</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {logEntries.slice().reverse().map((entry, index) => (
-                                <tr key={index} className="log-entry">
-                                    <td className="country-name">
-                                        {entry.correctCountry}
-                                    </td>
-                                    <td className="answer-cell">
-                                        {entry.guesses.location}
-                                    </td>
-                                    <td className="answer-cell">
-                                        {entry.guesses.name}
-                                    </td>
-                                    <td className="answer-cell">
-                                        {entry.guesses.flag}
-                                    </td>
+        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Quiz Log" content={
+            <div className="quiz-log">
+                {state.quiz.status === 'completed' && (
+                    <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+                        <input
+                            type="checkbox"
+                            checked={obscureNames}
+                            onChange={(e) => setObscureNames(e.target.checked)}
+                            style={{ margin: 0 }}
+                        />
+                        Hide country names
+                        </label>
+                        <button 
+                            onClick={copyResultsToClipboard}
+                            className="quiz-log__export-btn"
+                            style={{
+                                backgroundColor: exportSuccess ? '#28a745' : '#007bff',
+                                color: 'white',
+                                border: 'none',
+                                padding: '8px 16px',
+                                borderRadius: '4px',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                transition: 'background-color 0.2s'
+                            }}
+                        >
+                            {exportSuccess ? '✓ Copied!' : 'Export Results'}
+                        </button>
+                    </div>
+                )}
+                    <div className="quiz-log-table-container">
+                        <table className="quiz-log-table">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    {/* <th>Prompt</th> */}
+                                    {/* <th>Status</th> */}
+                                    <th>Map</th>
+                                    <th>Name</th>
+                                    <th>Flag</th>
                                 </tr>
-                            ))}
+                            </thead>
+                            <tbody>
+                                {logEntries.slice().reverse().map((entry, index) => (
+                                    <tr key={index} className="log-entry">
+                                        <td className="country-name">
+                                            {entry.correctCountry}
+                                        </td>
+                                        <td className="answer-cell">
+                                            {entry.guesses.location}
+                                        </td>
+                                        <td className="answer-cell">
+                                            {entry.guesses.name}
+                                        </td>
+                                        <td className="answer-cell">
+                                            {entry.guesses.flag}
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
+        }/>
     );
 }
