@@ -73,6 +73,7 @@ export function BaseMap({
   getSmallCountryPriority,
   className,
   initialView = { coordinates: [0, 0], zoom: 1 },
+  additionalControls = [],
   showGraticule = true
 }){
   const [viewWindow, setViewWindow] = useState(initialView);
@@ -113,6 +114,11 @@ export function BaseMap({
         >
           Reset View
         </button>
+        {additionalControls.map((control, index) => (
+          <React.Fragment key={`control-${index}`}>
+            {control}
+          </React.Fragment>
+        ))}
       </div>
       <ComposableMap
         projection="geoEqualEarth"

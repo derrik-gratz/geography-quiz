@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
 import { QuizConfig } from './components/quiz/QuizConfig.jsx';
 import { QuizPrompt } from './components/quiz/QuizPrompt.jsx';
-import { FlagSelect } from './components/quiz/FlagSelect.jsx';
-import { TextInput } from './components/quiz/TextInput.jsx';
-import { WorldMap } from './components/quiz/WorldMap.jsx';
+import { QuizFlagSelect } from './components/quiz/FlagSelect/FlagSelect.jsx';
+import { QuizTextInput } from './components/quiz/TextInput/TextInput.jsx';
+import { QuizWorldMap } from './components/quiz/WorldMap/WorldMap.jsx';
 import { QuizLog } from './components/quiz/QuizLog.jsx';
 import { ProfilePage } from './components/profile/ProfilePage.jsx';
 import { initStorage } from './services/storageService.js';
@@ -81,9 +81,9 @@ function App() {
                             </div>
                         </div>
                         <div className="right-column">
-                            <TextInput />
-                            <FlagSelect />
-                            <WorldMap />
+                            <QuizTextInput />
+                            <QuizFlagSelect />
+                            <QuizWorldMap />
                         </div>
                     </main>
                 )}

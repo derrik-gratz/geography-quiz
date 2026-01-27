@@ -1,0 +1,8 @@
+/* For showing dropdown suggestions */
+.quiz-text-input {
+    overflow: visible;
+  }
+
+.quiz-text-input .collapsable-container__content {
+overflow: visible;
+}

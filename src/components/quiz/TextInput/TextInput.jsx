@@ -1,16 +1,19 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../../hooks/useQuiz.js';
-import { useQuizActions } from '../../hooks/useQuizActions.js';
-import { useCollapsible } from '../../hooks/useCollapsible.js';
-import { CountryTextEntry } from '../base/CountryTextEntry.jsx';
-import { useComponentState } from '../../hooks/useComponentState.js';
+import { useQuiz } from '../../../hooks/useQuiz.js';
+import { useQuizActions } from '../../../hooks/useQuizActions.js';
+// import { useCollapsible } from '../../hooks/useCollapsible.js';
+import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { CountryTextEntry } from '../../base/CountryTextEntry.jsx';
+import { useComponentState } from '../../../hooks/useComponentState.js';
+import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
+import './TextInput.css';
 
-export function TextInput() {
+export function QuizTextInput() {
   const { state } = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
   
-  const defaultCollapsed = useMemo(() => {
+  const isCollapsed = useMemo(() => {
     if (componentStatus === 'prompting') return true;
     if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
       return true;
@@ -18,7 +21,7 @@ export function TextInput() {
     return false;
   }, [componentStatus, state.quiz.status]);
   
-  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+  // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   const [input, setInput] = useState('');
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -141,55 +144,33 @@ export function TextInput() {
   const handleCountryHoverLeave = () => {
   };
 
+  const submitButtonStatus = useMemo(() => {
+    if (guesses?.status === 'completed') return 'completed';
+    if (isWrong) return 'incorrect';
+    if (selectedCountry && componentStatus === 'active') return 'active';
+    return 'disabled';
+  }, [selectedCountry, guesses?.status, isWrong, disabled, componentStatus]);
+
   return (
-    <div className={`text-input component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`} style={{ position: 'relative' }}>
-      <div className="component-panel__title-container">
-        <button 
-          className="component-panel__toggle-button" 
-          onClick={toggleCollapsed}
-          aria-label={isCollapsed ? 'Expand Country Name' : 'Collapse Country Name'}
-        >
-          {isCollapsed ? '▶ Country Name' : '▼ Country Name'}
-        </button>
-      </div>
-      <div className="component-panel__content" style={{ position: 'relative', overflow: 'visible' }}>
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative' }}>
-          <button
-            onClick={handleSubmit}
-            disabled={!selectedCountry || disabled}
-            style={{
-              padding: '0.5rem 1rem',
-              fontSize: '0.9rem',
-              borderRadius: '4px',
-              border: guesses?.status === 'completed' ? '1px solid var(--input-option-correct)' : 
-                      isWrong ? '1px solid var(--input-option-incorrect)' :
-                      `1px solid ${selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'}`,
-              backgroundColor: guesses?.status === 'completed' ? 'var(--input-option-correct)' : 
-                              isWrong ? 'var(--input-option-incorrect)' : 
-                              (selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)'),
-              color: guesses?.status === 'completed' || isWrong ? '#fff' : 
-                     (selectedCountry && !disabled ? '#fff' : 'var(--text-primary)'),
-              cursor: (selectedCountry && componentStatus === 'active') ? 'pointer' : 'not-allowed',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            {state.quiz.status === 'reviewing' ? 'Answer:' : guesses?.status === 'completed' ? 'Correct!' : isWrong ? 'Incorrect!' : 'Submit'}
-          </button>
+    <div className="quiz-text-input">
+      <CollapsibleContainer defaultCollapsed={isCollapsed} title="Country Name" classNames={componentStatus} content={
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative', overflow: 'visible'}}>
+          <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
           <CountryTextEntry
-            value={input}
-            onValueChange={handleValueChange}
-            onCountryClick={handleCountryClick}
-            onCountryHover={handleCountryHover}
-            onCountryHoverLeave={handleCountryHoverLeave}
-            getSuggestionStyle={getSuggestionStyle}
-            getInputStyle={getInputStyle}
-            disabled={disabled || isWrong}
-            getSuggestionPriority={getSuggestionPriority}
-            placeholder="Type a country name..."
-            allowSuggestions={allowSuggestions && guesses?.status !== 'completed'}
-          />
+              value={input}
+              onValueChange={handleValueChange}
+              onCountryClick={handleCountryClick}
+              onCountryHover={handleCountryHover}
+              onCountryHoverLeave={handleCountryHoverLeave}
+              getSuggestionStyle={getSuggestionStyle}
+              getInputStyle={getInputStyle}
+              disabled={disabled || isWrong}
+              getSuggestionPriority={getSuggestionPriority}
+              placeholder="Type a country name..."
+              allowSuggestions={allowSuggestions && guesses?.status !== 'completed'}
+            />
         </div>
-      </div>
+      } />
     </div>
   );
 } 

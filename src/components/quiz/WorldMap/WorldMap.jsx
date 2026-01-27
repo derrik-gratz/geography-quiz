@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BaseMap } from '../base/BaseMap.jsx';
-import allCountryData from '../../data/country_data.json';
-import { useQuiz } from '../../hooks/useQuiz.js';
-import { useQuizActions } from '../../hooks/useQuizActions.js';
-import { useCollapsible } from '../../hooks/useCollapsible.js';
-import { useComponentState } from '../../hooks/useComponentState.js';
+import { BaseMap } from '../../base/BaseMap.jsx';
+import allCountryData from '../../../data/country_data.json';
+import { useQuiz } from '../../../hooks/useQuiz.js';
+import { useQuizActions } from '../../../hooks/useQuizActions.js';
+// import { useCollapsible } from '../../../hooks/useCollapsible.js';
+import { useComponentState } from '../../../hooks/useComponentState.js';
+import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
 
 function getCountryViewWindow(countryCode) {
   const countryData = allCountryData.find(country => country.code === countryCode);
@@ -17,7 +19,7 @@ function getCountryViewWindow(countryCode) {
   return { coordinates: [0, 0], zoom: 1 };
 }
 
-export function WorldMap() {
+export function QuizWorldMap() {
   const { state } = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('location');
@@ -29,7 +31,7 @@ export function WorldMap() {
     return false;
   }, [componentStatus, state.quiz.status]);
 
-  const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+  // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
@@ -129,49 +131,16 @@ export function WorldMap() {
       return 0;
     }
   };
+
+  const submitButtonStatus = useMemo(() => {
+    if (guesses?.status === 'completed') return 'completed';
+    if (selectedCountry && componentStatus === 'active') return 'active';
+    return 'disabled';
+  }, [selectedCountry, guesses?.status, disabled, componentStatus]);
   
   return (
-    <div className={`world-map component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`}>
-      <div className="component-panel__title-container">
-        <button 
-          className="component-panel__toggle-button" 
-          onClick={toggleCollapsed}
-          aria-label={isCollapsed ? 'Expand World Map' : 'Collapse World Map'}
-        >
-          {isCollapsed ? '▶ World Map' : '▼ World Map'}
-        </button>
-      </div>
-      <div className="component-panel__content">
-      {/* <div style={{
-        // position: 'absolute',
-        top: '1rem',
-        right: '1rem',
-        display: 'flex',
-        gap: '5px',
-        zIndex: 1000
-      }}> */}
-        {componentStatus === 'active' && guesses?.status === 'incomplete' && (
-          <button
-            onClick={handleSubmit}
-            disabled={!selectedCountry || disabled}
-            style={{
-              position: 'absolute',
-              top: '1rem',
-              right: '1rem',
-              padding: '8px 12px',
-              fontSize: '14px',
-              fontFamily: 'monospace',
-              borderRadius: '4px',
-              border: `1px solid ${selectedCountry && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
-              backgroundColor: selectedCountry && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
-              color: selectedCountry && !disabled ? '#fff' : 'var(--text-primary)',
-              cursor: selectedCountry && !disabled ? 'pointer' : 'not-allowed'
-            }}
-            title="Submit map selection"
-          >
-            Submit Map
-          </button>
-        )}
+    <CollapsibleContainer title="World Map" defaultCollapsed={defaultCollapsed} content={
+      <div className="quiz-world-map">
         <BaseMap
           onCountryHover={onMouseEnter}
           onCountryHoverLeave={onMouseLeave}
@@ -181,9 +150,10 @@ export function WorldMap() {
           disabled={disabled}
           className="world-map__base-map"
           initialView={defaultViewWindow}
+          additionalControls={[<SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />]}
           showGraticule={true}
         />
       </div>
-    </div>
+    }/>
   );
 }

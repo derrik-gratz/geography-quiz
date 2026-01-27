@@ -1,12 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useQuiz } from '../../hooks/useQuiz.js';
-import { useQuizActions } from '../../hooks/useQuizActions.js';
-import { useCollapsible } from '../../hooks/useCollapsible.js';
-import countryData from '../../data/country_data.json';
-import quizSets from '../../data/quiz_sets.json';
-import { useComponentState } from '../../hooks/useComponentState.js';
-import { shuffleArray } from '../../services/filterCountryData.js';
-import flagColors from '../../data/flag_colors.json';
+import { useQuiz } from '../../../hooks/useQuiz.js';
+import { useQuizActions } from '../../../hooks/useQuizActions.js';
+// import { useCollapsible } from '../../../hooks/useCollapsible.js';
+import countryData from '../../../data/country_data.json';
+import quizSets from '../../../data/quiz_sets.json';
+import { useComponentState } from '../../../hooks/useComponentState.js';
+import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
+import { shuffleArray } from '../../../services/filterCountryData.js';
+import flagColors from '../../../data/flag_colors.json';
+import './FlagSelect.css';
 
 const availableColors = [
     { name: "red"   , color: "#FF0000" },
@@ -18,7 +21,7 @@ const availableColors = [
     { name: "orange", color: "#ffa500" }
 ]
 
-export function FlagSelect() {
+export function QuizFlagSelect() {
     const { state } = useQuiz();
     const { submitAnswer, sandboxSelect } = useQuizActions();
     const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('flag');
@@ -30,7 +33,6 @@ export function FlagSelect() {
         }
         return false;
       }, [componentStatus, state.quiz.status]);
-    const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedFlag, setSelectedFlag] = useState(null);
@@ -57,6 +59,7 @@ export function FlagSelect() {
     }, [disabled, state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
+        console.log('handleSubmit', selectedFlag, disabled);
         if (selectedFlag && !disabled) {
             submitAnswer('flag', selectedFlag);
             setSelectedFlag(null);
@@ -143,69 +146,53 @@ export function FlagSelect() {
     }, [allCountries, componentStatus, correctValue, state.config.quizSet, selectedColors]);
 
     const getFlagClassName = (country) => {
-        let className = `flag-icon fi fi-${country.toLowerCase()}`;
+        const baseClassName = `quiz-flag-select__flag-icon`;
+        let className = baseClassName;
         if (componentStatus !== 'active') {
             if (country === correctValue) {
-                className += ' correct';
+                className += ` ${baseClassName}_correct`;
             }
         } if (incorrectValues.includes(country)) {
-            className += ' incorrect';
+            className += ` ${baseClassName}_incorrect`;
         } else if (selectedFlag === country) {
-            const isSandbox = state.config.gameMode === 'sandbox';
-            className += isSandbox ? ' sandbox-selected' : ' selected';
+            // const isSandbox = state.config.gameMode === 'sandbox';
+            // className += isSandbox ? `${baseClassName}_selected` : `${baseClassName}_selected`;
+            className += ` ${baseClassName}_selected`;
         }
+        className += ` fi fi-${country.toLowerCase()}`;
         return className;
     };
+
+    const submitButtonStatus = useMemo(() => {
+        if (guesses?.status === 'completed') return 'completed';
+        if (guesses?.status === 'incorrect') return 'incorrect';
+        if (selectedFlag && componentStatus === 'active') return 'active';
+        return 'disabled';
+      }, [selectedFlag, guesses?.status, componentStatus, disabled]);
+
     return (
-        <div className={`flag-select component-panel status-${componentStatus} ${isCollapsed ? 'collapsed' : ''}`}>
-            <div className="component-panel__title-container">
-                <button 
-                    className="component-panel__toggle-button" 
-                    onClick={toggleCollapsed}
-                    aria-label={isCollapsed ? 'Expand Flag Selection' : 'Collapse Flag Selection'}
-                >
-                    {isCollapsed ? '▶ Flag Selection' : '▼ Flag Selection'}
-                </button>
-            </div>
-            <div className="component-panel__content">
-            <div className="flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>
-                <button
-                    className="flag-select__submit-button"
-                    onClick={handleSubmit}
-                    disabled={!selectedFlag || disabled}
-                    style={{
-                        padding: '0.3rem 0.8rem',
-                        fontSize: '0.8rem',
-                        borderRadius: '4px',
-                        border: `1px solid ${selectedFlag && !disabled ? 'var(--color-submit-button-outline)' : 'var(--color-disabled)'}`,
-                        backgroundColor: selectedFlag && !disabled ? 'var(--submit-button-ready)' : 'var(--submit-button-not-ready)',
-                        color: selectedFlag && !disabled ? '#fff' : 'var(--text-primary)',
-                        cursor: selectedFlag && !disabled ? 'pointer' : 'not-allowed',
-                        whiteSpace: 'nowrap'
-                    }}
-                >
-                    <>Submit<br />Flag</>
-                </button>
-                <div className="flag-select__color-picker" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 auto', minWidth: 0 }}>
-                    {!disabled && (
-                        <>
-                            <span className="color-filter__label" style={{ whiteSpace: 'normal', flexShrink: 0, minWidth: 'fit-content', maxWidth: 'none' }}>Filter by colors:</span>
-                            <div className="color-filter__colors" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', alignItems: 'center' }}>
-                                {availableColors.map(color =>
-                                    <button 
-                                        key={color.name}
-                                        className={`flag-select__color-filter-color ${selectedColors.includes(color.name) ? "selected" : ""}`}
-                                        onClick={() => handleColorClick(color.name)}
-                                        style={{ backgroundColor: color.color, flexShrink: 0 }}
-                                        title={color.name}
-                                    ></button>
-                                )}
-                            </div>
-                        </>
-                    )}
+        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Flag Selection" content={
+        <div className={`quiz-flag-select`}>
+            {!disabled && (
+            <div className="quiz-flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>
+                <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
+                <div className="quiz-flag-select__color-filter" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 auto', minWidth: 0 }}>
+                    <span className="quiz-flag-select__color-filter-label" style={{ whiteSpace: 'normal', flexShrink: 0, minWidth: 'fit-content', maxWidth: 'none' }}>Filter by colors:</span>
+                    <div className="quiz-flag-select__color-filter-colors" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', alignItems: 'center' }}>
+                        {availableColors.map(color =>
+                            <button 
+                                key={color.name}
+                                className={`quiz-flag-select__color-filter-color ${selectedColors.includes(color.name) ? "quiz-flag-select__color-filter-color_selected" : ""}`}
+                                onClick={() => handleColorClick(color.name)}
+                                style={{ backgroundColor: color.color, flexShrink: 0 }}
+                                title={color.name}
+                            ></button>
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className="flag-select__flag-grid">
+            )}
+            <div className="quiz-flag-select__flag-grid">
                 {filteredFlags.map((flag) => (
                     <span
                         key={flag}
@@ -222,6 +209,6 @@ export function FlagSelect() {
                 ))}
             </div>
             </div>
-        </div>
+        }/>
     );
 }
