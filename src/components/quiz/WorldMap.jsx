@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BaseMap } from '../../base/BaseMap/BaseMap.jsx';
-import allCountryData from '../../../data/country_data.json';
-import { useQuiz } from '../../../hooks/useQuiz.js';
-import { useQuizActions } from '../../../hooks/useQuizActions.js';
+import { BaseMap } from '../base/BaseMap/BaseMap.jsx';
+import allCountryData from '../../data/country_data.json';
+import { useQuiz } from '../../hooks/useQuiz.js';
+import { useQuizActions } from '../../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
-import { useComponentState } from '../../../hooks/useComponentState.js';
-import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
-import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
+import { useComponentState } from '../../hooks/useComponentState.js';
+import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { SubmitButton } from '../base/SubmitButton/SubmitButton.jsx';
 import './WorldMap.css';
 
 function getCountryViewWindow(countryCode) {

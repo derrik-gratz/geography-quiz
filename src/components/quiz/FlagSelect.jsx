@@ -1,14 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useQuiz } from '../../../hooks/useQuiz.js';
-import { useQuizActions } from '../../../hooks/useQuizActions.js';
+import { useQuiz } from '../../hooks/useQuiz.js';
+import { useQuizActions } from '../../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
-import countryData from '../../../data/country_data.json';
-import quizSets from '../../../data/quiz_sets.json';
+import countryData from '../../data/country_data.json';
+import quizSets from '../../data/quiz_sets.json';
 import { useComponentState } from '../../../hooks/useComponentState.js';
-import { CollapsibleContainer } from '../../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
 import { SubmitButton } from '../../base/SubmitButton/SubmitButton.jsx';
-import { shuffleArray } from '../../../services/filterCountryData.js';
-import flagColors from '../../../data/flag_colors.json';
+import { shuffleArray } from '../../services/filterCountryData.js';
+import flagColors from '../../data/flag_colors.json';
 import './FlagSelect.css';
 
 const availableColors = [
