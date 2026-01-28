@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../base/BaseMap/BaseMap.jsx';
+import { BaseMap } from '../../base/BaseMap/BaseMap.jsx';
 
 /**
  * Map component for profile page showing country statistics
@@ -11,41 +11,24 @@ export function ProfileMap({ countryStats }) {
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
   
-  // color country based on state
-  const getCountryStyle = (countryCode) => {
+  const getCountryClassName = (countryCode) => {
     const hasData = countryStats && countryStats[countryCode];
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
     
     if (isSelected) {
-      return {
-        fill: 'var(--color-selected)',
-        stroke: 'var(--color-selected-outline)',
-        strokeWidth: 0.5,
-        outline: 'none',
-      };
+      return 'profile-map__country_selected';
     }
-    
     if (isHovered) {
-      return {
-        fill: hasData ? 'var(--color-hover)' : 'var(--map-default)',
-        stroke: hasData ? 'var(--color-hover-outline)' : 'var(--map-default-outline)',
-        strokeWidth: 0.5,
-        outline: 'none',
-      };
+      return 'profile-map__country_hovered';
     }
+    if (hasData) {
+      return 'profile-map__country_data';
+    }
+    return 'profile-map__country_no-data';
+  }
 
-    return {
-      fill: hasData ? 'var(--color-correct)' : 'var(--map-default)',
-      stroke: hasData ? 'var(--color-correct-outline)' : 'var(--map-default-outline)',
-      strokeWidth: 0.3,
-      outline: 'none',
-      opacity: hasData ? 0.7 : 0.4,
-    };
-  };
-
-  const handleCountryClick = (geo) => {
-    const countryCode = getCountryCode(geo);
+  const handleCountryClick = (countryCode) => {
     if (countryCode) {
       setSelectedCountry(countryCode === selectedCountry ? null : countryCode);
     }
@@ -71,7 +54,7 @@ export function ProfileMap({ countryStats }) {
         onCountryHover={onMouseEnter}
         onCountryHoverLeave={onMouseLeave}
         onCountryClick={handleCountryClick}
-        getCountryStyle={getCountryStyle}
+        getCountryClassName={getCountryClassName}
         getSmallCountryPriority={getSmallCountryPriority}
         disabled={false}
         className="world-map__base-map"

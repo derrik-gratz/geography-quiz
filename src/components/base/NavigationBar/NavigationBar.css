@@ -1,0 +1,24 @@
+.navigation-bar {
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.navigation-bar__button {
+    padding: 0.5rem 1rem;
+    background: none;
+    color: var(--text-primary);
+    border: 2px solid;
+    /* border-color: var(--border-color); */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.navigation-bar__button_selected {
+    background: var(--color-selected);
+    color: white;
+    border-color: var(--color-selected);
+}
