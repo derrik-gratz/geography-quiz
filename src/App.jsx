@@ -1,38 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
-import { QuizConfig } from './components/QuizConfig.jsx';
-import { QuizPrompt } from './components/QuizPrompt.jsx';
-import { FlagSelect } from './components/FlagSelect.jsx';
-import { TextInput } from './components/TextInput.jsx';
-import { WorldMap } from './components/WorldMap.jsx';
-import { QuizLog } from './components/QuizLog.jsx';
+// import { NavigationBar } from './components/base/NavigationBar/NavigationBar.jsx';
+import { QuizPage } from './components/quiz/QuizPage/QuizPage.jsx';
+// import { ProfilePage } from './components/profile/ProfilePage.jsx';
+import { initStorage } from './services/storageService.js';
+// import './components/profile/ProfilePage.css';
+
 /**
  * Main App component for the Geography Quiz application
- * Displays quiz configuration interface
+ * Manages page navigation and displays quiz or profile page
  */
 function App() {
+
+    // Initialize storage on app mount
+    React.useEffect(() => {
+        initStorage().catch(error => {
+            console.error('Failed to initialize storage:', error);
+        });
+    }, []);
+
+    const [currentPage, setCurrentPage] = useState('quiz');
+
     return (
         <QuizProvider>
             <div className="app">
-                <main className="app-main">
-                    <div className="left-column">
-                        <div className="quiz-config-panel">
-                            <QuizConfig />
-                        </div>
-                        <div className="quiz-log-panel">
-                            <QuizLog />
-                        </div>
-                        <div className="quiz-prompt-panel">
-                            <QuizPrompt />
-                        </div>
-                    </div>
-                    <div className="right-column">
-                        <TextInput />
-                        <FlagSelect />
-                        <WorldMap />
-                    </div>
-
-                </main>
+                {/* <NavigationBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                {currentPage === 'profile' ? (
+                    <ProfilePage />
+                ) : ( */}
+                    <QuizPage />
+                {/* )} */}
             </div>
         </QuizProvider>
     );

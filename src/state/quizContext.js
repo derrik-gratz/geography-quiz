@@ -42,6 +42,7 @@
  * 
  * @property {Array<Object>} quiz.history - Array of completed prompts
  * @property {number} quiz.history[].quizDataIndex - Index into quizData for the country that was quizzed
+ * @property {string} quiz.history[].countryCode - Country code for the country that was quizzed
  * @property {Object} quiz.history[].location - Location guess state for this history entry (same structure as prompt.guesses.location)
  * @property {Object} quiz.history[].name - Name guess state for this history entry
  * @property {Object} quiz.history[].flag - Flag guess state for this history entry
@@ -242,6 +243,7 @@ export function quizReducer(state, action){
             
             const newHistoryEntry = {
                 quizDataIndex: state.quiz.prompt.quizDataIndex,
+                countryCode: currentCountry.countryCode,
                 ...statusEntries
             };
             

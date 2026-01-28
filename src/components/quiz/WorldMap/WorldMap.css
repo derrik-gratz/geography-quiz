@@ -1,0 +1,29 @@
+.quiz-world-map__country--correct {
+    --fill: var(--input-option-correct);
+    --stroke: var(--input-option-correct);
+    cursor: default;
+}
+
+.quiz-world-map__country--incorrect {
+    --fill: var(--input-option-incorrect);
+    --stroke: var(--input-option-incorrect);
+    cursor: not-allowed;
+}
+
+.quiz-world-map__country--selected {
+    --fill: var(--input-option-selected);
+    --stroke: var(--input-option-selected-stroke);
+    cursor: pointer;
+}
+
+.quiz-world-map__country--hovered {
+    --fill: var(--input-option-hover);
+    --stroke: var(--input-option-hover-outline);
+    cursor: pointer;
+}
+
+.quiz-world-map__country--neutral {
+    --fill: var(--input-option-neutral);
+    --stroke: var(--map-default-outline);
+    cursor: pointer;
+}

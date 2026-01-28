@@ -1,0 +1,26 @@
+.profile-map__country_selected {
+  fill: var(--color-selected);
+  stroke: var(--color-selected-outline);
+  stroke-width: 0.5;
+  outline: none;
+}
+.profile-map__country_hovered {
+  fill: var(--color-hover);
+  stroke: var(--color-hover-outline);
+  stroke-width: 0.5;
+  outline: none;
+}
+
+.profile-map__country_data {
+  fill: var(--color-correct);
+  stroke: var(--color-correct-outline);
+  stroke-width: 0.3;
+  outline: none;
+  opacity: 0.7;
+}
+.profile-map__country_no-data {
+  fill: var(--color-neutral);
+  stroke: var(--color-neutral-outline);
+  stroke-width: 0.3;
+  outline: none;
+}

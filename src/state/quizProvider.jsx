@@ -1,6 +1,9 @@
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js'; 
 import { checkPromptCompletion, checkQuizCompletion, generatePromptType, derivePromptValue } from '../services/quizEngine.js';
+import { saveDailyChallenge } from '../services/storageService.js';
+import { transformQuizStateToStorage } from '../services/storageService.js';
+import { formatDateString } from '../types/dataSchemas.js';
 
 export const QuizContext = createContext();
 
@@ -69,9 +72,26 @@ export function QuizProvider({ children }) {
         return false;
     }, [state.quiz.status, state.quiz.prompt.quizDataIndex, state.quizData]);
     
+    // Quiz completion
     useEffect(() => {
         if (isQuizFinished) {
             dispatch({ type: 'QUIZ_COMPLETED' });
+            if (state.config.quizSet === 'Daily challenge' && 
+                state.quiz.history && 
+                state.quiz.history.length > 0 &&
+                state.quizData && 
+                state.quizData.length > 0) {
+                // Transform quiz state to storage format
+                const challengeData = transformQuizStateToStorage(state, state.quizData);
+                console.log('challengeData', challengeData);
+                const date = formatDateString(new Date());
+                
+                // Save to storage (non-blocking)
+                saveDailyChallenge(date, challengeData).catch(error => {
+                    console.error('Failed to save daily challenge:', error);
+                    // Don't block user experience if save fails
+                });
+            }
         }
     }, [isQuizFinished]);
 
