@@ -59,7 +59,6 @@ export function QuizFlagSelect() {
     }, [disabled, state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex]);
 
     const handleSubmit = () => {
-        console.log('handleSubmit', selectedFlag, disabled);
         if (selectedFlag && !disabled) {
             submitAnswer('flag', selectedFlag);
             setSelectedFlag(null);

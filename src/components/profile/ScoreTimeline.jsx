@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import * as Plot from '@observablehq/plot';
 
-export function ScoreTimeline({ scoreLog }) {
+export function ScoreTimeline({ userData }) {
+
+  const scoreLog = userData.dailyChallenge.fullEntries;
   const plotRef = useRef(null);
 
   useEffect(() => {

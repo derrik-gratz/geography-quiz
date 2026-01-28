@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ComposableMap,
     Geographies,
@@ -74,6 +74,12 @@ export function BaseMap({
 }){
   const [viewWindow, setViewWindow] = useState(initialView);
   const [resetKey, setResetKey] = useState(0);
+
+  // Sync viewWindow state when initialView prop changes
+  useEffect(() => {
+    setViewWindow(initialView);
+  }, [initialView.coordinates, initialView.zoom]);  // Update when coordinates or zoom changes
+  
   
   const getCircleRadius = (baseRadius = 3) => {
     return baseRadius / Math.sqrt(viewWindow.zoom);

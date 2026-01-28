@@ -1,3 +1,9 @@
+# todo
+
+- tidy up persistant data storage. define data format
+- clean profile page
+- implement learning mode (requires persistant storage)
+
 # data to store
 
 {

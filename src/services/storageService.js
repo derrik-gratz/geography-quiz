@@ -9,11 +9,12 @@ import {
   createEmptyModalityMatrix,
   calculateSkillScore,
   getModalityIndex,
-  getModalityName
+  getModalityName,
+  createCountryResultFromPrompt
 } from '../types/dataSchemas.js';
 
 const DB_NAME = 'geography_quiz_db';
-const DB_VERSION = 4; // Increment version for new schema
+const DB_VERSION = 5; // New schema with fullEntries and location modality
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
@@ -74,19 +75,19 @@ export async function getUserMetadata() {
   }
 }
 
-/**
- * Update last active timestamp
- * @returns {Promise<void>}
- */
-export async function updateLastActive() {
-  try {
-    const metadata = await getUserMetadata();
-    metadata.lastActiveAt = Date.now();
-    localStorage.setItem(USER_METADATA_KEY, JSON.stringify(metadata));
-  } catch (error) {
-    console.error('Failed to update last active:', error);
-  }
-}
+// /**
+//  * Update last active timestamp
+//  * @returns {Promise<void>}
+//  */
+// export async function updateLastActive() {
+//   try {
+//     const metadata = await getUserMetadata();
+//     metadata.lastActiveAt = Date.now();
+//     localStorage.setItem(USER_METADATA_KEY, JSON.stringify(metadata));
+//   } catch (error) {
+//     console.error('Failed to update last active:', error);
+//   }
+// }
 
 /**
  * Load user data store
@@ -112,7 +113,7 @@ async function loadUserData() {
                 current: 0,
                 lastPlayed: null
               },
-              scoreLog: []
+              fullEntries: []
             },
             countries: {}
           });
@@ -125,7 +126,7 @@ async function loadUserData() {
     return {
       dailyChallenge: {
         streak: { current: 0, lastPlayed: null },
-        scoreLog: []
+        fullEntries: []
       },
       countries: {}
     };
@@ -158,9 +159,39 @@ async function saveUserData(userData) {
 }
 
 /**
+ * Transform quiz state format to storage format
+ * Returns prompts array with country_id and modality data
+ * @param {Object} quizState - Quiz state from context
+ * @param {Array} quizData - Quiz data array
+ * @returns {Object} Daily challenge entry data with prompts
+ */
+export function transformQuizStateToStorage(quizState, quizData) {
+  const prompts = quizState.quiz.history.map((entry) => {
+    const countryData = quizData[entry.quizDataIndex];
+    if (!countryData) {
+      return null;
+    }
+
+    // Extract country code
+    const countryCode = countryData.code || countryData.flagCode || countryData.country || 'UNKNOWN';
+
+    // Pass through modality data as-is (status, n_attempts, attempts)
+    return {
+      countryCode,
+      name: entry.name || { status: null, n_attempts: 0, attempts: [] },
+      flag: entry.flag || { status: null, n_attempts: 0, attempts: [] },
+      location: entry.location || { status: null, n_attempts: 0, attempts: [] }
+    };
+  }).filter(prompt => prompt !== null);
+
+  return { prompts };
+}
+
+/**
  * Save daily challenge completion
  * @param {string} date - Date string in "YYYY-MM-DD" format
  * @param {Object} challengeData - Daily challenge entry data with prompts
+ *   Each prompt should have: countryCode and name/flag/location with status/n_attempts/attempts
  * @returns {Promise<boolean>} True if saved, false if already exists
  */
 export async function saveDailyChallenge(date, challengeData) {
@@ -168,61 +199,73 @@ export async function saveDailyChallenge(date, challengeData) {
     const userData = await loadUserData();
     
     // Check if entry already exists
-    const existingEntry = userData.dailyChallenge.scoreLog.find(entry => entry.date === date);
-    if (existingEntry) {
+    const existingFullEntry = userData.dailyChallenge?.fullEntries?.find(entry => entry.date === date);
+    if (existingFullEntry) {
       console.log(`Daily challenge for ${date} already exists, skipping save`);
       return false;
     }
 
-    // Calculate scores per country (0, 0.5, or 1)
-    const guesses = challengeData.prompts.map(prompt => {
-      const types = ['name', 'flag', 'map'];
-      const completedCount = types.filter(type => {
-        const modality = prompt[type];
-        return modality && modality.correct === true;
-      }).length;
-      // Score per country: 0 = failed, 0.5 = partially correct, 1 = fully correct
-      return completedCount * 0.5;
-    });
+    // Transform prompts to country results using new schema helpers
+    const results = challengeData.prompts.map(prompt => {
+      const countryCode = prompt.countryCode;
+      if (!countryCode) {
+        console.warn('Prompt missing countryCode:', prompt);
+        return null;
+      }
 
-    // Calculate total score (sum of country scores)
-    const score = guesses.reduce((sum, g) => sum + g, 0);
+      // Prompt entry should have name/flag/location with status, n_attempts, attempts
+      const promptEntry = {
+        name: prompt.name || { status: null, n_attempts: 0, attempts: [] },
+        flag: prompt.flag || { status: null, n_attempts: 0, attempts: [] },
+        location: prompt.location || { status: null, n_attempts: 0, attempts: [] }
+      };
 
-    // Calculate skill score
+      return createCountryResultFromPrompt(promptEntry, countryCode);
+    }).filter(country => country !== null);
+
+    // Calculate overall skill score (sum of all modality skill scores)
     let skillScore = 0;
-    challengeData.prompts.forEach(prompt => {
-      ['name', 'flag', 'map'].forEach(modality => {
-        const modalityData = prompt[modality];
-        if (modalityData && modalityData.guesses !== null && modalityData.guesses > 0) {
-          const skill = calculateSkillScore(modalityData.correct === true, modalityData.guesses);
-          skillScore += skill;
-        }
-      });
+    results.forEach(result => {
+      skillScore += result.name.skillScore;
+      skillScore += result.flag.skillScore;
+      skillScore += result.location.skillScore;
     });
 
-    // Create score log entry
-    const scoreLogEntry = {
+    // Calculate total score (sum of country scores: 0, 0.5, or 1 per country)
+    // Score per country: 0 = failed, 0.5 = partially correct (1-2 modalities), 1 = fully correct (3 modalities)
+    const countryScores = results.map(result => {
+      const correctCount = [result.name, result.flag, result.location]
+        .filter(modality => modality.correct === true).length;
+      return correctCount * 0.5;
+    });
+    const score = countryScores.reduce((sum, s) => sum + s, 0);
+
+    // Create full entry using new schema
+    const fullEntry = {
       date,
       skillScore,
       score,
-      guesses
+      results
     };
 
     // Console log: Show what's being saved
     console.log('=== Daily Challenge Completion ===');
     console.log('Date:', date);
-    console.log('Score Log Entry:', scoreLogEntry);
-    console.log('Number of countries:', guesses.length);
+    console.log('Full Entry:', fullEntry);
+    console.log('Number of countries:', results.length);
 
-    // Add to score log
-    userData.dailyChallenge.scoreLog.push(scoreLogEntry);
+    // Initialize fullEntries array if it doesn't exist
+    if (!userData.dailyChallenge.fullEntries) {
+      userData.dailyChallenge.fullEntries = [];
+    }
+
+    // Add to full entries
+    userData.dailyChallenge.fullEntries.push(fullEntry);
     // Sort by date (most recent first)
-    userData.dailyChallenge.scoreLog.sort((a, b) => b.date.localeCompare(a.date));
+    userData.dailyChallenge.fullEntries.sort((a, b) => b.date.localeCompare(a.date));
 
     // Update streak
-    const lastPlayed = userData.dailyChallenge.streak.lastPlayed;
-    const today = formatDateString(new Date());
-    
+    const lastPlayed = userData.dailyChallenge.streak?.lastPlayed;
     if (!lastPlayed) {
       // First challenge
       userData.dailyChallenge.streak = {
@@ -255,7 +298,6 @@ export async function saveDailyChallenge(date, challengeData) {
 
     // Save updated data
     await saveUserData(userData);
-    await updateLastActive();
 
     console.log('✅ Daily challenge saved:', { date, score, skillScore, streak: userData.dailyChallenge.streak.current });
     return true;
@@ -276,9 +318,9 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
     return;
   }
 
-  // Process each country in the challenge
+    // Process each country in the challenge
   for (const prompt of challengeData.prompts) {
-    const countryId = prompt.country_id;
+    const countryId = prompt.countryCode;
     if (!countryId) continue;
 
     // Get or create country data
@@ -290,37 +332,49 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
 
     const countryData = userData.countries[countryId];
 
-    // Find which modality was prompted (only one should be true)
+    // Find which modality was prompted (status === 'prompted')
     let promptedModality = null;
-    ['name', 'flag', 'map'].forEach(modality => {
+    ['name', 'flag', 'location'].forEach(modality => {
       const modalityData = prompt[modality];
-      if (modalityData && modalityData.prompted === true) {
+      if (modalityData && modalityData.status === 'prompted') {
         promptedModality = modality;
       }
     });
 
     if (!promptedModality) {
       // No prompted modality found, skip this country
-      return;
+      continue;
     }
 
     const promptedIndex = getModalityIndex(promptedModality);
-    if (promptedIndex === -1) return;
+    if (promptedIndex === -1) continue;
 
     // Process each input modality that was attempted
-    ['name', 'flag', 'map'].forEach(inputModality => {
+    ['name', 'flag', 'location'].forEach(inputModality => {
       const inputIndex = getModalityIndex(inputModality);
       if (inputIndex === -1) return;
 
       const inputData = prompt[inputModality];
-      
-      // Only process if this modality was attempted (guesses is not null and > 0)
+      if (!inputData) return;
+
+      // Get number of guesses from attempts array or n_attempts
+      let guessCount = 0;
+      if (inputData.attempts && Array.isArray(inputData.attempts)) {
+        guessCount = inputData.attempts.length;
+      } else if (inputData.n_attempts) {
+        guessCount = inputData.n_attempts;
+      }
+
+      // Determine if correct from status
+      const isCorrect = inputData.status === 'completed';
+
+      // Only process if this modality was attempted (guessCount > 0)
       // Matrix: rows = input modality, columns = prompted modality
-      if (inputData && inputData.guesses !== null && inputData.guesses > 0) {
+      if (guessCount > 0) {
         const cell = countryData.matrix[inputIndex][promptedIndex];
         
         // Calculate skill score
-        const skillScore = calculateSkillScore(inputData.correct === true, inputData.guesses);
+        const skillScore = calculateSkillScore(isCorrect, guessCount);
         
         // Add to testing array (skill scores from daily challenges)
         cell.testing.push(skillScore);

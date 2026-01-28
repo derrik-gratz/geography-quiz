@@ -191,7 +191,7 @@ export function calculateSkillScore(correct, guesses) {
   if (!correct || guesses <= 0) {
     return 0;
   }
-  return (6 - guesses) / 10;
+  return (6 - guesses) / (5*2); // 5 guesses, 2 modalities per country
 }
 
 /**
