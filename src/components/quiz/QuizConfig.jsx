@@ -3,6 +3,7 @@ import { useQuiz } from '../../hooks/useQuiz';
 import { useQuizActions } from '../../hooks/useQuizActions';
 import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
 import quizSets from '../../data/quiz_sets.json';
+import './QuizConfig.css';
 
 const PROMPT_TYPES = ['location', 'name', 'flag'];
 
@@ -17,10 +18,10 @@ export function QuizConfig() {
     return (
         <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Quiz Configuration" content={
             <div className="quiz-config">
-                {state.quiz.status === 'not_started' && (
+                {state.quiz.status === 'not_started' ? (
                     <>
                     <div className="quiz-config__game-mode-select">
-                        <label htmlFor="game-mode-select">Game mode:</label>
+                        <label htmlFor="game-mode">Game mode:</label>
                         <label>
                             <input
                                 type="radio"
@@ -45,7 +46,7 @@ export function QuizConfig() {
                             Normal
                         </label>
                     </div>
-                <div className="quiz-config__quiz-set">              
+                <div className="quiz-config__quiz-set-select">              
                     <label htmlFor="quiz-set-select">Quiz Set:</label>
                     <select 
                         id="quiz-set-select"
@@ -80,32 +81,36 @@ export function QuizConfig() {
                     
                     </select>
                 </div>
-                <div className="quiz-config__prompt-types">
+                <div className="quiz-config__prompt-types-select">
                     {quizSet && quizSet !== 'Daily challenge' && gameMode === 'quiz' &&(
                         <>
                             <label htmlFor="prompt-types-select">Prompt types:</label>
-                            {state.config.selectedPromptTypes.length === 0 && (
-                                <div className="quiz-config__warning">
-                                    <p className="quiz-config__warning-text">Select at least one prompt type.</p>
+                            <div className="quiz-config__prompt-types-select-content">
+                                {state.config.selectedPromptTypes.length === 0 && (
+                                    <div className="quiz-config__warning">
+                                        <p className="quiz-config__warning-text">Select at least one prompt type.</p>
+                                    </div>
+                                )}
+                                <div className="quiz-config__prompt-types-checkbox">
+                                    {PROMPT_TYPES.map(type => (
+                                        <label key={type} className="quiz-config__prompt-types-checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                className="quiz-config__prompt-types-checkbox-input"
+                                                checked={state.config.selectedPromptTypes.includes(type)}
+                                                onChange={(e) => {handlePromptTypeChange(type, e.target.checked)}}
+                                            />
+                                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                                        </label>
+                                    ))}
                                 </div>
-                            )}
-                            <div className="quiz-config__checkbox-group">
-                                {PROMPT_TYPES.map(type => (
-                                    <label key={type} className="quiz-config__checkbox-label">
-                                        <input
-                                            type="checkbox"
-                                            className="quiz-config__checkbox-input"
-                                            checked={state.config.selectedPromptTypes.includes(type)}
-                                            onChange={(e) => {handlePromptTypeChange(type, e.target.checked)}}
-                                        />
-                                        {type.charAt(0).toUpperCase() + type.slice(1)}
-                                    </label>
-                                ))}
                             </div>
                         </>
                     )}
                 </div>
                 </>
+                ) : (
+                    <p>Quiz in progress</p>
                 )}
             </div>
         } />
