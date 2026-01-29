@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
-
-const DAILY_CHALLENGE_GUESSES = 5;
-const DAILY_CHALLENGE_LENGTH = 5;
+import { calculateSkillScore } from '../../types/dataSchemas.js';
+import './QuizLog.css';
 
 /**
  * QuizLog Component
@@ -68,24 +67,17 @@ export function QuizLog({
                     guesses.flag.status === 'completed' ? '✓/' + guesses.flag.attempts.length : '?'
             }
         }
-        const calculateSkillScore = (guesses) => {
-            let sum = 0;
-            if (guesses.flag.status === 'completed') {
-                sum += 6 - guesses.flag.attempts.length;
-            } 
-            if (guesses.name.status === 'completed') {
-                sum += 6 - guesses.name.attempts.length;
-            } 
-            if (guesses.location.status === 'completed') {
-                sum += 6 - guesses.location.attempts.length;
-            }
-            return sum;
+        const sumSkillScore = (guesses) => {
+            return guesses.flag.status === 'completed' ? calculateSkillScore(guesses.flag) :
+                guesses.name.status === 'completed' ? calculateSkillScore(guesses.name) :
+                guesses.location.status === 'completed' ? calculateSkillScore(guesses.location) : 0;
         }
+        
         const pastPrompts = state.quiz.history.map((entry) => {
             const correctCountry = state.quizData[entry.quizDataIndex]?.country || '?';
             const score = promptScore(entry);
             const guesses = parseGuesses(entry);
-            const skillScore = calculateSkillScore(entry);
+            const skillScore = sumSkillScore(entry);
             return { correctCountry, score, guesses, skillScore };
         });
         if (state.quiz.status === 'active') {
@@ -114,7 +106,7 @@ export function QuizLog({
             const skillScore = logEntries.reduce((sum, entry) => {
                 return sum + entry.skillScore;
             }, 0);
-            exportText += `\t(${skillScore}/${DAILY_CHALLENGE_GUESSES * 2 * DAILY_CHALLENGE_LENGTH})\n\n`;
+            exportText += `\t(${skillScore}/5)\n\n`;
         } else {
             exportText += `\n\n`;
         }
@@ -139,10 +131,6 @@ export function QuizLog({
             const countryDisplay = obscureNames ? `${index + 1}` : entry.correctCountry;
             exportText += `| ${pad(countryDisplay, countryCol)} | ${pad(entry.guesses.location, mapCol)} | ${pad(entry.guesses.name, nameCol)} | ${pad(entry.guesses.flag, flagCol)} |\n`;
         });
-        // logEntries.slice().reverse().forEach((entry, index) => {
-        //     const countryDisplay = obscureNames ? `${index + 1}` : entry.correctCountry;
-        //     exportText += `| ${countryDisplay} | ${entry.guesses.location} | ${entry.guesses.name} | ${entry.guesses.flag} |\n`;
-        // });
         exportText += `\`\`\``;
         return exportText;
     };
@@ -165,8 +153,8 @@ export function QuizLog({
         <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Quiz Log" content={
             <div className="quiz-log">
                 {state.quiz.status === 'completed' && (
-                    <div className="quiz-log-export" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '4px', marginLeft: '10px' }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
+                    <div className="quiz-log-export">
+                        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer' }}>
                         <input
                             type="checkbox"
                             checked={obscureNames}
@@ -177,19 +165,12 @@ export function QuizLog({
                         </label>
                         <button 
                             onClick={copyResultsToClipboard}
-                            className="quiz-log__export-btn"
+                            className="quiz-log-export__button"
                             style={{
                                 backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-                                color: 'white',
-                                border: 'none',
-                                padding: '8px 16px',
-                                borderRadius: '4px',
-                                fontSize: '14px',
-                                cursor: 'pointer',
-                                transition: 'background-color 0.2s'
                             }}
                         >
-                            {exportSuccess ? '✓ Copied!' : 'Export Results'}
+                            {exportSuccess ? '✓ Copied!' : 'Copy to Clipboard'}
                         </button>
                     </div>
                 )}

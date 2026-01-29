@@ -1,0 +1,11 @@
+/* Mobile order (default): Config, Log, Prompt */
+.quiz-page__config { order: 1; }
+.quiz-page__log { order: 2; }
+.quiz-page__prompt { order: 3; }
+
+/* Desktop order: Different arrangement */
+@media (min-width: 768px) {
+  .quiz-page__config { order: 1; } /* or whatever order you want */
+  .quiz-page__log { order: 3; }     /* or whatever order you want */
+  .quiz-page__prompt { order: 2; }  /* or whatever order you want */
+}

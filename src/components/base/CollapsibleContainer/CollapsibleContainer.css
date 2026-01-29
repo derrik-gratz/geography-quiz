@@ -48,15 +48,15 @@ position: relative;
 }
 
 .collapsable-container.completed {
-    border-color: var(--color-correct-outline);
+    border-color: #28a74650;
 }
 
 .collapsable-container.failed {
-    border-color: var(--color-incorrect-outline);
+    border-color: #dc354650;
 }
 
 .collapsable-container.active {
-    border-color: var(--color-active-primary-outline);
+    border-color: #ffc10750;
 }
 
 .collapsable-container__content {

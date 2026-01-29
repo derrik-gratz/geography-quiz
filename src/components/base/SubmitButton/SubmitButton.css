@@ -1,9 +1,16 @@
+:root {
+  --color-submit-button-ready: #31b953;
+  --color-submit-button-not-ready: #6c757d;
+
+  --color-submit-button-outline: #00cc33;
+}
+
 .submit-button {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     border-radius: 4px;
-    border: 1px solid var(--submit-button-neutral);
-    background-color: var(--submit-button-neutral);
+    border: 1px solid #aaaaaa;
+    /* background-color: #efefef; */
     color: var(--text-primary);
     cursor: not-allowed;
 }
@@ -23,8 +30,8 @@
 }
 
 .submit-button--active {
-    border: 1px solid var(--color-active-secondary-outline);
-    background-color: var(--color-active-secondary);
+    border: 1px solid var(--color-selected-outline);
+    background-color: var(--color-selected);
     color: #fff;
     cursor: pointer;
 }

@@ -4,6 +4,7 @@ import { useQuizActions } from '../../hooks/useQuizActions.js';
 
 import { derivePromptValue } from '../../services/quizEngine.js';
 import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import './QuizPrompt.css';
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
 // )}
@@ -177,7 +178,7 @@ export function QuizPrompt({}) {
     return (
         <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Quiz Prompt" content={
             <div className="quiz-prompt">
-                <div className="quiz-prompt__content" style={{ textAlign: 'center' }}>
+                <div className="quiz-prompt__content">
                     {promptContent}
                 </div>
                 <div className="quiz-prompt__button">

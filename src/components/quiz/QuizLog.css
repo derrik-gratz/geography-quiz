@@ -1,0 +1,59 @@
+.quiz-log-export {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    margin-left: 10px;
+}
+
+.quiz-log-export__button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+
+.quiz-log-table-container {
+    display: flex;
+    flex: 1;
+    max-height: calc(2.5rem + 5 * 2.5rem); /* Header (~2.5rem) + 5 rows (~2.5rem each with padding) */
+    overflow-y: auto;
+    overflow-x: auto;
+    justify-content: center;
+}
+
+
+.quiz-log-table {
+    min-width: 300px;
+    max-width: 650px;
+    border-collapse: collapse;
+}
+
+.quiz-log-table-container .quiz-log-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.quiz-log-table th,
+.quiz-log-table td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.quiz-log-table th {
+    background-color: var(--background-secondary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.quiz-log-table .answer-cell {
+    text-align: center;
+}

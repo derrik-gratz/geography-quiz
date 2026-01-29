@@ -1,5 +1,7 @@
-/* CSS Custom Properties for theming */
+
 :root {
+  color-scheme: light dark;
+  
   /* Light mode colors */
   --text-primary: #333;
   --text-secondary: #666;
@@ -9,46 +11,26 @@
   --background-tertiary: #f5f5f5;
   --background-contrast: #080808;
   --border-color: #e0e0e0;
+  --border-dashed: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
-  --success-bg: #d4edda;
-  --success-border: #c3e6cb;
-  --success-text: #155724;
-  
-  /* Interactive state colors - consistent across components */
-  --color-hover: #fff3cd; /* Light yellow for hovered items */
-  --color-hover-outline: #ffc107; /* Yellow outline for hover */
-  --color-active-primary: #fff3cd;;
+
+  /* Interactive state colors */
+  --color-hover: #fff3cd;
+  --color-hover-outline: #ffc107;
+  --color-active-primary: #fff3cd;
   --color-active-primary-outline: #ffc107;
   --color-active-secondary: #007bff;
   --color-active-secondary-outline: #0056b3;
-  --color-selected: #007bff; /* Blue for selected items */
-  --color-selected-outline: #0056b3; /* Darker blue outline for selected */
-  --color-correct: #28a745; /* Green for correct answers */
-  --color-correct-outline: #1e7e34; /* Darker green outline for correct */
-  --color-incorrect: #dc3545; /* Red for incorrect answers */
-  --color-incorrect-outline: #c82333; /* Darker red outline for incorrect */
-  --color-disabled: #6c757d; /* Gray for disabled items */
-  --color-disabled-bg: #f8f9fa; /* Light gray background for disabled */
+  --color-selected: #007bff;
+  --color-selected-outline: #0056b3;
+  --color-correct: #28a745;
+  --color-correct-outline: #1e7e34;
+  --color-incorrect: #dc3545;
+  --color-incorrect-outline: #c82333;
+  --color-disabled: #6c757d;
+  --color-disabled-bg: #f8f9fa;
 
-
-  /* Interactive state colors - consistent across all components */
-  --submit-button-ready: #31b953;
-  --submit-button-not-ready: #6c757d;
-  --color-submit-button-outline: #00cc33;
-  --input-option-neutral: #f8f9fa;
-  --input-option-hover: #ddcb00;
-  --input-option-selected: #007bff;
-  --input-option-correct: #28a745;
-  --input-option-incorrect: #dc3545;
-  --input-option-disabled: #6c757d;
-  --map-default: #f8f9fa;
-  --map-default-outline: #e0e0e0;
   --flag-icon-size: 40px;  /* Mobile default */
-
-  --component-panel-success-color: #28a74650;
-  --component-panel-failure-color: #dc354650;
-  --component-panel-incomplete-color: #ffc10750;
-  --component-panel-prompting-color: #6c757d50;
 }
 
 /* Dark mode colors */
@@ -63,257 +45,48 @@
     --border-color: #555555;
     --border-dashed: #666666;
     --shadow-color: rgba(0, 0, 0, 0.3);
-    --success-bg: #1e4a2e;
-    --success-border: #2d5a3d;
-    --success-text: #a8e6c1;
-    
-    /* Dark mode interactive state colors */
-    --color-hover: #4a4a2a; /* Darker yellow for hovered items in dark mode */
-    --color-hover-outline: #ffc107; /* Same yellow outline */
-    --color-selected: #007bff; /* Same blue for selected items */
-    --color-selected-outline: #0056b3; /* Same darker blue outline */
-    --color-correct: #28a745; /* Same green for correct answers */
-    --color-correct-outline: #1e7e34; /* Same darker green outline */
-    --color-incorrect: #dc3545; /* Same red for incorrect answers */
-    --color-incorrect-outline: #c82333; /* Same darker red outline */
-    --color-disabled: #6c757d; /* Same gray for disabled items */
-    --color-disabled-bg: #404040; /* Darker background for disabled in dark mode */
   }
 }
 
+/* Base HTML element styles */
+body {
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+}
+
+a {
+  color: var(--color-selected);
+}
+a:hover {
+  color: var(--color-selected-outline);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+button:hover {
+  border-color: var(--color-hover-outline);
+  background-color: var(--color-hover);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* App Layout */
 .app {
   text-align: center;
   padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-/* Header removed */
-
-/* Main Layout - 2 Column Flexbox */
-.app-main {
-  display: flex;
-  gap: 20px;
-  width: 95vw; /* Fixed width for better centering */
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 100vh; /* Full viewport height */
-}
-
-/* Left Column - Controls and Results */
-.left-column {
-  flex: 0 0 500px; 
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 800px; /* Increased from 350px */
-  /* overflow: ; Prevent content from overflowing */
-}
-
-/* Quiz Control Panel - Consolidated config and prompt */
-.quiz-control-panel {
-  background: var(--background-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-  display: flex;
-  flex-direction: column;
-  max-height: 500px;
-  gap: 2px;
-}
-
-
-/* Right Column - Interactive Elements */
-.right-column {
-  flex: 1; /* Take remaining space */
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 0; /* Allow flex item to shrink below content size */
-}
-
-/* Input Row - Text and Flag side by side */
-.input-row {
-  display: flex;
-  gap: 15px;
-  height: 200px; /* Increased height to match flag container */
-  max-height: 500px;
-}
-
-.text-input-container {
-  min-width: 200px; /* Allow text input to shrink */
-  background: var(--background-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  height: 200px; /* Match input-row height */
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* Component Panel Styles - Border and Title */
-.component-panel {
-  border: 4px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1rem;
-  background-color: var(--background-primary);
-  display: flex;
-  flex-direction: column;
-}
-
-.component-panel.collapsed {
-  padding: 0.5rem 1rem;
-  height: 2.5rem; /* Fixed height: button line-height (~1.5rem) + padding (1rem total) */
-  min-height: 2.5rem !important;
-  max-height: 2.5rem !important;
-  overflow: hidden;
-}
-
-/* .component-panel.collapsed.flag-select {
-  min-height: 2.5rem !important;
-  max-height: 2.5rem !important;
-} */
-
-.component-panel__title-container {
-  margin: 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-  position: relative;
-}
-
-.component-panel.collapsed .component-panel__title-container {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-.component-panel__toggle-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: var(--text-primary);
-  font-size: 1.1rem;
-  font-weight: 600;
-  width: 100%;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.component-panel__toggle-button:hover {
-  background-color: var(--background-secondary);
-}
-
-.component-panel__toggle-button:focus {
-  outline: 2px solid var(--input-option-selected);
-  outline-offset: 2px;
-}
-
-.component-panel.status-completed {
-  border-color: var(--component-panel-success-color);
-  /* background-color: var(--component-panel-success-color); Light green tint */
-}
-.component-panel.collapsed.status-completed {
-  /* border-color: var(--component-panel-success-color); */
-  background-color: var(--component-panel-success-color); /* Light green tint */
-}
-
-.component-panel.status-failed {
-  border-color: var(--component-panel-failure-color);
-  /* background-color: var(--component-panel-failure-color); Light red tint */
-}
-.component-panel.collapsed.status-failed {
-  /* border-color: var(--component-panel-success-color); */
-  background-color: var(--component-panel-failure-color); /* Light red tint */
-}
-
-.component-panel.status-active {
-  border-color: var(--component-panel-incomplete-color);
-  /* background-color: var(--component-panel-incomplete-color); Light yellow tint */
-}
-.component-panel.collapsed.status-active {
-  /* border-color: var(--component-panel-success-color); */
-  background-color: var(--component-panel-incomplete-color); /* Light yellow tint */
-}
-
-.component-panel.status-prompting {
-  border-color: var(--component-panel-prompting-color);
-  /* background-color: var(--component-panel-prompting-color);  */
-}
-
-.component-panel.status-reviewing,
-.component-panel.status-disabled,
-.component-panel.status-sandbox,
-.component-panel.status-unknown {
-  border-color: var(--border-color);
-  /* background-color: var(--background-primary); */
-}
-
-.component-panel__content {
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-  max-height: 5000px;
-  opacity: 1;
-}
-
-/* show dropdown suggestions */
-.text-input .component-panel__content {
-  overflow: visible;
-}
-
-.component-panel.collapsed .component-panel__content {
-  max-height: 0;
-  opacity: 0;
-  margin: 0;
-  padding: 0;
-  pointer-events: none;
-}
-
-
-.component-panel__content {
-  margin-top: 1rem;
-}
-
-.component-panel.collapsed .component-panel__content {
-  margin-top: 0;
-}
-
-/* World Map specific styling */
-.world-map {
-  position: relative;
-  overflow: hidden;
-}
-
-/* World Map - Remove focus outlines from SVG elements */
-.world-map svg path:focus,
-.world-map svg path:focus-visible,
-.world-map svg circle:focus,
-.world-map svg circle:focus-visible {
-  outline: none !important;
-  border: none !important;
-}
-
-/* Also target react-simple-maps Geography components */
-.world-map svg path[class*="rsm-geography"]:focus,
-.world-map svg path[class*="rsm-geography"]:focus-visible {
-  outline: none !important;
-}
-
-/* Remove any box-shadow that might appear on focus */
-.world-map svg path:focus,
-.world-map svg circle:focus {
-  box-shadow: none !important;
-}
-
-/* Prevent focus outline on the entire map container */
-.world-map:focus,
-.world-map:focus-visible {
-  outline: none;
+  font-family: inherit;
 }
 
 /* App Layout - Mobile First */
@@ -336,15 +109,15 @@
 
 .right-column {
   width: 100%;
-  min-width: 0;  /* Allow shrinking */
+  min-width: 250px;  /* Allow shrinking */
   gap: 0;
 }
 
 /* Desktop Layout */
 @media (min-width: 768px) {
-  :root {
-    --flag-icon-size: 50px;  /* Larger on desktop */
-  }
+  /* :root {
+    --flag-icon-size: 50px;
+  } */
 
   .app-main {
     flex-direction: row;  /* Side-by-side on desktop */
@@ -363,132 +136,3 @@
     max-width: 800px;
   }
 }
-
-/* Dark mode colors */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-primary: #ffffff;
-    --text-secondary: #e0e0e0;
-    --text-muted: #b0b0b0;
-    --background-primary: #2d2d2d;
-    --background-secondary: #3a3a3a;
-    --background-tertiary: #404040;
-    --border-color: #555555;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-  }
-}
-
-
-/* Quiz Prompt*/
-.quiz-prompt__content {
-  font-size: 1.2rem;
-}
-.quiz-prompt__content .prompt-flag {
-  font-size: 4rem;
-}
-/* Flag select*/
-
-.flag-icon:hover:not(.disabled) {
-  border-color: var(--input-option-hover);
-  /* box-shadow: 0 0 0 2px var(--color-hover-outline); */
-  background-color: var(--input-option-hover);
-  /* transform: translateY(-2px); */
-}
-
-.flag-icon.selected {
-  border-color: var(--input-option-selected);
-  /* box-shadow: 0 0 0 2px var(--color-selected); */
-  background-color: var(--input-option-selected);
-  /* color: white; */
-  transform: scale(1.1);
-}
-
-.flag-icon.sandbox-selected {
-  border-color: var(--input-option-selected);
-  border-width: 6px;
-  /* box-shadow: 0 0 0 2px var(--color-selected); */
-  background-color: var(--input-option-selected);
-  /* color: white; */
-  transform: scale(1.05);
-}
-
-.flag-icon.correct {
-  border-color: var(--input-option-correct);
-  /* box-shadow: 0 0 0 2px var(--color-correct); */
-  background-color: var(--input-option-correct);
-  /* color: white; */
-}
-
-.flag-icon.incorrect {
-  border-color: var(--input-option-incorrect);
-  /* box-shadow: 0 0 0 2px var(--color-incorrect); */
-  background-color: var(--input-option-incorrect);
-  /* color: white; */
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* Quiz Log Table Styles */
-.quiz-log-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--border-color);
-}
-
-.quiz-log-table th,
-.quiz-log-table td {
-  border: 1px solid var(--border-color);
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.quiz-log-table th {
-  background-color: var(--background-secondary);
-  font-weight: 600;
-  text-align: center;
-}
-
-.quiz-log-table tbody tr {
-  border-bottom: 1px solid var(--border-color);
-}
-
-.quiz-log-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.quiz-log-table .country-name {
-  font-weight: 500;
-}
-
-.quiz-log-table .answer-cell {
-  text-align: center;
-}
-
-/* Quiz Log - Scrollable table container showing 5 rows */
-.quiz-log-table-container {
-  overflow-y: auto;
-  overflow-x: auto;
-  max-height: calc(2.5rem + 5 * 2.5rem); /* Header (~2.5rem) + 5 rows (~2.5rem each with padding) */
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
-
-/* Ensure thead is sticky when scrolling */
-.quiz-log-table-container .quiz-log-table thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.quiz-log-table-container .quiz-log-table th {
-  background-color: var(--background-secondary);
-}
-
-.quiz-log-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: none; /* Remove border since container has it */
-  margin: 0;
-}
-
-
