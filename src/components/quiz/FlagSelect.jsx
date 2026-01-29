@@ -178,9 +178,9 @@ export function QuizFlagSelect() {
             {!disabled && (
             <div className="quiz-flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>
                 <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
-                <div className="quiz-flag-select__color-filter" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 auto', minWidth: 0 }}>
+                <div className="quiz-flag-select__color-filter" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', flex: '1 1 auto', minWidth: 0 }}>
                     <span className="quiz-flag-select__color-filter-label" style={{ whiteSpace: 'normal', flexShrink: 0, minWidth: 'fit-content', maxWidth: 'none' }}>Filter by colors:</span>
-                    <div className="quiz-flag-select__color-filter-colors" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', alignItems: 'center' }}>
+                    <div className="quiz-flag-select__color-filter-colors" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '0.25rem', alignItems: 'center' }}>
                         {availableColors.map(color =>
                             <button 
                                 key={color.name}
