@@ -34,8 +34,8 @@
 }
 
 .country-text-entry__suggestion-item {
+    color: #333333;
     padding: 0.5rem;
-    color: var(--text-primary);
     border-bottom: 1px solid #eee;
     min-height: 40px;
     display: flex;
@@ -47,6 +47,6 @@
 
 .country-text-entry__suggestion-aliases {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: #666666;
     font-style: italic;
 }

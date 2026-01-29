@@ -67,10 +67,14 @@ export function QuizLog({
                     guesses.flag.status === 'completed' ? '✓/' + guesses.flag.attempts.length : '?'
             }
         }
-        const sumSkillScore = (guesses) => {
-            return guesses.flag.status === 'completed' ? calculateSkillScore(guesses.flag) :
-                guesses.name.status === 'completed' ? calculateSkillScore(guesses.name) :
-                guesses.location.status === 'completed' ? calculateSkillScore(guesses.location) : 0;
+        const sumSkillScore = (entry) => {
+            let skillScore = 0;
+            console.log(entry);
+            ['flag', 'name', 'location'].forEach((modality) => {
+                console.log(entry[modality]);
+                skillScore += calculateSkillScore(entry[modality].status === 'completed', entry[modality].attempts.length);
+            });
+            return skillScore;
         }
         
         const pastPrompts = state.quiz.history.map((entry) => {
