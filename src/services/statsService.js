@@ -8,6 +8,7 @@ import {
   parseDateString,
   calculateSkillScore,
   getModalityIndex,
+  createEmptyModalityMatrix,
   getModalityName
 } from '../types/dataSchemas.js';
 
@@ -15,16 +16,26 @@ import {
  * Calculate statistics per prompt modality from score log and country data
  * @param {Object} userData - Complete user data store
  * @returns {Object} Statistics per modality { name, flag, location }
+ * recall = ability to guess modality when prompted with different modality
+ * recognition = performance on other modalities when prompted with this modality
  */
 export function calculatePerModalityStats(userData) {
-  const stats = {
-    name: { totalGuesses: 0, totalCorrect: 0, accuracy: 0 },
-    flag: { totalGuesses: 0, totalCorrect: 0, accuracy: 0 },
-    location: { totalGuesses: 0, totalCorrect: 0, accuracy: 0 }
-  };
+
+  const modalityMatrix = [];
+  for (let input = 0; input < 3; input++) {
+    modalityMatrix[input] = [];
+    for (let prompted = 0; prompted < 3; prompted++) {
+      modalityMatrix[input][prompted] = {
+        accuracy: [],
+        percision: []
+      };
+    }
+  }
+
 
   if (!userData || !userData.countries) {
-    return stats;
+    console.error('No user data or countries found');
+    return modalityMatrix;
   }
 
   // Aggregate from all country matrices
@@ -45,25 +56,46 @@ export function calculatePerModalityStats(userData) {
         const cell = countryData.matrix[inputIndex][promptedIndex];
         
         // Count from testing array
-        if (cell.testing && cell.testing.length > 0) {
-          stats[inputModality].totalGuesses += cell.testing.length;
-          
-          // Count correct answers (skill score > 0 means correct)
-          const correctCount = cell.testing.filter(score => score > 0).length;
-          stats[inputModality].totalCorrect += correctCount;
+        if (cell.testing && cell.testing.length > 0) {          
+          // Push individual values, not arrays
+          // For accuracy: 1 if correct (score > 0), 0 if incorrect
+          cell.testing.forEach(score => {
+            modalityMatrix[inputIndex][promptedIndex].accuracy.push(score > 0 ? 1 : 0);
+            modalityMatrix[inputIndex][promptedIndex].percision.push(score);
+          });
         }
       }
     }
   });
-
+  for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
+    for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
+      const cell = modalityMatrix[inputIndex][promptedIndex];
+      // Calculate averages and replace arrays with numbers
+      if (cell.accuracy.length > 0) {
+        const avgAccuracy = cell.accuracy.reduce((acc, curr) => acc + curr, 0) / cell.accuracy.length;
+        cell.accuracy = avgAccuracy;
+      } else {
+        cell.accuracy = NaN;
+      }
+      
+      if (cell.percision.length > 0) {
+        const avgPercision = cell.percision.reduce((acc, curr) => acc + curr, 0) / cell.percision.length;
+        cell.percision = avgPercision;
+      } else {
+        cell.percision = NaN;
+      }
+    }
+  }
   // Calculate accuracy percentages
-  ['name', 'flag', 'location'].forEach(modality => {
-    const attempted = stats[modality].totalGuesses;
-    const correct = stats[modality].totalCorrect;
-    stats[modality].accuracy = attempted > 0 ? (correct / attempted) * 100 : 0;
-  });
+  // ['name', 'flag', 'location'].forEach(modality => {
+  //   ['recognition', 'recall'].forEach(type => {
+  //     const attempted = stats[modality][type].totalGuesses;
+  //     const correct = stats[modality][type].totalCorrect;
+  //     stats[modality][type].accuracy = attempted > 0 ? (correct / attempted) * 100 : 0;
+  //   });
+  // });
 
-  return stats;
+  return modalityMatrix;
 }
 
 // /**
