@@ -56,6 +56,7 @@
 
 .quiz-flag-select__color-filter-color_selected {
     border: 4px solid var(--color-selected-outline);
+    scale: 1.2;
 }
 
 .quiz-flag-select__flag-grid {

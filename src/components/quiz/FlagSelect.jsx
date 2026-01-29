@@ -169,8 +169,11 @@ export function QuizFlagSelect() {
         return 'disabled';
       }, [selectedFlag, guesses?.status, componentStatus, disabled]);
 
+    const containerTitle = useMemo(() => {
+        return `Flag Selection${componentStatus==='completed' ? '  ✓' : componentStatus==='failed' ? '  ✗' : ''}`;
+    }, [componentStatus]);
     return (
-        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title="Flag Selection" classNames={componentStatus} content={
+        <CollapsibleContainer defaultCollapsed={defaultCollapsed} title={containerTitle} classNames={componentStatus} content={
         <div className={`quiz-flag-select`}>
             {!disabled && (
             <div className="quiz-flag-select__controls" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1rem', flexWrap: 'nowrap' }}>

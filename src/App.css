@@ -15,18 +15,18 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 
   /* Interactive state colors */
-  --color-hover: #fff3cd;
-  --color-hover-outline: #ffc107;
-  --color-active-primary: #fff3cd;
-  --color-active-primary-outline: #ffc107;
-  --color-active-secondary: #007bff;
-  --color-active-secondary-outline: #0056b3;
-  --color-selected: #007bff;
-  --color-selected-outline: #0056b3;
-  --color-correct: #28a745;
-  --color-correct-outline: #1e7e34;
-  --color-incorrect: #dc3545;
-  --color-incorrect-outline: #c82333;
+  --color-hover: #0072B2;
+  --color-hover-outline: #00447a;
+  --color-active-primary: #F0E442;
+  --color-active-primary-outline: #d4c73b;
+  /* --color-active-secondary: #0072B2;
+  --color-active-secondary-outline: #00447a; */
+  --color-selected: #CC79A7;
+  --color-selected-outline: #ae658d;
+  --color-correct: #009E73;
+  --color-correct-outline: #007200;
+  --color-incorrect: #D55E00;
+  --color-incorrect-outline: #b24500;
   --color-disabled: #6c757d;
   --color-disabled-bg: #f8f9fa;
 

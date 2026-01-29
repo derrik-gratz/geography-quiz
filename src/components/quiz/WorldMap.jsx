@@ -128,8 +128,11 @@ export function QuizWorldMap() {
     return 'disabled';
   }, [selectedCountry, guesses?.status, disabled, componentStatus]);
   
+  const containerTitle = useMemo(() => {
+    return `World Map ${componentStatus==='completed' ? '✓' : componentStatus==='incorrect' ? '✗' : ''}`;
+  }, [componentStatus]);
   return (
-    <CollapsibleContainer title="World Map" defaultCollapsed={defaultCollapsed} classNames={componentStatus} content={
+    <CollapsibleContainer title={containerTitle} defaultCollapsed={defaultCollapsed} classNames={componentStatus} content={
       <div className="quiz-world-map">
         <BaseMap
           onCountryHover={onMouseEnter}

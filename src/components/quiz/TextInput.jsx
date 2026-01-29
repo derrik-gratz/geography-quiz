@@ -139,9 +139,12 @@ export function QuizTextInput() {
     return 'disabled';
   }, [selectedCountry, guesses?.status, isWrong, disabled, componentStatus]);
 
+  const containerTitle = useMemo(() => {
+    return `Country Name ${componentStatus==='completed' ? '✓' : componentStatus==='incorrect' ? '✗' : ''}`;
+  }, [componentStatus]);
   return (
     <div className="quiz-text-input">
-      <CollapsibleContainer defaultCollapsed={isCollapsed} title="Country Name" classNames={componentStatus} content={
+      <CollapsibleContainer defaultCollapsed={isCollapsed} title={containerTitle} classNames={componentStatus} content={
         <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative', overflow: 'visible', alignItems: 'center'}}>
           <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
           <CountryTextEntry
