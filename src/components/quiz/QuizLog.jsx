@@ -69,9 +69,7 @@ export function QuizLog({
         }
         const sumSkillScore = (entry) => {
             let skillScore = 0;
-            console.log(entry);
             ['flag', 'name', 'location'].forEach((modality) => {
-                console.log(entry[modality]);
                 skillScore += calculateSkillScore(entry[modality].status === 'completed', entry[modality].attempts.length);
             });
             return skillScore;

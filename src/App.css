@@ -73,21 +73,6 @@ button {
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 }
-button:hover {
-  border-color: var(--color-hover-outline);
-  background-color: var(--color-hover);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-/* Remove focus outline on mobile after tap */
-@media (hover: none) and (pointer: coarse) {
-  button:focus:not(:focus-visible) {
-    outline: none;
-  }
-}
 
 /* App Layout */
 .app {
