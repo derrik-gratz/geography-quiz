@@ -67,8 +67,8 @@ export function BaseMap({
   getCountryClassName,
   getCountryStyle=(countryCode)=> {
     return {
-      default: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'},
-      hover: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'}
+      default: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3', outline: 'none'},
+      hover: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3', outline: 'none'}
     }
   }, 
   disabled,
