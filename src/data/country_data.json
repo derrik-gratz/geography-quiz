@@ -1600,7 +1600,7 @@
       "lat": -53,
       "long": 73
     },
-    "flagCode": "HM",
+    "flagCode": "AU",
     "availablePrompts": [
       "name",
       "flag",
@@ -3303,7 +3303,7 @@
       "lat": -15,
       "long": -5
     },
-    "flagCode": "SH",
+    "flagCode": "GB",
     "availablePrompts": [
       "name",
       "flag",
