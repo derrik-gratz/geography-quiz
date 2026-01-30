@@ -38,6 +38,8 @@ export function ModalityMatrix({ userData }) {
     const plotData = [];
     const modalityLabels = ['Name', 'Flag', 'Location'];
 
+    console.log('modalityMatrix', modalityMatrix);
+
     for (let inputIdx = 0; inputIdx < 3; inputIdx++) {
       for (let promptedIdx = 0; promptedIdx < 3; promptedIdx++) {
         const cell = modalityMatrix[inputIdx] && modalityMatrix[inputIdx][promptedIdx];

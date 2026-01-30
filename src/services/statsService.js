@@ -27,7 +27,7 @@ export function calculatePerModalityStats(userData) {
     for (let prompted = 0; prompted < 3; prompted++) {
       modalityMatrix[input][prompted] = {
         accuracy: [],
-        percision: []
+        precision: []
       };
     }
   }
@@ -43,33 +43,22 @@ export function calculatePerModalityStats(userData) {
   Object.values(userData.countries).forEach(countryData => {
     if (!countryData.matrix) return;
 
-    // For each input modality (rows)
     for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
-      const inputModality = getModalityName(inputIndex);
-      if (!inputModality) continue;
-
-      // For each prompted modality (columns)
       for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
-        const promptedModality = getModalityName(promptedIndex);
-        if (!promptedModality) continue;
-
         const cell = countryData.matrix[inputIndex][promptedIndex];
-        // Count from testing array
-        if (cell.testing && cell.testing.length > 0) {
-          // Push individual values, not arrays
-          // For accuracy: 1 if correct (score > 0), 0 if incorrect
-          cell.testing.forEach(score => {
+        if (cell.length > 0) {
+          cell.forEach(( score ) => {
             modalityMatrix[inputIndex][promptedIndex].accuracy.push(score > 0 ? 1 : 0);
-            modalityMatrix[inputIndex][promptedIndex].percision.push(score);
+            modalityMatrix[inputIndex][promptedIndex].precision.push(score);
           });
         }
       }
     }
   });
+  console.log('modalityMatrix1', modalityMatrix);
   for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
     for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
       const cell = modalityMatrix[inputIndex][promptedIndex];
-      // Calculate averages and replace arrays with numbers
       if (cell.accuracy.length > 0) {
         const avgAccuracy = cell.accuracy.reduce((acc, curr) => acc + curr, 0) / cell.accuracy.length;
         cell.accuracy = avgAccuracy;
@@ -77,11 +66,11 @@ export function calculatePerModalityStats(userData) {
         cell.accuracy = NaN;
       }
       
-      if (cell.percision.length > 0) {
-        const avgPercision = cell.percision.reduce((acc, curr) => acc + curr, 0) / cell.percision.length;
-        cell.percision = avgPercision;
+      if (cell.precision.length > 0) {
+        const avgprecision = cell.precision.reduce((acc, curr) => acc + curr, 0) / cell.precision.length;
+        cell.precision = avgprecision;
       } else {
-        cell.percision = NaN;
+        cell.precision = NaN;
       }
     }
   }
