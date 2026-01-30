@@ -14,14 +14,10 @@ import {
 } from '../types/dataSchemas.js';
 
 const DB_NAME = 'geography_quiz_db';
-const DB_VERSION = 5; // New schema with fullEntries and location modality
+const DB_VERSION = 6;
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
-/**
- * Initialize IndexedDB database
- * @returns {Promise<IDBDatabase>} Database instance
- */
 function initDB() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -31,23 +27,51 @@ function initDB() {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
+      const oldVersion = event.oldVersion;
+      const newVersion = event.newVersion;
       
-      // Create user data store (replaces old stores)
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-        objectStore.createIndex('id', 'id', { unique: true });
+      console.log(`🔄 Database upgrade: ${oldVersion} → ${newVersion}`);
+      
+      // If upgrading from version 0 (new database), just create the store
+      if (oldVersion === 0) {
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          objectStore.createIndex('id', 'id', { unique: true });
+        }
+        return;
       }
+
+      // For version changes, delete all old stores and create fresh database
+      // TODO: Add data migration logic here in the future if needed
+      // For now, we're creating a clean database on version change
       
-      // Delete old stores if they exist (for migration)
+      // Delete old stores
       if (db.objectStoreNames.contains('daily_challenges')) {
         db.deleteObjectStore('daily_challenges');
       }
       if (db.objectStoreNames.contains('country_stats')) {
         db.deleteObjectStore('country_stats');
       }
+      
+      // Delete and recreate the main store
+      if (db.objectStoreNames.contains(STORE_NAME)) {
+        db.deleteObjectStore(STORE_NAME);
+      }
+      const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      objectStore.createIndex('id', 'id', { unique: true });
+
+      console.log('✅ Fresh database created');
+      
+      // Future migration placeholder:
+      // if (oldVersion < newVersion) {
+      //   // Read existing data before deletion
+      //   // Migrate data to new schema
+      //   // Write migrated data back
+      // }
     };
   });
 }
+
 
 /**
  * Get or create local user metadata
@@ -345,6 +369,9 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
 
     // Process each input modality that was attempted
     ['name', 'flag', 'location'].forEach(inputModality => {
+      if (inputModality === promptedModality) {
+        return;
+      }
       const inputIndex = getModalityIndex(inputModality);
       if (inputIndex === -1) return;
 
@@ -362,25 +389,13 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
       // Determine if correct from status
       const isCorrect = inputData.status === 'completed';
 
-      // Only process if this modality was attempted (guessCount > 0)
-      // Matrix: rows = input modality, columns = prompted modality
-      // if (guessCount > 0) {
       const cell = countryData.matrix[inputIndex][promptedIndex];
-      
-      // Calculate skill score
-      const skillScore = calculateSkillScore(isCorrect, guessCount);
-      
-      // Add to testing array (skill scores from daily challenges)
-      cell.testing.push(skillScore);
-      
-      // Keep only last 5
-      if (cell.testing.length > 5) {
-        cell.testing = cell.testing.slice(-5);
-        }
-
-        // Note: Learning data (lastCorrect, learningRate) is NOT updated by daily challenges.
-        // It will be updated by a separate game mode (not yet developed).
-      // }
+      const skillScore = guessCount > 0 ? calculateSkillScore(isCorrect, guessCount) : 0;
+      cell.push(skillScore);
+      if (cell.length > 5) {
+        cell = cell.slice(-5);
+      }
+      countryData.matrix[inputIndex][promptedIndex] = cell;
     });
 
     // Console log: Show matrix update summary (testing scores only)
@@ -390,10 +405,10 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
       for (let promptedIdx = 0; promptedIdx < 3; promptedIdx++) {
         const cell = countryData.matrix[inputIdx][promptedIdx];
         const key = `${getModalityName(promptedIdx)}->${getModalityName(inputIdx)}`;
-        if (cell.testing.length > 0) {
+        if (cell.length > 0) {
           matrixSummary[key] = {
-            tests: cell.testing.length,
-            scores: cell.testing
+            tests: cell.length,
+            scores: cell
             // Note: learning data not updated by daily challenges
           };
         }

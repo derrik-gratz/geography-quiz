@@ -28,10 +28,14 @@ export function ProfilePage() {
     try {
       setIsLoading(true);
       // Use dummy data for testing
-      setUserData(fakeUserData);
+      // setUserData(fakeUserData);
       // Optionally load real metadata
-      // const metadata = await getUserMetadata();
-      // setUserMetadata(metadata);
+      const [data, metadata] = await Promise.all([
+        loadAllUserData(),
+        getUserMetadata()
+      ]);
+      setUserData(data);
+      setUserMetadata(metadata);
       
       setIsLoading(false);
     } catch (err) {
@@ -118,7 +122,7 @@ export function ProfilePage() {
 
         <ProfileMap countryStats={userData.countries} />
 
-        {(!userData || !userData.dailyChallenge || !userData.dailyChallenge.scoreLog || userData.dailyChallenge.scoreLog.length === 0) && (
+        {(!userData || userData.dailyChallenge.fullEntries.length === 0) && (
           <div className="profile-page__empty-state">
             <p>You haven't completed any daily challenges yet. Start a daily challenge to see your statistics here!</p>
           </div>

@@ -55,7 +55,7 @@ export function calculatePerModalityStats(userData) {
       }
     }
   });
-  console.log('modalityMatrix1', modalityMatrix);
+  
   for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
     for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
       const cell = modalityMatrix[inputIndex][promptedIndex];

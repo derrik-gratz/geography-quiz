@@ -57,19 +57,13 @@
  */
 
 /**
- * @typedef {Object} ModalityPairData
- * @property {LearningData} learning - Learning/spaced repetition data
- * @property {number[]} testing - Array of skill scores (floats) for last 5 tests
- */
-
-/**
- * @typedef {ModalityPairData[][]} CountryModalityMatrix
+ * @typedef {number[][]} CountryModalityMatrix
  * 3x3 matrix where:
  * - Rows (first index 0-2) = Input modality (name, flag, location)
  * - Columns (second index 0-2) = Prompted modality (name, flag, location)
- * - Each cell [input][prompted] = ModalityPairData
+ * - Each cell [input][prompted] = Array of skill scores (floats, 0-1) for last 5 tests
  * 
- * Example: matrix[1][0] = data for "prompted with name, answered with flag"
+ * Example: matrix[1][0] = array of skill scores for "prompted with name, answered with flag"
  * 
  * Matrix access: matrix[inputIndex][promptedIndex]
  * Matrix indices:
@@ -81,6 +75,7 @@
 /** 
  * @typedef {Object} CountryLogEntry
  * @property {string} countryCode - Country code (e.g., "MEX", "CAN")
+ * @property {number} learningRate - Number of days until next prompted for learning (spaced repetition)
  * @property {CountryModalityMatrix} modalityMatrix - Matrix of modality data for this country
  */
 
@@ -167,13 +162,7 @@ export function createEmptyModalityMatrix() {
   for (let input = 0; input < 3; input++) {
     matrix[input] = [];
     for (let prompted = 0; prompted < 3; prompted++) {
-      matrix[input][prompted] = {
-        learning: {
-          lastCorrect: null,
-          learningRate: null
-        },
-        testing: []
-      };
+      matrix[input][prompted] = []
     }
   }
   return matrix;
