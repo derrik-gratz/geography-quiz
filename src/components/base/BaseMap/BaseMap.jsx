@@ -65,6 +65,12 @@ export function BaseMap({
   onCountryHoverLeave,
   onCountryClick,
   getCountryClassName,
+  getCountryStyle=(countryCode)=> {
+    return {
+      default: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'},
+      hover: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'}
+    }
+  }, 
   disabled,
   getSmallCountryPriority,
   className,
@@ -147,14 +153,17 @@ export function BaseMap({
         >
           {showGraticule && <Graticule stroke="#999" step={[20,20]} />}
           <Geographies geography={mainGeoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
+            {({ geographies }) => {
+              let lowPriorityGeos = [];
+              let regularGeos = [];
+              let specialGeos = [];
+              
+              geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
-                
                 if (allCountryData.find(country => country.code === countryCode)) {
-                  const countryClassName = `base-map__country ${getCountryClassName(countryCode)}`;
-                  
-                  return (
+                  const countryClassName = `base-map__country ${getCountryClassName(countryCode) || ''}`;
+                  const countryStyle = getCountryStyle(countryCode);
+                  const geoElement = (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
@@ -162,16 +171,22 @@ export function BaseMap({
                       onClick={() => onCountryClick(countryCode)}
                       onMouseEnter={() => onCountryHover(countryCode)}
                       onMouseLeave={() => onCountryHoverLeave()}
-                      strokeWidth='var(--stroke-width)'
-                      style={{
-                        default: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'},
-                        hover: {fill: 'var(--fill)', stroke: 'var(--stroke)', strokeWidth: '0.3'}
-                      }}
+                      style={countryStyle}
                     />
                   );
+                  const priority = getSmallCountryPriority ? getSmallCountryPriority(countryCode) : 0;
+                  if (priority === -1) {
+                    lowPriorityGeos.push(geoElement);
+                  } else if (priority === 1) {
+                    specialGeos.push(geoElement);
+                  } else {
+                    regularGeos.push(geoElement);
+                  }
                 }
-              })
-            }
+              });
+              
+              return [...lowPriorityGeos, ...regularGeos, ...specialGeos];
+            }}
           </Geographies>
           <Geographies geography={tinyGeoUrl}>
             {({ geographies, projection }) => {
@@ -181,33 +196,35 @@ export function BaseMap({
                 const currentRadius = getCircleRadius();
                 geographies.forEach((geo) => {
                     const countryCode = getCountryCode(geo);
-                    const [centroid_x, centroid_y] = getCentroid(geo);
-                    const [cx, cy] = projection([centroid_x, centroid_y]);
-                    const countryClassName = `base-map__country base-map__small-country ${getCountryClassName(countryCode)}`;
-                    
-                    const circleElement = (
-                        <circle
-                            key={`${geo.rsmKey}-${viewWindow.zoom}`}
-                            className={countryClassName}
-                            cx={cx}
-                            cy={cy}
-                            fill='var(--fill)'
-                            stroke='var(--stroke)'
-                            // can't figure out how to specify this with CSS
-                            strokeWidth={0.3}
-                            r={currentRadius}
-                            onClick={() => onCountryClick(countryCode)}
-                            onMouseEnter={() => onCountryHover(countryCode)}
-                            onMouseLeave={() => onCountryHoverLeave()}
-                        />
-                    );
-                    const priority = getSmallCountryPriority ? getSmallCountryPriority(countryCode) : 'regular';
-                    if (priority === -1) {
-                    lowPriorityCircles.push(circleElement);
-                    } else if (priority === 1) {
-                    specialCircles.push(circleElement);
-                    } else {
-                    regularCircles.push(circleElement);
+                    if (allCountryData.find(country => country.code === countryCode)) {
+                      const [centroid_x, centroid_y] = getCentroid(geo);
+                      const [cx, cy] = projection([centroid_x, centroid_y]);
+                      const countryClassName = `base-map__country base-map__small-country ${getCountryClassName(countryCode) || ''}`;
+                      const countryStyle = getCountryStyle(countryCode);
+                      const circleElement = (
+                          <circle
+                              key={`${geo.rsmKey}-${viewWindow.zoom}`}
+                              className={countryClassName}
+                              cx={cx}
+                              cy={cy}
+                              fill={countryStyle.default.fill}
+                              stroke={countryStyle.default.stroke}
+                              // can't figure out how to specify this with CSS
+                              strokeWidth={countryStyle.default.strokeWidth}
+                              r={currentRadius}
+                              onClick={() => onCountryClick(countryCode)}
+                              onMouseEnter={() => onCountryHover(countryCode)}
+                              onMouseLeave={() => onCountryHoverLeave()}
+                          />
+                      );
+                      const priority = getSmallCountryPriority ? getSmallCountryPriority(countryCode) : 'regular';
+                      if (priority === -1) {
+                      lowPriorityCircles.push(circleElement);
+                      } else if (priority === 1) {
+                      specialCircles.push(circleElement);
+                      } else {
+                      regularCircles.push(circleElement);
+                      }
                     }
                 });
             return [...lowPriorityCircles, ...regularCircles, ...specialCircles];

@@ -54,9 +54,8 @@ export function calculatePerModalityStats(userData) {
         if (!promptedModality) continue;
 
         const cell = countryData.matrix[inputIndex][promptedIndex];
-        
         // Count from testing array
-        if (cell.testing && cell.testing.length > 0) {          
+        if (cell.testing && cell.testing.length > 0) {
           // Push individual values, not arrays
           // For accuracy: 1 if correct (score > 0), 0 if incorrect
           cell.testing.forEach(score => {
@@ -126,6 +125,27 @@ export function calculatePerModalityStats(userData) {
 //     perModality
 //   };
 // }
+
+export function calculateCountryAccuracy(countryData) {
+  if (!countryData || !countryData.matrix) {
+    return NaN;
+  }
+
+  let totalTests = 0;
+  let correctTests = 0;
+  // Iterate through the 3x3 matrix
+  for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
+    for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
+      const cell = countryData.matrix[inputIndex][promptedIndex];
+      if (cell) {
+        totalTests += cell.length;
+        correctTests += cell.filter(score => score > 0).length;
+      }
+    }
+  }
+  // Return accuracy as ratio of correct to total (0-1)
+  return totalTests > 0 ? correctTests / totalTests : NaN;
+}
 
 /**
  * Calculate average skill score for a country modality

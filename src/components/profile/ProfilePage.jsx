@@ -9,12 +9,13 @@ import allCountryData from '../../data/country_data.json';
 // import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
 import { ScoreTimeline } from './ScoreTimeline.jsx';
 import { ModalityMatrix } from './ModalityMatrix.jsx';
+import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
+import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
 
 
 export function ProfilePage() {
   const [userData, setUserData] = useState(null);
-  // const [statistics, setStatistics] = useState(null);
   const [userMetadata, setUserMetadata] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,17 +27,11 @@ export function ProfilePage() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const [data, metadata] = await Promise.all([
-        loadAllUserData(),
-        getUserMetadata()
-      ]);
-      
-      setUserData(data);
-      setUserMetadata(metadata);
-      
-      // Calculate statistics
-      // const stats = calculateOverallStats(data);
-      // setStatistics(stats);
+      // Use dummy data for testing
+      setUserData(fakeUserData);
+      // Optionally load real metadata
+      // const metadata = await getUserMetadata();
+      // setUserMetadata(metadata);
       
       setIsLoading(false);
     } catch (err) {
@@ -46,12 +41,11 @@ export function ProfilePage() {
     }
   };
 
+
   const perModalityStats = useMemo(() => {
     if (!userData) return null;
     return calculatePerModalityStats(userData);
   }, [userData]);
-
-  console.log(perModalityStats);
 
   // const formatDate = (dateString) => {
   //   const date = new Date(dateString + 'T00:00:00');
@@ -121,6 +115,8 @@ export function ProfilePage() {
             <ProfileMap countryStats={userData.countries} />
           </StatsCard>
         )} */}
+
+        <ProfileMap countryStats={userData.countries} />
 
         {(!userData || !userData.dailyChallenge || !userData.dailyChallenge.scoreLog || userData.dailyChallenge.scoreLog.length === 0) && (
           <div className="profile-page__empty-state">

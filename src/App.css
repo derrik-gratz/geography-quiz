@@ -29,6 +29,8 @@
   --color-incorrect-outline: #b24500;
   --color-disabled: #6c757d;
   --color-disabled-bg: #f8f9fa;
+  --map-country-outline: #aaaaaa;;
+  --map-country-fill: #efefef;
 
   --flag-icon-size: 40px;  /* Mobile default */
 }

@@ -1,16 +1,23 @@
-.profile-map__country_selected {
-  fill: var(--color-selected);
-  stroke: var(--color-selected-outline);
-  stroke-width: 0.5;
-  outline: none;
-}
-.profile-map__country_hovered {
-  fill: var(--color-hover);
-  stroke: var(--color-hover-outline);
-  stroke-width: 0.5;
-  outline: none;
+.profile-map__country {
+  --fill: var(--map-country-fill);
+  --stroke: var(--map-country-outline);
+  --stroke-width: 0.5;
+  /* outline: none; */
 }
 
+.profile-map__country_selected {
+  --fill: var(--color-selected);
+  --stroke: var(--color-selected-outline);
+  --stroke-width: 1;
+  /* outline: none; */
+}
+.profile-map__country_hovered {
+  --fill: var(--color-hover);
+  --stroke: var(--color-hover-outline);
+  --stroke-width: 1;
+  /* outline: none; */
+}
+/* 
 .profile-map__country_data {
   fill: var(--color-correct);
   stroke: var(--color-correct-outline);
@@ -23,4 +30,4 @@
   stroke: var(--color-neutral-outline);
   stroke-width: 0.3;
   outline: none;
-}
+} */

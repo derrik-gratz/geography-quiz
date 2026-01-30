@@ -244,15 +244,9 @@ export async function saveDailyChallenge(date, challengeData) {
     const fullEntry = {
       date,
       skillScore,
-      score,
-      results
+      score
+      // results
     };
-
-    // Console log: Show what's being saved
-    console.log('=== Daily Challenge Completion ===');
-    console.log('Date:', date);
-    console.log('Full Entry:', fullEntry);
-    console.log('Number of countries:', results.length);
 
     // Initialize fullEntries array if it doesn't exist
     if (!userData.dailyChallenge.fullEntries) {
@@ -370,23 +364,23 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
 
       // Only process if this modality was attempted (guessCount > 0)
       // Matrix: rows = input modality, columns = prompted modality
-      if (guessCount > 0) {
-        const cell = countryData.matrix[inputIndex][promptedIndex];
-        
-        // Calculate skill score
-        const skillScore = calculateSkillScore(isCorrect, guessCount);
-        
-        // Add to testing array (skill scores from daily challenges)
-        cell.testing.push(skillScore);
-        
-        // Keep only last 5
-        if (cell.testing.length > 5) {
-          cell.testing = cell.testing.slice(-5);
+      // if (guessCount > 0) {
+      const cell = countryData.matrix[inputIndex][promptedIndex];
+      
+      // Calculate skill score
+      const skillScore = calculateSkillScore(isCorrect, guessCount);
+      
+      // Add to testing array (skill scores from daily challenges)
+      cell.testing.push(skillScore);
+      
+      // Keep only last 5
+      if (cell.testing.length > 5) {
+        cell.testing = cell.testing.slice(-5);
         }
 
         // Note: Learning data (lastCorrect, learningRate) is NOT updated by daily challenges.
         // It will be updated by a separate game mode (not yet developed).
-      }
+      // }
     });
 
     // Console log: Show matrix update summary (testing scores only)
