@@ -23,12 +23,12 @@ function App() {
     return (
         <QuizProvider>
             <div className="app">
-                <NavigationBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-                {currentPage === 'profile' ? (
-                    <ProfilePage />
-                ) : (
+                {/* <NavigationBar currentPage={currentPage} setCurrentPage={setCurrentPage} /> */}
+                {/* {currentPage === 'profile' ? ( */}
+                    {/* <ProfilePage /> */}
+                {/* ) : ( */}
                     <QuizPage />
-                )}
+                {/* )} */}
             </div>
         </QuizProvider>
     );
