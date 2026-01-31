@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js'; 
 import { checkPromptCompletion, checkQuizCompletion, generatePromptType, derivePromptValue } from '../services/quizEngine.js';
-import { saveDailyChallenge } from '../services/storageService.js';
+import { saveDailyChallenge, updateCountryLearningData } from '../services/storageService.js';
 import { transformQuizStateToStorage } from '../services/storageService.js';
 import { formatDateString } from '../types/dataSchemas.js';
 
@@ -42,8 +42,32 @@ export function QuizProvider({ children }) {
     useEffect(() => {
         if (promptCompleted && state.quiz.status === 'active') {
             dispatch({ type: 'PROMPT_FINISHED' });
+            
+            // For learning mode, update learning data when prompt is completed
+            // Check if both modalities were correct (prompt passed)
+            if (state.config.gameMode === 'learning') {
+                const guesses = state.quiz.prompt.guesses;
+                const promptType = state.quiz.prompt.type;
+                
+                // Get the two input modalities (not the prompted one)
+                const inputModalities = ['name', 'flag', 'location'].filter(type => type !== promptType);
+                
+                // Check if both input modalities were completed (correct)
+                const bothCorrect = inputModalities.every(type => 
+                    guesses[type]?.status === 'completed'
+                );
+                
+                const currentCountry = state.quizData[state.quiz.prompt.quizDataIndex];
+                if (currentCountry) {
+                    const countryCode = currentCountry.code;
+                    // Update learning data based on whether both were correct
+                    updateCountryLearningData(countryCode, bothCorrect).catch(error => {
+                        console.error('Failed to update learning data:', error);
+                    });
+                }
+            }
         }
-    }, [promptCompleted, state.quiz.status]);
+    }, [promptCompleted, state.quiz.status, state.config.gameMode, state.quiz.prompt.guesses, state.quiz.prompt.type, state.quiz.prompt.quizDataIndex, state.quizData]);
     useEffect(() => {
         if (state.quiz.status === 'reviewing' && state.quiz.reviewType === 'auto') {
             // Calculate delay: 1s for success, 3s for failure/give-up
@@ -76,14 +100,13 @@ export function QuizProvider({ children }) {
     useEffect(() => {
         if (isQuizFinished) {
             dispatch({ type: 'QUIZ_COMPLETED' });
-            if (state.config.quizSet === 'Daily challenge' && 
+            if (state.config.gameMode === 'dailyChallenge' && 
                 state.quiz.history && 
                 state.quiz.history.length > 0 &&
                 state.quizData && 
                 state.quizData.length > 0) {
                 // Transform quiz state to storage format
                 const challengeData = transformQuizStateToStorage(state, state.quizData);
-                console.log('challengeData', challengeData);
                 const date = formatDateString(new Date());
                 
                 // Save to storage (non-blocking)

@@ -104,7 +104,7 @@ export function QuizLog({
             return sum + entry.score;
         }, 0);
         exportText += `Score: ${score} / ${state.quizData.length} countries`;
-        if (state.config.quizSet === 'Daily challenge') {
+        if (state.config.gameMode === 'dailyChallenge') {
             const skillScore = logEntries.reduce((sum, entry) => {
                 return sum + entry.skillScore;
             }, 0);

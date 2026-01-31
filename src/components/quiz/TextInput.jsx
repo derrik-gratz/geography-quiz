@@ -89,7 +89,7 @@ export function QuizTextInput() {
   const handleCountryClick = (country) => {
     if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
       sandboxSelect({ inputType: 'name', countryValue: country.country });
-    } else if (state.config.gameMode === 'quiz') {
+    } else {
       if (!disabled && !incorrectValues.includes(country.country)) {
         setInput(country.country);
         setSelectedCountry(country.country);

@@ -80,10 +80,10 @@ export function QuizWorldMap() {
 
   const handleCountryClick = (countryCode) => {
     if (disabled) return;
-    if (countryCode && !incorrectValues.includes(countryCode) && state.config.gameMode === 'quiz') {
-      setSelectedCountry(countryCode);
-    } else if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
+    if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
       sandboxSelect({ inputType: 'location', countryValue: countryCode });
+    } else {
+      countryCode && !incorrectValues.includes(countryCode) && setSelectedCountry(countryCode);
     }
   };
 

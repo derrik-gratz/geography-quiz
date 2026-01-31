@@ -7,7 +7,7 @@
  * @property {Object} config - Quiz configuration
  * @property {string|null} config.quizSet - Selected quiz set name (e.g., 'Daily challenge', 'Europe', 'all', or null)
  * @property {string[]} config.selectedPromptTypes - Array of prompt types: 'location', 'name', 'flag'
- * @property {string} config.gameMode - Game mode: 'quiz' (normal quiz) or 'sandbox' (learning mode)
+ * @property {string} config.gameMode - Game mode: 'dailyChallenge' | 'quiz' (normal quiz) | 'sandbox' (exploration mode) | 'learning' (spaced repetition)
  * 
  * @property {Array<Object>} quizData - Filtered country data for current quiz set
  * 
@@ -52,7 +52,7 @@ export function createInitialQuizState() {
         config: {
             quizSet: 'Daily challenge',
             selectedPromptTypes: ['location', 'name', 'flag'],
-            gameMode: 'quiz'
+            gameMode: 'dailyChallenge'
         },
         quizData: [],
         quiz: {
@@ -96,7 +96,7 @@ export function quizReducer(state, action){
                     }
                 };
             }
-            if (action.payload === 'quiz') {
+            if (action.payload === 'dailyChallenge') {
                 return {
                     ...state,
                     config: {
@@ -106,6 +106,27 @@ export function quizReducer(state, action){
                     }
                 };
             }
+            if (action.payload === 'learning') {
+                return {
+                    ...state,
+                    config: {
+                        ...state.config,
+                        quizSet: 'all',
+                        gameMode: action.payload
+                    }
+                };
+            }
+            if (action.payload === 'quiz') {
+                return {
+                    ...state,
+                    config: {
+                        ...state.config,
+                        quizSet: 'all', // Default quizSet for regular quiz mode
+                        gameMode: action.payload
+                    }
+                };
+            }
+            return state;
         case 'SET_SELECTED_PROMPT_TYPES':
             return { 
                 ...state, 
@@ -178,7 +199,10 @@ export function quizReducer(state, action){
             const newNAttempts = state.quiz.prompt.guesses[type].n_attempts + 1;
             
             let newStatus = isCorrect ? 'completed' : 'incomplete';
-            if (state.config.quizSet === 'Daily challenge' && newNAttempts === 5 && !isCorrect) {
+            // Learning mode: wrong answers are immediately failed (only one attempt)
+            if (state.config.gameMode === 'learning' && !isCorrect) {
+                newStatus = 'failed';
+            } else if (state.config.gameMode === 'dailyChallenge' && newNAttempts === 5 && !isCorrect) {
                 newStatus = 'failed';
             }
             return { 
@@ -243,7 +267,7 @@ export function quizReducer(state, action){
             
             const newHistoryEntry = {
                 quizDataIndex: state.quiz.prompt.quizDataIndex,
-                countryCode: currentCountry.countryCode,
+                countryCode: currentCountry.code,
                 ...statusEntries
             };
             

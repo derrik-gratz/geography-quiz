@@ -30,10 +30,14 @@ export function generatePromptType(quizContext){
     const countryData = quizContext.quizData[quizContext.quiz.prompt.quizDataIndex];
     let promptOptions = ['location', 'name', 'flag'];
     let seed;
-    // select prompt type by quiz set, fixed for daily challenge
-    if (quizContext.config.quizSet === 'Daily challenge'){
+    // select prompt type by quiz set, fixed for daily challenge and learning mode
+    if (quizContext.config.gameMode === 'dailyChallenge' || quizContext.config.gameMode === 'learning'){
         promptOptions = countryData.availablePrompts;
-        seed = getDailySeed() + quizContext.quiz.prompt.quizDataIndex * 1000;
+        if (quizContext.config.gameMode === 'dailyChallenge') {
+            seed = getDailySeed() + quizContext.quiz.prompt.quizDataIndex * 1000;
+        } else {
+            seed = Date.now();
+        }
     } else {
         promptOptions = countryData.availablePrompts.filter(prompt => 
             quizContext.config.selectedPromptTypes.includes(prompt)

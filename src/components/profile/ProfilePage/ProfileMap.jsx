@@ -34,7 +34,6 @@ export function ProfileMap({ countryStats }) {
   const handleCountryClick = (countryCode) => {
     if (countryCode) {
       setSelectedCountry(countryCode === selectedCountry ? null : countryCode);
-      console.log(countryCode);
     }
   };
 

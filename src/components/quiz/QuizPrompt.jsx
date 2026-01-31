@@ -1,9 +1,11 @@
-import React, { useMemo } from 'react'; // useState, useEffect,
+import React, { useMemo, useState, useEffect } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
 
 import { derivePromptValue } from '../../services/quizEngine.js';
 import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { loadAllUserData } from '../../services/storageService.js';
+import { dailyChallengeCompletedToday } from '../../services/statsService.js';
 import './QuizPrompt.css';
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -18,8 +20,31 @@ import './QuizPrompt.css';
 export function QuizPrompt({}) {
     const { state, promptCompleted, isQuizFinished, currentPromptData } = useQuiz();
     const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
+    const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
+    const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
     // Expand when quiz not started, collapse otherwise
     const defaultCollapsed = false; //state.quiz.status !== 'not_started';
+
+    // Check if daily challenge is already completed
+    useEffect(() => {
+        if (state.config.gameMode === 'dailyChallenge' && state.quiz.status === 'not_started') {
+            setCheckingDailyChallenge(true);
+            loadAllUserData()
+                .then(userData => {
+                    const completed = dailyChallengeCompletedToday(userData);
+                    setDailyChallengeCompleted(completed);
+                })
+                .catch(error => {
+                    console.error('Failed to check daily challenge status:', error);
+                    setDailyChallengeCompleted(false);
+                })
+                .finally(() => {
+                    setCheckingDailyChallenge(false);
+                });
+        } else {
+            setDailyChallengeCompleted(false);
+        }
+    }, [state.config.gameMode, state.quiz.status]);
 
     // Reset give up state when prompt changes
     // useEffect(() => {
@@ -55,9 +80,12 @@ export function QuizPrompt({}) {
         if (state.config.gameMode === 'sandbox') {
             return false;
         }
+        if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
+            return true;
+        }
         return state.quiz.status === 'not_started' && 
                (!state.config.quizSet || !state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0);
-    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode]);   
+    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode, dailyChallengeCompleted]);   
 
     const successfulCompletion = useMemo(() => 
         Object.values(state.quiz.prompt.guesses).every(
@@ -97,6 +125,8 @@ export function QuizPrompt({}) {
         let promptText = '';
         if (state.config.gameMode === 'sandbox') {
             promptText = 'Click any input to explore country data';
+        } else if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
+            promptText = 'You have already completed today\'s daily challenge! Come back tomorrow for a new challenge.';
         } else if (state.quiz.status === 'not_started' && isStartDisabled) {
             promptText = 'Configure quiz settings';
         } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
@@ -141,15 +171,19 @@ export function QuizPrompt({}) {
             return null;
         }
         if (state.quiz.status === 'not_started') {
-            return (
-                <button 
-                    className="quiz-prompt__start-quiz-button" 
-                    onClick={startQuiz}
-                    disabled={isStartDisabled}
-                >
-                    Start quiz
-                </button>
-            );
+            if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
+                return null;
+            } else {
+                return (
+                    <button 
+                        className="quiz-prompt__start-quiz-button" 
+                        onClick={startQuiz}
+                        disabled={isStartDisabled || checkingDailyChallenge}
+                    >
+                        {'Start quiz'}
+                    </button>
+                );
+            }
         } else if (state.quiz.status === 'active') {
             return (
                 <button 
@@ -172,7 +206,7 @@ export function QuizPrompt({}) {
         }
         // Review mode - no button shown
         return null;
-    }, [state.quiz.status, promptCompleted, isStartDisabled, startQuiz, giveUpPrompt, resetQuiz]);
+    }, [state.quiz.status, state.config.gameMode, promptCompleted, isStartDisabled, dailyChallengeCompleted, checkingDailyChallenge, startQuiz, giveUpPrompt, resetQuiz]);
 
 
     return (

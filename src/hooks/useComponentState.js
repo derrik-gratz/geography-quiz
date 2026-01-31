@@ -18,16 +18,18 @@ export function useComponentState(guessType) {
     if (state.config.gameMode === 'sandbox') {
       disabled = false;
       // In sandbox, guesses would be null, correctValue can be set if needed
-    } else if (state.config.gameMode === 'quiz') {
+    } else if (state.config.gameMode === 'quiz' || state.config.gameMode === 'learning' || state.config.gameMode === 'dailyChallenge') {
       if (state.quiz.status === 'active') {
         guesses = state.quiz.prompt.guesses[guessType];
         disabled = guesses?.status !== 'incomplete';
-        correctValue = state.quizData[state.quiz.prompt.quizDataIndex]?.[correctField];
+        const currentCountry = state.quizData[state.quiz.prompt.quizDataIndex];
+        correctValue = currentCountry?.[correctField];
       } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
         const historyEntry = state.quiz.history[state.quiz.reviewIndex];
         guesses = historyEntry?.[guessType];
         disabled = true;
-        correctValue = state.quizData[historyEntry.quizDataIndex]?.[correctField];
+        const historyCountry = state.quizData[historyEntry.quizDataIndex];
+        correctValue = historyCountry?.[correctField];
       }
     }
 
@@ -48,7 +50,7 @@ export function useComponentState(guessType) {
   const componentStatus = useMemo(() => {
     if (state.config.gameMode === 'sandbox') {
       return 'sandbox';
-    } else if (state.config.gameMode === 'quiz') {
+    } else if (state.config.gameMode === 'quiz' || state.config.gameMode === 'learning' || state.config.gameMode === 'dailyChallenge') {
       if (state.quiz.status === 'not_started' || state.quiz.status === 'completed') {
         return 'disabled';
       } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
@@ -64,7 +66,7 @@ export function useComponentState(guessType) {
       }
     }
     return 'unknown';
-  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, guesses?.status]);
+  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, guesses?.status, disabled]);
 
   const incorrectValues = useMemo(() => {
     if (!guesses || !guesses.attempts) return [];

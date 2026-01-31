@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import { useQuiz } from './useQuiz.js';
 import { filterCountryData } from '../services/filterCountryData.js';
 import { checkSubmission } from '../services/quizEngine.js';
+import { loadAllUserData, updateCountryLearningData } from '../services/storageService.js';
+import { dailyChallengeCompletedToday } from '../services/statsService.js';
 import countryData from '../data/country_data.json';
 
 export function useQuizActions() {
@@ -24,34 +26,75 @@ export function useQuizActions() {
         }
     };
 
-    const setGameMode = useCallback((gameMode) => {
+    const setGameMode = useCallback(async (gameMode) => {
         dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
         if (gameMode === 'sandbox') {
             setQuizSet('all');
-            const quizData = filterCountryData('all', state.config.selectedPromptTypes, countryData);
+            const quizData = filterCountryData('all', state.config.selectedPromptTypes, countryData, gameMode);
             dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+        } else if (gameMode === 'dailyChallenge') {
+            const quizData = filterCountryData('Daily challenge', state.config.selectedPromptTypes, countryData, gameMode);
+            dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+        } else if (gameMode === 'learning') {
+            setQuizSet('all');
+            try {
+                const userData = await loadAllUserData();
+                const quizData = filterCountryData('all', state.config.selectedPromptTypes, countryData, gameMode, userData);
+                dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+            } catch (error) {
+                console.error('Failed to load countries for learning mode:', error);
+            }
         }
-    }, [dispatch]);
+    }, [dispatch, state.config.selectedPromptTypes, setQuizSet]);
 
     const sandboxSelect = useCallback(({ inputType, countryValue }) => {
         dispatch({ type: 'SANDBOX_SELECT', payload: { inputType, countryValue } });
     }, [dispatch]);
 
-    const startQuiz = useCallback(() => {
+    const startQuiz = useCallback(async () => {
+        // Check if daily challenge is already completed today
+        if (state.config.gameMode === 'dailyChallenge') {
+            try {
+                const userData = await loadAllUserData();
+                if (dailyChallengeCompletedToday(userData)) {
+                    alert('You have already completed today\'s daily challenge! Come back tomorrow for a new challenge.');
+                    return;
+                }
+            } catch (error) {
+                console.error('Failed to check daily challenge status:', error);
+                // Continue with quiz start if check fails (don't block user)
+            }
+        }
+        
         if (!state.config.quizSet) {
             console.error('Cannot start quiz: quizSet is not selected');
             return;
         }
         
-        if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
-            console.error('Cannot start quiz: no prompt types selected');
-            return;
+        // Learning mode doesn't require prompt types
+        if (state.config.gameMode !== 'learning') {
+            if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
+                console.error('Cannot start quiz: no prompt types selected');
+                return;
+            }
         }
 
-        const quizData = filterCountryData(state.config.quizSet, state.config.selectedPromptTypes, countryData);
-        dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-        dispatch({ type: 'START_QUIZ' });
-    }, [state.config.quizSet, state.config.selectedPromptTypes, dispatch]);
+        // For learning mode, load userData and filter countries due for review
+        if (state.config.gameMode === 'learning') {
+            try {
+                const userData = await loadAllUserData();
+                const quizData = filterCountryData(state.config.quizSet, state.config.selectedPromptTypes, countryData, state.config.gameMode, userData);
+                dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+                dispatch({ type: 'START_QUIZ' });
+            } catch (error) {
+                console.error('Failed to load countries for learning mode:', error);
+            }
+        } else {
+            const quizData = filterCountryData(state.config.quizSet, state.config.selectedPromptTypes, countryData, state.config.gameMode);
+            dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+            dispatch({ type: 'START_QUIZ' });
+        }
+    }, [state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode, dispatch]);
 
     const submitAnswer = useCallback((submissionType, submissionValue) => {
         // Only allow submission in active mode
@@ -67,7 +110,7 @@ export function useQuizActions() {
         }
 
         // Check Daily Challenge guess limit (5 attempts per field)
-        if (state.config.quizSet === 'Daily challenge') {
+        if (state.config.gameMode === 'dailyChallenge') {
             const guessState = state.quiz.prompt.guesses[submissionType];
             const currentAttempts = guessState?.n_attempts || 0;
             const currentStatus = guessState?.status;
@@ -81,8 +124,9 @@ export function useQuizActions() {
 
         const currentCountryData = state.quizData[state.quiz.prompt.quizDataIndex];
         const evaluation = checkSubmission(currentCountryData, submissionType, submissionValue);
+        
         dispatch({ type: 'ANSWER_SUBMITTED', payload: { type: submissionType, value: submissionValue, isCorrect: evaluation } });
-    }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, state.config.quizSet, state.quiz.prompt.guesses, dispatch]);
+    }, [state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status, state.config.gameMode, state.quiz.prompt.guesses, dispatch]);
 
     const giveUpPrompt = useCallback(() => {
         dispatch({ type: 'GIVE_UP'})

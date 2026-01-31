@@ -27,12 +27,24 @@ export function QuizConfig() {
                                 type="radio"
                                 name="game-mode"
                                 className="quiz-config__game-mode-input"
-                                value="sandbox"
+                                value="dailyChallenge"
                                 disabled={state.quiz.status !== 'not_started'}
-                                checked={gameMode === 'sandbox'}
-                                onChange={(e) => setGameMode(e.target.checked ? 'sandbox' : 'quiz')}
+                                checked={gameMode === 'dailyChallenge'}
+                                onChange={(e) => setGameMode('dailyChallenge')}
                             />
-                            Sandbox
+                            Daily Challenge
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="game-mode"
+                                className="quiz-config__game-mode-input"
+                                value="learning"
+                                disabled={state.quiz.status !== 'not_started'}
+                                checked={gameMode === 'learning'}
+                                onChange={(e) => setGameMode('learning')}
+                            />
+                            Learning
                         </label>
                         <label>
                             <input
@@ -40,49 +52,61 @@ export function QuizConfig() {
                                 name="game-mode"
                                 className="quiz-config__game-mode-input"
                                 value="quiz"
+                                disabled={state.quiz.status !== 'not_started'}
                                 checked={gameMode === 'quiz'}
-                                onChange={(e) => setGameMode(e.target.checked ? 'quiz' : 'sandbox')}
+                                onChange={(e) => setGameMode('quiz')}
                             />
                             Normal
                         </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="game-mode"
+                                className="quiz-config__game-mode-input"
+                                value="sandbox"
+                                disabled={state.quiz.status !== 'not_started'}
+                                checked={gameMode === 'sandbox'}
+                                onChange={(e) => setGameMode('sandbox')}
+                            />
+                            Sandbox
+                        </label>
                     </div>
-                <div className="quiz-config__quiz-set-select">              
-                    <label htmlFor="quiz-set-select">Quiz Set:</label>
-                    <select 
-                        id="quiz-set-select"
-                        className="quiz-config__quiz-set-dropdown"
-                        value={quizSet || (gameMode === 'quiz' ? 'Daily challenge' : 'all') || ''} 
-                        onChange={(e) => setQuizSet(e.target.value || null)}
-                    >
-                        {gameMode === 'quiz' ? (
-                            <>
-                                <option value="Daily challenge">
-                                    Daily challenge
-                                </option>
-                                {quizSets.map(set => (
-                                    <option key={set.name} value={set.name}>
-                                        {set.name}
+                {gameMode !== 'dailyChallenge' && gameMode !== 'learning' && (
+                    <div className="quiz-config__quiz-set-select">              
+                        <label htmlFor="quiz-set-select">Quiz Set:</label>
+                        <select 
+                            id="quiz-set-select"
+                            className="quiz-config__quiz-set-dropdown"
+                            value={quizSet || (gameMode === 'quiz' ? 'all' : 'all') || ''} 
+                            onChange={(e) => setQuizSet(e.target.value || null)}
+                        >
+                            {gameMode === 'quiz' ? (
+                                <>
+                                    {quizSets.map(set => (
+                                        <option key={set.name} value={set.name}>
+                                            {set.name}
+                                        </option>
+                                    ))}
+                                    <option value="all">All countries</option>
+                                </>
+                            ) : (gameMode === 'sandbox' ? (
+                                <>
+                                    <option value="all">
+                                        All countries
                                     </option>
-                                ))}
-                                <option value="all">All countries</option>
-                            </>
-                        ) : (gameMode === 'sandbox' ? (
-                            <>
-                                <option value="all">
-                                    All countries
-                                </option>
-                                {quizSets.map(set => (
-                                    <option key={set.name} value={set.name}>
-                                        {set.name}
-                                    </option>
-                                ))}
-                            </>
-                        ) : (null))}
-                    
-                    </select>
-                </div>
+                                    {quizSets.map(set => (
+                                        <option key={set.name} value={set.name}>
+                                            {set.name}
+                                        </option>
+                                    ))}
+                                </>
+                            ) : (null))}
+                        
+                        </select>
+                    </div>
+                )}
                 <div className="quiz-config__prompt-types-select">
-                    {quizSet && quizSet !== 'Daily challenge' && gameMode === 'quiz' &&(
+                    {gameMode === 'quiz' && (
                         <>
                             <label htmlFor="prompt-types-select">Prompt types:</label>
                             <div className="quiz-config__prompt-types-select-content">

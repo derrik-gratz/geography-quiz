@@ -12,6 +12,7 @@ import {
   getModalityName,
   createCountryResultFromPrompt
 } from '../types/dataSchemas.js';
+import { getDefaultLearningRate, updateLearningRate } from './spacedRepetitionEngine.js';
 
 const DB_NAME = 'geography_quiz_db';
 const DB_VERSION = 6;
@@ -344,7 +345,9 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
     // Get or create country data
     if (!userData.countries[countryId]) {
       userData.countries[countryId] = {
-        matrix: createEmptyModalityMatrix()
+        matrix: createEmptyModalityMatrix(),
+        learningRate: getDefaultLearningRate(),
+        lastCorrect: null
       };
     }
 
@@ -479,6 +482,50 @@ export async function clearAllData() {
   } catch (error) {
     console.error('Failed to clear all data:', error);
     throw error;
+  }
+}
+
+/**
+ * Update learning data for a country after a learning mode attempt
+ * @param {string} countryCode - Country code (e.g., "MEX", "CAN")
+ * @param {boolean} isCorrect - Whether the answer was correct
+ * @returns {Promise<void>}
+ */
+export async function updateCountryLearningData(countryCode, isCorrect) {
+  try {
+    const userData = await loadUserData();
+    
+    // Get or create country data
+    if (!userData.countries[countryCode]) {
+      userData.countries[countryCode] = {
+        matrix: createEmptyModalityMatrix(),
+        learningRate: getDefaultLearningRate(),
+        lastCorrect: null
+      };
+    }
+    
+    const countryData = userData.countries[countryCode];
+    const today = formatDateString(new Date());
+    
+    // Update learningRate based on correctness
+    const currentRate = countryData.learningRate ?? getDefaultLearningRate();
+    countryData.learningRate = updateLearningRate(currentRate, isCorrect);
+    
+    // Update lastCorrect if answer was correct
+    if (isCorrect) {
+      countryData.lastCorrect = today;
+    }
+    
+    // Save updated data
+    await saveUserData(userData);
+  } catch (error) {
+    console.error('Failed to update country learning data:', error);
+    throw error;
+  } finally {
+    // Remove from pending set after completion (with a small delay to handle rapid successive calls)
+    setTimeout(() => {
+      pendingUpdates.delete(updateKey);
+    }, 100);
   }
 }
 

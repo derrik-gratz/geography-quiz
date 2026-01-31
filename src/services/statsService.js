@@ -115,6 +115,31 @@ export function calculatePerModalityStats(userData) {
 //   };
 // }
 
+export function dailyChallengeCompletedToday(userData) {
+  if (!userData || !userData.dailyChallenge) {
+    return false;
+  }
+  
+  const today = formatDateString(new Date());
+  
+  // Check if there's a fullEntry for today
+  if (userData.dailyChallenge.fullEntries) {
+    const todayEntry = userData.dailyChallenge.fullEntries.find(
+      entry => entry.date === today
+    );
+    if (todayEntry) {
+      return true;
+    }
+  }
+  
+  // Fallback: check streak.lastPlayed
+  if (userData.dailyChallenge.streak?.lastPlayed === today) {
+    return true;
+  }
+  
+  return false;
+}
+
 export function calculateCountryAccuracy(countryData) {
   if (!countryData || !countryData.matrix) {
     return NaN;

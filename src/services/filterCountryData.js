@@ -1,6 +1,7 @@
 // import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '../data/quiz_sets.json' with { type: 'json' };
-import { seededRNG, getDailySeed, createSeededRNG } from './dailyRNG.js'
+import { seededRNG, getDailySeed, createSeededRNG } from './dailyRNG.js';
+import { getCountriesDueForReview } from './spacedRepetitionEngine.js';
 
 const dailyChallengeLength = 5; 
 
@@ -24,17 +25,30 @@ export function shuffleArray(data, seed) {
 }
 
 // Handle user configs to filter data for prompts
-export function filterCountryData(quizSet, selectedPromptTypes, countryData) {
+export function filterCountryData(quizSet, selectedPromptTypes, countryData, gameMode = null, userData = null) {
     let filteredCountryData = countryData;
     //remove countries with no valid prompt types
     filteredCountryData = countryData.filter(country => {
         return country.availablePrompts.length > 0;
     })
+    
+    // Learning mode: use spaced repetition engine
+    if (gameMode === 'learning') {
+        if (!userData) {
+            console.error('Learning mode requires userData');
+            return [];
+        }
+        filteredCountryData = getCountriesDueForReview(userData, filteredCountryData);
+        // Shuffle the due countries for variety
+        filteredCountryData = shuffleArray(filteredCountryData, Date.now());
+        return filteredCountryData;
+    }
+    
     // Quiz set filtering
     if (!quizSet) {
         console.error(`No quiz set selected for filtering`);
         return [];
-    } else if (quizSet === 'Daily challenge') {
+    } else if (gameMode === 'dailyChallenge' || quizSet === 'Daily challenge') {
         // Maybe a little unelegant in here with the early return, but doesn't have a prompt type config
         const dailySeed = getDailySeed();
 
