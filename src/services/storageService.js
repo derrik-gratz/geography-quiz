@@ -31,7 +31,7 @@ function initDB() {
       const oldVersion = event.oldVersion;
       const newVersion = event.newVersion;
       
-      console.log(`🔄 Database upgrade: ${oldVersion} → ${newVersion}`);
+      console.log(`Database upgrade: ${oldVersion} → ${newVersion}`);
       
       // If upgrading from version 0 (new database), just create the store
       if (oldVersion === 0) {
@@ -60,8 +60,6 @@ function initDB() {
       }
       const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
       objectStore.createIndex('id', 'id', { unique: true });
-
-      console.log('✅ Fresh database created');
       
       // Future migration placeholder:
       // if (oldVersion < newVersion) {
@@ -226,7 +224,6 @@ export async function saveDailyChallenge(date, challengeData) {
     // Check if entry already exists
     const existingFullEntry = userData.dailyChallenge?.fullEntries?.find(entry => entry.date === date);
     if (existingFullEntry) {
-      console.log(`Daily challenge for ${date} already exists, skipping save`);
       return false;
     }
 
@@ -318,7 +315,6 @@ export async function saveDailyChallenge(date, challengeData) {
     // Save updated data
     await saveUserData(userData);
 
-    console.log('✅ Daily challenge saved:', { date, score, skillScore, streak: userData.dailyChallenge.streak.current });
     return true;
   } catch (error) {
     console.error('Failed to save daily challenge:', error);
@@ -417,7 +413,6 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
         }
       }
     }
-    console.log(`📊 Updated testing scores for ${countryId}:`, matrixSummary);
   }
 }
 
