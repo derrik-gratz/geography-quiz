@@ -116,19 +116,26 @@ export function ScoreTimeline({ userData }) {
     return <div className="score-timeline__empty">No data available</div>;
   }
 
+
+
   return (
-    <div className="score-timeline">
-      <div className="score-timeline__legend">
-        <div className="score-timeline__legend-item">
-          <span className="score-timeline__legend-line score-timeline__legend-line--score"></span>
-          <span>Regular Score</span>
+    // <div className="daily-challenge-stats" style={{display: 'flex', flexDirection: 'row'}}>
+      <div className="score-timeline" style={{display: 'flex', flexDirection: 'column'}}>
+        <div className="score-timeline__legend" style={{display: 'flex', flexDirection: 'row'}}>
+          <div className="score-timeline__legend-item">
+            <span className="score-timeline__legend-line score-timeline__legend-line--score"></span>
+            <span>Regular Score</span>
+          </div>
+          <div className="score-timeline__legend-item">
+            <span className="score-timeline__legend-line score-timeline__legend-line--skill"></span>
+            <span>Skill Score</span>
+          </div>
+          <div className="score-timeline__legend-item">
+            <span>Current streak: {userData.dailyChallenge.streak.current} days</span>
+          </div>
         </div>
-        <div className="score-timeline__legend-item">
-          <span className="score-timeline__legend-line score-timeline__legend-line--skill"></span>
-          <span>Skill Score</span>
-        </div>
+        <div ref={plotRef} className="score-timeline__chart"></div>
       </div>
-      <div ref={plotRef} className="score-timeline__chart"></div>
-    </div>
+    // </div>
   );
 }

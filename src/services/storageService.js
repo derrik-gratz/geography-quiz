@@ -15,7 +15,7 @@ import {
 import { getDefaultLearningRate, updateLearningRate } from './spacedRepetitionEngine.js';
 
 const DB_NAME = 'geography_quiz_db';
-const DB_VERSION = 6;
+const DB_VERSION = 7;
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
@@ -511,22 +511,20 @@ export async function updateCountryLearningData(countryCode, isCorrect) {
     const currentRate = countryData.learningRate ?? getDefaultLearningRate();
     countryData.learningRate = updateLearningRate(currentRate, isCorrect);
     
-    // Update lastCorrect if answer was correct
-    if (isCorrect) {
-      countryData.lastCorrect = today;
-    }
+    countryData.lastChecked = today;
     
     // Save updated data
     await saveUserData(userData);
   } catch (error) {
     console.error('Failed to update country learning data:', error);
     throw error;
-  } finally {
-    // Remove from pending set after completion (with a small delay to handle rapid successive calls)
-    setTimeout(() => {
-      pendingUpdates.delete(updateKey);
-    }, 100);
-  }
+  } 
+  // finally {
+  //   // Remove from pending set after completion (with a small delay to handle rapid successive calls)
+  //   setTimeout(() => {
+  //     pendingUpdates.delete(updateKey);
+  //   }, 100);
+  // }
 }
 
 /**

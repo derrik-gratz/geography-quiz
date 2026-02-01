@@ -17,6 +17,15 @@
   --stroke-width: 1;
   /* outline: none; */
 }
+
+.profile-map__display-mode-selector-button {
+  background-color: var(--background-secondary);
+}
+
+.profile-map__display-mode-selector-button-active {
+  background-color: var(--color-selected);
+  border-color: var(--color-selected-outline);
+}
 /* 
 .profile-map__country_data {
   fill: var(--color-correct);

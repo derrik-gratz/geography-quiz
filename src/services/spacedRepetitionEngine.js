@@ -7,11 +7,11 @@
 import { formatDateString, parseDateString } from '../types/dataSchemas.js';
 
 // Algorithm parameters - can be adjusted or swapped
-const DEFAULT_LEARNING_RATE = 1; // days
-const CORRECT_MULTIPLIER = 2;
+const DEFAULT_LEARNING_RATE = 2; // days
+const CORRECT_MULTIPLIER = 1.6;
 const WRONG_DIVISOR = 2;
-const MIN_LEARNING_RATE = 0.25; // minimum 6 hours
-const MAX_LEARNING_RATE = 365; // maximum 1 year
+const MIN_LEARNING_RATE = 1; // minimum 6 hours
+const MAX_LEARNING_RATE = 128; // maximum 1 year
 
 /**
  * Calculate days between two date strings (YYYY-MM-DD)
@@ -29,7 +29,7 @@ function daysBetween(dateString1, dateString2) {
 
 /**
  * Check if a country is due for review
- * @param {Object} countryData - Country data with learningRate and lastCorrect
+ * @param {Object} countryData - Country data with learningRate and lastChecked
  * @param {string} today - Today's date string (YYYY-MM-DD)
  * @returns {boolean} True if country is due for review
  */
@@ -39,7 +39,7 @@ export function isCountryDueForReview(countryData, today) {
   }
   
   // If never reviewed, due immediately
-  if (!countryData.lastCorrect) {
+  if (!countryData.lastChecked) {
     return true;
   }
   
@@ -47,10 +47,10 @@ export function isCountryDueForReview(countryData, today) {
   const learningRate = countryData.learningRate ?? DEFAULT_LEARNING_RATE;
   
   // Calculate days since last correct
-  const daysSinceLastCorrect = daysBetween(countryData.lastCorrect, today);
+  const daysSincelastChecked = daysBetween(countryData.lastChecked, today);
   
   // Due if days since last correct >= learningRate
-  return daysSinceLastCorrect >= learningRate;
+  return daysSincelastChecked >= learningRate;
 }
 
 /**

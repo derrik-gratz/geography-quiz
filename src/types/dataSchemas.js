@@ -41,7 +41,7 @@
 
 /**
  * @typedef {Object} DailyChallengeLog
- * @property {number} currentStreak - Current consecutive days streak
+ * @property {number} streak - Current consecutive days streak
  * @property {string|null} lastPlayed - Date string "YYYY-MM-DD" of last daily challenge completion
  * @property {DailyChallengeLogEntry[]} entries - Array of daily challenge entries
  */
@@ -52,7 +52,7 @@
 
 /** 
  * @typedef {Object} LearningData
- * @property {string|null} lastCorrect - Date string "YYYY-MM-DD" when last answered correctly
+ * @property {string|null} lastChecked - Date string "YYYY-MM-DD" when last checked in learning mode
  * @property {number|null} learningRate - Number of days until next prompted for learning (spaced repetition)
  */
 

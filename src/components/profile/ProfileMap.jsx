@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../../base/BaseMap/BaseMap.jsx';
-import { calculateCountryAccuracy } from '../../../services/statsService.js';
+import { BaseMap } from '../base/BaseMap/BaseMap.jsx';
+import { calculateCountryAccuracy } from '../../services/statsService.js';
 import './ProfileMap.css';
 
 /**
@@ -12,6 +12,7 @@ export function ProfileMap({ countryStats }) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
+  const [displayMode, setDisplayMode] = useState('dailyChallenge');
   
   const getCountryClassName = (countryCode) => {
     const hasData = countryStats && countryStats[countryCode];
@@ -55,7 +56,7 @@ export function ProfileMap({ countryStats }) {
   };
   
 // Helper function to interpolate between two hex colors
-const interpolateColor = (avgAccuracy, color1, color2) => {
+const interpolateColor = (value, color1, color2, minValue = 0, maxValue = 1) => {
   // Convert hex to RGB
   const hexToRgb = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -72,8 +73,11 @@ const interpolateColor = (avgAccuracy, color1, color2) => {
   if (!rgb1 || !rgb2) return color1; // Fallback if parsing fails
 
   // Use accuracy directly as interpolation factor (already 0-1)
-  const factor = avgAccuracy || 0;
-
+  if (Number.isNaN(value)) {
+    return 'var(--fill)';
+  }
+  let factor = (value - minValue) / (maxValue - minValue);
+  factor = Math.max(0, Math.min(1, factor));
   // Interpolate each channel
   const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * factor);
   const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * factor);
@@ -97,7 +101,13 @@ const getCountryStyle = (countryCode) => {
   // Clamp accuracy to 0-1 range
   // const clampedAccuracy = Math.max(0, Math.min(1, avgAccuracy || 0));
   // Interpolate: 0 = incorrect color, 1 = correct color
-  const fillColor = Number.isNaN(avgAccuracy) ? 'var(--fill)' : interpolateColor(avgAccuracy, incorrectColor, correctColor);
+  // console.log(countryStats)
+  const fillColor = displayMode === 'dailyChallenge' ? 
+    interpolateColor(avgAccuracy, incorrectColor, correctColor) : 
+    displayMode === 'learningRate' && countryStats[countryCode]?.learningRate && countryStats[countryCode].lastChecked ? 
+    interpolateColor(countryStats[countryCode].learningRate, incorrectColor, correctColor, 0, 64) :
+     'var(--fill)';
+  // const fillColor = Number.isNaN(avgAccuracy) ? 'var(--fill)' : interpolateColor(avgAccuracy, incorrectColor, correctColor);
 
   return {
     default: {
@@ -112,9 +122,13 @@ const getCountryStyle = (countryCode) => {
     }
   };
 };
-
+  const buttonBaseName = 'profile-map__display-mode-selector-button';
   return (
     <div className={`profile-mapworld-map`}>
+      <div className="profile-map__display-mode-selector">
+        <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>
+        <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
+      </div>
       <BaseMap
         onCountryHover={onMouseEnter}
         onCountryHoverLeave={onMouseLeave}

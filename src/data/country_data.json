@@ -486,7 +486,6 @@
     "flagCode": "FR",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },
@@ -1603,7 +1602,6 @@
     "flagCode": "AU",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },
@@ -3306,7 +3304,6 @@
     "flagCode": "GB",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },

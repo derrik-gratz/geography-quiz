@@ -9,7 +9,7 @@ import allCountryData from '../../data/country_data.json';
 // import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
 import { ScoreTimeline } from './ScoreTimeline.jsx';
 import { ModalityMatrix } from './ModalityMatrix.jsx';
-import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
+import { ProfileMap } from './ProfileMap.jsx';
 import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
 
@@ -86,7 +86,7 @@ export function ProfilePage() {
   //     </div>
   //   );
   // }
-
+  console.log(userData);
   return (
     <div className="profile-page">
       <div className="profile-page__header">
@@ -119,7 +119,6 @@ export function ProfilePage() {
             <ProfileMap countryStats={userData.countries} />
           </StatsCard>
         )} */}
-
         <ProfileMap countryStats={userData.countries} />
 
         {(!userData || userData.dailyChallenge.fullEntries.length === 0) && (
