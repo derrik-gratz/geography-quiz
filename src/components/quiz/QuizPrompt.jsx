@@ -3,7 +3,7 @@ import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
 
 import { derivePromptValue } from '../../services/quizEngine.js';
-import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
+import { CollapsibleContainer } from '../base/CollapsibleContainer.jsx';
 import { loadAllUserData } from '../../services/storageService.js';
 import { dailyChallengeCompletedToday } from '../../services/statsService.js';
 import './QuizPrompt.css';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { QuizProvider } from './state/quizProvider.jsx';
-import { NavigationBar } from './components/base/NavigationBar/NavigationBar.jsx';
+import { NavigationBar } from './components/base/NavigationBar.jsx';
 import { QuizPage } from './components/quiz/QuizPage.jsx';
 import { ProfilePage } from './components/profile/ProfilePage.jsx';
 import { initStorage } from './services/storageService.js';

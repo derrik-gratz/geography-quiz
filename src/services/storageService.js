@@ -501,25 +501,15 @@ export async function updateCountryLearningData(countryCode, isCorrect) {
     
     const countryData = userData.countries[countryCode];
     const today = formatDateString(new Date());
-    
-    // Update learningRate based on correctness
     const currentRate = countryData.learningRate ?? getDefaultLearningRate();
     countryData.learningRate = updateLearningRate(currentRate, isCorrect);
-    
     countryData.lastChecked = today;
     
-    // Save updated data
     await saveUserData(userData);
   } catch (error) {
     console.error('Failed to update country learning data:', error);
     throw error;
   } 
-  // finally {
-  //   // Remove from pending set after completion (with a small delay to handle rapid successive calls)
-  //   setTimeout(() => {
-  //     pendingUpdates.delete(updateKey);
-  //   }, 100);
-  // }
 }
 
 /**

@@ -67,22 +67,13 @@ export function calculatePerModalityStats(userData) {
       }
       
       if (cell.precision.length > 0) {
-        const avgprecision = cell.precision.reduce((acc, curr) => acc + curr, 0) / cell.precision.length;
-        cell.precision = avgprecision;
+        const avgPrecision = cell.precision.reduce((acc, curr) => acc + curr, 0) / cell.precision.length;
+        cell.precision = avgPrecision;
       } else {
         cell.precision = NaN;
       }
     }
   }
-  // Calculate accuracy percentages
-  // ['name', 'flag', 'location'].forEach(modality => {
-  //   ['recognition', 'recall'].forEach(type => {
-  //     const attempted = stats[modality][type].totalGuesses;
-  //     const correct = stats[modality][type].totalCorrect;
-  //     stats[modality][type].accuracy = attempted > 0 ? (correct / attempted) * 100 : 0;
-  //   });
-  // });
-
   return modalityMatrix;
 }
 

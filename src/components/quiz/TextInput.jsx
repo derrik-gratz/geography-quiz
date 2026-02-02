@@ -2,10 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../hooks/useCollapsible.js';
-import { CollapsibleContainer } from '../base/CollapsibleContainer/CollapsibleContainer.jsx';
-import { CountryTextEntry } from '../base/CountryTextEntry/CountryTextEntry.jsx';
+import { CollapsibleContainer } from '../base/CollapsibleContainer.jsx';
+import { CountryTextEntry } from '../base/CountryTextEntry.jsx';
 import { useComponentState } from '../../hooks/useComponentState.js';
-import { SubmitButton } from '../base/SubmitButton/SubmitButton.jsx';
+import { SubmitButton } from '../base/SubmitButton.jsx';
 import './TextInput.css';
 
 export function QuizTextInput() {

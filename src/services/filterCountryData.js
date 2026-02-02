@@ -8,7 +8,6 @@ const dailyChallengeLength = 5;
 
 // Shuffle array using Fisher-Yates algorithm
 export function shuffleArray(data, seed) {
-    // Ensure data is an array
     if (!Array.isArray(data)) {
         console.error('shuffleArray: data must be an array', data);
         return [];
@@ -24,67 +23,52 @@ export function shuffleArray(data, seed) {
     return shuffledData;
 }
 
+function filterCountryDataByQuizSet(countryData, quizSet) {
+    const quizSetData = quizSets.find(q => q.name === quizSet);
+    if (quizSetData) {
+        return countryData.filter(country => quizSetData.countryCodes.includes(country.code));
+    } else {
+        console.error(`Invalid quiz set: ${quizSet}`);
+        return [];
+    }
+}
+
 // Handle user configs to filter data for prompts
 export function filterCountryData(quizSet, selectedPromptTypes, countryData, gameMode = null, userData = null) {
     let filteredCountryData = countryData;
+    const dailySeed = getDailySeed();
+    
     //remove countries with no valid prompt types
     filteredCountryData = countryData.filter(country => {
         return country.availablePrompts.length > 0;
     })
-    
-    // Learning mode: use spaced repetition engine
+
     if (gameMode === 'learning') {
         if (!userData) {
             console.error('Learning mode requires userData');
             return [];
         }
+        // from userData
         filteredCountryData = getCountriesDueForReview(userData, filteredCountryData);
-        // Shuffle the due countries for variety
-        filteredCountryData = shuffleArray(filteredCountryData, Date.now());
+        filteredCountryData = shuffleArray(filteredCountryData, dailySeed);
         return filteredCountryData;
-    }
-    
-    // Quiz set filtering
-    if (!quizSet) {
-        console.error(`No quiz set selected for filtering`);
-        return [];
     } else if (gameMode === 'dailyChallenge' || quizSet === 'Daily challenge') {
-        // Maybe a little unelegant in here with the early return, but doesn't have a prompt type config
-        const dailySeed = getDailySeed();
-
         filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(0, dailyChallengeLength);
-
-        // 1 prompt type, randomly selected
-        // filteredCountryData = filteredCountryData.map(country => {
-        //     const selectedPromptType = shuffleArray(country.availablePrompts, dailySeed)[0];
-        //     return {
-        //         ...country,
-        //         availablePrompts: [selectedPromptType]
-        //     };
-        // })...
         return filteredCountryData;
-    } else if (quizSet !== 'all') {
-        const quizSetData = quizSets.find(q => q.name === quizSet);
-        if (quizSetData) {
-            filteredCountryData = filteredCountryData.filter(country => quizSetData.countryCodes.includes(country.code));
-        } else {
-            console.error(`Invalid quiz set: ${quizSet}`);
-            // filteredCountryData = countryData;
+    } else if (gameMode === 'quiz') {
+        if (!quizSet) {
+            console.error(`No quiz set selected for filtering`);
             return [];
+        } else if (quizSet !== 'all') {
+            filteredCountryData = filterCountryDataByQuizSet(filteredCountryData, quizSet);
         }
-    }
+        filteredCountryData = shuffleArray(filteredCountryData, Date.now());
 
-    filteredCountryData = shuffleArray(filteredCountryData, Date.now());
-    
-    
-
-    // Filter by prompt types
-    if (selectedPromptTypes && selectedPromptTypes.length > 0) {
-        filteredCountryData = filteredCountryData.filter(country => {
-            return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
-        })
+        if (selectedPromptTypes && selectedPromptTypes.length > 0) {
+            filteredCountryData = filteredCountryData.filter(country => {
+                return country.availablePrompts.some(type => selectedPromptTypes.includes(type));
+            })
+        }
     }
     return filteredCountryData;
 }
-
-// Generate prompt queue

@@ -18,13 +18,15 @@ export function checkPromptCompletion(quizContext){
     // Status values: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
     // A prompt is complete when all guesses are not null and not 'incomplete'
     return Object.values(quizContext.quiz.prompt.guesses).every(status => 
-        status.status !== null && status.status !== 'incomplete'
+        // status.status !== null && status.status !== 'incomplete'
+        status.status === 'completed' || status.status === 'failed' || status.status === 'prompted'
     );
 }
 
 export function generatePromptType(quizContext){
-    // Use new nested state structure
     if (!quizContext.quizData || quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length) {
+        console.error('Error generating prompt type');
+        console.error(quizContext);
         return null;
     }
     const countryData = quizContext.quizData[quizContext.quiz.prompt.quizDataIndex];
@@ -73,6 +75,8 @@ export function derivePromptValue(countryData, promptType){
         case 'flag':
             return countryData.flagCode;
         default:
+            console.error('Error deriving prompt value');
+            console.error(countryData, promptType);
             return null;
     }
 }
@@ -80,6 +84,8 @@ export function derivePromptValue(countryData, promptType){
 export function checkQuizCompletion(quizContext){
     // If no country data, quiz can't be finished
     if (!quizContext.quizData?.length) {
+        console.error('Error checking quiz completion');
+        console.error(quizContext);
         return false;
     }
     return quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length;

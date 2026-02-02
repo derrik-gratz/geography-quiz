@@ -6,7 +6,7 @@ import {
     Graticule,
     ZoomableGroup
 } from "react-simple-maps";
-import allCountryData from '../../../data/country_data.json';
+import allCountryData from '../../data/country_data.json';
 
 const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
 const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../base/BaseMap/BaseMap.jsx';
+import { BaseMap } from '../base/BaseMap.jsx';
 import { calculateCountryAccuracy } from '../../services/statsService.js';
 import './ProfileMap.css';
 

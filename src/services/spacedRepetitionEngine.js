@@ -1,17 +1,11 @@
-/**
- * Spaced Repetition Engine
- * Modular engine for managing spaced repetition learning algorithm
- * Can be swapped with different algorithms in the future
- */
-
 import { formatDateString, parseDateString } from '../types/dataSchemas.js';
 
-// Algorithm parameters - can be adjusted or swapped
-const DEFAULT_LEARNING_RATE = 2; // days
+// in days
+const DEFAULT_LEARNING_RATE = 2;
 const CORRECT_MULTIPLIER = 1.6;
 const WRONG_DIVISOR = 2;
-const MIN_LEARNING_RATE = 1; // minimum 6 hours
-const MAX_LEARNING_RATE = 128; // maximum 1 year
+const MIN_LEARNING_RATE = 1;
+const MAX_LEARNING_RATE = 128;
 
 /**
  * Calculate days between two date strings (YYYY-MM-DD)
@@ -43,13 +37,8 @@ export function isCountryDueForReview(countryData, today) {
     return true;
   }
   
-  // Get learningRate, default to 1 if not set
   const learningRate = countryData.learningRate ?? DEFAULT_LEARNING_RATE;
-  
-  // Calculate days since last correct
   const daysSincelastChecked = daysBetween(countryData.lastChecked, today);
-  
-  // Due if days since last correct >= learningRate
   return daysSincelastChecked >= learningRate;
 }
 
@@ -83,7 +72,6 @@ export function getCountriesDueForReview(userData, allCountryData) {
   const today = formatDateString(new Date());
   const dueCountries = [];
   
-  // Check each country in the full dataset
   allCountryData.forEach(country => {
     const countryCode = country.code;
     const countryData = userData.countries[countryCode];
@@ -94,7 +82,6 @@ export function getCountriesDueForReview(userData, allCountryData) {
       return;
     }
     
-    // Check if country is due for review
     if (isCountryDueForReview(countryData, today)) {
       dueCountries.push(country);
     }
