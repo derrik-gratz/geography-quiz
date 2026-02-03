@@ -1,0 +1,76 @@
+.score-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-timeline__legend {
+  display: flex;
+  flex-direction: row;
+}
+
+.score-timeline__legend-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Score Timeline */
+.score-timeline {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.score-timeline__legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.score-timeline__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.score-timeline__legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.score-timeline__legend-line--score {
+  background-color: var(--color-selected);
+}
+
+.score-timeline__legend-line--skill {
+  background-color: var(--color-hover);
+}
+
+.score-timeline__chart {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  overflow: visible;
+}
+
+.score-timeline__line {
+  transition: stroke-width 0.2s ease;
+}
+
+.score-timeline__point {
+  cursor: pointer;
+  transition: r 0.2s ease;
+}
+
+.score-timeline__point:hover {
+  r: 6;
+}
+
+.score-timeline__empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+}

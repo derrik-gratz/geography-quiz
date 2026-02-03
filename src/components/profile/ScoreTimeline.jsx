@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as Plot from '@observablehq/plot';
+import './ScoreTimeline.css';
 
 export function ScoreTimeline({ userData }) {
 
@@ -19,7 +20,7 @@ export function ScoreTimeline({ userData }) {
     };
 
     const scoreColor = getComputedColor('--color-selected');
-    const skillColor = getComputedColor('--color-correct');
+    const skillColor = getComputedColor('--color-hover');
     const textColor = getComputedColor('--text-primary');
     const borderColor = getComputedColor('--border-color');
 
@@ -41,8 +42,8 @@ export function ScoreTimeline({ userData }) {
 
     // Create the plot
     const chart = Plot.plot({
-      width: 800,
-      height: 300,
+      width: 600,
+      height: 400,
       marginTop: 20,
       marginRight: 40,
       marginBottom: 40,
@@ -116,8 +117,6 @@ export function ScoreTimeline({ userData }) {
     return <div className="score-timeline__empty">No data available</div>;
   }
 
-
-
   return (
     // <div className="daily-challenge-stats" style={{display: 'flex', flexDirection: 'row'}}>
       <div className="score-timeline" style={{display: 'flex', flexDirection: 'column'}}>
@@ -129,9 +128,6 @@ export function ScoreTimeline({ userData }) {
           <div className="score-timeline__legend-item">
             <span className="score-timeline__legend-line score-timeline__legend-line--skill"></span>
             <span>Skill Score</span>
-          </div>
-          <div className="score-timeline__legend-item">
-            <span>Current streak: {userData.dailyChallenge.streak.current} days</span>
           </div>
         </div>
         <div ref={plotRef} className="score-timeline__chart"></div>

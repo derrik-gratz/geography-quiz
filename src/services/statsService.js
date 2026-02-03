@@ -14,13 +14,12 @@ import {
 
 /**
  * Calculate statistics per prompt modality from score log and country data
- * @param {Object} userData - Complete user data store
+ * @param {Object} userCountryData - Complete user country data store
  * @returns {Object} Statistics per modality { name, flag, location }
  * recall = ability to guess modality when prompted with different modality
  * recognition = performance on other modalities when prompted with this modality
  */
-export function calculatePerModalityStats(userData) {
-
+export function calculatePerModalityStats(userCountryData) {
   const modalityMatrix = [];
   for (let input = 0; input < 3; input++) {
     modalityMatrix[input] = [];
@@ -33,14 +32,14 @@ export function calculatePerModalityStats(userData) {
   }
 
 
-  if (!userData || !userData.countries) {
-    console.error('No user data or countries found');
+  if (!userCountryData) {
+    console.error('No user country data found');
     return modalityMatrix;
   }
 
   // Aggregate from all country matrices
   // Matrix: rows = input modality, columns = prompted modality
-  Object.values(userData.countries).forEach(countryData => {
+  Object.values(userCountryData).forEach(countryData => {
     if (!countryData.matrix) return;
 
     for (let inputIndex = 0; inputIndex < 3; inputIndex++) {

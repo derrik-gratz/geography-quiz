@@ -8,7 +8,7 @@ import { StatsCard } from './StatsCard.jsx';
 import allCountryData from '../../data/country_data.json';
 // import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
 import { ScoreTimeline } from './ScoreTimeline.jsx';
-import { ModalityMatrix } from './ModalityMatrix.jsx';
+import { DailyChallengeModalityMatrix } from './DailyChallengeModalityMatrix.jsx';
 import { ProfileMap } from './ProfileMap.jsx';
 import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
@@ -46,19 +46,10 @@ export function ProfilePage() {
   };
 
 
-  const perModalityStats = useMemo(() => {
-    if (!userData) return null;
-    return calculatePerModalityStats(userData);
-  }, [userData]);
-
-  // const formatDate = (dateString) => {
-  //   const date = new Date(dateString + 'T00:00:00');
-  //   return date.toLocaleDateString('en-US', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric'
-  //   });
-  // };
+  // const perModalityStats = useMemo(() => {
+  //   if (!userData) return null;
+  //   return calculatePerModalityStats(userData);
+  // }, [userData]);
 
   if (isLoading) {
     return (
@@ -86,47 +77,38 @@ export function ProfilePage() {
   //     </div>
   //   );
   // }
-  console.log(userData);
+  const streakDisplay = (
+    userData.dailyChallenge.streak.current >= 5 ? '🔥' : 
+    userData.dailyChallenge.streak.current >= 10 ? '🔥🔥' :
+    userData.dailyChallenge.streak.current >= 25 ? '🥵' :
+    userData.dailyChallenge.streak.current >= 50 ? '🤯' :
+    userData.dailyChallenge.streak.current >= 75 ? '😱' :
+    userData.dailyChallenge.streak.current >= 100 ? '👑' :
+    ''
+  );
+
   return (
     <div className="profile-page">
       <div className="profile-page__header">
-        <h1 className="profile-page__title">Daily Challenge Statistics</h1>
-        {/* {userMetadata && (
-          <p className="profile-page__metadata">
-            Tracking since {formatDate(new Date(userMetadata.createdAt).toISOString().split('T')[0])}
-          </p>
-        )} */}
+        <h1 className="profile-page__title">User profile</h1>
       </div>
-
-      <div className="profile-page__content">
-        <p>Current Streak: {userData.dailyChallenge.streak.current} days</p>
-        {/* <StatsCard title="Streaks">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
-            <StatItem label="Current Streak" value={statistics.streak.current} unit=" days" />
-            <StatItem label="Longest Streak" value={statistics.streak.longest} unit=" days" />
-          </div>
-        </StatsCard> */}
-        <p>Accuracy by Modality:</p>
-        <ModalityMatrix userData={userData} />
-        {userData?.dailyChallenge?.fullEntries && userData.dailyChallenge.fullEntries.length > 0 && (
-          <StatsCard title="Score Timeline">
-            <ScoreTimeline userData={userData} />
-          </StatsCard>
-        )}
-
-        {/* {userData?.countries && Object.keys(userData.countries).length > 0 && (
-          <StatsCard title="Country Statistics Map">
-            <ProfileMap countryStats={userData.countries} />
-          </StatsCard>
-        )} */}
-        <ProfileMap countryStats={userData.countries} />
-
-        {(!userData || userData.dailyChallenge.fullEntries.length === 0) && (
+        {(!userData || userData.dailyChallenge.fullEntries.length === 0) ? (
           <div className="profile-page__empty-state">
             <p>You haven't completed any daily challenges yet. Start a daily challenge to see your statistics here!</p>
           </div>
+        ) : (
+          <div className="profile-page__content" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <h4>Daily challenge performance</h4>
+            <div style={{ justifyContent: 'center' }}>
+              <span>Current streak: {userData.dailyChallenge.streak.current}{streakDisplay}</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+              <ScoreTimeline userData={userData} />
+              <DailyChallengeModalityMatrix userCountryData={userData.countries} />
+            </div>
+            <ProfileMap countryStats={userData.countries} />
+          </div>
         )}
-      </div>
     </div>
   );
 }
