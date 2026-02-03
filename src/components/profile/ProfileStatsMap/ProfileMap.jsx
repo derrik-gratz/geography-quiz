@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../base/BaseMap.jsx';
-import { calculateCountryAccuracy } from '../../services/statsService.js';
+import { BaseMap } from '../../base/BaseMap.jsx';
+import { calculateCountryAccuracy } from '../../../services/statsService.js';
+import { SelectedCountryDisplay } from './SelectedCountryDisplay.jsx';
 import './ProfileMap.css';
 
 /**
@@ -18,12 +19,12 @@ export function ProfileMap({ countryStats }) {
     const hasData = countryStats && countryStats[countryCode];
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
-    let classes = 'profile-map__country'
+    let classes = 'profile-stats-map__country'
     if (isSelected) {
-      classes += ' profile-map__country_selected';
+      classes += ' profile-stats-map__country_selected';
     }
     if (isHovered) {
-      classes += ' profile-map__country_hovered';
+      classes += ' profile-stats-map__country_hovered';
     }
     return classes;
     // if (hasData) {
@@ -122,25 +123,32 @@ const getCountryStyle = (countryCode) => {
     }
   };
 };
-  const buttonBaseName = 'profile-map__display-mode-selector-button';
+  const buttonBaseName = 'profile-stats-map__display-mode-selector-button';
   return (
-    <div className={`profile-mapworld-map`}>
-      <div className="profile-map__display-mode-selector">
+    <div className={`profile-stats-map`}>
+      <div className="profile-stats-map__display-mode-selector">
         <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>
         <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
       </div>
-      <BaseMap
-        onCountryHover={onMouseEnter}
-        onCountryHoverLeave={onMouseLeave}
-        onCountryClick={handleCountryClick}
-        getCountryClassName={getCountryClassName}
-        getSmallCountryPriority={getSmallCountryPriority}
-        getCountryStyle={getCountryStyle}
-        disabled={false}
-        className="world-map__base-map"
-        initialView={defaultViewWindow}
-        showGraticule={true}
-      />
+      <div className="profile-stats-map__display">
+        <div className="profile-stats-map__display-map">
+          <BaseMap
+            onCountryHover={onMouseEnter}
+            onCountryHoverLeave={onMouseLeave}
+            onCountryClick={handleCountryClick}
+            getCountryClassName={getCountryClassName}
+            getSmallCountryPriority={getSmallCountryPriority}
+            getCountryStyle={getCountryStyle}
+            disabled={false}
+            className="world-map__base-map"
+            initialView={defaultViewWindow}
+            showGraticule={true}
+          />
+        </div>
+        <div className="profile-stats-map__display-country-stats">
+          <SelectedCountryDisplay selectedCountry={selectedCountry} countryStats={countryStats} displayMode={displayMode}/>
+        </div>
+      </div>
     </div>
   );
 }

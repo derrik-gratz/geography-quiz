@@ -15,7 +15,17 @@ export function ModalityHeatmap({ plotData }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (!plotData) return;
+    if (!plotData || !chartRef.current) return;
+
+    // Get container dimensions
+    const container = chartRef.current;
+    const containerWidth = container.clientWidth || 500;
+    
+    // Calculate aspect ratio (maintain 5:4 ratio)
+    // Use width to calculate height since container height may be 0 initially
+    const aspectRatio = 5 / 4;
+    const width = containerWidth;
+    const height = width / aspectRatio;
 
     // Get computed CSS variable values for theming
     const getComputedColor = (variable) => {
@@ -28,7 +38,7 @@ export function ModalityHeatmap({ plotData }) {
     const borderColor = getComputedColor('--border-color');
     const lowColor = getComputedColor('--color-incorrect');
     const highColor = getComputedColor('--color-correct');
-    const unknownColor = getComputedColor('--color-disabled');
+    const unknownColor = getComputedColor('--background-secondary');
 
     const colorScale = {
       type: 'linear',
@@ -40,8 +50,8 @@ export function ModalityHeatmap({ plotData }) {
     };
 
     const plot = Plot.plot({
-      width: 500,
-      height: 400,
+      width: width,
+      height: height,
       marginTop: 0,
       marginRight: 60,
       marginBottom: 40,
@@ -80,14 +90,14 @@ export function ModalityHeatmap({ plotData }) {
           y: 'y',
           text: (d) => Number.isNaN(d.value) ? '' : (d.value * 100).toFixed(0) + '%',
         //   fill: textColor,
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: 'bold'
         })
       ],
       style: {
         background: 'transparent',
         color: textColor,
-        fontSize: '12px'
+        fontSize: '14px'
       }
     });
 

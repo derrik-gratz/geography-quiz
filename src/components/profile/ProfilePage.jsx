@@ -9,7 +9,7 @@ import allCountryData from '../../data/country_data.json';
 // import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
 import { ScoreTimeline } from './ScoreTimeline.jsx';
 import { DailyChallengeModalityMatrix } from './DailyChallengeModalityMatrix.jsx';
-import { ProfileMap } from './ProfileMap.jsx';
+import { ProfileMap } from './ProfileStatsMap/ProfileMap.jsx';
 import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
 

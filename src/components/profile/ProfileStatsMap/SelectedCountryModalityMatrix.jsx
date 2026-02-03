@@ -1,14 +1,14 @@
-import { ModalityHeatmap } from '../base/ModalityHeatmap.jsx';
-import { calculatePerModalityStats } from '../../services/statsService.js';
-import './DailyChallengeModalityMatrix.css';
+import { ModalityHeatmap } from '../../base/ModalityHeatmap.jsx';
+import { calculatePerModalityStats } from '../../../services/statsService.js';
+import './SelectedCountryModalityMatrix.css';
 /**
  * ModalityMatrix component
  * Displays a 3x3 heatmap showing accuracy for each input/prompted modality combination
  * 
  * @param {Object} props
- * @param {Object} props.userData - User data object containing country statistics
+ * @param {Object} props.userCountryData - User country data object containing country statistics
  */
-export function DailyChallengeModalityMatrix({ userCountryData }) {
+export function SelectedCountryModalityMatrix({ userCountryData }) {
     // Melt to long format
     const modalityMatrix = calculatePerModalityStats(userCountryData);
     const plotData = [];
@@ -35,7 +35,7 @@ export function DailyChallengeModalityMatrix({ userCountryData }) {
     return <div className="modality-matrix__empty">No modality matrix data available</div>;
   }
   return (
-    <div className="daily-challenge-modality-matrix">
+    <div className="selected-country-modality-matrix">
       <ModalityHeatmap plotData={plotData} />
     </div>
   );

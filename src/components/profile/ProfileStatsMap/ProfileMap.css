@@ -1,28 +1,43 @@
-.profile-map__country {
+.profile-stats-map__display {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.profile-stats-map__display-map {
+  width: 65%;
+}
+
+.profile-stats-map__display-country-stats {
+  margin-top: 1.5rem;
+  width: 35%;
+}
+
+.profile-stats-map__country {
   --fill: var(--map-country-fill);
   --stroke: var(--map-country-outline);
   --stroke-width: 0.5;
   /* outline: none; */
 }
 
-.profile-map__country_selected {
+.profile-stats-map__country_selected {
   --fill: var(--color-selected);
   --stroke: var(--color-selected-outline);
   --stroke-width: 1;
   /* outline: none; */
 }
-.profile-map__country_hovered {
+.profile-stats-map__country_hovered {
   --fill: var(--color-hover);
   --stroke: var(--color-hover-outline);
   --stroke-width: 1;
   /* outline: none; */
 }
 
-.profile-map__display-mode-selector-button {
+.profile-stats-map__display-mode-selector-button {
   background-color: var(--background-secondary);
 }
 
-.profile-map__display-mode-selector-button-active {
+.profile-stats-map__display-mode-selector-button-active {
   background-color: var(--color-selected);
   border-color: var(--color-selected-outline);
 }

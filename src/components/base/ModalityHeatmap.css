@@ -8,7 +8,7 @@ padding: 1rem;
 
 .modality-matrix__chart {
 width: 100%;
-max-width: 600px;
+max-width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -17,10 +17,19 @@ gap: 0rem;
 }
 
 .modality-matrix__plot {
-min-height: 500px;
-min-width: 500px;
-margin-top: 0rem;
-padding-top: 0.25rem;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 5 / 4; /* Maintain plot aspect ratio */
+  margin-top: 0rem;
+  padding-top: 0.25rem;
+  overflow: hidden; /* Prevent SVG from exceeding container */
+}
+
+.modality-matrix__plot svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .modality-matrix__legend {

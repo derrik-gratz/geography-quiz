@@ -37,9 +37,14 @@ export function calculatePerModalityStats(userCountryData) {
     return modalityMatrix;
   }
 
+   // handle single country and multiple countries
+  const countriesArray = userCountryData.matrix 
+   ? [userCountryData]
+   : Object.values(userCountryData);
+
   // Aggregate from all country matrices
   // Matrix: rows = input modality, columns = prompted modality
-  Object.values(userCountryData).forEach(countryData => {
+  countriesArray.forEach(countryData => {
     if (!countryData.matrix) return;
 
     for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
