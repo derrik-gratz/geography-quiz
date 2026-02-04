@@ -67,6 +67,9 @@ export function QuizWorldMap() {
   useEffect(() => {
     if (state.config.gameMode === 'sandbox' && state.quiz.prompt.quizDataIndex !== null) {
       setSelectedCountry(state.quizData[state.quiz.prompt.quizDataIndex].code);
+    } else {
+      setSelectedCountry(null);
+      setHoveredCountry(null);
     }
   }, [state.config.gameMode, state.quiz.prompt.quizDataIndex]);
 
