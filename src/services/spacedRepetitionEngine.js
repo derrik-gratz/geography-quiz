@@ -1,4 +1,5 @@
 import { formatDateString, parseDateString } from '../types/dataSchemas.js';
+import allCountryData from '../data/country_data.json' with { type: 'json' };
 
 // in days
 const DEFAULT_LEARNING_RATE = 2;
@@ -64,15 +65,15 @@ export function updateLearningRate(currentRate, isCorrect) {
  * @param {Array} allCountryData - All available country data from country_data.json
  * @returns {Array} Array of country objects due for review
  */
-export function getCountriesDueForReview(userData, allCountryData) {
-  if (!userData || !userData.countries || !allCountryData) {
+export function getCountriesDueForReview(userData, countryData=allCountryData) {
+  if (!userData || !userData.countries || !countryData) {
     return [];
   }
   
   const today = formatDateString(new Date());
   const dueCountries = [];
   
-  allCountryData.forEach(country => {
+  countryData.forEach(country => {
     const countryCode = country.code;
     const countryData = userData.countries[countryCode];
     

@@ -50,7 +50,7 @@ export function filterCountryData(quizSet, selectedPromptTypes, countryData, gam
         }
         // from userData
         filteredCountryData = getCountriesDueForReview(userData, filteredCountryData);
-        filteredCountryData = shuffleArray(filteredCountryData, dailySeed);
+        filteredCountryData = shuffleArray(filteredCountryData, Date.now());
         return filteredCountryData;
     } else if (gameMode === 'dailyChallenge' || quizSet === 'Daily challenge') {
         filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(0, dailyChallengeLength);
