@@ -126,10 +126,10 @@ const getCountryStyle = (countryCode) => {
   const buttonBaseName = 'profile-stats-map__display-mode-selector-button';
   return (
     <div className={`profile-stats-map`}>
-      <div className="profile-stats-map__display-mode-selector">
+      {/* <div className="profile-stats-map__display-mode-selector">
         <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>
         <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
-      </div>
+      </div> */}
       <div className="profile-stats-map__display">
         <div className="profile-stats-map__display-map">
           <BaseMap
@@ -142,6 +142,10 @@ const getCountryStyle = (countryCode) => {
             disabled={false}
             className="world-map__base-map"
             initialView={defaultViewWindow}
+            additionalControls={[
+              <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>,
+              <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
+            ]}
             showGraticule={true}
           />
         </div>

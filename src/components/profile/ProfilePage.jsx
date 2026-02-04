@@ -102,7 +102,7 @@ export function ProfilePage() {
             <div style={{ justifyContent: 'center' }}>
               <span>Current streak: {userData.dailyChallenge.streak.current}{streakDisplay}</span>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+            <div className="profile-page__content-row">
               <ScoreTimeline userData={userData} />
               <DailyChallengeModalityMatrix userCountryData={userData.countries} />
             </div>

@@ -51,8 +51,7 @@ export function SelectedCountryDisplay({ selectedCountry, countryStats, displayM
                 {displayMode === 'dailyChallenge' && dailyChallengeDataAvailable && <SelectedCountryModalityMatrix userCountryData={countryStats[selectedCountry]} />}
                 {displayMode === 'learningRate' && learningRateDataAvailable && (
                     <div className="selected-country-display__body-text">
-                        Learning rate: {countryStats[selectedCountry].learningRate}
-                        Last checked: {countryStats[selectedCountry].lastChecked}
+                        Learning rate: {countryStats[selectedCountry].learningRate} days <br /> Last checked: {countryStats[selectedCountry].lastChecked}
                     </div>
                 )}
             </div>
