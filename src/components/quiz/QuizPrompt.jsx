@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
-import Countdown, { zeroPad, calcTimeDelta, formatTimeDelta } from 'react-countdown';
+import { calcTimeDelta, formatTimeDelta } from 'react-countdown';
 
 import { derivePromptValue } from '../../services/quizEngine.js';
 import { CollapsibleContainer } from '../base/CollapsibleContainer.jsx';
@@ -57,7 +57,7 @@ export function QuizPrompt({}) {
                 .then(userData => {
                     // Check if there are countries due for review
                     
-                    const dueCountries = getCountriesDueForReview(userData, countryData);
+                    const dueCountries = getCountriesDueForReview(userData);
                     setLearningModeHasCountries(dueCountries.length > 0);
                 })
                 .catch(error => {
@@ -162,7 +162,13 @@ export function QuizPrompt({}) {
             promptText = 'Click any input to explore country data';
         } else if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
             const timeUntilNextDay = getTimeUntilNextDay();
-            promptText = `You have already completed today\'s daily challenge! Next challenge in ${timeUntilNextDay.hours}h:${timeUntilNextDay.minutes}m.`;
+            return (
+                <span className="prompt-content__generic-text">
+                    You have already completed today's daily challenge!<br />
+                    Next challenge in {timeUntilNextDay.hours}h:{timeUntilNextDay.minutes}m.
+                </span>
+            );
+            // promptText = `You have already completed today\'s daily challenge!<br />Next challenge in ${timeUntilNextDay.hours}h:${timeUntilNextDay.minutes}m.`;
         } else if (state.quiz.status === 'not_started' && isStartDisabled) {
             promptText = 'Configure quiz settings';
         } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
