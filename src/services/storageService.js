@@ -388,7 +388,7 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
       // Determine if correct from status
       const isCorrect = inputData.status === 'completed';
 
-      const cell = countryData.matrix[inputIndex][promptedIndex];
+      let cell = countryData.matrix[inputIndex][promptedIndex];
       const skillScore = guessCount > 0 ? calculateSkillScore(isCorrect, guessCount) : 0;
       cell.push(skillScore);
       if (cell.length > 5) {

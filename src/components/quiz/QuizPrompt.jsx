@@ -1,11 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useQuiz } from '../../hooks/useQuiz.js';
 import { useQuizActions } from '../../hooks/useQuizActions.js';
+import Countdown, { zeroPad, calcTimeDelta, formatTimeDelta } from 'react-countdown';
 
 import { derivePromptValue } from '../../services/quizEngine.js';
 import { CollapsibleContainer } from '../base/CollapsibleContainer.jsx';
 import { loadAllUserData } from '../../services/storageService.js';
 import { dailyChallengeCompletedToday } from '../../services/statsService.js';
+import { getCountriesDueForReview } from '../../services/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -22,6 +24,8 @@ export function QuizPrompt({}) {
     const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
     const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
     const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
+    const [learningModeHasCountries, setLearningModeHasCountries] = useState(true);
+    const [checkingLearningMode, setCheckingLearningMode] = useState(false);
     // Expand when quiz not started, collapse otherwise
     const defaultCollapsed = false; //state.quiz.status !== 'not_started';
 
@@ -43,6 +47,28 @@ export function QuizPrompt({}) {
                 });
         } else {
             setDailyChallengeCompleted(false);
+        }
+    }, [state.config.gameMode, state.quiz.status]);
+
+    useEffect(() => {
+        if (state.config.gameMode === 'learning' && state.quiz.status === 'not_started') {
+            setCheckingLearningMode(true);
+            loadAllUserData()
+                .then(userData => {
+                    // Check if there are countries due for review
+                    
+                    const dueCountries = getCountriesDueForReview(userData, countryData);
+                    setLearningModeHasCountries(dueCountries.length > 0);
+                })
+                .catch(error => {
+                    console.error('Failed to check learning mode countries:', error);
+                    setLearningModeHasCountries(false);
+                })
+                .finally(() => {
+                    setCheckingLearningMode(false);
+                });
+        } else {
+            setLearningModeHasCountries(true);
         }
     }, [state.config.gameMode, state.quiz.status]);
 
@@ -83,9 +109,12 @@ export function QuizPrompt({}) {
         if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
             return true;
         }
+        if (state.config.gameMode === 'learning' && !learningModeHasCountries) {
+            return true;
+        }
         return state.quiz.status === 'not_started' && 
                (!state.config.quizSet || !state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0);
-    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode, dailyChallengeCompleted]);   
+    }, [state.quiz.status, state.config.quizSet, state.config.selectedPromptTypes, state.config.gameMode, dailyChallengeCompleted, learningModeHasCountries]);   
 
     const successfulCompletion = useMemo(() => 
         Object.values(state.quiz.prompt.guesses).every(
@@ -121,12 +150,19 @@ export function QuizPrompt({}) {
         }
     }
 
+    const getTimeUntilNextDay = () => {
+        const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+        tomorrow.setHours(0, 0, 0, 0);
+        return formatTimeDelta(calcTimeDelta(tomorrow, new Date()));
+    }
+
     const promptContent = useMemo(() => {
         let promptText = '';
         if (state.config.gameMode === 'sandbox') {
             promptText = 'Click any input to explore country data';
         } else if (state.config.gameMode === 'dailyChallenge' && dailyChallengeCompleted) {
-            promptText = 'You have already completed today\'s daily challenge! Come back tomorrow for a new challenge.';
+            const timeUntilNextDay = getTimeUntilNextDay();
+            promptText = `You have already completed today\'s daily challenge! Next challenge in ${timeUntilNextDay.hours}h:${timeUntilNextDay.minutes}m.`;
         } else if (state.quiz.status === 'not_started' && isStartDisabled) {
             promptText = 'Configure quiz settings';
         } else if (state.quiz.status === 'not_started' && !isStartDisabled) {
@@ -158,6 +194,8 @@ export function QuizPrompt({}) {
             } else {
                 promptText = 'Review mode';
             }
+        } else if (state.config.gameMode === 'learning' && !learningModeHasCountries) {
+            promptText = 'No countries due for review';
         } else if (state.quiz.status === 'completed') {
             promptText = 'Quiz Finished!';
         } else {
