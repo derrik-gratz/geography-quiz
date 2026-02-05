@@ -13,11 +13,19 @@
   flex-direction: column;
 }
 
-.score-timeline__legend-line--score {
+
+.score-timeline__legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.score-timeline__legend-line.score-timeline__legend-line--score {
   background-color: var(--color-selected);
 }
 
-.score-timeline__legend-line--skill {
+.score-timeline__legend-line.score-timeline__legend-line--skill {
   background-color: var(--color-hover);
 }
 

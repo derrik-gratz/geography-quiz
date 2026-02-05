@@ -120,7 +120,7 @@ export function ScoreTimeline({ userData }) {
   return (
     // <div className="daily-challenge-stats" style={{display: 'flex', flexDirection: 'row'}}>
       <div className="score-timeline" style={{display: 'flex', flexDirection: 'column'}}>
-        <div className="score-timeline__legend" style={{display: 'flex', flexDirection: 'row'}}>
+        <div className="score-timeline__legend" style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
           <div className="score-timeline__legend-item">
             <span className="score-timeline__legend-line score-timeline__legend-line--score"></span>
             <span>Regular Score</span>
