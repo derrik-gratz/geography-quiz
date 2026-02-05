@@ -117,12 +117,14 @@ const getCountryStyle = (countryCode) => {
     default: {
       fill: countryCode === selectedCountry || countryCode === hoveredCountry ? 'var(--fill)': fillColor ,
       stroke: 'var(--stroke)',
-      strokeWidth: 'var(--stroke-width)'
+      strokeWidth: 'var(--stroke-width)',
+      outline: 'none'
     },
     hover: {
       fill: 'var(--color-hover-outline)',
       stroke: 'var(--color-hover-outline)',
-      strokeWidth: '0.8'
+      strokeWidth: '0.8',
+      outline: 'none'
     }
   };
 };
