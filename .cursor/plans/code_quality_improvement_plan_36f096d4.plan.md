@@ -1,127 +1,3 @@
----
-name: Code Quality Improvement Plan
-overview: Comprehensive plan to improve state management, component structure, CSS architecture, testing coverage, and overall code quality to achieve a more professional architecture before migrating to hosted storage.
-todos:
-  - id: state-audit
-    content: Audit all useState hooks across components and document which should be local vs shared
-    status: pending
-  - id: state-context-page
-    content: Move currentPage state from App.jsx to context
-    status: pending
-    dependencies:
-      - state-audit
-  - id: state-context-derived
-    content: Move dailyChallengeCompleted and learningModeHasCountries checks to provider as derived state
-    status: pending
-    dependencies:
-      - state-audit
-  - id: state-reducer-cleanup
-    content: Review and clean up reducer for redundancy and minimal state shape
-    status: pending
-    dependencies:
-      - state-context-derived
-  - id: test-extract-logic
-    content: Extract business logic from components to services for testability
-    status: pending
-  - id: test-storage
-    content: Create comprehensive tests for storageService
-    status: pending
-    dependencies:
-      - test-extract-logic
-  - id: test-stats
-    content: Create comprehensive tests for statsService
-    status: pending
-    dependencies:
-      - test-extract-logic
-  - id: test-spaced-repetition
-    content: Create comprehensive tests for spacedRepetitionEngine
-    status: pending
-    dependencies:
-      - test-extract-logic
-  - id: test-reducer
-    content: Create comprehensive tests for quizReducer
-    status: pending
-    dependencies:
-      - test-extract-logic
-  - id: html-audit
-    content: Audit all component JSX for unnecessary divs, deep nesting, and semantic HTML opportunities
-    status: pending
-  - id: html-simplify-quizpage
-    content: Simplify QuizPage HTML structure with semantic elements
-    status: pending
-    dependencies:
-      - html-audit
-  - id: html-simplify-components
-    content: Simplify HTML structure across all components
-    status: pending
-    dependencies:
-      - html-audit
-  - id: css-audit
-    content: Audit all 21 CSS files for consolidation opportunities and hierarchy
-    status: pending
-  - id: css-consolidate
-    content: Consolidate small CSS files into logical groups
-    status: pending
-    dependencies:
-      - css-audit
-  - id: css-hierarchy
-    content: Establish clear CSS hierarchy and organization
-    status: pending
-    dependencies:
-      - css-consolidate
-  - id: service-purity
-    content: Review and ensure all services are pure (no React dependencies)
-    status: pending
-  - id: service-side-effects
-    content: Separate side effects from state management in quizProvider
-    status: pending
-    dependencies:
-      - service-purity
-  - id: service-interfaces
-    content: Standardize service interfaces and add JSDoc documentation
-    status: pending
-    dependencies:
-      - service-side-effects
-  - id: polish-docs
-    content: Add JSDoc documentation to all exported functions and components
-    status: pending
-  - id: polish-cleanup
-    content: Remove dead code, commented code, and unused imports
-    status: pending
-  - id: workflow-prettier
-    content: Set up Prettier for code formatting and integrate with ESLint
-    status: pending
-  - id: workflow-precommit
-    content: Set up Husky and lint-staged for pre-commit hooks
-    status: pending
-    dependencies:
-      - workflow-prettier
-  - id: workflow-readme
-    content: Create comprehensive README.md with project documentation
-    status: pending
-  - id: workflow-env
-    content: Set up environment variable management with .env.example
-    status: pending
-  - id: workflow-error-boundaries
-    content: Implement React Error Boundaries for graceful error handling
-    status: pending
-  - id: workflow-accessibility
-    content: Enhance accessibility with ARIA labels, keyboard navigation, and a11y linting
-    status: pending
-  - id: workflow-performance
-    content: Optimize bundle size and runtime performance with lazy loading and memoization
-    status: pending
-  - id: workflow-cicd
-    content: Set up CI/CD pipeline with GitHub Actions
-    status: pending
-  - id: workflow-security
-    content: Review security, audit dependencies, and set up Dependabot
-    status: pending
-  - id: workflow-docs
-    content: Create architecture documentation and improve project structure docs
-    status: pending
----
-
 # Geography Quiz Code Quality Improvement Plan
 
 ## Overview
@@ -447,9 +323,9 @@ This plan addresses five key improvement areas: state management consolidation, 
 - **Action:** Set up Husky and lint-staged
 - Install: `npm install --save-dev husky lint-staged`
 - Configure pre-commit hook to run:
-  - ESLint
-  - Prettier check
-  - Tests (optional, can be slow)
+- ESLint
+- Prettier check
+- Tests (optional, can be slow)
 - Create `.lintstagedrc` or add to `package.json`
 - Ensure hooks run on staged files only
 
@@ -514,14 +390,14 @@ This plan addresses five key improvement areas: state management consolidation, 
 - **Action:** Set up GitHub Actions (or similar) for CI/CD
 - Create `.github/workflows/ci.yml`
 - Run on pull requests:
-  - Lint check
-  - Format check
-  - Type check (if using TypeScript)
-  - Test suite
-  - Build verification
+- Lint check
+- Format check
+- Type check (if using TypeScript)
+- Test suite
+- Build verification
 - Run on main branch:
-  - All checks above
-  - Deploy to GitHub Pages (if applicable)
+- All checks above
+- Deploy to GitHub Pages (if applicable)
 - Add status badges to README
 
 ### 7.9 Security Considerations
