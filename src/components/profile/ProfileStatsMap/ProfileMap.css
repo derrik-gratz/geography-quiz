@@ -47,9 +47,11 @@
 
 .profile-stats-map__display-mode-selector-button {
   background-color: var(--background-secondary);
+  font-size: 12px;
 }
 
 .profile-stats-map__display-mode-selector-button-active {
+  font-size: 12px;
   background-color: var(--color-selected);
   border-color: var(--color-selected-outline);
 }
