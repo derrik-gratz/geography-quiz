@@ -19,12 +19,12 @@ export function SelectedCountryDisplay({ selectedCountry, countryStats, displayM
 
     const learningRateDataAvailable = selectedCountry && countryStats[selectedCountry] !== undefined && countryStats[selectedCountry].lastChecked !== undefined;
 
-    const displayModeText = displayMode === 'dailyChallenge' ? 'daily challenge' : 'learning rate';
+    const displayModeText = displayMode === 'dailyChallengeAccuracy' ? 'daily challenge accuracy' : displayMode === 'dailyChallengePrecision' ? 'daily challenge skill score' : 'learning rate';
     let displayText = '';
     if (!selectedCountry) {
         displayText = 'Select a country for extended stats';
     }
-    else if ((displayMode === 'dailyChallenge' && !dailyChallengeDataAvailable) || (displayMode === 'learningRate' && !learningRateDataAvailable)) {
+    else if ((displayMode === 'dailyChallengeAccuracy' && !dailyChallengeDataAvailable) || (displayMode === 'dailyChallengePrecision' && !dailyChallengeDataAvailable) || (displayMode === 'learningRate' && !learningRateDataAvailable)) {
         displayText = `No ${displayModeText} data for this country`;
     }
     else {
@@ -48,7 +48,7 @@ export function SelectedCountryDisplay({ selectedCountry, countryStats, displayM
                 </div>
             </div>
             <div className="selected-country-display__body"> 
-                {displayMode === 'dailyChallenge' && dailyChallengeDataAvailable && <SelectedCountryModalityMatrix userCountryData={countryStats[selectedCountry]} />}
+                {(displayMode === 'dailyChallengeAccuracy' || displayMode === 'dailyChallengePrecision') && dailyChallengeDataAvailable && <SelectedCountryModalityMatrix userCountryData={countryStats[selectedCountry]} mode={displayMode === 'dailyChallengeAccuracy' ? 'accuracy' : displayMode === 'dailyChallengePrecision' ? 'precision' : ''} />}
                 {displayMode === 'learningRate' && learningRateDataAvailable && (
                     <div className="selected-country-display__body-text">
                         Learning rate: {countryStats[selectedCountry].learningRate} days <br /> Last checked: {countryStats[selectedCountry].lastChecked}

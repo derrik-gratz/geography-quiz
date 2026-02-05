@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BaseMap } from '../../base/BaseMap.jsx';
-import { calculateCountryAccuracy } from '../../../services/statsService.js';
+import { calculateCountryAccuracy, calculateCountryPrecision } from '../../../services/statsService.js';
 import { SelectedCountryDisplay } from './SelectedCountryDisplay.jsx';
 import './ProfileMap.css';
 
@@ -13,7 +13,7 @@ export function ProfileMap({ countryStats }) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({ coordinates: [0, 0], zoom: 1 });
-  const [displayMode, setDisplayMode] = useState('dailyChallenge');
+  const [displayMode, setDisplayMode] = useState('dailyChallengeAccuracy');
   
   const getCountryClassName = (countryCode) => {
     const hasData = countryStats && countryStats[countryCode];
@@ -89,6 +89,7 @@ const interpolateColor = (value, color1, color2, minValue = 0, maxValue = 1) => 
 
 const getCountryStyle = (countryCode) => {
   const avgAccuracy = calculateCountryAccuracy(countryStats[countryCode]);
+  const avgPrecision = calculateCountryPrecision(countryStats[countryCode]);
   // Get computed CSS variable values
   const getComputedColor = (variable) => {
     return getComputedStyle(document.documentElement)
@@ -103,13 +104,15 @@ const getCountryStyle = (countryCode) => {
   // const clampedAccuracy = Math.max(0, Math.min(1, avgAccuracy || 0));
   // Interpolate: 0 = incorrect color, 1 = correct color
   // console.log(countryStats)
-  const fillColor = displayMode === 'dailyChallenge' ? 
-    interpolateColor(avgAccuracy, incorrectColor, correctColor) : 
-    displayMode === 'learningRate' && countryStats[countryCode]?.learningRate && countryStats[countryCode].lastChecked ? 
-    interpolateColor(countryStats[countryCode].learningRate, incorrectColor, correctColor, 0, 64) :
-     'var(--fill)';
-  // const fillColor = Number.isNaN(avgAccuracy) ? 'var(--fill)' : interpolateColor(avgAccuracy, incorrectColor, correctColor);
-
+  let fillColor = 'var(--fill)';
+  
+  if (displayMode === 'dailyChallengeAccuracy') {
+    fillColor = interpolateColor(avgAccuracy, incorrectColor, correctColor);
+  } else if (displayMode === 'dailyChallengePrecision') {
+    fillColor = interpolateColor(avgPrecision, incorrectColor, correctColor);
+  } else if (displayMode === 'learningRate' && countryStats[countryCode]?.learningRate && countryStats[countryCode].lastChecked) {
+    fillColor = interpolateColor(countryStats[countryCode].learningRate, incorrectColor, correctColor, 0, 64);
+  } 
   return {
     default: {
       fill: countryCode === selectedCountry || countryCode === hoveredCountry ? 'var(--fill)': fillColor ,
@@ -143,7 +146,8 @@ const getCountryStyle = (countryCode) => {
             className="world-map__base-map"
             initialView={defaultViewWindow}
             additionalControls={[
-              <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>,
+              <button className={`${buttonBaseName} ${displayMode === 'dailyChallengeAccuracy' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallengeAccuracy')}>Daily challenge accuracy</button>,
+              <button className={`${buttonBaseName} ${displayMode === 'dailyChallengePrecision' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallengePrecision')}>Daily challenge precision</button>,
               <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
             ]}
             showGraticule={true}

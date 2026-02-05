@@ -164,7 +164,7 @@ export function QuizPrompt({}) {
             const timeUntilNextDay = getTimeUntilNextDay();
             return (
                 <span className="prompt-content__generic-text">
-                    You have already completed today's daily challenge!<br />
+                    You completed today's daily challenge!<br />
                     Next challenge in {timeUntilNextDay.hours}h:{timeUntilNextDay.minutes}m.
                 </span>
             );

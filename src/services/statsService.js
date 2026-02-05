@@ -156,6 +156,26 @@ export function calculateCountryAccuracy(countryData) {
   return totalTests > 0 ? correctTests / totalTests : NaN;
 }
 
+export function calculateCountryPrecision(countryData) {
+  if (!countryData || !countryData.matrix) {
+    return NaN;
+  }
+  let totalTests = 0;
+  // Iterate through the 3x3 matrix
+  let avgPrecision = 0;
+  for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
+    for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
+      const cell = countryData.matrix[inputIndex][promptedIndex];
+      if (cell && cell.length > 0) {
+        totalTests += cell.length;
+        avgPrecision += calculateAverageSkillScore(cell) / 0.5;
+      }
+    }
+  }
+  // Return accuracy as ratio of correct to total (0-1)
+  return totalTests > 0 ? avgPrecision / totalTests : NaN;
+}
+
 /**
  * Calculate average skill score for a country modality
  * @param {Array} skillScores - Array of skill scores (floats)
