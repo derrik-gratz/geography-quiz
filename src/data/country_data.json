@@ -2287,7 +2287,6 @@
     "flagCode": "FR",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },
@@ -3407,7 +3406,6 @@
     "flagCode": "FR",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },
@@ -4097,7 +4095,6 @@
     "flagCode": "FR",
     "availablePrompts": [
       "name",
-      "flag",
       "location"
     ]
   },

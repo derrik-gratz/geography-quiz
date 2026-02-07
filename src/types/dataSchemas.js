@@ -1,12 +1,23 @@
 /**
- * Data schemas and type definitions for daily challenge tracking
- * 
- * Modalities: 'name', 'flag', 'location' (3 total)
+ * Country Data
  */
 
 /**
- * Today's Daily Challenge
-*/
+ * @typedef {Object} CountryRecord
+ * @property {string} country - Country name
+ * @property {string[]} aliases - Alternative country names
+ * @property {string} code - 3 character country code, used as universal identifier
+ * @property {string} capital - Country capital, currently unused
+ * @property {number[]} location - Country location coordinates, for displaying with map prompt [latitude, longitude]
+ * @property {string} flagCode - Country flag code, for flag SVG classnames
+ * @property {string[]} availablePrompts - Valid modalities available for prompting (flag, name, location)
+ */
+
+/**
+ * @typedef {Object} CountryData
+ * @property {CountryRecord[]} countries - Array of country records
+ */
+
 
 /**
  * @typedef {Object} DailyChallengeModalityResult
