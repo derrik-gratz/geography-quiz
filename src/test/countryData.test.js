@@ -81,10 +81,8 @@ describe('flag_colors.json format', () => {
 });
 
 import flagIconList from 'flag-icons/country.json' with { type: 'json' };
-import mainGeographies from '../assets/ne_50m_admin_0_countries.geojson' with { type: 'json' };
-import tinyGeographies from '../assets/ne_50m_admin_0_tiny_countries.geojson' with { type: 'json' };
-
-const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
+import mainGeographies from '../assets/ne_50m_admin_0_countries.json' with { type: 'json' };
+import tinyGeographies from '../assets/ne_50m_admin_0_tiny_countries.json' with { type: 'json' };
 
 describe('data codes consistent with packages', () => {
     it('Flag codes have SVG available in flag-icons package', () => {
@@ -93,11 +91,42 @@ describe('data codes consistent with packages', () => {
         const invalid = flagCodes.filter(code => !availableIcons.has(code));
         expect(invalid, `Invalid flag codes: ${invalid.join(', ')}`).toEqual([]);
     })
-    it('Country codes have geography available in natural-earth-vector package', () => {
-        
-        const countryCodes = countryData.map(c => c.code);
-        console.log(mainGeographies);
-        const invalid = countryCodes.filter(code => !mainGeographies.features.some(feature => feature.properties.ISO_A3 === code));
-        expect(invalid, `Invalid country codes: ${invalid.join(', ')}`).toEqual([]);
+    it('countries in country_data.json have geography available', () => {
+        const countryCodeSet = new Set(countryData.map((c) => c.code));
+        countryCodeSet.forEach(code => {
+            const featureLarge = mainGeographies.features.find(f => f.properties.ISO_A3 === code);
+            const featureTiny = tinyGeographies.features.find(f => f.properties.ISO_A3 === code);
+            expect(featureLarge || featureTiny, `Country ${code} has no geography available`).toBeDefined();
+        });
     })
+    // it('loads and validates tiny countries GeoJSON', async () => {
+    //     // const res = await fetch(tinyGeoUrl);
+    //     // expect(res.ok, `Failed to fetch: ${res.status}`).toBe(true);
+    //     // const geojson = await res.json();
+    //     // expect(geojson.type).toBe('FeatureCollection');
+    //     // expect(Array.isArray(geojson.features)).toBe(true);
+    //     // console.log(geojson);
+    //     const countryCodeSet = new Set(countryData.map((c) => c.code));
+    //     const featuresWithMissingCode = tinyGeographies.features.filter(
+    //     (f) =>
+    //         f.properties?.ISO_A3 !== null && f.properties?.ISO_A3 !== '-99' &&
+    //         !countryCodeSet.has(f.properties.ISO_A3)
+    //     );
+    //     expect(
+    //     featuresWithMissingCode,
+    //     featuresWithMissingCode.length
+    //         ? `GeoJSON ISO_A3 not in countryData: ${featuresWithMissingCode
+    //             .map((f) => f.properties.ISO_A3)
+    //             .join(", ")}`
+    //         : ""
+    //     ).toEqual([]);
+        
+    //     // ... rest of assertions
+    //   });
+    // it('Country codes have geography available in natural-earth-vector package', () => {
+        
+    //     const countryCodes = countryData.map(c => c.code);
+    //     const invalid = countryCodes.filter(code => !mainGeographies.features.some(feature => feature.properties.ISO_A3 === code));
+    //     expect(invalid, `Invalid country codes: ${invalid.join(', ')}`).toEqual([]);
+    // })
 })

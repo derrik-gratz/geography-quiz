@@ -7,9 +7,8 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import allCountryData from '../../data/country_data.json';
-
-const mainGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson";
-const tinyGeoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_50m_admin_0_tiny_countries.geojson";
+import mainGeographies from '../../assets/ne_50m_admin_0_countries.json';
+import tinyGeographies from '../../assets/ne_50m_admin_0_tiny_countries.json';
 
 function isValidCountryCode(code) {
   return code && 
@@ -152,7 +151,7 @@ export function BaseMap({
           }}
         >
           {showGraticule && <Graticule stroke="#999" step={[20,20]} />}
-          <Geographies geography={mainGeoUrl}>
+          <Geographies geography={mainGeographies}>
             {({ geographies }) => {
               let lowPriorityGeos = [];
               let regularGeos = [];
@@ -188,7 +187,7 @@ export function BaseMap({
               return [...lowPriorityGeos, ...regularGeos, ...specialGeos];
             }}
           </Geographies>
-          <Geographies geography={tinyGeoUrl}>
+          <Geographies geography={tinyGeographies}>
             {({ geographies, projection }) => {
                 let lowPriorityCircles = [];
                 let regularCircles = [];
