@@ -85,48 +85,42 @@ import mainGeographies from '../assets/ne_50m_admin_0_countries.json' with { typ
 import tinyGeographies from '../assets/ne_50m_admin_0_tiny_countries.json' with { type: 'json' };
 
 describe('data codes consistent with packages', () => {
+    const countryDataISOA3 = new Set(countryData.map((c) => c.code));
+    const countryDataISOA2 = countryData.map(c => c.flagCode.toLowerCase());
+    const availableFlagIcons = new Set(flagIconList.map(x => x.code));
     it('Flag codes have SVG available in flag-icons package', () => {
-        const flagCodes = countryData.map(c => c.flagCode.toLowerCase());
-        const availableIcons = new Set(flagIconList.map(x => x.code));
-        const invalid = flagCodes.filter(code => !availableIcons.has(code));
+        const invalid = countryDataISOA2.filter(code => !availableFlagIcons.has(code));
         expect(invalid, `Invalid flag codes: ${invalid.join(', ')}`).toEqual([]);
     })
     it('countries in country_data.json have geography available', () => {
-        const countryCodeSet = new Set(countryData.map((c) => c.code));
-        countryCodeSet.forEach(code => {
+        countryDataISOA3.forEach(code => {
             const featureLarge = mainGeographies.features.find(f => f.properties.ISO_A3 === code);
             const featureTiny = tinyGeographies.features.find(f => f.properties.ISO_A3 === code);
             expect(featureLarge || featureTiny, `Country ${code} has no geography available`).toBeDefined();
         });
     })
-    // it('loads and validates tiny countries GeoJSON', async () => {
-    //     // const res = await fetch(tinyGeoUrl);
-    //     // expect(res.ok, `Failed to fetch: ${res.status}`).toBe(true);
-    //     // const geojson = await res.json();
-    //     // expect(geojson.type).toBe('FeatureCollection');
-    //     // expect(Array.isArray(geojson.features)).toBe(true);
-    //     // console.log(geojson);
-    //     const countryCodeSet = new Set(countryData.map((c) => c.code));
-    //     const featuresWithMissingCode = tinyGeographies.features.filter(
-    //     (f) =>
-    //         f.properties?.ISO_A3 !== null && f.properties?.ISO_A3 !== '-99' &&
-    //         !countryCodeSet.has(f.properties.ISO_A3)
-    //     );
-    //     expect(
-    //     featuresWithMissingCode,
-    //     featuresWithMissingCode.length
-    //         ? `GeoJSON ISO_A3 not in countryData: ${featuresWithMissingCode
-    //             .map((f) => f.properties.ISO_A3)
-    //             .join(", ")}`
-    //         : ""
-    //     ).toEqual([]);
-        
-    //     // ... rest of assertions
-    //   });
-    // it('Country codes have geography available in natural-earth-vector package', () => {
-        
-    //     const countryCodes = countryData.map(c => c.code);
-    //     const invalid = countryCodes.filter(code => !mainGeographies.features.some(feature => feature.properties.ISO_A3 === code));
-    //     expect(invalid, `Invalid country codes: ${invalid.join(', ')}`).toEqual([]);
-    // })
+    it('identify additional countries with geographies and flags not in country_data.json', () => {
+        const missingCountriesLarge = mainGeographies.features
+            .filter(geo => 
+                !countryDataISOA3.has(geo.properties.ISO_A3) && 
+                geo.properties.ISO_A3 !== '-99'// &&
+                // availableFlagIcons.has(geo.properties.ISO_A2)
+            )
+            .map(geo => [geo.properties.ISO_A3, geo.properties.NAME_EN]);
+        if (missingCountriesLarge.length > 0) {
+            console.log(`Large geographies available but not in country data: ${missingCountriesLarge.join('; ')}`);
+        }
+        // expect(missingCountriesLarge, `Large geographies available with flag but not in country dada: ${missingCountriesLarge}`).toEqual([])
+        const missingCountriesTiny = tinyGeographies.features
+            .filter(geo => 
+                !countryDataISOA3.has(geo.properties.ISO_A3) && 
+                geo.properties.ISO_A3 !== '-99' //&&
+                //availableFlagIcons.has(geo.properties.ISO_A2)
+            )
+            .map(geo => [geo.properties.ISO_A3, geo.properties.NAME_EN]);
+        // expect(missingCountriesTiny, `Large geographies available with flag but not in country dada: ${missingCountriesTiny}`).toEqual([])
+        if (missingCountriesTiny.length > 0) {
+            console.log(`Tiny geographies available but not in country data: ${missingCountriesTiny}`);
+        }
+    })
 })
