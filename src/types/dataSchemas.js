@@ -1,12 +1,12 @@
 /**
  * Data schemas and type definitions for daily challenge tracking
- * 
+ *
  * Modalities: 'name', 'flag', 'location' (3 total)
  */
 
 /**
  * Today's Daily Challenge
-*/
+ */
 
 /**
  * @typedef {Object} DailyChallengeModalityResult
@@ -50,7 +50,7 @@
  * Per-country performance data
  */
 
-/** 
+/**
  * @typedef {Object} LearningData
  * @property {string|null} lastChecked - Date string "YYYY-MM-DD" when last checked in learning mode
  * @property {number|null} learningRate - Number of days until next prompted for learning (spaced repetition)
@@ -62,17 +62,17 @@
  * - Rows (first index 0-2) = Input modality (name, flag, location)
  * - Columns (second index 0-2) = Prompted modality (name, flag, location)
  * - Each cell [input][prompted] = Array of skill scores (floats, 0-1) for last 5 tests
- * 
+ *
  * Example: matrix[1][0] = array of skill scores for "prompted with name, answered with flag"
- * 
+ *
  * Matrix access: matrix[inputIndex][promptedIndex]
  * Matrix indices:
  * 0 = name
- * 1 = flag  
+ * 1 = flag
  * 2 = location
  */
 
-/** 
+/**
  * @typedef {Object} CountryLogEntry
  * @property {string} countryCode - Country code (e.g., "MEX", "CAN")
  * @property {number} learningRate - Number of days until next prompted for learning (spaced repetition)
@@ -84,7 +84,7 @@
  * @property {CountryLogEntry[]} entries - Array of country log entries
  */
 
-/** 
+/**
  * @typedef {Object} UserData
  * @property {string} userId - Unique user ID
  * @property {DailyChallengeLog} dailyChallengeLog - Daily challenge log
@@ -123,7 +123,7 @@ export function generateLocalUserId() {
   if (existingId) {
     return existingId;
   }
-  
+
   // Generate new ID
   const newId = `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   localStorage.setItem('geography_quiz_user_id', newId);
@@ -162,7 +162,7 @@ export function createEmptyModalityMatrix() {
   for (let input = 0; input < 3; input++) {
     matrix[input] = [];
     for (let prompted = 0; prompted < 3; prompted++) {
-      matrix[input][prompted] = []
+      matrix[input][prompted] = [];
     }
   }
   return matrix;
@@ -180,7 +180,7 @@ export function calculateSkillScore(correct, guesses) {
   if (!correct || guesses <= 0) {
     return 0;
   }
-  return (6 - guesses) / (5*2); // 5 guesses, 2 modalities per country
+  return (6 - guesses) / (5 * 2); // 5 guesses, 2 modalities per country
 }
 
 /**
@@ -193,7 +193,7 @@ export function createEmptyModalityResult(prompted = false) {
     skillScore: 0,
     correct: null,
     guesses: [],
-    prompted
+    prompted,
   };
 }
 
@@ -205,7 +205,7 @@ export function createEmptyModalityResult(prompted = false) {
  */
 export function createModalityResultFromGuess(guessData) {
   const { status, n_attempts = 0, attempts = [] } = guessData || {};
-  
+
   let correct = null;
   let prompted = false;
   if (status === 'completed') {
@@ -216,15 +216,18 @@ export function createModalityResultFromGuess(guessData) {
     correct = null;
     prompted = true;
   }
-  
+
   const guesses = attempts || [];
-  const skillScore = calculateSkillScore(correct === true, guesses.length || n_attempts);
-  
+  const skillScore = calculateSkillScore(
+    correct === true,
+    guesses.length || n_attempts,
+  );
+
   return {
     skillScore,
     correct,
     guesses,
-    prompted
+    prompted,
   };
 }
 
@@ -235,14 +238,26 @@ export function createModalityResultFromGuess(guessData) {
  * @returns {DailyChallengeCountryResult} Country result
  */
 export function createCountryResultFromPrompt(promptEntry, countryCode) {
-  const nameData = promptEntry.name || { status: null, n_attempts: 0, attempts: [] };
-  const flagData = promptEntry.flag || { status: null, n_attempts: 0, attempts: [] };
-  const locationData = promptEntry.location || { status: null, n_attempts: 0, attempts: [] };
-  
+  const nameData = promptEntry.name || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+  const flagData = promptEntry.flag || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+  const locationData = promptEntry.location || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+
   return {
     countryCode,
     name: createModalityResultFromGuess(nameData),
     flag: createModalityResultFromGuess(flagData),
-    location: createModalityResultFromGuess(locationData)
+    location: createModalityResultFromGuess(locationData),
   };
 }

@@ -10,7 +10,7 @@ import {
   getModalityIndex,
   createEmptyModalityMatrix,
   getModalityName,
-} from "@/types/dataSchemas.js";
+} from '@/types/dataSchemas.js';
 
 /**
  * Calculate statistics per prompt modality from score log and country data
@@ -32,7 +32,7 @@ export function calculatePerModalityStats(userCountryData) {
   }
 
   if (!userCountryData) {
-    console.error("No user country data found");
+    console.error('No user country data found');
     return modalityMatrix;
   }
 

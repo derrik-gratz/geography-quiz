@@ -1,14 +1,14 @@
 // import countryData from '../data/country_data.json' with { type: 'json' };
-import quizSets from "@/data/quiz_sets.json" with { type: "json" };
-import { seededRNG, getDailySeed, createSeededRNG } from "./dailyRNG.js";
-import { getCountriesDueForReview } from "./spacedRepetitionEngine.js";
+import quizSets from '@/data/quiz_sets.json' with { type: 'json' };
+import { seededRNG, getDailySeed, createSeededRNG } from './dailyRNG.js';
+import { getCountriesDueForReview } from './spacedRepetitionEngine.js';
 
 const dailyChallengeLength = 5;
 
 // Shuffle array using Fisher-Yates algorithm
 export function shuffleArray(data, seed) {
   if (!Array.isArray(data)) {
-    console.error("shuffleArray: data must be an array", data);
+    console.error('shuffleArray: data must be an array', data);
     return [];
   }
 
@@ -50,9 +50,9 @@ export function filterCountryData(
     return country.availablePrompts.length > 0;
   });
 
-  if (gameMode === "learning") {
+  if (gameMode === 'learning') {
     if (!userData) {
-      console.error("Learning mode requires userData");
+      console.error('Learning mode requires userData');
       return [];
     }
     // from userData
@@ -62,17 +62,17 @@ export function filterCountryData(
     );
     filteredCountryData = shuffleArray(filteredCountryData, Date.now());
     return filteredCountryData;
-  } else if (gameMode === "dailyChallenge" || quizSet === "Daily challenge") {
+  } else if (gameMode === 'dailyChallenge' || quizSet === 'Daily challenge') {
     filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(
       0,
       dailyChallengeLength,
     );
     return filteredCountryData;
-  } else if (gameMode === "quiz") {
+  } else if (gameMode === 'quiz') {
     if (!quizSet) {
       console.error(`No quiz set selected for filtering`);
       return [];
-    } else if (quizSet !== "all") {
+    } else if (quizSet !== 'all') {
       filteredCountryData = filterCountryDataByQuizSet(
         filteredCountryData,
         quizSet,

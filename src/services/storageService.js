@@ -11,16 +11,16 @@ import {
   getModalityIndex,
   getModalityName,
   createCountryResultFromPrompt,
-} from "@/types/dataSchemas.js";
+} from '@/types/dataSchemas.js';
 import {
   getDefaultLearningRate,
   updateLearningRate,
-} from "./spacedRepetitionEngine.js";
+} from './spacedRepetitionEngine.js';
 
-const DB_NAME = "geography_quiz_db";
+const DB_NAME = 'geography_quiz_db';
 const DB_VERSION = 7;
-const STORE_NAME = "user_data";
-const USER_METADATA_KEY = "geography_quiz_user_metadata";
+const STORE_NAME = 'user_data';
+const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
 function initDB() {
   return new Promise((resolve, reject) => {
@@ -40,9 +40,9 @@ function initDB() {
       if (oldVersion === 0) {
         if (!db.objectStoreNames.contains(STORE_NAME)) {
           const objectStore = db.createObjectStore(STORE_NAME, {
-            keyPath: "id",
+            keyPath: 'id',
           });
-          objectStore.createIndex("id", "id", { unique: true });
+          objectStore.createIndex('id', 'id', { unique: true });
         }
         return;
       }
@@ -52,19 +52,19 @@ function initDB() {
       // For now, we're creating a clean database on version change
 
       // Delete old stores
-      if (db.objectStoreNames.contains("daily_challenges")) {
-        db.deleteObjectStore("daily_challenges");
+      if (db.objectStoreNames.contains('daily_challenges')) {
+        db.deleteObjectStore('daily_challenges');
       }
-      if (db.objectStoreNames.contains("country_stats")) {
-        db.deleteObjectStore("country_stats");
+      if (db.objectStoreNames.contains('country_stats')) {
+        db.deleteObjectStore('country_stats');
       }
 
       // Delete and recreate the main store
       if (db.objectStoreNames.contains(STORE_NAME)) {
         db.deleteObjectStore(STORE_NAME);
       }
-      const objectStore = db.createObjectStore(STORE_NAME, { keyPath: "id" });
-      objectStore.createIndex("id", "id", { unique: true });
+      const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      objectStore.createIndex('id', 'id', { unique: true });
 
       // Future migration placeholder:
       // if (oldVersion < newVersion) {
@@ -97,7 +97,7 @@ export async function getUserMetadata() {
     localStorage.setItem(USER_METADATA_KEY, JSON.stringify(metadata));
     return metadata;
   } catch (error) {
-    console.error("Failed to get user metadata:", error);
+    console.error('Failed to get user metadata:', error);
     throw error;
   }
 }
@@ -123,11 +123,11 @@ export async function getUserMetadata() {
 async function loadUserData() {
   try {
     const db = await initDB();
-    const transaction = db.transaction([STORE_NAME], "readonly");
+    const transaction = db.transaction([STORE_NAME], 'readonly');
     const store = transaction.objectStore(STORE_NAME);
 
     return new Promise((resolve, reject) => {
-      const request = store.get("user_data");
+      const request = store.get('user_data');
       request.onsuccess = () => {
         const data = request.result;
         if (data) {
@@ -149,7 +149,7 @@ async function loadUserData() {
       request.onerror = () => reject(request.error);
     });
   } catch (error) {
-    console.error("Failed to load user data:", error);
+    console.error('Failed to load user data:', error);
     return {
       dailyChallenge: {
         streak: { current: 0, lastPlayed: null },
@@ -168,19 +168,19 @@ async function loadUserData() {
 async function saveUserData(userData) {
   try {
     const db = await initDB();
-    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
 
     await new Promise((resolve, reject) => {
       const request = store.put({
-        id: "user_data",
+        id: 'user_data',
         data: userData,
       });
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
   } catch (error) {
-    console.error("Failed to save user data:", error);
+    console.error('Failed to save user data:', error);
     throw error;
   }
 }
@@ -205,7 +205,7 @@ export function transformQuizStateToStorage(quizState, quizData) {
         countryData.code ||
         countryData.flagCode ||
         countryData.country ||
-        "UNKNOWN";
+        'UNKNOWN';
 
       // Pass through modality data as-is (status, n_attempts, attempts)
       return {
@@ -248,7 +248,7 @@ export async function saveDailyChallenge(date, challengeData) {
       .map((prompt) => {
         const countryCode = prompt.countryCode;
         if (!countryCode) {
-          console.warn("Prompt missing countryCode:", prompt);
+          console.warn('Prompt missing countryCode:', prompt);
           return null;
         }
 
@@ -314,8 +314,8 @@ export async function saveDailyChallenge(date, challengeData) {
         lastPlayed: date,
       };
     } else {
-      const lastDate = new Date(lastPlayed + "T00:00:00");
-      const currentDate = new Date(date + "T00:00:00");
+      const lastDate = new Date(lastPlayed + 'T00:00:00');
+      const currentDate = new Date(date + 'T00:00:00');
       const daysDiff = Math.floor(
         (currentDate - lastDate) / (1000 * 60 * 60 * 24),
       );
@@ -344,7 +344,7 @@ export async function saveDailyChallenge(date, challengeData) {
 
     return true;
   } catch (error) {
-    console.error("Failed to save daily challenge:", error);
+    console.error('Failed to save daily challenge:', error);
     throw error;
   }
 }
@@ -378,9 +378,9 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
 
     // Find which modality was prompted (status === 'prompted')
     let promptedModality = null;
-    ["name", "flag", "location"].forEach((modality) => {
+    ['name', 'flag', 'location'].forEach((modality) => {
       const modalityData = prompt[modality];
-      if (modalityData && modalityData.status === "prompted") {
+      if (modalityData && modalityData.status === 'prompted') {
         promptedModality = modality;
       }
     });
@@ -394,7 +394,7 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
     if (promptedIndex === -1) continue;
 
     // Process each input modality that was attempted
-    ["name", "flag", "location"].forEach((inputModality) => {
+    ['name', 'flag', 'location'].forEach((inputModality) => {
       if (inputModality === promptedModality) {
         return;
       }
@@ -413,7 +413,7 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
       }
 
       // Determine if correct from status
-      const isCorrect = inputData.status === "completed";
+      const isCorrect = inputData.status === 'completed';
 
       let cell = countryData.matrix[inputIndex][promptedIndex];
       const skillScore =
@@ -490,7 +490,7 @@ export async function clearAllData() {
   try {
     // Clear IndexedDB
     const db = await initDB();
-    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
 
     await new Promise((resolve, reject) => {
@@ -501,9 +501,9 @@ export async function clearAllData() {
 
     // Clear localStorage
     localStorage.removeItem(USER_METADATA_KEY);
-    localStorage.removeItem("geography_quiz_user_id");
+    localStorage.removeItem('geography_quiz_user_id');
   } catch (error) {
-    console.error("Failed to clear all data:", error);
+    console.error('Failed to clear all data:', error);
     throw error;
   }
 }
@@ -535,7 +535,7 @@ export async function updateCountryLearningData(countryCode, isCorrect) {
 
     await saveUserData(userData);
   } catch (error) {
-    console.error("Failed to update country learning data:", error);
+    console.error('Failed to update country learning data:', error);
     throw error;
   }
 }
@@ -550,7 +550,7 @@ export async function initStorage() {
     await getUserMetadata();
     await loadUserData(); // Initialize data structure
   } catch (error) {
-    console.error("Failed to initialize storage:", error);
+    console.error('Failed to initialize storage:', error);
     throw error;
   }
 }

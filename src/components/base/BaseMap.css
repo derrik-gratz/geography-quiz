@@ -5,13 +5,13 @@ For some reason strokeWidth can't be set for small-countries, so
 it's specified as a hardcoded prop */
 
 .base-map__country {
-    --fill: var(--map-country-fill);
-    --stroke: var(--map-country-outline);
-    --stroke-width: 0.3;
+  --fill: var(--map-country-fill);
+  --stroke: var(--map-country-outline);
+  --stroke-width: 0.3;
 }
 
 .base-map__small-country {
-    --fill: var(--map-country-fill);
-    --stroke: var(--map-country-outline);
-    --stroke-width: 0.3;
+  --fill: var(--map-country-fill);
+  --stroke: var(--map-country-outline);
+  --stroke-width: 0.3;
 }

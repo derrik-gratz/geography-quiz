@@ -1,5 +1,5 @@
-import { formatDateString, parseDateString } from "@/types/dataSchemas.js";
-import allCountryData from "@/data/country_data.json" with { type: "json" };
+import { formatDateString, parseDateString } from '@/types/dataSchemas.js';
+import allCountryData from '@/data/country_data.json' with { type: 'json' };
 
 // in days
 const DEFAULT_LEARNING_RATE = 2;

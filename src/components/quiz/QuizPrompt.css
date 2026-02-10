@@ -1,8 +1,8 @@
 .quiz-prompt__content {
-    font-size: 1.2rem;
-    line-height: 2rem;
-  }
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
 
 .quiz-prompt__content .prompt-flag {
-    font-size: 4rem;
+  font-size: 4rem;
 }

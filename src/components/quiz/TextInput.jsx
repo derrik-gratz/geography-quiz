@@ -11,16 +11,20 @@ import './TextInput.css';
 export function QuizTextInput() {
   const { state } = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { guesses, correctValue, disabled, componentStatus, incorrectValues } = useComponentState('name');
-  
+  const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
+    useComponentState('name');
+
   const isCollapsed = useMemo(() => {
     if (componentStatus === 'prompting') return true;
-    if ((componentStatus === 'completed' || componentStatus === 'failed') && state.quiz.status === 'active') {
+    if (
+      (componentStatus === 'completed' || componentStatus === 'failed') &&
+      state.quiz.status === 'active'
+    ) {
       return true;
     }
     return false;
   }, [componentStatus, state.quiz.status]);
-  
+
   // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
 
   const [input, setInput] = useState('');
@@ -46,22 +50,29 @@ export function QuizTextInput() {
         setSelectedCountry(null);
       }, 1000);
       return () => clearTimeout(timeoutId);
-    } 
+    }
   }, [isWrong]);
 
   // Reset when prompt changes
   React.useEffect(() => {
     if (state.config.gameMode === 'sandbox') {
-      setSelectedCountry(state.quizData[state.quiz.prompt.quizDataIndex]?.country);
+      setSelectedCountry(
+        state.quizData[state.quiz.prompt.quizDataIndex]?.country,
+      );
       setInput(state.quizData[state.quiz.prompt.quizDataIndex]?.country || '');
       setAllowSuggestions(true);
-    } else {  
+    } else {
       setSelectedCountry(null);
       setInput('');
       setAllowSuggestions(true);
       setIsWrong(false);
     }
-  }, [state.config.gameMode, state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.status]);
+  }, [
+    state.config.gameMode,
+    state.quizData,
+    state.quiz.prompt.quizDataIndex,
+    state.quiz.status,
+  ]);
 
   // Handle review mode and other status changes
   React.useEffect(() => {
@@ -84,7 +95,14 @@ export function QuizTextInput() {
       // Allow suggestions when component is active and not in wrong state
       setAllowSuggestions(true);
     }
-  }, [componentStatus, correctValue, isWrong, selectedCountry, state.quizData, state.quiz.prompt.quizDataIndex]);
+  }, [
+    componentStatus,
+    correctValue,
+    isWrong,
+    selectedCountry,
+    state.quizData,
+    state.quiz.prompt.quizDataIndex,
+  ]);
 
   const handleCountryClick = (country) => {
     if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
@@ -119,18 +137,16 @@ export function QuizTextInput() {
   const getSuggestionPriority = (a, b) => {
     const aIsIncorrect = incorrectValues.includes(a.country);
     const bIsIncorrect = incorrectValues.includes(b.country);
-    
+
     // If one is incorrect and the other isn't, put the correct one first
     if (aIsIncorrect && !bIsIncorrect) return 1;
     if (!aIsIncorrect && bIsIncorrect) return -1;
     return 0;
   };
 
-  const handleCountryHover = (country) => {
-  };
+  const handleCountryHover = (country) => {};
 
-  const handleCountryHoverLeave = () => {
-  };
+  const handleCountryHoverLeave = () => {};
 
   const submitButtonStatus = useMemo(() => {
     if (guesses?.status === 'completed') return 'completed';
@@ -140,14 +156,30 @@ export function QuizTextInput() {
   }, [selectedCountry, guesses?.status, isWrong, disabled, componentStatus]);
 
   const containerTitle = useMemo(() => {
-    return `Country Name ${componentStatus==='completed' ? '✓' : componentStatus==='incorrect' ? '✗' : ''}`;
+    return `Country Name ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
   }, [componentStatus]);
   return (
     <div className="quiz-text-input">
-      <CollapsibleContainer defaultCollapsed={isCollapsed} title={containerTitle} classNames={componentStatus} content={
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', position: 'relative', overflow: 'visible', alignItems: 'center'}}>
-          <SubmitButton handleSubmit={handleSubmit} status={submitButtonStatus} />
-          <CountryTextEntry
+      <CollapsibleContainer
+        defaultCollapsed={isCollapsed}
+        title={containerTitle}
+        classNames={componentStatus}
+        content={
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              marginBottom: '8px',
+              position: 'relative',
+              overflow: 'visible',
+              alignItems: 'center',
+            }}
+          >
+            <SubmitButton
+              handleSubmit={handleSubmit}
+              status={submitButtonStatus}
+            />
+            <CountryTextEntry
               value={input}
               onValueChange={handleValueChange}
               onCountryClick={handleCountryClick}
@@ -157,10 +189,13 @@ export function QuizTextInput() {
               disabled={disabled || isWrong}
               getSuggestionPriority={getSuggestionPriority}
               placeholder="Type a country name..."
-              allowSuggestions={allowSuggestions && guesses?.status !== 'completed'}
+              allowSuggestions={
+                allowSuggestions && guesses?.status !== 'completed'
+              }
             />
-        </div>
-      } />
+          </div>
+        }
+      />
     </div>
   );
-} 
+}

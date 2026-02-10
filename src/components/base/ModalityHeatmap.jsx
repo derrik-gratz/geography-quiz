@@ -5,7 +5,7 @@ import './ModalityHeatmap.css';
 /**
  * ModalityMatrix component
  * Displays a 3x3 heatmap showing accuracy for each input/prompted modality combination
- * 
+ *
  * @param {Object} props
  * @param {Object} props.plotData - Plot data in long format containing accuracy and precision for each input/prompted modality combination
  */
@@ -20,7 +20,7 @@ export function ModalityHeatmap({ plotData }) {
     // Get container dimensions
     const container = chartRef.current;
     const containerWidth = container.clientWidth || 500;
-    
+
     // Calculate aspect ratio (maintain 5:4 ratio)
     // Use width to calculate height since container height may be 0 initially
     const aspectRatio = 5 / 4;
@@ -29,9 +29,11 @@ export function ModalityHeatmap({ plotData }) {
 
     // Get computed CSS variable values for theming
     const getComputedColor = (variable) => {
-      return getComputedStyle(document.documentElement)
-        .getPropertyValue(variable)
-        .trim() || '#000000';
+      return (
+        getComputedStyle(document.documentElement)
+          .getPropertyValue(variable)
+          .trim() || '#000000'
+      );
     };
 
     const textColor = getComputedColor('--text-primary');
@@ -46,7 +48,7 @@ export function ModalityHeatmap({ plotData }) {
       unknown: unknownColor,
       domain: [0, 1],
       label: 'Accuracy (%)',
-      tickFormat: (d) => (d * 100).toFixed(0) + '%'
+      tickFormat: (d) => (d * 100).toFixed(0) + '%',
     };
 
     const plot = Plot.plot({
@@ -59,16 +61,16 @@ export function ModalityHeatmap({ plotData }) {
       x: {
         label: 'Prompted Modality',
         domain: ['Name', 'Flag', 'Location'],
-        axis: 'bottom'
+        axis: 'bottom',
       },
       y: {
         label: 'Input Modality',
         domain: ['Name', 'Flag', 'Location'].reverse(),
-        axis: 'left'
+        axis: 'left',
       },
       color: {
         ...colorScale,
-        legend: false
+        legend: false,
       },
       marks: [
         Plot.cell(plotData, {
@@ -83,22 +85,23 @@ export function ModalityHeatmap({ plotData }) {
             const accuracy = (d.value * 100).toFixed(1);
             const precision = (d.precision * 100).toFixed(1);
             return `${inputLabel} → ${promptedLabel}\nAccuracy: ${accuracy}%\nPrecision: ${precision}%`;
-          }
+          },
         }),
         Plot.text(plotData, {
           x: 'x',
           y: 'y',
-          text: (d) => Number.isNaN(d.value) ? '' : (d.value * 100).toFixed(0) + '%',
-        //   fill: textColor,
+          text: (d) =>
+            Number.isNaN(d.value) ? '' : (d.value * 100).toFixed(0) + '%',
+          //   fill: textColor,
           fontSize: 16,
-          fontWeight: 'bold'
-        })
+          fontWeight: 'bold',
+        }),
       ],
       style: {
         background: 'transparent',
         color: textColor,
-        fontSize: '14px'
-      }
+        fontSize: '14px',
+      },
     });
 
     const legend = Plot.legend({
@@ -119,13 +122,17 @@ export function ModalityHeatmap({ plotData }) {
   }, [plotData]);
 
   if (!plotData) {
-    return <div className="modality-matrix__empty">No modality matrix data available</div>;
+    return (
+      <div className="modality-matrix__empty">
+        No modality matrix data available
+      </div>
+    );
   }
 
   return (
     <div ref={containerRef} className="modality-matrix__chart">
-      <div ref={legendRef} className="modality-matrix__legend"/>
-      <div ref={chartRef} className="modality-matrix__plot"/>
+      <div ref={legendRef} className="modality-matrix__legend" />
+      <div ref={chartRef} className="modality-matrix__plot" />
     </div>
   );
 }

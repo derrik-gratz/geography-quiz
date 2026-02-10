@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import countryData from '@/data/country_data.json';
 import './CountryTextEntry.css';
 
-export function CountryTextEntry({ 
+export function CountryTextEntry({
   value,
   onValueChange,
   onCountryClick,
@@ -12,17 +12,18 @@ export function CountryTextEntry({
   disabled,
   getSuggestionPriority,
   defaultText,
-  allowSuggestions
-}) {  
+  allowSuggestions,
+}) {
   const [internalInput, setInternalInput] = useState(value || '');
   const [suggestions, setSuggestions] = useState([]);
   const [internalShowSuggestions, setInternalShowSuggestions] = useState(false);
 
   // Use controlled value if provided, otherwise use internal state
   const inputValue = value ? value : internalInput;
-  
+
   // showSuggestions is true only if allowSuggestions is true AND we have suggestions to show
-  const showSuggestions = allowSuggestions && internalShowSuggestions && suggestions.length > 0;
+  const showSuggestions =
+    allowSuggestions && internalShowSuggestions && suggestions.length > 0;
 
   // Sync internal state with controlled value
   useEffect(() => {
@@ -54,10 +55,10 @@ export function CountryTextEntry({
 
   const handleChange = (e) => {
     const newValue = e.target.value;
-    
+
     // Update internal state
     setInternalInput(newValue);
-    
+
     // Notify parent of value change
     if (onValueChange) {
       onValueChange(newValue);
@@ -66,20 +67,25 @@ export function CountryTextEntry({
     // Filter and show suggestions
     if (newValue.length > 0) {
       const normalizedInput = normalizeText(newValue);
-      let filtered = countryData.filter(c => {
-        const allAliases = [c.country, ...(Array.isArray(c.aliases) ? c.aliases : [])].filter(Boolean);
-        const matches = allAliases.map(name => normalizeText(name)).some(name => name.includes(normalizedInput));
+      let filtered = countryData.filter((c) => {
+        const allAliases = [
+          c.country,
+          ...(Array.isArray(c.aliases) ? c.aliases : []),
+        ].filter(Boolean);
+        const matches = allAliases
+          .map((name) => normalizeText(name))
+          .some((name) => name.includes(normalizedInput));
         return matches;
       });
-      
+
       // Apply custom sorting if provided
       if (getSuggestionPriority) {
         filtered = filtered.sort((a, b) => getSuggestionPriority(a, b));
       }
-      
+
       filtered = filtered.slice(0, 10);
       setSuggestions(filtered);
-      
+
       // Only show suggestions if allowed
       if (allowSuggestions) {
         setInternalShowSuggestions(true);
@@ -91,7 +97,11 @@ export function CountryTextEntry({
   };
 
   const handleFocus = () => {
-    if (inputValue.length > 0 && suggestions.length > 0 && allowSuggestions !== false) {
+    if (
+      inputValue.length > 0 &&
+      suggestions.length > 0 &&
+      allowSuggestions !== false
+    ) {
       setInternalShowSuggestions(true);
     }
   };
@@ -102,28 +112,27 @@ export function CountryTextEntry({
     }, 100);
   };
 
-//   const handleSuggestionClick = (country) => {
-//     if (onCountryClick) {
-//       onCountryClick(country);
-//     }
-//   };
-
+  //   const handleSuggestionClick = (country) => {
+  //     if (onCountryClick) {
+  //       onCountryClick(country);
+  //     }
+  //   };
 
   return (
     <div className="country-text-entry">
-      <input 
+      <input
         className="country-text-entry__input"
         type="text"
         value={inputValue}
         onChange={handleChange}
-        placeholder={defaultText || "Type a country name..."}
+        placeholder={defaultText || 'Type a country name...'}
         disabled={disabled}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
       {showSuggestions && (
         <ul className="country-text-entry__suggestions">
-          {suggestions.map(country => (
+          {suggestions.map((country) => (
             <li
               key={country.code}
               className={`country-text-entry__suggestion-item ${getSuggestionClassName(country)}`}
@@ -135,7 +144,10 @@ export function CountryTextEntry({
               <div>{country.country}</div>
               {country.aliases && country.aliases.length > 0 && (
                 <div className="country-text-entry__suggestion-aliases">
-                  Aliases: {Array.isArray(country.aliases) ? country.aliases.join(', ') : country.aliases}
+                  Aliases:{' '}
+                  {Array.isArray(country.aliases)
+                    ? country.aliases.join(', ')
+                    : country.aliases}
                 </div>
               )}
             </li>
@@ -144,4 +156,4 @@ export function CountryTextEntry({
       )}
     </div>
   );
-} 
+}

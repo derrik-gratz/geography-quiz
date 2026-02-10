@@ -1,19 +1,19 @@
 .modality-matrix {
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 
 .modality-matrix__chart {
-width: 100%;
-max-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 0rem;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0rem;
 }
 
 .modality-matrix__plot {
@@ -33,12 +33,12 @@ gap: 0rem;
 }
 
 .modality-matrix__legend {
-padding-bottom: 0.25rem;
-margin-bottom: 0rem;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0rem;
 }
 
 .modality-matrix__empty {
-padding: 2rem;
-text-align: center;
-color: var(--text-muted);
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
 }
