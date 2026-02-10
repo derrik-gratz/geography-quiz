@@ -1,8 +1,8 @@
 import React from 'react';
-import { useQuiz } from '../../hooks/useQuiz';
-import { useQuizActions } from '../../hooks/useQuizActions';
-import { CollapsibleContainer } from '../base/CollapsibleContainer.jsx';
-import quizSets from '../../data/quiz_sets.json';
+import { useQuiz } from '@/hooks/useQuiz';
+import { useQuizActions } from '@/hooks/useQuizActions';
+import { CollapsibleContainer } from '@/components/base/CollapsibleContainer.jsx';
+import quizSets from '@/data/quiz_sets.json';
 import './QuizConfig.css';
 
 const PROMPT_TYPES = ['location', 'name', 'flag'];

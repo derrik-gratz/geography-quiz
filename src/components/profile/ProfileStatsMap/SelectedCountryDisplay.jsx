@@ -1,5 +1,5 @@
 import { SelectedCountryModalityMatrix } from './SelectedCountryModalityMatrix.jsx';
-import allCountryData from '../../../data/country_data.json';
+import allCountryData from '@/data/country_data.json';
 import './SelectedCountryDisplay.css';
 
 export function SelectedCountryDisplay({ selectedCountry, countryStats, displayMode }) {

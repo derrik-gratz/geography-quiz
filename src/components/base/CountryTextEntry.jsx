@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import countryData from '../../data/country_data.json';
+import countryData from '@/data/country_data.json';
 import './CountryTextEntry.css';
 
 export function CountryTextEntry({ 

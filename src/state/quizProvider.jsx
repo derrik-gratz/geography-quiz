@@ -1,9 +1,9 @@
 import React, { createContext, useReducer, useEffect, useMemo } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js'; 
 import { checkPromptCompletion, checkQuizCompletion, generatePromptType, derivePromptValue } from '../services/quizEngine.js';
-import { saveDailyChallenge, updateCountryLearningData } from '../services/storageService.js';
-import { transformQuizStateToStorage } from '../services/storageService.js';
-import { formatDateString } from '../types/dataSchemas.js';
+import { saveDailyChallenge, updateCountryLearningData } from '@/services/storageService.js';
+import { transformQuizStateToStorage } from '@/services/storageService.js';
+import { formatDateString } from '@/types/dataSchemas.js';
 
 export const QuizContext = createContext();
 

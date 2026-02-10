@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { BaseMap } from '../../base/BaseMap.jsx';
-import { calculateCountryAccuracy, calculateCountryPrecision } from '../../../services/statsService.js';
+import { BaseMap } from '@/components/base/BaseMap.jsx';
+import { calculateCountryAccuracy, calculateCountryPrecision } from '@/services/statsService.js';
 import { SelectedCountryDisplay } from './SelectedCountryDisplay.jsx';
 import './ProfileMap.css';
 

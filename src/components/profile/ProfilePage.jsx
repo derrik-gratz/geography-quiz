@@ -2,15 +2,15 @@
  * Profile page component displaying daily challenge statistics from local storage
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { loadAllUserData, getUserMetadata } from '../../services/storageService.js';
-import { calculatePerModalityStats } from '../../services/statsService.js';
-import { StatsCard } from './StatsCard.jsx';
-import allCountryData from '../../data/country_data.json';
+import { loadAllUserData, getUserMetadata } from '@/services/storageService.js';
+// import { calculatePerModalityStats } from '../../services/statsService.js';
+// import { StatsCard } from './StatsCard.jsx';
+// import allCountryData from '../../data/country_data.json';
 // import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
 import { ScoreTimeline } from './ScoreTimeline.jsx';
 import { DailyChallengeModalityMatrix } from './DailyChallengeModalityMatrix.jsx';
 import { ProfileMap } from './ProfileStatsMap/ProfileMap.jsx';
-import fakeUserData from '../../types/dummyUserData.js';
+// import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
 
 

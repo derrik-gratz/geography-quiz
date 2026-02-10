@@ -1,5 +1,5 @@
-import { formatDateString, parseDateString } from '../types/dataSchemas.js';
-import allCountryData from '../data/country_data.json' with { type: 'json' };
+import { formatDateString, parseDateString } from "@/types/dataSchemas.js";
+import allCountryData from "@/data/country_data.json" with { type: "json" };
 
 // in days
 const DEFAULT_LEARNING_RATE = 2;
@@ -32,12 +32,12 @@ export function isCountryDueForReview(countryData, today) {
   if (!countryData) {
     return false;
   }
-  
+
   // If never reviewed, due immediately
   if (!countryData.lastChecked) {
     return true;
   }
-  
+
   const learningRate = countryData.learningRate ?? DEFAULT_LEARNING_RATE;
   const daysSincelastChecked = daysBetween(countryData.lastChecked, today);
   return daysSincelastChecked >= learningRate;
@@ -51,7 +51,7 @@ export function isCountryDueForReview(countryData, today) {
  */
 export function updateLearningRate(currentRate, isCorrect) {
   const rate = currentRate ?? DEFAULT_LEARNING_RATE;
-  
+
   if (isCorrect) {
     return Math.min(rate * CORRECT_MULTIPLIER, MAX_LEARNING_RATE);
   } else {
@@ -65,29 +65,32 @@ export function updateLearningRate(currentRate, isCorrect) {
  * @param {Array} allCountryData - All available country data from country_data.json
  * @returns {Array} Array of country objects due for review
  */
-export function getCountriesDueForReview(userData, countryData=allCountryData) {
+export function getCountriesDueForReview(
+  userData,
+  countryData = allCountryData,
+) {
   if (!userData || !userData.countries || !countryData) {
     return [];
   }
-  
+
   const today = formatDateString(new Date());
   const dueCountries = [];
-  
-  countryData.forEach(country => {
+
+  countryData.forEach((country) => {
     const countryCode = country.code;
     const countryData = userData.countries[countryCode];
-    
+
     // If country has no data, it's due (never reviewed)
     if (!countryData) {
       dueCountries.push(country);
       return;
     }
-    
+
     if (isCountryDueForReview(countryData, today)) {
       dueCountries.push(country);
     }
   });
-  
+
   return dueCountries;
 }
 
