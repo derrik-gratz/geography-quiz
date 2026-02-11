@@ -1,28 +1,27 @@
 /* For showing dropdown suggestions */
 .quiz-text-input {
-    overflow: visible;
+  overflow: visible;
 }
 
 .quiz-text-input .collapsable-container__content {
-    overflow: visible;
+  overflow: visible;
 }
 
 /* Input state styles */
 .quiz-text-input__input--wrong {
-    color: var(--input-option-incorrect);
-    cursor: not-allowed;
+  color: var(--input-option-incorrect);
+  cursor: not-allowed;
 }
 
 .quiz-text-input__input--disabled {
-    background-color: #f5f5f5;
-    color: #999;
-    cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
 }
 
-
 .quiz-text-input__suggestion--incorrect {
-    cursor: not-allowed;
-    color: #999;
-    opacity: 0.5;
-    text-decoration: line-through;
+  cursor: not-allowed;
+  color: #999;
+  opacity: 0.5;
+  text-decoration: line-through;
 }

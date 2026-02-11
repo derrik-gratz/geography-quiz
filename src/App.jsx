@@ -10,28 +10,26 @@ import { initStorage } from './services/storageService.js';
  * Manages page navigation and displays quiz or profile page
  */
 function App() {
+  // Initialize storage on app mount
+  React.useEffect(() => {
+    initStorage().catch((error) => {
+      console.error('Failed to initialize storage:', error);
+    });
+  }, []);
 
-    // Initialize storage on app mount
-    React.useEffect(() => {
-        initStorage().catch(error => {
-            console.error('Failed to initialize storage:', error);
-        });
-    }, []);
+  const [currentPage, setCurrentPage] = useState('quiz');
 
-    const [currentPage, setCurrentPage] = useState('quiz');
-
-    return (
-        <QuizProvider>
-            <div className="app">
-                <NavigationBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-                {currentPage === 'profile' ? (
-                    <ProfilePage />
-                ) : (
-                    <QuizPage />
-                )}
-            </div>
-        </QuizProvider>
-    );
+  return (
+    <QuizProvider>
+      <div className="app">
+        <NavigationBar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+        {currentPage === 'profile' ? <ProfilePage /> : <QuizPage />}
+      </div>
+    </QuizProvider>
+  );
 }
 
 export default App;

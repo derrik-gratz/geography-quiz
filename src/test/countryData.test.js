@@ -106,7 +106,7 @@ describe('data codes consistent with packages', () => {
                 geo.properties.ISO_A3 !== '-99'// &&
                 // availableFlagIcons.has(geo.properties.ISO_A2)
             )
-            .map(geo => [geo.properties.ISO_A3, geo.properties.NAME_EN]);
+            .map(geo => `${geo.properties.ISO_A} (${geo.properties.NAME_EN})`);
         if (missingCountriesLarge.length > 0) {
             console.log(`Large geographies available but not in country data: ${missingCountriesLarge.join('; ')}`);
         }
@@ -117,7 +117,7 @@ describe('data codes consistent with packages', () => {
                 geo.properties.ISO_A3 !== '-99' //&&
                 //availableFlagIcons.has(geo.properties.ISO_A2)
             )
-            .map(geo => [geo.properties.ISO_A3, geo.properties.NAME_EN]);
+            .map(geo => `${geo.properties.ISO_A} (${geo.properties.NAME_EN})`);
         // expect(missingCountriesTiny, `Large geographies available with flag but not in country dada: ${missingCountriesTiny}`).toEqual([])
         if (missingCountriesTiny.length > 0) {
             console.log(`Tiny geographies available but not in country data: ${missingCountriesTiny}`);

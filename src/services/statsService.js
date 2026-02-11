@@ -9,8 +9,8 @@ import {
   calculateSkillScore,
   getModalityIndex,
   createEmptyModalityMatrix,
-  getModalityName
-} from '../types/dataSchemas.js';
+  getModalityName,
+} from '@/types/dataSchemas.js';
 
 /**
  * Calculate statistics per prompt modality from score log and country data
@@ -26,52 +26,57 @@ export function calculatePerModalityStats(userCountryData) {
     for (let prompted = 0; prompted < 3; prompted++) {
       modalityMatrix[input][prompted] = {
         accuracy: [],
-        precision: []
+        precision: [],
       };
     }
   }
-
 
   if (!userCountryData) {
     console.error('No user country data found');
     return modalityMatrix;
   }
 
-   // handle single country and multiple countries
-  const countriesArray = userCountryData.matrix 
-   ? [userCountryData]
-   : Object.values(userCountryData);
+  // handle single country and multiple countries
+  const countriesArray = userCountryData.matrix
+    ? [userCountryData]
+    : Object.values(userCountryData);
 
   // Aggregate from all country matrices
   // Matrix: rows = input modality, columns = prompted modality
-  countriesArray.forEach(countryData => {
+  countriesArray.forEach((countryData) => {
     if (!countryData.matrix) return;
 
     for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
       for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
         const cell = countryData.matrix[inputIndex][promptedIndex];
         if (cell.length > 0) {
-          cell.forEach(( score ) => {
-            modalityMatrix[inputIndex][promptedIndex].accuracy.push(score > 0 ? 1 : 0);
+          cell.forEach((score) => {
+            modalityMatrix[inputIndex][promptedIndex].accuracy.push(
+              score > 0 ? 1 : 0,
+            );
             modalityMatrix[inputIndex][promptedIndex].precision.push(score);
           });
         }
       }
     }
   });
-  
+
   for (let inputIndex = 0; inputIndex < 3; inputIndex++) {
     for (let promptedIndex = 0; promptedIndex < 3; promptedIndex++) {
       const cell = modalityMatrix[inputIndex][promptedIndex];
       if (cell.accuracy.length > 0) {
-        const avgAccuracy = cell.accuracy.reduce((acc, curr) => acc + curr, 0) / cell.accuracy.length;
+        const avgAccuracy =
+          cell.accuracy.reduce((acc, curr) => acc + curr, 0) /
+          cell.accuracy.length;
         cell.accuracy = avgAccuracy;
       } else {
         cell.accuracy = NaN;
       }
-      
+
       if (cell.precision.length > 0) {
-        const avgPrecision = cell.precision.reduce((acc, curr) => acc + curr, 0) / cell.precision.length;
+        const avgPrecision =
+          cell.precision.reduce((acc, curr) => acc + curr, 0) /
+          cell.precision.length;
         cell.precision = avgPrecision;
       } else {
         cell.precision = NaN;
@@ -114,24 +119,24 @@ export function dailyChallengeCompletedToday(userData) {
   if (!userData || !userData.dailyChallenge) {
     return false;
   }
-  
+
   const today = formatDateString(new Date());
-  
+
   // Check if there's a fullEntry for today
   if (userData.dailyChallenge.fullEntries) {
     const todayEntry = userData.dailyChallenge.fullEntries.find(
-      entry => entry.date === today
+      (entry) => entry.date === today,
     );
     if (todayEntry) {
       return true;
     }
   }
-  
+
   // Fallback: check streak.lastPlayed
   if (userData.dailyChallenge.streak?.lastPlayed === today) {
     return true;
   }
-  
+
   return false;
 }
 
@@ -148,7 +153,7 @@ export function calculateCountryAccuracy(countryData) {
       const cell = countryData.matrix[inputIndex][promptedIndex];
       if (cell) {
         totalTests += cell.length;
-        correctTests += cell.filter(score => score > 0).length;
+        correctTests += cell.filter((score) => score > 0).length;
       }
     }
   }
@@ -202,14 +207,14 @@ export function calculateCountrySkillScores(countryData, inputModality = null) {
     return {
       name: 0,
       flag: 0,
-      location: 0
+      location: 0,
     };
   }
 
   const scores = {
     name: [],
     flag: [],
-    location: []
+    location: [],
   };
 
   // Aggregate scores from matrix
@@ -230,7 +235,7 @@ export function calculateCountrySkillScores(countryData, inputModality = null) {
   const result = {
     name: calculateAverageSkillScore(scores.name),
     flag: calculateAverageSkillScore(scores.flag),
-    location: calculateAverageSkillScore(scores.location)
+    location: calculateAverageSkillScore(scores.location),
   };
 
   return inputModality ? result[inputModality] : result;

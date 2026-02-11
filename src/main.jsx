@@ -1,15 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import './App.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import './App.css';
 import 'flag-icons/css/flag-icons.min.css';
-import App from './App.jsx'
-import { clearAllData } from './services/storageService.js'
+import App from './App.jsx';
+import { clearAllData } from './services/storageService.js';
 
 // Expose clearAllData for development/testing
 if (import.meta.env.DEV) {
   window.clearQuizData = async () => {
-    if (confirm('⚠️ This will delete ALL quiz data (daily challenges, country stats, etc.). Are you sure?')) {
+    if (
+      confirm(
+        '⚠️ This will delete ALL quiz data (daily challenges, country stats, etc.). Are you sure?',
+      )
+    ) {
       try {
         await clearAllData();
         console.log('✅ All quiz data cleared successfully!');
@@ -20,11 +24,13 @@ if (import.meta.env.DEV) {
       }
     }
   };
-  console.log('💡 Dev helper: Call window.clearQuizData() to wipe the database');
+  console.log(
+    '💡 Dev helper: Call window.clearQuizData() to wipe the database',
+  );
 }
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>,
-)
+);

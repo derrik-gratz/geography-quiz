@@ -529,14 +529,5 @@
     "YE",
     "ZW"
   ],
-  "orange": [
-    "AM",
-    "BT",
-    "CI",
-    "CY",
-    "IN",
-    "IE",
-    "ME",
-    "NE"
-  ]
+  "orange": ["AM", "BT", "CI", "CY", "IN", "IE", "ME", "NE"]
 }

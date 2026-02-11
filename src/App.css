@@ -1,7 +1,6 @@
-
 :root {
   color-scheme: light dark;
-  
+
   /* Light mode colors */
   --text-primary: #333;
   --text-secondary: #666;
@@ -15,24 +14,24 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 
   /* Interactive state colors */
-  --color-hover: #0072B2;
+  --color-hover: #0072b2;
   --color-hover-outline: #00447a;
-  --color-active-primary: #F0E442;
+  --color-active-primary: #f0e442;
   --color-active-primary-outline: #d4c73b;
   /* --color-active-secondary: #0072B2;
   --color-active-secondary-outline: #00447a; */
-  --color-selected: #CC79A7;
+  --color-selected: #cc79a7;
   --color-selected-outline: #ae658d;
-  --color-correct: #009E73;
+  --color-correct: #009e73;
   --color-correct-outline: #007200;
-  --color-incorrect: #D55E00;
+  --color-incorrect: #d55e00;
   --color-incorrect-outline: #b24500;
   --color-disabled: #6c757d;
   --color-disabled-bg: #f8f9fa;
-  --map-country-outline: #aaaaaa;;
+  --map-country-outline: #aaaaaa;
   --map-country-fill: #efefef;
 
-  --flag-icon-size: 40px;  /* Mobile default */
+  --flag-icon-size: 40px; /* Mobile default */
 }
 
 /* Dark mode colors */
@@ -73,7 +72,9 @@ button {
   background-color: var(--background-secondary);
   color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s;
 }
 
 /* App Layout */
@@ -86,7 +87,7 @@ button {
 /* App Layout - Mobile First */
 .app-main {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 1rem;
   padding: 0.5rem;
   width: 100%;
@@ -103,7 +104,7 @@ button {
 
 .right-column {
   width: 100%;
-  min-width: 250px;  /* Allow shrinking */
+  min-width: 250px; /* Allow shrinking */
   gap: 0;
 }
 
@@ -114,7 +115,7 @@ button {
   } */
 
   .app-main {
-    flex-direction: row;  /* Side-by-side on desktop */
+    flex-direction: row; /* Side-by-side on desktop */
     padding: 1rem;
   }
 

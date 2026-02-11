@@ -9,8 +9,15 @@ import { useQuiz } from './useQuiz.js';
  */
 export function useComponentState(guessType) {
   const { state } = useQuiz();
-  const correctField = guessType === 'name' ? 'country' : guessType === 'flag' ? 'flagCode' : guessType === 'location' ? 'code' : null;
-    const { guesses, correctValue, disabled } = useMemo(() => {
+  const correctField =
+    guessType === 'name'
+      ? 'country'
+      : guessType === 'flag'
+        ? 'flagCode'
+        : guessType === 'location'
+          ? 'code'
+          : null;
+  const { guesses, correctValue, disabled } = useMemo(() => {
     let guesses = null;
     let correctValue = null;
     let disabled = true;
@@ -18,13 +25,20 @@ export function useComponentState(guessType) {
     if (state.config.gameMode === 'sandbox') {
       disabled = false;
       // In sandbox, guesses would be null, correctValue can be set if needed
-    } else if (state.config.gameMode === 'quiz' || state.config.gameMode === 'learning' || state.config.gameMode === 'dailyChallenge') {
+    } else if (
+      state.config.gameMode === 'quiz' ||
+      state.config.gameMode === 'learning' ||
+      state.config.gameMode === 'dailyChallenge'
+    ) {
       if (state.quiz.status === 'active') {
         guesses = state.quiz.prompt.guesses[guessType];
         disabled = guesses?.status !== 'incomplete';
         const currentCountry = state.quizData[state.quiz.prompt.quizDataIndex];
         correctValue = currentCountry?.[correctField];
-      } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
+      } else if (
+        state.quiz.status === 'reviewing' &&
+        state.quiz.reviewIndex !== null
+      ) {
         const historyEntry = state.quiz.history[state.quiz.reviewIndex];
         guesses = historyEntry?.[guessType];
         disabled = true;
@@ -44,16 +58,26 @@ export function useComponentState(guessType) {
     state.quiz.history,
     state.quizData,
     guessType,
-    correctField
+    correctField,
   ]);
 
   const componentStatus = useMemo(() => {
     if (state.config.gameMode === 'sandbox') {
       return 'sandbox';
-    } else if (state.config.gameMode === 'quiz' || state.config.gameMode === 'learning' || state.config.gameMode === 'dailyChallenge') {
-      if (state.quiz.status === 'not_started' || state.quiz.status === 'completed') {
+    } else if (
+      state.config.gameMode === 'quiz' ||
+      state.config.gameMode === 'learning' ||
+      state.config.gameMode === 'dailyChallenge'
+    ) {
+      if (
+        state.quiz.status === 'not_started' ||
+        state.quiz.status === 'completed'
+      ) {
         return 'disabled';
-      } else if (state.quiz.status === 'reviewing' && state.quiz.reviewIndex !== null) {
+      } else if (
+        state.quiz.status === 'reviewing' &&
+        state.quiz.reviewIndex !== null
+      ) {
         return 'reviewing';
       } else if (guesses && guesses.status === 'failed') {
         return 'failed';
@@ -66,11 +90,17 @@ export function useComponentState(guessType) {
       }
     }
     return 'unknown';
-  }, [state.config.gameMode, state.quiz.status, state.quiz.reviewIndex, guesses?.status, disabled]);
+  }, [
+    state.config.gameMode,
+    state.quiz.status,
+    state.quiz.reviewIndex,
+    guesses?.status,
+    disabled,
+  ]);
 
   const incorrectValues = useMemo(() => {
     if (!guesses || !guesses.attempts) return [];
-    return guesses.attempts.filter(attempt => attempt !== correctValue);
+    return guesses.attempts.filter((attempt) => attempt !== correctValue);
   }, [guesses?.attempts, correctValue]);
 
   return {
@@ -78,6 +108,6 @@ export function useComponentState(guessType) {
     correctValue,
     disabled,
     componentStatus,
-    incorrectValues
+    incorrectValues,
   };
 }

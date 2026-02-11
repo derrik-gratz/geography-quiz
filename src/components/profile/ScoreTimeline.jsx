@@ -3,7 +3,6 @@ import * as Plot from '@observablehq/plot';
 import './ScoreTimeline.css';
 
 export function ScoreTimeline({ userData }) {
-
   const scoreLog = userData.dailyChallenge.fullEntries;
   const plotRef = useRef(null);
 
@@ -14,9 +13,11 @@ export function ScoreTimeline({ userData }) {
 
     // Get computed CSS variable values
     const getComputedColor = (variable) => {
-      return getComputedStyle(document.documentElement)
-        .getPropertyValue(variable)
-        .trim() || '#000000';
+      return (
+        getComputedStyle(document.documentElement)
+          .getPropertyValue(variable)
+          .trim() || '#000000'
+      );
     };
 
     const scoreColor = getComputedColor('--color-selected');
@@ -25,18 +26,20 @@ export function ScoreTimeline({ userData }) {
     const borderColor = getComputedColor('--border-color');
 
     // Sort by date (oldest first)
-    const sortedLog = [...scoreLog].sort((a, b) => a.date.localeCompare(b.date));
+    const sortedLog = [...scoreLog].sort((a, b) =>
+      a.date.localeCompare(b.date),
+    );
 
     // Transform data for Observable Plot
     // Plot expects dates as Date objects and values as numbers
-    const plotData = sortedLog.map(entry => ({
+    const plotData = sortedLog.map((entry) => ({
       date: new Date(entry.date + 'T00:00:00'),
       score: entry.score || 0,
-      skillScore: entry.skillScore || 0
+      skillScore: entry.skillScore || 0,
     }));
 
     // Calculate domain for Y axis
-    const allScores = plotData.flatMap(d => [d.score, d.skillScore]);
+    const allScores = plotData.flatMap((d) => [d.score, d.skillScore]);
     const minScore = Math.min(0, ...allScores);
     const maxScore = Math.max(...allScores, 1);
 
@@ -53,16 +56,19 @@ export function ScoreTimeline({ userData }) {
         label: null,
         tickFormat: (d) => {
           const date = new Date(d);
-          return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
         },
         tickRotate: sortedLog.length <= 20 ? -45 : 0,
-        ticks: sortedLog.length <= 20 ? sortedLog.length : 10
+        ticks: sortedLog.length <= 20 ? sortedLog.length : 10,
       },
       y: {
         label: 'Score',
         domain: [minScore, maxScore],
         grid: true,
-        tickFormat: (d) => d.toFixed(1)
+        tickFormat: (d) => d.toFixed(1),
       },
       marks: [
         Plot.line(plotData, {
@@ -70,35 +76,37 @@ export function ScoreTimeline({ userData }) {
           y: 'score',
           stroke: scoreColor,
           strokeWidth: 2,
-          curve: 'linear'
+          curve: 'linear',
         }),
         Plot.line(plotData, {
           x: 'date',
           y: 'skillScore',
           stroke: skillColor,
           strokeWidth: 2,
-          curve: 'linear'
+          curve: 'linear',
         }),
         Plot.dot(plotData, {
           x: 'date',
           y: 'score',
           fill: scoreColor,
           r: 4,
-          title: (d) => `${d.date.toLocaleDateString()}: Score ${d.score.toFixed(2)}`
+          title: (d) =>
+            `${d.date.toLocaleDateString()}: Score ${d.score.toFixed(2)}`,
         }),
         Plot.dot(plotData, {
           x: 'date',
           y: 'skillScore',
           fill: skillColor,
           r: 4,
-          title: (d) => `${d.date.toLocaleDateString()}: Skill ${d.skillScore.toFixed(2)}`
-        })
+          title: (d) =>
+            `${d.date.toLocaleDateString()}: Skill ${d.skillScore.toFixed(2)}`,
+        }),
       ],
       style: {
         background: 'transparent',
         color: textColor,
-        fontSize: '12px'
-      }
+        fontSize: '12px',
+      },
     });
 
     // Clear previous plot and append new one
@@ -119,19 +127,29 @@ export function ScoreTimeline({ userData }) {
 
   return (
     // <div className="daily-challenge-stats" style={{display: 'flex', flexDirection: 'row'}}>
-      <div className="score-timeline" style={{display: 'flex', flexDirection: 'column'}}>
-        <div className="score-timeline__legend" style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-          <div className="score-timeline__legend-item">
-            <span className="score-timeline__legend-line score-timeline__legend-line--score"></span>
-            <span>Regular Score</span>
-          </div>
-          <div className="score-timeline__legend-item">
-            <span className="score-timeline__legend-line score-timeline__legend-line--skill"></span>
-            <span>Skill Score</span>
-          </div>
+    <div
+      className="score-timeline"
+      style={{ display: 'flex', flexDirection: 'column' }}
+    >
+      <div
+        className="score-timeline__legend"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
+        <div className="score-timeline__legend-item">
+          <span className="score-timeline__legend-line score-timeline__legend-line--score"></span>
+          <span>Regular Score</span>
         </div>
-        <div ref={plotRef} className="score-timeline__chart"></div>
+        <div className="score-timeline__legend-item">
+          <span className="score-timeline__legend-line score-timeline__legend-line--skill"></span>
+          <span>Skill Score</span>
+        </div>
       </div>
+      <div ref={plotRef} className="score-timeline__chart"></div>
+    </div>
     // </div>
   );
 }
