@@ -33,6 +33,15 @@ function filterCountryDataByQuizSet(countryData, quizSet) {
     }
 }
 
+function filterCountryDataByPromptTypes(countryData, promptTypes) {
+    if (promptTypes && promptTypes.length > 0) {
+        return countryData.filter(country => {
+            return country.availablePrompts.some(type => promptTypes.includes(type));
+        })
+    }
+    return countryData;
+}
+
 // Handle user configs to filter data for prompts
 export function filterCountryData(quizSet, selectedPromptTypes, countryData, gameMode = null, userData = null) {
     let filteredCountryData = countryData;
