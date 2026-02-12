@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '@/hooks/useQuiz.js';
-import { CollapsibleContainer } from '@/components/base/CollapsibleContainer.jsx';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { calculateSkillScore } from '@/types/dataSchemas.js';
 import './QuizLog.css';
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { filterCountryData } from '@/services/filterCountryData.js';
+import { filterCountryData } from '@/utils/filterCountryData.js';
 import countryData from '@/data/country_data.json' with { type: 'json' };
 import quizSets from '@/data/quiz_sets.json' with { type: 'json' };
 

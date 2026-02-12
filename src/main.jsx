@@ -4,7 +4,7 @@ import './index.css';
 import './App.css';
 import 'flag-icons/css/flag-icons.min.css';
 import App from './App.jsx';
-import { clearAllData } from './services/storageService.js';
+import { clearAllData } from './utils/storageService.js';
 
 // Expose clearAllData for development/testing
 if (import.meta.env.DEV) {

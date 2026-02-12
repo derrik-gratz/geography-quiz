@@ -1,14 +1,14 @@
 // src/hooks/useQuizActions.js
 import { useCallback } from 'react';
 import { useQuiz } from './useQuiz.js';
-import { filterCountryData } from '../services/filterCountryData.js';
-import { checkSubmission } from '../services/quizEngine.js';
+import { filterCountryData } from '@/utils/filterCountryData.js';
+import { checkSubmission } from '@/utils/quizEngine.js';
 import {
   loadAllUserData,
   updateCountryLearningData,
-} from '../services/storageService.js';
-import { dailyChallengeCompletedToday } from '../services/statsService.js';
-import countryData from '../data/country_data.json';
+} from '@/utils/storageService.js';
+import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
+import countryData from '@/data/country_data.json';
 
 export function useQuizActions() {
   const { dispatch, state } = useQuiz();

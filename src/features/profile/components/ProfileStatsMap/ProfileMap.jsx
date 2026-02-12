@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { BaseMap } from '@/components/base/BaseMap.jsx';
+import { BaseMap } from '@/components/BaseMap.jsx';
 import {
   calculateCountryAccuracy,
   calculateCountryPrecision,
-} from '@/services/statsService.js';
+} from '@/utils/statsService.js';
 import { SelectedCountryDisplay } from './SelectedCountryDisplay.jsx';
 import './ProfileMap.css';
 

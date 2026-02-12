@@ -1,5 +1,5 @@
-import { filterCountryData, shuffleArray } from './filterCountryData.js';
-import { getDailySeed } from './dailyRNG.js';
+import { filterCountryData, shuffleArray } from '@/utils/filterCountryData.js';
+import { getDailySeed } from '@/utils/dailyRNG.js';
 
 export function checkSubmission(
   promptCountryData,

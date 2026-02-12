@@ -1,13 +1,12 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useQuiz } from '@/hooks/useQuiz.js';
-import { useQuizActions } from '@/hooks/useQuizActions.js';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
 import { calcTimeDelta, formatTimeDelta } from 'react-countdown';
-
-import { derivePromptValue } from '@/services/quizEngine.js';
-import { CollapsibleContainer } from '@/components/base/CollapsibleContainer.jsx';
-import { loadAllUserData } from '@/services/storageService.js';
-import { dailyChallengeCompletedToday } from '@/services/statsService.js';
-import { getCountriesDueForReview } from '@/services/spacedRepetitionEngine.js';
+import { derivePromptValue } from '@/utils/quizEngine.js';
+import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
+import { loadAllUserData } from '@/utils/storageService.js';
+import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
+import { getCountriesDueForReview } from '@/utils/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>

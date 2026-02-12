@@ -1,14 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useQuiz } from '@/hooks/useQuiz.js';
-import { useQuizActions } from '@/hooks/useQuizActions.js';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
 import countryData from '@/data/country_data.json';
 import flagColors from '@/data/flag_colors.json';
 import quizSets from '@/data/quiz_sets.json';
-import { useComponentState } from '@/hooks/useComponentState.js';
-import { CollapsibleContainer } from '@/components/base/CollapsibleContainer.jsx';
-import { SubmitButton } from '@/components/base/SubmitButton.jsx';
-import { shuffleArray } from '@/services/filterCountryData.js';
+import { useComponentState } from '../hooks/useComponentState.js';
+import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
+import { SubmitButton } from '@/components/SubmitButton.jsx';
+import { shuffleArray } from '@/utils/filterCountryData.js';
 
 import './FlagSelect.css';
 

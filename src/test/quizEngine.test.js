@@ -6,7 +6,7 @@ import {
   generatePromptType,
   derivePromptValue,
   checkQuizCompletion,
-} from '@/services/quizEngine.js';
+} from '@/utils/quizEngine.js';
 
 const mockCountryData = [
   {

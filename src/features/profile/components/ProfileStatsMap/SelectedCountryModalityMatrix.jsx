@@ -1,5 +1,5 @@
-import { ModalityHeatmap } from '@/components/base/ModalityHeatmap.jsx';
-import { calculatePerModalityStats } from '@/services/statsService.js';
+import { ModalityHeatmap } from '@/components/ModalityHeatmap.jsx';
+import { calculatePerModalityStats } from '@/utils/statsService.js';
 import './SelectedCountryModalityMatrix.css';
 /**
  * ModalityMatrix component

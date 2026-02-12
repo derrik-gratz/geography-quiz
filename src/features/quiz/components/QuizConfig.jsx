@@ -1,7 +1,7 @@
 import React from 'react';
-import { useQuiz } from '@/hooks/useQuiz';
-import { useQuizActions } from '@/hooks/useQuizActions';
-import { CollapsibleContainer } from '@/components/base/CollapsibleContainer.jsx';
+import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuizActions } from '../hooks/useQuizActions.js';
+import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import quizSets from '@/data/quiz_sets.json';
 import './QuizConfig.css';
 

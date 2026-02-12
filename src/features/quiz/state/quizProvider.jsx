@@ -5,12 +5,12 @@ import {
   checkQuizCompletion,
   generatePromptType,
   derivePromptValue,
-} from '../services/quizEngine.js';
+} from '@/utils/quizEngine.js';
 import {
   saveDailyChallenge,
   updateCountryLearningData,
-} from '@/services/storageService.js';
-import { transformQuizStateToStorage } from '@/services/storageService.js';
+} from '@/utils/storageService.js';
+import { transformQuizStateToStorage } from '@/utils/storageService.js';
 import { formatDateString } from '@/types/dataSchemas.js';
 
 export const QuizContext = createContext();

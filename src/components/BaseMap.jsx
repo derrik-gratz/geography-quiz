@@ -7,8 +7,8 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 import allCountryData from '@/data/country_data.json';
-import mainGeographies from '@/assets/ne_50m_admin_0_countries.json';
-import tinyGeographies from '@/assets/ne_50m_admin_0_tiny_countries.json';
+import mainGeographies from '@/data/ne_50m_admin_0_countries.json';
+import tinyGeographies from '@/data/ne_50m_admin_0_tiny_countries.json';
 
 function isValidCountryCode(code) {
   return code && code !== '-99' && code.length === 3 && /^[A-Z]{3}$/.test(code);
