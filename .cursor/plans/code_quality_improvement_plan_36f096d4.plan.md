@@ -1,3 +1,10 @@
+---
+name: ''
+overview: ''
+todos: []
+isProject: false
+---
+
 # Geography Quiz Code Quality Improvement Plan
 
 ## Overview
@@ -8,14 +15,14 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 **State Management:**
 
-- Main state in [`src/state/quizContext.js`](src/state/quizContext.js) using reducer pattern
+- Main state in `[src/state/quizContext.js](src/state/quizContext.js)` using reducer pattern
 - Local `useState` in multiple components: `QuizPrompt`, `ProfilePage`, `WorldMap`, `QuizLog`, `FlagSelect`, `TextInput`, `BaseMap`, `CollapsibleContainer`, `CountryTextEntry`
 - `App.jsx` has `currentPage` state that could be in context
 - Derived state calculated in both provider and components (e.g., `dailyChallengeCompleted` checked in `QuizPrompt`)
 
 **Testing:**
 
-- Only [`src/test/quizEngine.test.js`](src/test/quizEngine.test.js) exists
+- Only `[src/test/quizEngine.test.js](src/test/quizEngine.test.js)` exists
 - No tests for: `storageService`, `statsService`, `spacedRepetitionEngine`, `filterCountryData`, reducer logic
 
 **Component Structure:**
@@ -26,7 +33,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 **CSS:**
 
-- Variables in [`src/App.css`](src/App.css) but component-specific overrides scattered
+- Variables in `[src/App.css](src/App.css)` but component-specific overrides scattered
 - No clear hierarchy or design system
 - Many small files that could be consolidated
 
@@ -38,22 +45,21 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 - **Action:** Create inventory of all `useState` hooks across components
 - **Files to review:**
-- [`src/components/quiz/QuizPrompt.jsx`](src/components/quiz/QuizPrompt.jsx) - has 4 useState hooks
-- [`src/components/profile/ProfilePage.jsx`](src/components/profile/ProfilePage.jsx) - has 4 useState hooks
-- [`src/components/quiz/WorldMap.jsx`](src/components/quiz/WorldMap.jsx) - has 3 useState hooks
-- [`src/components/quiz/QuizLog.jsx`](src/components/quiz/QuizLog.jsx) - has 2 useState hooks
-- [`src/App.jsx`](src/App.jsx) - has 1 useState hook
+- `[src/components/quiz/QuizPrompt.jsx](src/components/quiz/QuizPrompt.jsx)` - has 4 useState hooks
+- `[src/components/profile/ProfilePage.jsx](src/components/profile/ProfilePage.jsx)` - has 4 useState hooks
+- `[src/components/quiz/WorldMap.jsx](src/components/quiz/WorldMap.jsx)` - has 3 useState hooks
+- `[src/components/quiz/QuizLog.jsx](src/components/quiz/QuizLog.jsx)` - has 2 useState hooks
+- `[src/App.jsx](src/App.jsx)` - has 1 useState hook
 - All other components with useState
 
 ### 1.2 Move Shared State to Context
 
 - **Action:** Move `currentPage` from `App.jsx` to context
-- Add `currentPage` and `setCurrentPage` to [`src/state/quizContext.js`](src/state/quizContext.js) reducer
-- Update [`src/App.jsx`](src/App.jsx) to use context
+- Add `currentPage` and `setCurrentPage` to `[src/state/quizContext.js](src/state/quizContext.js)` reducer
+- Update `[src/App.jsx](src/App.jsx)` to use context
 - Update `NavigationBar` to use context
-
 - **Action:** Move derived state calculations to provider
-- Extract `dailyChallengeCompleted` check from `QuizPrompt` to [`src/state/quizProvider.jsx`](src/state/quizProvider.jsx)
+- Extract `dailyChallengeCompleted` check from `QuizPrompt` to `[src/state/quizProvider.jsx](src/state/quizProvider.jsx)`
 - Extract `learningModeHasCountries` check from `QuizPrompt` to provider
 - Add these as computed values in context using `useMemo`
 - Update `QuizPrompt` to consume from context instead of local state
@@ -78,7 +84,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 1.5 Clean Up Reducer
 
-- **Action:** Review [`src/state/quizContext.js`](src/state/quizContext.js) reducer for:
+- **Action:** Review `[src/state/quizContext.js](src/state/quizContext.js)` reducer for:
 - Redundant state updates
 - Opportunities to simplify action handlers
 - Ensure state shape is minimal (no duplicate data)
@@ -91,13 +97,13 @@ This plan addresses five key improvement areas: state management consolidation, 
 ### 2.1 Extract Business Logic from Components
 
 - **Action:** Identify business logic in components and extract to services
-- Extract `dailyChallengeCompleted` check logic to [`src/services/statsService.js`](src/services/statsService.js) (if not already there)
+- Extract `dailyChallengeCompleted` check logic to `[src/services/statsService.js](src/services/statsService.js)` (if not already there)
 - Extract `learningModeHasCountries` check to `spacedRepetitionEngine` or new service
 - Move any calculation logic from `useMemo` in components to pure functions
 
 ### 2.2 Test Storage Service
 
-- **Action:** Create [`src/test/storageService.test.js`](src/test/storageService.test.js)
+- **Action:** Create `[src/test/storageService.test.js](src/test/storageService.test.js)`
 - Test `saveDailyChallenge`, `loadDailyChallenge`, `getAllDailyChallenges`
 - Test `updateCountryLearningData`, `getCountryLearningData`
 - Test `loadAllUserData`, `getUserMetadata`
@@ -106,28 +112,28 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 2.3 Test Stats Service
 
-- **Action:** Create [`src/test/statsService.test.js`](src/test/statsService.test.js)
+- **Action:** Create `[src/test/statsService.test.js](src/test/statsService.test.js)`
 - Test `dailyChallengeCompletedToday`
 - Test all statistics calculation functions
 - Test edge cases (empty data, missing fields)
 
 ### 2.4 Test Spaced Repetition Engine
 
-- **Action:** Create [`src/test/spacedRepetitionEngine.test.js`](src/test/spacedRepetitionEngine.test.js)
+- **Action:** Create `[src/test/spacedRepetitionEngine.test.js](src/test/spacedRepetitionEngine.test.js)`
 - Test `getCountriesDueForReview`
 - Test learning rate calculations
 - Test update logic
 
 ### 2.5 Test Filter Country Data
 
-- **Action:** Enhance [`src/test/filterCountryData.test.js`](src/test/filterCountryData.test.js) (create if doesn't exist)
+- **Action:** Enhance `[src/test/filterCountryData.test.js](src/test/filterCountryData.test.js)` (create if doesn't exist)
 - Test filtering by quiz set
 - Test filtering by prompt types
 - Test game mode filtering (dailyChallenge, learning, etc.)
 
 ### 2.6 Test Reducer Logic
 
-- **Action:** Create [`src/test/quizContext.test.js`](src/test/quizContext.test.js) (enhance existing if present)
+- **Action:** Create `[src/test/quizContext.test.js](src/test/quizContext.test.js)` (enhance existing if present)
 - Test all action types in reducer
 - Test state transitions
 - Test edge cases (invalid actions, boundary conditions)
@@ -135,7 +141,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 2.7 Test Quiz Engine (Enhance Existing)
 
-- **Action:** Review and enhance [`src/test/quizEngine.test.js`](src/test/quizEngine.test.js)
+- **Action:** Review and enhance `[src/test/quizEngine.test.js](src/test/quizEngine.test.js)`
 - Ensure all functions are covered
 - Add edge case tests
 - Test error conditions
@@ -154,7 +160,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 3.2 Simplify QuizPage Structure
 
-- **Action:** Refactor [`src/components/quiz/QuizPage.jsx`](src/components/quiz/QuizPage.jsx)
+- **Action:** Refactor `[src/components/quiz/QuizPage.jsx](src/components/quiz/QuizPage.jsx)`
 - Replace generic divs with semantic HTML
 - Consider extracting layout to a reusable component
 - Simplify class names (reduce BEM nesting)
@@ -162,7 +168,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 3.3 Simplify QuizPrompt Structure
 
-- **Action:** Refactor [`src/components/quiz/QuizPrompt.jsx`](src/components/quiz/QuizPrompt.jsx)
+- **Action:** Refactor `[src/components/quiz/QuizPrompt.jsx](src/components/quiz/QuizPrompt.jsx)`
 - Reduce nesting in JSX
 - Extract complex conditional rendering to separate components or functions
 - Simplify class structure
@@ -187,7 +193,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 4.1 Create Design System Foundation
 
-- **Action:** Organize [`src/App.css`](src/App.css) into clear sections:
+- **Action:** Organize `[src/App.css](src/App.css)` into clear sections:
 - CSS Custom Properties (variables) - colors, spacing, typography
 - Base element styles
 - Utility classes (if needed)
@@ -245,7 +251,7 @@ This plan addresses five key improvement areas: state management consolidation, 
 
 ### 5.2 Separate Side Effects from State Management
 
-- **Action:** Refactor [`src/state/quizProvider.jsx`](src/state/quizProvider.jsx):
+- **Action:** Refactor `[src/state/quizProvider.jsx](src/state/quizProvider.jsx)`:
 - Move storage operations to separate effect hooks
 - Consider creating a `useQuizPersistence` hook for storage side effects
 - Keep reducer pure (no side effects)
@@ -311,7 +317,6 @@ This plan addresses five key improvement areas: state management consolidation, 
 - Add format scripts to `package.json`: `"format": "prettier --write ."`, `"format:check": "prettier --check ."`
 - Integrate with ESLint (install `eslint-config-prettier` to avoid conflicts)
 - Consider adding format-on-save in IDE settings
-
 - **Action:** Enhance ESLint configuration
 - Review and expand ESLint rules for best practices
 - Add rules for accessibility (`eslint-plugin-jsx-a11y`)
