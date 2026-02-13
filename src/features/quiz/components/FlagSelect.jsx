@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
 import countryData from '@/data/country_data.json';
@@ -23,7 +23,7 @@ const availableColors = [
 ];
 
 export function QuizFlagSelect() {
-  const { state } = useQuiz();
+  const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
     useComponentState('flag');

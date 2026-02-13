@@ -1,6 +1,6 @@
 // src/hooks/usePromptState.js
 import { useMemo } from 'react';
-import { useQuiz } from './useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 
 /**
  * Hook to get the state for a specific prompt type component
@@ -8,7 +8,7 @@ import { useQuiz } from './useQuiz.js';
  * @returns {Object} Component state including guesses, correctValue, disabled, componentStatus, incorrectValues
  */
 export function useComponentState(guessType) {
-  const { state } = useQuiz();
+  const state = useQuiz();
   const correctField =
     guessType === 'name'
       ? 'country'

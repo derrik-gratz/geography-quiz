@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import { calcTimeDelta, formatTimeDelta } from 'react-countdown';
 import { derivePromptValue } from '@/utils/quizEngine.js';
@@ -8,6 +8,8 @@ import { loadAllUserData } from '@/utils/storageService.js';
 import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
 import { getCountriesDueForReview } from '@/utils/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
+import { checkPromptCompletion } from '@/utils/quizEngine.js';
+
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
 // )}
@@ -19,8 +21,7 @@ import './QuizPrompt.css';
 // )}
 
 export function QuizPrompt({}) {
-  const { state, promptCompleted, isQuizFinished, currentPromptData } =
-    useQuiz();
+  const state = useQuiz();
   const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
   const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
   const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
@@ -30,6 +31,24 @@ export function QuizPrompt({}) {
   // Expand when quiz not started, collapse otherwise
   const defaultCollapsed = false; //state.quiz.status !== 'not_started';
 
+
+  const promptCompleted = useMemo(() => {
+    if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
+      return false;
+    }
+    return checkPromptCompletion(state);
+  }, [
+    state.quiz.prompt.type,
+    state.quiz.prompt.status,
+    state.quiz.prompt.guesses,
+  ]);
+
+  const currentPromptData = useMemo(() => {
+    if (!state.quizData || state.quiz.prompt.quizDataIndex >= state.quizData.length) {
+      return null;
+    }
+    return state.quizData[state.quiz.prompt.quizDataIndex];
+  }, [state.quizData, state.quiz.prompt.quizDataIndex]);
   // Check if daily challenge is already completed
   useEffect(() => {
     if (
@@ -218,6 +237,7 @@ export function QuizPrompt({}) {
       if (currentPrompt) {
         return displayPrompt(currentPrompt);
       } else {
+        console.log(state);
         promptText = 'Unknown prompt state';
       }
     } else if (state.quiz.status === 'reviewing') {
@@ -229,7 +249,7 @@ export function QuizPrompt({}) {
         state.quiz.reviewIndex !== null
       ) {
         const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-        if (historyEntry && currentPromptData) {
+        if (historyEntry && state.quizData[historyEntry.quizDataIndex]) {
           return (
             <span className="prompt-name">{currentPromptData.country}</span>
           );

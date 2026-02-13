@@ -1,6 +1,6 @@
 // src/hooks/useQuizActions.js
 import { useCallback } from 'react';
-import { useQuiz } from './useQuiz.js';
+import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
 import { filterCountryData } from '@/utils/filterCountryData.js';
 import { checkSubmission } from '@/utils/quizEngine.js';
 import {
@@ -11,74 +11,8 @@ import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
 import countryData from '@/data/country_data.json';
 
 export function useQuizActions() {
-  const { dispatch, state } = useQuiz();
-
-  const setQuizSet = useCallback(
-    (quizSet) => {
-      dispatch({ type: 'SET_QUIZ_SET', payload: quizSet });
-    },
-    [dispatch],
-  );
-
-  const setSelectedPromptTypes = useCallback(
-    (selectedPromptTypes) => {
-      dispatch({
-        type: 'SET_SELECTED_PROMPT_TYPES',
-        payload: selectedPromptTypes,
-      });
-    },
-    [dispatch],
-  );
-
-  const handlePromptTypeChange = (type, checked) => {
-    if (checked) {
-      setSelectedPromptTypes([...state.config.selectedPromptTypes, type]);
-    } else {
-      setSelectedPromptTypes(
-        state.config.selectedPromptTypes.filter((t) => t !== type),
-      );
-    }
-  };
-
-  const setGameMode = useCallback(
-    async (gameMode) => {
-      dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
-      if (gameMode === 'sandbox') {
-        setQuizSet('all');
-        const quizData = filterCountryData(
-          'all',
-          state.config.selectedPromptTypes,
-          countryData,
-          gameMode,
-        );
-        dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-      } else if (gameMode === 'dailyChallenge') {
-        const quizData = filterCountryData(
-          'Daily challenge',
-          state.config.selectedPromptTypes,
-          countryData,
-          gameMode,
-        );
-        dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-      } else if (gameMode === 'learning') {
-        setQuizSet('all');
-        try {
-          const userData = await loadAllUserData();
-          const quizData = filterCountryData(
-            'all',
-            state.config.selectedPromptTypes,
-            countryData,
-            gameMode,
-            userData,
-          );
-          dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-        } catch (error) {
-          console.error('Failed to load countries for learning mode:', error);
-        }
-      }
-    },
-    [dispatch, state.config.selectedPromptTypes, setQuizSet],
-  );
+  const state = useQuiz();
+  const dispatch = useQuizDispatch();
 
   const sandboxSelect = useCallback(
     ({ inputType, countryValue }) => {
@@ -228,10 +162,6 @@ export function useQuizActions() {
   }, [dispatch]);
 
   return {
-    setQuizSet,
-    setSelectedPromptTypes,
-    handlePromptTypeChange,
-    setGameMode,
     sandboxSelect,
     startQuiz,
     submitAnswer,

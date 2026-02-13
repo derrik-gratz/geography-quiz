@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { calculateSkillScore } from '@/types/dataSchemas.js';
 import './QuizLog.css';
@@ -17,7 +17,6 @@ import './QuizLog.css';
  * @param {Object} props.currentPrompt - Current active prompt
  * @param {Array} props.requiredAnswerTypes - Types user must answer for current question
  * @param {boolean} props.isComplete - Whether current question is complete
- * @param {number} props.totalCountries - Total countries in quiz set
  * @returns {JSX.Element} Quiz log table interface
  */
 export function QuizLog(
@@ -28,12 +27,11 @@ export function QuizLog(
     // currentPrompt,
     // requiredAnswerTypes = [],
     // isComplete = false,
-    // totalCountries,
     // isQuizFinished = false,
     // quizSetName = 'Geography Quiz'
   },
 ) {
-  const { state } = useQuiz();
+  const state = useQuiz();
   const [exportSuccess, setExportSuccess] = useState(false);
   const [obscureNames, setObscureNames] = useState(true);
   const defaultCollapsed = useMemo(

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BaseMap } from '@/components/BaseMap.jsx';
 import allCountryData from '@/data/country_data.json';
-import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
 import { useComponentState } from '../hooks/useComponentState.js';
@@ -23,7 +23,7 @@ function getCountryViewWindow(countryCode) {
 }
 
 export function QuizWorldMap() {
-  const { state } = useQuiz();
+  const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
     useComponentState('location');

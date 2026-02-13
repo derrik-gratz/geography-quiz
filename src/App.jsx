@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationBar } from '@/components/NavigationBar.jsx';
 import { AppContent } from '@/components/AppContent.jsx';
-import { AppProvider } from '@/state/AppContext.jsx';
+import { AppProvider } from '@/state/AppProvider.jsx';
 
 function App() {
   return (

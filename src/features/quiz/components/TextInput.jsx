@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../hooks/useCollapsible.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
@@ -9,7 +9,7 @@ import { SubmitButton } from '@/components/SubmitButton.jsx';
 import './TextInput.css';
 
 export function QuizTextInput() {
-  const { state } = useQuiz();
+  const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
   const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
     useComponentState('name');

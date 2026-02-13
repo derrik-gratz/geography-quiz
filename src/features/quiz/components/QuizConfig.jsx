@@ -1,6 +1,5 @@
 import React from 'react';
-import { useQuiz } from '../hooks/useQuiz.js';
-import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useQuiz, useQuizDispatch, useQuizThunks } from '../state/quizProvider.jsx';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import quizSets from '@/data/quiz_sets.json';
 import './QuizConfig.css';
@@ -8,12 +7,35 @@ import './QuizConfig.css';
 const PROMPT_TYPES = ['location', 'name', 'flag'];
 
 export function QuizConfig() {
-  const { state } = useQuiz();
-  const { setQuizSet, handlePromptTypeChange, setGameMode } = useQuizActions();
-  // Expand when quiz not started, collapse otherwise
+  const state = useQuiz();
+  const dispatch = useQuizDispatch();
+  const { switchGameMode } = useQuizThunks();
   const defaultCollapsed = state.quiz.status !== 'not_started';
 
   const { quizSet, selectedPromptTypes, gameMode } = state.config;
+
+
+  const handlePromptTypeChange = (type, checked) => {
+    const next = checked
+      ? [...state.config.selectedPromptTypes, type]
+      : state.config.selectedPromptTypes.filter((t) => t !== type);
+    dispatch({ type: 'SET_SELECTED_PROMPT_TYPES', payload: next });
+  };
+
+  const handleQuizSetChange = (quizSet) => {
+    dispatch({ type: 'SET_QUIZ_SET', payload: quizSet });
+  };
+
+  const handleGameModeChange = (gameMode) => {
+    switchGameMode(gameMode);
+  };
+
+  const gameModeOptions = [
+    { value: 'dailyChallenge', label: 'Daily Challenge' },
+    { value: 'learning', label: 'Learning' },
+    { value: 'quiz', label: 'Quiz' },
+    { value: 'sandbox', label: 'Sandbox' },
+  ];
 
   return (
     <CollapsibleContainer
@@ -25,54 +47,20 @@ export function QuizConfig() {
             <>
               <div className="quiz-config__game-mode-select">
                 <label htmlFor="game-mode">Game mode:</label>
-                <label>
-                  <input
-                    type="radio"
-                    name="game-mode"
-                    className="quiz-config__game-mode-input"
-                    value="dailyChallenge"
-                    disabled={state.quiz.status !== 'not_started'}
-                    checked={gameMode === 'dailyChallenge'}
-                    onChange={(e) => setGameMode('dailyChallenge')}
-                  />
-                  Daily Challenge
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="game-mode"
-                    className="quiz-config__game-mode-input"
-                    value="learning"
-                    disabled={state.quiz.status !== 'not_started'}
-                    checked={gameMode === 'learning'}
-                    onChange={(e) => setGameMode('learning')}
-                  />
-                  Learning
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="game-mode"
-                    className="quiz-config__game-mode-input"
-                    value="quiz"
-                    disabled={state.quiz.status !== 'not_started'}
-                    checked={gameMode === 'quiz'}
-                    onChange={(e) => setGameMode('quiz')}
-                  />
-                  Normal
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="game-mode"
-                    className="quiz-config__game-mode-input"
-                    value="sandbox"
-                    disabled={state.quiz.status !== 'not_started'}
-                    checked={gameMode === 'sandbox'}
-                    onChange={(e) => setGameMode('sandbox')}
-                  />
-                  Sandbox
-                </label>
+                {gameModeOptions.map((option) => (
+                  <label key={option.value}>
+                    <input
+                      type="radio"
+                      name="game-mode"
+                      className="quiz-config__game-mode-input"
+                      value={option.value}
+                      disabled={state.quiz.status !== 'not_started'}
+                      checked={gameMode === option.value}
+                      onChange={(e) => handleGameModeChange(option.value)}
+                    />
+                    {option.label}
+                  </label>
+                ))}
               </div>
               {gameMode !== 'dailyChallenge' && gameMode !== 'learning' && (
                 <div className="quiz-config__quiz-set-select">
@@ -83,7 +71,7 @@ export function QuizConfig() {
                     value={
                       quizSet || (gameMode === 'quiz' ? 'all' : 'all') || ''
                     }
-                    onChange={(e) => setQuizSet(e.target.value || null)}
+                    onChange={(e) => handleQuizSetChange(e.target.value || null)}
                   >
                     {gameMode === 'quiz' ? (
                       <>

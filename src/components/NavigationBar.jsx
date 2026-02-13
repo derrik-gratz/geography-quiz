@@ -1,4 +1,4 @@
-import { useApp, useAppDispatch } from '@/state/AppContext.jsx';
+import { useApp, useAppDispatch } from '@/state/AppProvider.jsx';
 
 export function NavigationBar() {
   const appContext = useApp();
