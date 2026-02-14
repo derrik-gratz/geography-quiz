@@ -8,7 +8,7 @@ import quizSets from '@/data/quiz_sets.json';
 import { useComponentState } from '../hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
-import { shuffleArray } from '@/utils/filterCountryData.js';
+import { shuffleArray } from '@/utils/RNG.js';
 
 import './FlagSelect.css';
 

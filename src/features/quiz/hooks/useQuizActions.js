@@ -1,7 +1,7 @@
 // src/hooks/useQuizActions.js
 import { useCallback } from 'react';
 import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
-import { filterCountryData } from '@/utils/filterCountryData.js';
+// import { filterCountryData } from '@/utils/filterCountryData.js';
 import { checkSubmission } from '@/utils/quizEngine.js';
 import {
   loadAllUserData,
@@ -24,71 +24,26 @@ export function useQuizActions() {
     [dispatch],
   );
 
-  const startQuiz = useCallback(async () => {
-    // Check if daily challenge is already completed today
-    if (state.config.gameMode === 'dailyChallenge') {
-      try {
-        const userData = await loadAllUserData();
-        if (dailyChallengeCompletedToday(userData)) {
-          alert(
-            "You have already completed today's daily challenge! Come back tomorrow for a new challenge.",
-          );
-          return;
-        }
-      } catch (error) {
-        console.error('Failed to check daily challenge status:', error);
-        // Continue with quiz start if check fails (don't block user)
-      }
-    }
-
-    if (!state.config.quizSet) {
-      console.error('Cannot start quiz: quizSet is not selected');
-      return;
-    }
-
-    // Learning mode doesn't require prompt types
-    if (state.config.gameMode !== 'learning') {
-      if (
-        !state.config.selectedPromptTypes ||
-        state.config.selectedPromptTypes.length === 0
-      ) {
-        console.error('Cannot start quiz: no prompt types selected');
-        return;
-      }
-    }
-
-    // For learning mode, load userData and filter countries due for review
-    if (state.config.gameMode === 'learning') {
-      try {
-        const userData = await loadAllUserData();
-        const quizData = filterCountryData(
-          state.config.quizSet,
-          state.config.selectedPromptTypes,
-          countryData,
-          state.config.gameMode,
-          userData,
-        );
-        dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-        dispatch({ type: 'START_QUIZ' });
-      } catch (error) {
-        console.error('Failed to load countries for learning mode:', error);
-      }
-    } else {
-      const quizData = filterCountryData(
-        state.config.quizSet,
-        state.config.selectedPromptTypes,
-        countryData,
-        state.config.gameMode,
-      );
-      dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-      dispatch({ type: 'START_QUIZ' });
-    }
-  }, [
-    state.config.quizSet,
-    state.config.selectedPromptTypes,
-    state.config.gameMode,
-    dispatch,
-  ]);
+  // const startQuiz = useCallback(async () => {
+  //   if (state.config.gameMode === 'quiz') {
+  //     if (
+  //       !state.config.selectedPromptTypes ||
+  //       state.config.selectedPromptTypes.length === 0
+  //     ) {
+  //       console.error('Cannot start quiz: no prompt types selected');
+  //       return;
+  //     }
+  //   }
+  //   if (state.quizData.length === 0) {
+  //     console.error('Cannot start quiz: no countries to quiz');
+  //     return;
+  //   }
+  //   console.log(state.quizData);
+  //   dispatch({ type: 'START_QUIZ' });
+  // }, [
+  //   state.quizData,
+  //   dispatch,
+  // ]);
 
   const submitAnswer = useCallback(
     (submissionType, submissionValue) => {
@@ -163,7 +118,7 @@ export function useQuizActions() {
 
   return {
     sandboxSelect,
-    startQuiz,
+    // startQuiz,
     submitAnswer,
     giveUpPrompt,
     resetQuiz,

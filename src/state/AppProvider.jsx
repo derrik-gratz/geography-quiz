@@ -1,5 +1,5 @@
 import { createContext, useReducer, useEffect, useContext } from "react";
-import { getDailySeed } from "@/utils/dailyRNG.js";
+import { getDailySeed } from "@/utils/RNG.js";
 import { getUserMetadata } from "@/utils/storageService.js";
 import { initStorage } from "@/utils/storageService.js";
 

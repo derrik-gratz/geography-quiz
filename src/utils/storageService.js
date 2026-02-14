@@ -13,7 +13,7 @@ import {
   createCountryResultFromPrompt,
 } from '@/types/dataSchemas.js';
 import {
-  getDefaultLearningRate,
+  getEngineSettings,
   updateLearningRate,
 } from './spacedRepetitionEngine.js';
 
@@ -369,8 +369,8 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
     if (!userData.countries[countryId]) {
       userData.countries[countryId] = {
         matrix: createEmptyModalityMatrix(),
-        learningRate: getDefaultLearningRate(),
-        lastCorrect: null,
+        learningRate: getEngineSettings().DEFAULT_LEARNING_RATE,
+        lastChecked: null,
       };
     }
 
@@ -522,14 +522,15 @@ export async function updateCountryLearningData(countryCode, isCorrect) {
     if (!userData.countries[countryCode]) {
       userData.countries[countryCode] = {
         matrix: createEmptyModalityMatrix(),
-        learningRate: getDefaultLearningRate(),
-        lastCorrect: null,
+        learningRate: getEngineSettings().DEFAULT_LEARNING_RATE,
+        lastChecked: null,
       };
     }
 
     const countryData = userData.countries[countryCode];
     const today = formatDateString(new Date());
-    const currentRate = countryData.learningRate ?? getDefaultLearningRate();
+    const currentRate =
+      countryData.learningRate ?? getEngineSettings().DEFAULT_LEARNING_RATE;
     countryData.learningRate = updateLearningRate(currentRate, isCorrect);
     countryData.lastChecked = today;
 

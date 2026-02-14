@@ -1,7 +1,7 @@
-import { createContext, useReducer, useMemo, useContext } from 'react';
+import { createContext, useReducer, useMemo, useContext, useEffect } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js';
 import { useQuizProgression } from '../hooks/useQuizProgression.js';
-import { switchGameMode } from './quizThunks.js';
+import { switchGameMode, startQuiz } from './quizThunks.js';
 
 const QuizContext = createContext(null);
 const QuizDispatchContext = createContext(null);
@@ -47,8 +47,19 @@ export function QuizProvider({ children }) {
   useQuizProgression(state, dispatch);
 
   const thunks = useMemo(() => {
-    return { switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode) };
+    return { 
+      switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode),
+      startQuiz: () => startQuiz(dispatch, state),
+    };
+
   }, [dispatch, state]);
+
+  // Should run on startup
+  useEffect(() => {
+    if (state.config.gameMode === null) {
+      thunks.switchGameMode('dailyChallenge');
+    }
+  }, [state.config.gameMode, thunks]);
 
   return (
     <QuizContext.Provider value={state}>

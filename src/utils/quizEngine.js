@@ -1,5 +1,4 @@
-import { filterCountryData, shuffleArray } from '@/utils/filterCountryData.js';
-import { getDailySeed } from '@/utils/dailyRNG.js';
+import { getDailySeed, shuffleArray } from '@/utils/RNG.js';
 
 export function checkSubmission(
   promptCountryData,
@@ -18,9 +17,7 @@ export function checkSubmission(
 }
 
 export function checkPromptCompletion(quizContext) {
-  // Check if all guesses have a status that indicates completion
   // Status values: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
-  // A prompt is complete when all guesses are not null and not 'incomplete'
   return Object.values(quizContext.quiz.prompt.guesses).every(
     (status) =>
       // status.status !== null && status.status !== 'incomplete'

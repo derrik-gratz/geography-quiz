@@ -1,24 +1,23 @@
-// Fake userData for testing
-const fakeUserData = {
+const mockUserData = {
   userId: 'test_user_123',
   dailyChallenge: {
     streak: {
       current: 3,
-      lastPlayed: '2024-01-15',
+      lastPlayed: '2026-01-15',
     },
     fullEntries: [
       {
-        date: '2024-01-15',
+        date: '2026-01-15',
         skillScore: 0,
         score: 0,
       },
       {
-        date: '2024-01-14',
+        date: '2026-01-14',
         skillScore: 1.3,
         score: 2.0,
       },
       {
-        date: '2024-01-13',
+        date: '2026-01-13',
         skillScore: 5,
         score: 5,
       },
@@ -26,7 +25,8 @@ const fakeUserData = {
   },
   countries: {
     MEX: {
-      learning: { lastChecked: null, learningRate: null },
+      lastChecked: null,
+      learningRate: null,
       matrix: [
         // Input: name (0)
         [
@@ -49,7 +49,8 @@ const fakeUserData = {
       ],
     },
     USA: {
-      learning: { lastChecked: '2024-01-15', learningRate: 3.2 },
+      lastChecked: '2026-01-15',
+      learningRate: 3.2,
       matrix: [
         // Input: name (0)
         [
@@ -72,7 +73,8 @@ const fakeUserData = {
       ],
     },
     CAN: {
-      learning: { lastChecked: '2024-01-15', learningRate: 1 },
+      lastChecked: '2026-01-15',
+      learningRate: 1,
       matrix: [
         // Input: name (0)
         [
@@ -97,5 +99,4 @@ const fakeUserData = {
   },
 };
 
-// Export for use in testing
-export default fakeUserData;
+export default mockUserData;

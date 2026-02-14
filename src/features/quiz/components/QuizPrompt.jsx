@@ -9,6 +9,7 @@ import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
 import { getCountriesDueForReview } from '@/utils/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
 import { checkPromptCompletion } from '@/utils/quizEngine.js';
+import { useQuizThunks } from '../state/quizProvider.jsx';
 
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -22,7 +23,8 @@ import { checkPromptCompletion } from '@/utils/quizEngine.js';
 
 export function QuizPrompt({}) {
   const state = useQuiz();
-  const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
+  const { giveUpPrompt, resetQuiz } = useQuizActions();
+  const { startQuiz } = useQuizThunks();
   const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
   const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
   const [learningModeHasCountries, setLearningModeHasCountries] =
@@ -237,7 +239,6 @@ export function QuizPrompt({}) {
       if (currentPrompt) {
         return displayPrompt(currentPrompt);
       } else {
-        console.log(state);
         promptText = 'Unknown prompt state';
       }
     } else if (state.quiz.status === 'reviewing') {

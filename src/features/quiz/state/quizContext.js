@@ -5,7 +5,7 @@
  *
  * @typedef {Object} QuizState
  * @property {Object} config - Quiz configuration
- * @property {string|null} config.quizSet - Selected quiz set name (e.g., 'Daily challenge', 'Europe', 'all', or null)
+ * @property {string|null} config.quizSet - Selected quiz set name (e.g., 'Europe', 'all', or null)
  * @property {string[]} config.selectedPromptTypes - Array of prompt types: 'location', 'name', 'flag'
  * @property {string} config.gameMode - Game mode: 'dailyChallenge' | 'quiz' (normal quiz) | 'sandbox' (exploration mode) | 'learning' (spaced repetition)
  *
@@ -50,9 +50,9 @@
 export function createInitialQuizState() {
   return {
     config: {
-      quizSet: 'Daily challenge',
+      quizSet: null,
       selectedPromptTypes: ['location', 'name', 'flag'],
-      gameMode: 'dailyChallenge',
+      gameMode: null,
     },
     quizData: [],
     quiz: {
@@ -101,7 +101,7 @@ export function quizReducer(state, action) {
           ...state,
           config: {
             ...state.config,
-            quizSet: 'Daily challenge',
+            quizSet: 'all',
             gameMode: action.payload,
           },
         };

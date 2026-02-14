@@ -1,92 +1,87 @@
 // import countryData from '../data/country_data.json' with { type: 'json' };
 import quizSets from '@/data/quiz_sets.json' with { type: 'json' };
-import { seededRNG, getDailySeed, createSeededRNG } from './dailyRNG.js';
+import AllCountryData from '@/data/country_data.json' with { type: 'json' };
 import { getCountriesDueForReview } from './spacedRepetitionEngine.js';
+import { shuffleArray, getDailySeed } from './RNG.js';
 
-const dailyChallengeLength = 5;
+const DAILY_CHALLENGE_LENGTH = 5;
 
-// Shuffle array using Fisher-Yates algorithm
-export function shuffleArray(data, seed) {
-  if (!Array.isArray(data)) {
-    console.error('shuffleArray: data must be an array', data);
-    return [];
-  }
+// function getDailyChallengeCountryCodes(seed=getDailySeed(), allCountryData=AllCountryData) {
+//   return shuffleArray(allCountryData.map(country => country.code), seed).slice(0, DAILY_CHALLENGE_LENGTH);
+// }
 
-  // Create a copy to avoid mutating the original array
-  const shuffledData = [...data];
-  const rng = createSeededRNG(seed);
-  for (let i = shuffledData.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
-  }
-  return shuffledData;
+function filterCountryDataByPromptTypes(countryData, selectedPromptTypes) {
+  return countryData.filter((country) =>
+    country.availablePrompts.some((prompt) =>
+      selectedPromptTypes.includes(prompt),
+    ),
+  );
 }
 
-function filterCountryDataByQuizSet(countryData, quizSet) {
+function getCountryCodesFromQuizSet(quizSet, allCountryData = AllCountryData) {
+  if (quizSet === 'all') {
+    return allCountryData.map((country) => country.code);
+  }
   const quizSetData = quizSets.find((q) => q.name === quizSet);
   if (quizSetData) {
-    return countryData.filter((country) =>
-      quizSetData.countryCodes.includes(country.code),
-    );
+    return quizSetData.countryCodes;
   } else {
     console.error(`Invalid quiz set: ${quizSet}`);
     return [];
   }
 }
 
-// Handle user configs to filter data for prompts
-export function filterCountryData(
+function filterCountryDataByCountryCodes(countryData, countryCodes) {
+  return countryData.filter((country) => countryCodes.includes(country.code));
+}
+
+export function prepareQuizData(
+  gameMode,
   quizSet,
   selectedPromptTypes,
-  countryData,
-  gameMode = null,
   userData = null,
+  dailySeed = getDailySeed(),
+  allCountryData = AllCountryData,
 ) {
-  let filteredCountryData = countryData;
-  const dailySeed = getDailySeed();
-
-  //remove countries with no valid prompt types
-  filteredCountryData = countryData.filter((country) => {
-    return country.availablePrompts.length > 0;
-  });
-
-  if (gameMode === 'learning') {
-    if (!userData) {
-      console.error('Learning mode requires userData');
-      return [];
-    }
-    // from userData
-    filteredCountryData = getCountriesDueForReview(
-      userData,
-      filteredCountryData,
-    );
-    filteredCountryData = shuffleArray(filteredCountryData, Date.now());
-    return filteredCountryData;
-  } else if (gameMode === 'dailyChallenge' || quizSet === 'Daily challenge') {
+  let countryCodes = [];
+  switch (gameMode) {
+    case 'learning':
+      if (!userData) {
+        console.error('Learning mode requires userData');
+      }
+      countryCodes = getCountriesDueForReview(userData);
+      break;
+    case 'dailyChallenge':
+      // return getDailyChallengeCountryCodes();
+      countryCodes = getCountryCodesFromQuizSet('all');
+      break;
+    case 'quiz':
+      countryCodes = getCountryCodesFromQuizSet(quizSet);
+      break;
+    case 'sandbox':
+      countryCodes = getCountryCodesFromQuizSet('all');
+      break;
+  }
+  let filteredCountryData = filterCountryDataByCountryCodes(
+    allCountryData,
+    countryCodes,
+  );
+  if (gameMode === 'daily challenge') {
     filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(
       0,
-      dailyChallengeLength,
+      DAILY_CHALLENGE_LENGTH,
     );
     return filteredCountryData;
-  } else if (gameMode === 'quiz') {
-    if (!quizSet) {
-      console.error(`No quiz set selected for filtering`);
-      return [];
-    } else if (quizSet !== 'all') {
-      filteredCountryData = filterCountryDataByQuizSet(
+  }
+
+  if (gameMode === 'quiz') {
+    if (selectedPromptTypes && selectedPromptTypes.length > 0) {
+      filteredCountryData = filterCountryDataByPromptTypes(
         filteredCountryData,
-        quizSet,
+        selectedPromptTypes,
       );
     }
-    filteredCountryData = shuffleArray(filteredCountryData, Date.now());
-
-    if (selectedPromptTypes && selectedPromptTypes.length > 0) {
-      filteredCountryData = filteredCountryData.filter((country) => {
-        return country.availablePrompts.some((type) =>
-          selectedPromptTypes.includes(type),
-        );
-      });
-    }
   }
+  filteredCountryData = shuffleArray(filteredCountryData, Date.now());
   return filteredCountryData;
 }
