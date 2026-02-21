@@ -2,6 +2,17 @@
     {
         "name": "Europe",
         "countryCodes": [
+            "HRV",
+            "BIH",
+            "ALB",
+            "BGR",
+            "EST",
+            "AND",
+            "DNK",
+            "BEL",
+            "FRO",
+            "ALA",
+            "FIN",
             "FRA",
             "GEO",
             "DEU",
@@ -17,6 +28,10 @@
             "LIE",
             "LTU",
             "LUX",
+            "AUT",
+            "CZE",
+            "SVN",
+            "BLR",
             "MLT",
             "MCO",
             "MDA",
@@ -71,6 +86,16 @@
     {
         "name": "Africa",
         "countryCodes": [
+            "GIN",
+            "BEN",
+            "TGO",
+            "TCD",
+            "SDN",
+            "SSD",
+            "SOM",
+            "ERI",
+            "DJI",
+            "MRT",
             "NGA",
             "ETH",
             "EGY",
@@ -90,12 +115,35 @@
             "MAR",
             "DZA",
             "TUN",
-            "LBY"
+            "LBY",
+            "LBR",
+            "SLE",
+            "SEN",
+            "GMB",
+            "CAF",
+            "COG",
+            "COD",
+            "GAB",
+            "GNQ",
+            "RWA",
+            "BDI",
+            "ZMB",
+            "ZWE",
+            "BWA",
+            "NAM",
+            "LSO",
+            "SWZ",
+            "COM",
+            "SYC",
+            "CPV",
+            "SHN",
+            "MUS"
         ]
     },
     {
         "name": "South America",
         "countryCodes": [
+            "FRA",
             "BRA",
             "ARG",
             "BOL",
@@ -115,8 +163,11 @@
     {
         "name": "North America",
         "countryCodes": [
+            "SPM",
+            "GRL",
             "USA",
             "CAN",
+            "BLZ",
             "MEX",
             "GTM",
             "CUB",
@@ -140,7 +191,20 @@
             "VCT",
             "TTO",
             "TCA",
-            "VIR"
+            "VIR",
+            "VGB",
+            "BHS",
+            "BMU",
+            "TCA",
+            "CYM",
+            "PAN",
+            "CRI",
+            "GTM",
+            "HND",
+            "NIC",
+            "SLV",
+            "DMA",
+            "BRB"
         ]
     },
     {
@@ -259,6 +323,7 @@
         "name": "Caribbean",
         "countryCodes": [
             "CUB",
+            "CYM",
             "JAM",
             "HTI",
             "DOM",
@@ -275,7 +340,8 @@
             "ABW",
             "CUW",
             "SXM",
-            "BES"
+            "BES",
+            "TCA"
         ]
     },
     {
