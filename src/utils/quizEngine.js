@@ -16,6 +16,23 @@ export function checkSubmission(
   return isCorrect;
 }
 
+export function checkModalityGuessLimit(gameMode, modality, modalityGuesses){
+  // const guessState = guesses[modality];
+  const currentAttempts = modalityGuesses?.n_attempts || 0;
+  const currentStatus = modalityGuesses?.status;
+  if (gameMode === 'dailyChallenge') {
+    if (currentAttempts >= 5 && currentStatus === 'incomplete') {
+      return true;
+    }
+  } else if (gameMode === 'learning') {
+    if (currentAttempts >= 1 && currentStatus === 'incomplete') {
+      return true;
+    }
+  }
+  return false;
+
+}
+
 export function checkPromptCompletion(quizContext) {
   // Status values: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
   return Object.values(quizContext.quiz.prompt.guesses).every(

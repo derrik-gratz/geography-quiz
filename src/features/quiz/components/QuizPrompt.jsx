@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { useQuiz } from '../state/quizProvider.jsx';
+import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 import { calcTimeDelta, formatTimeDelta } from 'react-countdown';
 import { derivePromptValue } from '@/utils/quizEngine.js';
@@ -9,7 +9,7 @@ import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
 import { getCountriesDueForReview } from '@/utils/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
 import { checkPromptCompletion } from '@/utils/quizEngine.js';
-import { useQuizThunks } from '../state/quizProvider.jsx';
+import { prepareQuizData } from '@/utils/filterCountryData.js';
 
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -23,8 +23,9 @@ import { useQuizThunks } from '../state/quizProvider.jsx';
 
 export function QuizPrompt({}) {
   const state = useQuiz();
+  const dispatch = useQuizDispatch();
   const { giveUpPrompt, resetQuiz } = useQuizActions();
-  const { startQuiz } = useQuizThunks();
+  // const { startQuiz } = useQuizThunks();
   const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
   const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
   const [learningModeHasCountries, setLearningModeHasCountries] =
@@ -33,6 +34,31 @@ export function QuizPrompt({}) {
   // Expand when quiz not started, collapse otherwise
   const defaultCollapsed = false; //state.quiz.status !== 'not_started';
 
+  function setQuizData(gameMode, quizSet, selectedPromptTypes, userData = null) {
+    const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
+    dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+  }
+  
+  function startQuiz() {
+    if (state.config.gameMode === 'quiz') {
+      if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
+        console.error('Cannot start quiz: no prompt types selected');
+        return;
+      }
+    }
+    setQuizData(
+      state.config.gameMode,
+      state.config.quizSet,
+      state.config.selectedPromptTypes,
+      state.userData,
+    );
+    if (state.quizData.length === 0) {
+      console.error('Cannot start quiz: no countries to quiz');
+      console.error(state);
+      return;
+    }
+    dispatch({ type: 'START_QUIZ' });
+  }
 
   const promptCompleted = useMemo(() => {
     if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {

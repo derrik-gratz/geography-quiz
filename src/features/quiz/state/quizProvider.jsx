@@ -1,18 +1,60 @@
 import { createContext, useReducer, useMemo, useContext, useEffect } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js';
 import { useQuizProgression } from '../hooks/useQuizProgression.js';
-import { switchGameMode, startQuiz } from './quizThunks.js';
+import { prepareQuizData } from '@/utils/filterCountryData.js';
+import { loadAllUserData } from '@/utils/storageService.js';
+
+// function setQuizData(dispatch, gameMode, quizSet, selectedPromptTypes, userData = null) {
+//   const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
+//   dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+// }
+
+// function startQuiz(dispatch, state) {
+//   if (state.config.gameMode === 'quiz') {
+//     if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
+//       console.error('Cannot start quiz: no prompt types selected');
+//       return;
+//     }
+//   }
+//   if (state.quizData.length === 0) {
+//     console.error('Cannot start quiz: no countries to quiz');
+//     return;
+//   }
+//   setQuizData(
+//     dispatch,
+//     state.config.gameMode,
+//     state.config.quizSet,
+//     state.config.selectedPromptTypes,
+//     state.userData,
+//   );
+//   dispatch({ type: 'START_QUIZ' });
+// }
+
+// async function switchGameMode(dispatch, state, gameMode) {
+//   dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
+//   const userData = gameMode === 'learning' ? await loadAllUserData() : null;
+//   setQuizData(
+//     dispatch,
+//     gameMode,
+//     state.config.quizSet,
+//     state.config.selectedPromptTypes,
+//     userData,
+//   );
+// }
 
 const QuizContext = createContext(null);
 const QuizDispatchContext = createContext(null);
-const QuizThunks = createContext(null);
 
 export function useQuizThunks() {
-  const context = useContext(QuizThunks);
-  if (context == null) {
-    throw new Error('useQuizThunks must be used within QuizProvider');
-  }
-  return context;
+  const state = useQuiz();
+  const dispatch = useQuizDispatch();
+  return useMemo(
+    () => ({
+      startQuiz: () => startQuiz(dispatch, state),
+      switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode),
+    }),
+    [dispatch, state],
+  );
 }
 
 export function useQuiz() {
@@ -32,41 +74,21 @@ export function useQuizDispatch() {
 }
 
 export function QuizProvider({ children }) {
-  const [state, dispatch] = useReducer(quizReducer, createInitialQuizState());
-
-  // const currentPromptData = useMemo(() => {
-  //   if (
-  //     !state.quizData ||
-  //     state.quiz.prompt.quizDataIndex >= state.quizData.length
-  //   ) {
-  //     return null;
-  //   }
-  //   return state.quizData[state.quiz.prompt.quizDataIndex];
-  // }, [state.quizData, state.quiz.prompt.quizDataIndex]);
+  // https://react.dev/reference/react/useReducer#avoiding-recreating-the-initial-state
+  const [state, dispatch] = useReducer(quizReducer, null, createInitialQuizState);
 
   useQuizProgression(state, dispatch);
 
-  const thunks = useMemo(() => {
-    return { 
-      switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode),
-      startQuiz: () => startQuiz(dispatch, state),
-    };
-
-  }, [dispatch, state]);
-
-  // Should run on startup
-  useEffect(() => {
-    if (state.config.gameMode === null) {
-      thunks.switchGameMode('dailyChallenge');
-    }
-  }, [state.config.gameMode, thunks]);
+  // useEffect(() => {
+  //   if (state.config.gameMode === null) {
+  //     switchGameMode(dispatch, state, 'dailyChallenge');
+  //   }
+  // }, [state.config.gameMode]);
 
   return (
     <QuizContext.Provider value={state}>
       <QuizDispatchContext.Provider value={dispatch}>
-        <QuizThunks.Provider value={thunks}>
-          {children}
-        </QuizThunks.Provider>
+        {children}
       </QuizDispatchContext.Provider>
     </QuizContext.Provider>
   );

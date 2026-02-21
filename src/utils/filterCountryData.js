@@ -66,7 +66,7 @@ export function prepareQuizData(
     allCountryData,
     countryCodes,
   );
-  if (gameMode === 'daily challenge') {
+  if (gameMode === 'dailyChallenge') {
     filteredCountryData = shuffleArray(filteredCountryData, dailySeed).slice(
       0,
       DAILY_CHALLENGE_LENGTH,

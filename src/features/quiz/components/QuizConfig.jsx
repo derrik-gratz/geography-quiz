@@ -1,6 +1,8 @@
-import React from 'react';
-import { useQuiz, useQuizDispatch, useQuizThunks } from '../state/quizProvider.jsx';
+import { useEffect } from 'react';
+import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
+import { prepareQuizData } from '@/utils/filterCountryData.js';
+import { loadAllUserData } from '@/utils/storageService.js';
 import quizSets from '@/data/quiz_sets.json';
 import './QuizConfig.css';
 
@@ -9,11 +11,28 @@ const PROMPT_TYPES = ['location', 'name', 'flag'];
 export function QuizConfig() {
   const state = useQuiz();
   const dispatch = useQuizDispatch();
-  const { switchGameMode } = useQuizThunks();
+  // const { switchGameMode } = useQuizThunks();
   const defaultCollapsed = state.quiz.status !== 'not_started';
 
   const { quizSet, selectedPromptTypes, gameMode } = state.config;
 
+
+// async function switchGameMode(dispatch, state, gameMode) {
+//   dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
+//   const userData = gameMode === 'learning' ? await loadAllUserData() : null;
+//   setQuizData(
+//     dispatch,
+//     gameMode,
+//     state.config.quizSet,
+//     state.config.selectedPromptTypes,
+//     userData,
+//   );
+// }
+
+  function setQuizData(dispatch, gameMode, quizSet, selectedPromptTypes, userData = null) {
+    const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
+    dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+  }
 
   const handlePromptTypeChange = (type, checked) => {
     const next = checked
@@ -26,9 +45,24 @@ export function QuizConfig() {
     dispatch({ type: 'SET_QUIZ_SET', payload: quizSet });
   };
 
-  const handleGameModeChange = (gameMode) => {
-    switchGameMode(gameMode);
+  async function handleGameModeChange(gameMode) {
+    dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
+    dispatch({ type: 'SET_QUIZ_SET', payload: "all" });
+    const userData = gameMode === 'learning' ? await loadAllUserData() : null;
+    setQuizData(
+      dispatch,
+      gameMode,
+      state.config.quizSet,
+      state.config.selectedPromptTypes,
+      userData,
+    );
   };
+
+  useEffect(() => {
+    if (state.config.gameMode === null) {
+      handleGameModeChange('dailyChallenge');
+    }
+  }, [state.config.gameMode]);
 
   const gameModeOptions = [
     { value: 'dailyChallenge', label: 'Daily Challenge' },

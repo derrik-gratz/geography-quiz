@@ -1,3 +1,5 @@
+import { checkModalityGuessLimit } from '@/utils/quizEngine';
+
 /**
  * Creates the initial quiz state structure.
  *
@@ -86,47 +88,13 @@ export function quizReducer(state, action) {
         },
       };
     case 'SET_GAME_MODE':
-      if (action.payload === 'sandbox') {
-        return {
-          ...state,
-          config: {
-            ...state.config,
-            quizSet: 'all',
-            gameMode: action.payload,
-          },
-        };
-      }
-      if (action.payload === 'dailyChallenge') {
-        return {
-          ...state,
-          config: {
-            ...state.config,
-            quizSet: 'all',
-            gameMode: action.payload,
-          },
-        };
-      }
-      if (action.payload === 'learning') {
-        return {
-          ...state,
-          config: {
-            ...state.config,
-            quizSet: 'all',
-            gameMode: action.payload,
-          },
-        };
-      }
-      if (action.payload === 'quiz') {
-        return {
-          ...state,
-          config: {
-            ...state.config,
-            quizSet: 'all', // Default quizSet for regular quiz mode
-            gameMode: action.payload,
-          },
-        };
-      }
-      return state;
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          gameMode: action.payload,
+        },
+      };
     case 'SET_SELECTED_PROMPT_TYPES':
       return {
         ...state,
@@ -198,17 +166,12 @@ export function quizReducer(state, action) {
       const { type, value, isCorrect } = action.payload;
       const newNAttempts = state.quiz.prompt.guesses[type].n_attempts + 1;
 
-      let newStatus = isCorrect ? 'completed' : 'incomplete';
-      // Learning mode: wrong answers are immediately failed (only one attempt)
-      if (state.config.gameMode === 'learning' && !isCorrect) {
-        newStatus = 'failed';
-      } else if (
-        state.config.gameMode === 'dailyChallenge' &&
-        newNAttempts === 5 &&
-        !isCorrect
-      ) {
-        newStatus = 'failed';
-      }
+      let newStatus = isCorrect ? 'completed' :
+      checkModalityGuessLimit(
+        state.config.gameMode, 
+        type, 
+        state.quiz.prompt.guesses[type]
+      ) ? 'failed' : 'incomplete';
       return {
         ...state,
         quiz: {
