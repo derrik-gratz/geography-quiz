@@ -4,7 +4,8 @@ import allCountryData from '@/data/country_data.json';
 import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
 // import { useCollapsible } from '../../../hooks/useCollapsible.js';
-import { useComponentState } from '../hooks/useComponentState.js';
+import { useModalityState } from '../state/modalityProvider.jsx';
+import { syncModalityStateWithQuizState } from '../hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
 import './WorldMap.css';
@@ -25,19 +26,9 @@ function getCountryViewWindow(countryCode) {
 export function QuizWorldMap() {
   const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
-    useComponentState('location');
-  const defaultCollapsed = useMemo(() => {
-    if (componentStatus === 'prompting') return false;
-    if (
-      (componentStatus === 'completed' || componentStatus === 'failed') &&
-      state.quiz.status === 'active'
-    ) {
-      return true;
-    }
-    return false;
-  }, [componentStatus, state.quiz.status]);
-
+  const { correctValue, disabled, componentStatus, incorrectValues, collapsed } =
+    useModalityState();
+  syncModalityStateWithQuizState();
   // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
@@ -112,7 +103,7 @@ export function QuizWorldMap() {
   };
 
   const handleSubmit = () => {
-    if (selectedCountry && !disabled) {
+    if (selectedCountry && !disabled && componentStatus === 'incomplete') {
       submitAnswer('location', selectedCountry);
       setSelectedCountry(null);
     }
@@ -122,7 +113,7 @@ export function QuizWorldMap() {
     // Allow hovering on correct country when component is active
     if (!disabled && !incorrectValues.includes(countryCode)) {
       // Only allow hover on correct country if component is active
-      if (countryCode === correctValue && componentStatus !== 'active') {
+      if (countryCode === correctValue && componentStatus !== 'incomplete') {
         return; // Don't hover correct country when not active
       }
       setHoveredCountry(countryCode);
@@ -152,10 +143,10 @@ export function QuizWorldMap() {
   };
 
   const submitButtonStatus = useMemo(() => {
-    if (guesses?.status === 'completed') return 'completed';
-    if (selectedCountry && componentStatus === 'active') return 'active';
+    if (componentStatus === 'completed') return 'completed';
+    if (selectedCountry && componentStatus === 'incomplete') return 'active';
     return 'disabled';
-  }, [selectedCountry, guesses?.status, disabled, componentStatus]);
+  }, [selectedCountry, componentStatus, disabled]);
 
   const containerTitle = useMemo(() => {
     return `World Map ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
@@ -163,7 +154,7 @@ export function QuizWorldMap() {
   return (
     <CollapsibleContainer
       title={containerTitle}
-      defaultCollapsed={defaultCollapsed}
+      defaultCollapsed={collapsed ?? false}
       classNames={componentStatus}
       content={
         <div className="quiz-world-map">

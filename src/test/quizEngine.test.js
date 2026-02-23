@@ -1,5 +1,6 @@
 // src/tests/quizEngine.test.js
 import { describe, it, expect } from 'vitest';
+import { getDailySeed } from '@/utils/RNG.js';
 import {
   checkSubmission,
   checkPromptCompletion,
@@ -126,7 +127,7 @@ describe('checkPromptCompletion', () => {
         },
       },
     };
-    const result = checkPromptCompletion(quizContext);
+    const result = checkPromptCompletion(quizContext.quiz.prompt.guesses);
     expect(result).toBe(true);
   });
 
@@ -185,14 +186,18 @@ describe('checkPromptCompletion', () => {
 
 describe('generatePromptType', () => {
   it('generate a random prompt type when selected', () => {
+    const countryData = mockCountryData[0];
+    const seed = 12345;
     for (let i = 0; i < 10; i++) {
-      const promptType = generatePromptType(mockQuizContext);
+      const promptType = generatePromptType(
+        countryData,
+        'quiz',
+        ['location', 'name', 'flag'],
+        seed + i,
+      );
       expect(promptType).toBeDefined();
       expect(['location', 'name', 'flag']).toContain(promptType);
 
-      // Derive the value to verify it works
-      const countryData =
-        mockQuizContext.quizData[mockQuizContext.quiz.prompt.quizDataIndex];
       const value = derivePromptValue(countryData, promptType);
       expect(value).toBeDefined();
 
@@ -207,32 +212,49 @@ describe('generatePromptType', () => {
   });
 
   it('generate a location prompt type for regular quiz set', () => {
-    mockQuizContext.config.selectedPromptTypes = ['location'];
-    const promptType = generatePromptType(mockQuizContext);
+    const countryData = mockCountryData[0];
+    const promptType = generatePromptType(
+      countryData,
+      'quiz',
+      ['location'],
+      999,
+    );
 
     expect(promptType).toBeDefined();
     expect(promptType).toBe('location');
 
-    // Verify value derivation
-    const countryData =
-      mockQuizContext.quizData[mockQuizContext.quiz.prompt.quizDataIndex];
     const value = derivePromptValue(countryData, promptType);
     expect(value).toStrictEqual({ code: 'USA', lat: 40, long: -100 });
   });
 
-  it('Daily challenge repeats should be identical', async () => {
-    const result1 = generatePromptType(mockQuizContext);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const result2 = generatePromptType(mockQuizContext);
+  it('Daily challenge repeats should be identical', () => {
+    const countryData = mockCountryData[0];
+    const seed = getDailySeed() + 0;
+    const result1 = generatePromptType(
+      countryData,
+      'dailyChallenge',
+      ['location', 'name', 'flag'],
+      seed,
+    );
+    const result2 = generatePromptType(
+      countryData,
+      'dailyChallenge',
+      ['location', 'name', 'flag'],
+      seed,
+    );
 
     expect(result1).toEqual(result2);
   });
 
   it('should filter prompt types based on selectedPromptTypes', () => {
-    mockQuizContext.config.selectedPromptTypes = ['name', 'flag'];
-
+    const countryData = mockCountryData[0];
     for (let i = 0; i < 10; i++) {
-      const promptType = generatePromptType(mockQuizContext);
+      const promptType = generatePromptType(
+        countryData,
+        'quiz',
+        ['name', 'flag'],
+        1000 + i,
+      );
 
       expect(promptType).toBeDefined();
       expect(['name', 'flag']).toContain(promptType);
@@ -256,15 +278,17 @@ describe('generatePromptType', () => {
         availablePrompts: ['name'],
       },
     ];
+    const countryData = limitedCountryData[0];
 
-    mockQuizContext.quizData = limitedCountryData;
-
-    const promptType = generatePromptType(mockQuizContext);
+    const promptType = generatePromptType(
+      countryData,
+      'quiz',
+      ['location', 'name', 'flag'],
+      42,
+    );
     expect(promptType).toBeDefined();
     expect(promptType).toBe('name');
 
-    // Verify value derivation
-    const countryData = limitedCountryData[0];
     const value = derivePromptValue(countryData, promptType);
     expect(value).toBe('Georgia');
   });
@@ -305,24 +329,20 @@ describe('derivePromptValue', () => {
 });
 
 describe('checkQuizCompletion', () => {
-  it('should return true when quizDataIndex equals quizData length', () => {
-    mockQuizContext.quiz.prompt.quizDataIndex = 1;
-    const result = checkQuizCompletion(mockQuizContext);
+  it('should return true when promptQuizDataIndex equals quizData length', () => {
+    const quizData = [{ code: 'US' }];
+    const result = checkQuizCompletion(quizData, 1);
     expect(result).toBe(true);
   });
 
-  it('return false when quizDataIndex is less than quizData length', () => {
-    mockQuizContext.quiz.prompt.quizDataIndex = 0;
-    const result = checkQuizCompletion(mockQuizContext);
+  it('returns false when promptQuizDataIndex is less than quizData length', () => {
+    const quizData = [{ code: 'US' }, { code: 'CA' }];
+    const result = checkQuizCompletion(quizData, 0);
     expect(result).toBe(false);
   });
 
   it('should return false when quizData is empty', () => {
-    const emptyContext = {
-      ...mockQuizContext,
-      quizData: [],
-    };
-    const result = checkQuizCompletion(emptyContext);
+    const result = checkQuizCompletion([], 0);
     expect(result).toBe(false);
   });
 });

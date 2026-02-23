@@ -1,8 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { expectTypeOf } from 'expect-type';
-import countryData from '../data/country_data.json' with { type: 'json' };
-import quizSets from '../data/quiz_sets.json' with { type: 'json' };
-import flagColors from '../data/flag_colors.json' with { type: 'json' };
+import countryData from '@/data/country_data.json' with { type: 'json' };
+import quizSets from '@/data/quiz_sets.json' with { type: 'json' };
+import flagColors from '@/data/flag_colors.json' with { type: 'json' };
+
+import flagIconList from 'flag-icons/country.json' with { type: 'json' };
+import mainGeographies from '@/data/ne_50m_admin_0_countries.json' with { type: 'json' };
+import tinyGeographies from '@/data/ne_50m_admin_0_tiny_countries.json' with { type: 'json' };
 
 import flagIcons from 'flag-icons';
 
@@ -69,6 +73,14 @@ describe('quiz_sets.json format', () => {
       ).toEqual([]);
     });
   });
+  it('Quiz sets should have unique country codes', () => {
+    quizSets.forEach((quizSet) => {
+      const duplicateCodes = quizSet.countryCodes.filter((code, index) => quizSet.countryCodes.indexOf(code) !== index);
+      expect(duplicateCodes,
+        `Quiz set "${quizSet.name}" has duplicate country codes: ${duplicateCodes.join(', ')}`,
+      ).toEqual([]);
+    });
+  });
 });
 
 describe('flag_colors.json format', () => {
@@ -88,10 +100,6 @@ describe('flag_colors.json format', () => {
     });
   });
 });
-
-import flagIconList from 'flag-icons/country.json' with { type: 'json' };
-import mainGeographies from '../assets/ne_50m_admin_0_countries.json' with { type: 'json' };
-import tinyGeographies from '../assets/ne_50m_admin_0_tiny_countries.json' with { type: 'json' };
 
 describe('data codes consistent with packages', () => {
   const countryDataISOA3 = new Set(countryData.map((c) => c.code));

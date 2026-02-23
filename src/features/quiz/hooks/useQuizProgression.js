@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { getDailySeed } from '@/utils/RNG.js';
 import {
   checkPromptCompletion,
   checkQuizCompletion,
@@ -24,16 +25,12 @@ export function useQuizProgression(state, dispatch) {
     if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
       return false;
     }
-    return checkPromptCompletion(state);
-  }, [
-    state.quiz.prompt.type,
-    state.quiz.prompt.status,
-    state.quiz.prompt.guesses,
-  ]);
+    return checkPromptCompletion(state.quiz.prompt.guesses);
+  }, [state.quiz.prompt.guesses]);
 
   const isQuizFinished = useMemo(() => {
     if (state.quiz.status === 'active') {
-      return checkQuizCompletion(state);
+      return checkQuizCompletion(state.quizData, state.quiz.prompt.quizDataIndex);
     }
     return false;
   }, [state.quiz.status, state.quiz.prompt.quizDataIndex, state.quizData]);
@@ -66,10 +63,19 @@ export function useQuizProgression(state, dispatch) {
     if (
       !state.quiz.prompt.type &&
       state.quiz.status === 'active' &&
-      state.quiz.reviewType === null &&
-      state.quizData[state.quiz.prompt.quizDataIndex]
+      state.quiz.reviewType === null
     ) {
-      const promptType = generatePromptType(state);
+      const countryData = state.quizData[state.quiz.prompt.quizDataIndex];
+      const seed =
+        state.config.gameMode === 'dailyChallenge'
+          ? getDailySeed() + state.quiz.prompt.quizDataIndex * 1000
+          : Date.now();
+      const promptType = generatePromptType(
+        countryData,
+        state.config.gameMode,
+        state.config.selectedPromptTypes,
+        seed,
+      );
       if (promptType) {
         dispatch({ type: 'PROMPT_GENERATED', payload: { promptType } });
       }

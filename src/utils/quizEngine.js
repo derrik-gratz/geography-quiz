@@ -1,23 +1,41 @@
-import { getDailySeed, shuffleArray } from '@/utils/RNG.js';
+import { shuffleArray } from '@/utils/RNG.js';
+
+
+/**
+ * Returns the value of a modality for a country
+ * @param {Object} countryData - country data
+ * @param {string} modality - 'name' | 'flag' | 'location'
+ * @returns {string|null} - the value of the modality
+ */
+export function countryModalityValue(countryData, modality) {
+  const correctField = modality === 'name' ? 'country' : modality === 'flag' ? 'flagCode' : modality === 'location' ? 'code' : null;
+  return countryData?.[correctField] ?? null;
+}
+
+/**
+ * Checks if user's submitted answer matches prompt data for that modality
+ * @param {CountryRecord} promptCountryData - The country data for the prompt
+ * @param {string} submissionType - The type of submission: 'flag' | 'name' | 'location'
+ * @param {string} submissionValue - The value of the submission
+ * @returns {boolean} True if the submission is correct
+ */
 
 export function checkSubmission(
   promptCountryData,
   submissionType,
   submissionValue,
 ) {
-  let isCorrect = false;
-  if (submissionType === 'flag') {
-    isCorrect = promptCountryData?.flagCode === submissionValue;
-  } else if (submissionType === 'name') {
-    isCorrect = promptCountryData?.country === submissionValue;
-  } else if (submissionType === 'location') {
-    isCorrect = promptCountryData?.code === submissionValue;
-  }
-  return isCorrect;
+  const correctValue = countryModalityValue(promptCountryData, submissionType);
+  return correctValue === submissionValue;
 }
 
-export function checkModalityGuessLimit(gameMode, modality, modalityGuesses){
-  // const guessState = guesses[modality];
+/**
+ * Checks if the guess limit has been reached for a modality.
+ * @param {string} gameMode - The game mode: 'dailyChallenge' | 'learning' | 'quiz' | 'sandbox'
+ * @param {Object} modalityGuesses - The guesses for the modality
+ * @returns {boolean} True if the guess limit has been reached, false otherwise
+ */
+export function checkModalityGuessLimit(gameMode, modalityGuesses){
   const currentAttempts = modalityGuesses?.n_attempts || 0;
   const currentStatus = modalityGuesses?.status;
   if (gameMode === 'dailyChallenge') {
@@ -33,54 +51,53 @@ export function checkModalityGuessLimit(gameMode, modality, modalityGuesses){
 
 }
 
-export function checkPromptCompletion(quizContext) {
-  // Status values: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
-  return Object.values(quizContext.quiz.prompt.guesses).every(
-    (status) =>
-      // status.status !== null && status.status !== 'incomplete'
-      status.status === 'completed' ||
-      status.status === 'failed' ||
-      status.status === 'prompted',
+
+/**
+ * Returns true when every modality (location, name, flag) has a terminal status (completed, failed, or prompted).
+ * @param {import('@/features/quiz/state/quizContext.js').PromptGuesses} guesses
+ * @returns {boolean}
+ */
+export function checkPromptCompletion(guesses) {
+  return Object.values(guesses).every(
+    (modalityGuess) =>
+      modalityGuess.status === 'completed' ||
+      modalityGuess.status === 'failed' ||
+      modalityGuess.status === 'prompted',
   );
 }
 
-export function generatePromptType(quizContext) {
-  if (
-    !quizContext.quizData ||
-    quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length
-  ) {
-    console.error('Error generating prompt type');
-    console.error(quizContext);
+/**
+ * Picks a single prompt type (location, name, or flag) for the current country.
+ * Caller must pass a valid country and a deterministic seed for reproducible results (e.g. daily challenge).
+ *
+ * @param {import('@/types/dataSchemas.js').CountryRecord|null|undefined} countryData - Country at current prompt index
+ * @param {string} gameMode - 'dailyChallenge' | 'learning' | 'quiz' | 'sandbox'
+ * @param {string[]} selectedPromptTypes - Prompt types enabled for quiz mode
+ * @param {number} seed - Seed for shuffle (e.g. getDailySeed() + index*1000 for dailyChallenge, Date.now() otherwise)
+ * @returns {string|null} - 'location' | 'name' | 'flag' or null if invalid/empty options
+ */
+export function generatePromptType(
+  countryData,
+  gameMode,
+  selectedPromptTypes,
+  seed,
+) {
+  if (!countryData?.availablePrompts?.length) {
     return null;
   }
-  const countryData =
-    quizContext.quizData[quizContext.quiz.prompt.quizDataIndex];
-  let promptOptions = ['location', 'name', 'flag'];
-  let seed;
-  // select prompt type by quiz set, fixed for daily challenge and learning mode
-  if (
-    quizContext.config.gameMode === 'dailyChallenge' ||
-    quizContext.config.gameMode === 'learning'
-  ) {
-    promptOptions = countryData.availablePrompts;
-    if (quizContext.config.gameMode === 'dailyChallenge') {
-      seed = getDailySeed() + quizContext.quiz.prompt.quizDataIndex * 1000;
-    } else {
-      seed = Date.now();
-    }
-  } else {
-    promptOptions = countryData.availablePrompts.filter((prompt) =>
-      quizContext.config.selectedPromptTypes.includes(prompt),
-    );
-    seed = Date.now();
-  }
+
+  const promptOptions =
+    gameMode === 'dailyChallenge' || gameMode === 'learning'
+      ? [...countryData.availablePrompts]
+      : countryData.availablePrompts.filter((prompt) =>
+          selectedPromptTypes.includes(prompt),
+        );
 
   if (promptOptions.length === 0) {
     return null;
   }
 
-  const selectedPromptType = shuffleArray(promptOptions, seed)[0];
-  return selectedPromptType;
+  return shuffleArray(promptOptions, seed)[0];
 }
 
 /**
@@ -113,12 +130,15 @@ export function derivePromptValue(countryData, promptType) {
   }
 }
 
-export function checkQuizCompletion(quizContext) {
-  // If no country data, quiz can't be finished
-  if (!quizContext.quizData?.length) {
-    console.error('Error checking quiz completion');
-    console.error(quizContext);
+/**
+ * Returns true when the current prompt index has reached or passed the end of the quiz data.
+ * @param {import('@/types/dataSchemas.js').CountryRecord[]} quizData - Filtered country list for the quiz
+ * @param {number} promptQuizDataIndex - Index into quizData for the current/next prompt
+ * @returns {boolean}
+ */
+export function checkQuizCompletion(quizData, promptQuizDataIndex) {
+  if (!quizData?.length) {
     return false;
   }
-  return quizContext.quiz.prompt.quizDataIndex >= quizContext.quizData.length;
+  return promptQuizDataIndex >= quizData.length;
 }

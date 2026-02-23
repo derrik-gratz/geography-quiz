@@ -64,12 +64,8 @@ export function QuizPrompt({}) {
     if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
       return false;
     }
-    return checkPromptCompletion(state);
-  }, [
-    state.quiz.prompt.type,
-    state.quiz.prompt.status,
-    state.quiz.prompt.guesses,
-  ]);
+    return checkPromptCompletion(state.quiz.prompt.guesses);
+  }, [state.quiz.prompt.guesses]);
 
   const currentPromptData = useMemo(() => {
     if (!state.quizData || state.quiz.prompt.quizDataIndex >= state.quizData.length) {

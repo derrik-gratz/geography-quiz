@@ -1,6 +1,6 @@
 // quizContext.test.js - Pure reducer tests
 import { describe, it, expect } from 'vitest';
-import { createInitialQuizState, quizReducer } from '@/state/quizContext.js';
+import { createInitialQuizState, quizReducer } from '@/features/quiz/state/quizContext.js';
 
 const exampleQuizData = [
   {

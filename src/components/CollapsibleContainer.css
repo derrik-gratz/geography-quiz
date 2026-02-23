@@ -54,7 +54,7 @@ max-height: 2.5rem !important;
   border-color: #dc354650;
 }
 
-.collapsable-container.active {
+.collapsable-container.incomplete {
   border-color: #ffc10750;
 }
 

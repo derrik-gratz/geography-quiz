@@ -5,7 +5,8 @@ import { useQuizActions } from '../hooks/useQuizActions.js';
 import countryData from '@/data/country_data.json';
 import flagColors from '@/data/flag_colors.json';
 import quizSets from '@/data/quiz_sets.json';
-import { useComponentState } from '../hooks/useComponentState.js';
+import {useModalityState} from '../state/modalityProvider.jsx';
+import { syncModalityStateWithQuizState } from '../hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
 import { shuffleArray } from '@/utils/RNG.js';
@@ -25,22 +26,13 @@ const availableColors = [
 export function QuizFlagSelect() {
   const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
-    useComponentState('flag');
-  // Collapse when flag is prompted (componentStatus === 'prompting')
-  const defaultCollapsed = useMemo(() => {
-    if (componentStatus === 'prompting') return true;
-    if (
-      (componentStatus === 'completed' || componentStatus === 'failed') &&
-      state.quiz.status === 'active'
-    ) {
-      return true;
-    }
-    return false;
-  }, [componentStatus, state.quiz.status]);
+  const { componentStatus, correctValue, incorrectValues, disabled, collapsed } =
+  useModalityState();
 
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedFlag, setSelectedFlag] = useState(null);
+
+  syncModalityStateWithQuizState();
 
   const handleFlagClick = (flag) => {
     if (state.config.gameMode === 'sandbox') {
@@ -68,7 +60,7 @@ export function QuizFlagSelect() {
   ]);
 
   const handleSubmit = () => {
-    if (selectedFlag && !disabled) {
+    if (selectedFlag && !disabled && componentStatus === 'incomplete') {
       submitAnswer('flag', selectedFlag);
       setSelectedFlag(null);
     }
@@ -119,7 +111,7 @@ export function QuizFlagSelect() {
   const filteredFlags = useMemo(() => {
     let countries = allCountries.filter((country) => {
       if (componentStatus === 'reviewing' || componentStatus === 'completed') {
-        const guessedFlagCodes = guesses?.attempts || [];
+        const guessedFlagCodes = incorrectValues || [];
         return (
           country.flagCode === correctValue ||
           guessedFlagCodes.includes(country.flagCode)
@@ -184,18 +176,18 @@ export function QuizFlagSelect() {
   };
 
   const submitButtonStatus = useMemo(() => {
-    if (guesses?.status === 'completed') return 'completed';
-    if (guesses?.status === 'incorrect') return 'incorrect';
-    if (selectedFlag && componentStatus === 'active') return 'active';
+    if (componentStatus === 'completed') return 'completed';
+    if (componentStatus === 'failed') return 'incorrect';
+    if (selectedFlag && componentStatus === 'incomplete') return 'active';
     return 'disabled';
-  }, [selectedFlag, guesses?.status, componentStatus, disabled]);
+  }, [selectedFlag, componentStatus, disabled]);
 
   const containerTitle = useMemo(() => {
     return `Flag Selection${componentStatus === 'completed' ? '  ✓' : componentStatus === 'failed' ? '  ✗' : ''}`;
   }, [componentStatus]);
   return (
     <CollapsibleContainer
-      defaultCollapsed={defaultCollapsed}
+      defaultCollapsed={collapsed ?? false}
       title={containerTitle}
       classNames={componentStatus}
       content={

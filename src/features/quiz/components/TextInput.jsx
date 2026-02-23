@@ -1,45 +1,31 @@
 import React, { useState, useMemo } from 'react';
-import { useQuiz } from '../state/quizProvider.jsx';
-import { useQuizActions } from '../hooks/useQuizActions.js';
-// import { useCollapsible } from '../../hooks/useCollapsible.js';
+import { useQuiz } from '@/features/quiz/state/quizProvider.jsx';
+import { useQuizActions } from '@/features/quiz/hooks/useQuizActions.js';
+import { useModalityState } from '@/features/quiz/state/modalityProvider.jsx';
+import { syncModalityStateWithQuizState } from '@/features/quiz/hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { CountryTextEntry } from '@/components/CountryTextEntry.jsx';
-import { useComponentState } from '../hooks/useComponentState.js';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
 import './TextInput.css';
 
 export function QuizTextInput() {
   const state = useQuiz();
+  syncModalityStateWithQuizState();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { guesses, correctValue, disabled, componentStatus, incorrectValues } =
-    useComponentState('name');
-
-  const isCollapsed = useMemo(() => {
-    if (componentStatus === 'prompting') return true;
-    if (
-      (componentStatus === 'completed' || componentStatus === 'failed') &&
-      state.quiz.status === 'active'
-    ) {
-      return true;
-    }
-    return false;
-  }, [componentStatus, state.quiz.status]);
-
-  // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+  const { componentStatus, correctValue, incorrectValues, disabled, collapsed } =
+    useModalityState();
 
   const [input, setInput] = useState('');
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [allowSuggestions, setAllowSuggestions] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
 
-  // Compute if the last guess was wrong
+  // Compute if the last guess was wrong (active + at least one incorrect attempt)
   React.useEffect(() => {
-    if (componentStatus === 'active') {
-      if (guesses.attempts?.length > 0 && guesses.status === 'incomplete') {
-        setIsWrong(true);
-      }
+    if (componentStatus === 'active' && incorrectValues.length > 0) {
+      setIsWrong(true);
     }
-  }, [componentStatus, guesses?.attempts, guesses?.status]);
+  }, [componentStatus, incorrectValues.length]);
 
   // Handle wrong guess timeout
   React.useEffect(() => {
@@ -123,7 +109,7 @@ export function QuizTextInput() {
   };
 
   const handleSubmit = () => {
-    if (selectedCountry && componentStatus === 'active') {
+    if (selectedCountry && componentStatus === 'incomplete') {
       submitAnswer('name', selectedCountry);
     }
   };
@@ -149,11 +135,11 @@ export function QuizTextInput() {
   const handleCountryHoverLeave = () => {};
 
   const submitButtonStatus = useMemo(() => {
-    if (guesses?.status === 'completed') return 'completed';
+    if (componentStatus === 'completed') return 'completed';
     if (isWrong) return 'incorrect';
-    if (selectedCountry && componentStatus === 'active') return 'active';
+    if (selectedCountry && componentStatus === 'incomplete') return 'active';
     return 'disabled';
-  }, [selectedCountry, guesses?.status, isWrong, disabled, componentStatus]);
+  }, [selectedCountry, componentStatus, isWrong, disabled]);
 
   const containerTitle = useMemo(() => {
     return `Country Name ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
@@ -161,7 +147,7 @@ export function QuizTextInput() {
   return (
     <div className="quiz-text-input">
       <CollapsibleContainer
-        defaultCollapsed={isCollapsed}
+        defaultCollapsed={collapsed ?? false}
         title={containerTitle}
         classNames={componentStatus}
         content={
@@ -190,7 +176,7 @@ export function QuizTextInput() {
               getSuggestionPriority={getSuggestionPriority}
               placeholder="Type a country name..."
               allowSuggestions={
-                allowSuggestions && guesses?.status !== 'completed'
+                allowSuggestions && componentStatus !== 'completed'
               }
             />
           </div>

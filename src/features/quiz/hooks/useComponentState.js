@@ -1,113 +1,123 @@
 // src/hooks/usePromptState.js
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useQuiz } from '../state/quizProvider.jsx';
+import { countryModalityValue } from '@/utils/quizEngine.js';
+import { useModalityState, useModalityStateDispatch } from '../state/modalityProvider.jsx';
 
 /**
- * Hook to get the state for a specific prompt type component
- * @param {string} guessType - The type of guess: 'name', 'flag', or 'location'
- * @returns {Object} Component state including guesses, correctValue, disabled, componentStatus, incorrectValues
+ * Pure derivation of modality component state from quiz state. Guesses stay in quiz state; this returns only what the UI needs (correctValue, disabled, componentStatus, incorrectValues).
+ *
+ * @param {string} gameMode - 'sandbox' | 'quiz' | 'learning' | 'dailyChallenge'
+ * @param {string} quizStatus - 'active' | 'reviewing' | 'not_started' | 'completed'
+ * @param {Object} guesses - guesses object
+ * @param {string} modality - 'name' | 'flag' | 'location'
+ * @param {string} guessType - 'name' | 'flag' | 'location'
+ * @returns {string} componentStatus - 'sandbox' | 'active' | 'reviewing' | 'disabled' | 'unknown'
  */
-export function useComponentState(guessType) {
+function computeModalityStatus(gameMode, quizStatus, guesses, modality) {
+  if (gameMode === 'sandbox') {
+    return 'sandbox'
+  } else if (
+    gameMode === 'quiz' ||
+    gameMode === 'learning' ||
+    gameMode === 'dailyChallenge'
+  ) {
+    if (quizStatus === 'active') {
+      const componentStatus = guesses[modality]?.status === 'incomplete' ? 'incomplete' : 
+      guesses[modality]?.status === 'completed' ? 'completed' :
+      guesses[modality]?.status === 'failed' ? 'failed' :
+      guesses[modality]?.status === 'prompted' ? 'prompting' :
+      'unknown';
+      return componentStatus
+    } else if (quizStatus === 'reviewing') {
+      return 'reviewing';
+    } else if (quizStatus === 'not_started' || quizStatus === 'completed') {
+      return 'disabled';
+    }
+  }
+  return null;
+}
+
+export function syncModalityStateWithQuizState() {
   const state = useQuiz();
-  const correctField =
-    guessType === 'name'
-      ? 'country'
-      : guessType === 'flag'
-        ? 'flagCode'
-        : guessType === 'location'
-          ? 'code'
-          : null;
-  const { guesses, correctValue, disabled } = useMemo(() => {
-    let guesses = null;
-    let correctValue = null;
-    let disabled = true;
+  const modalityState = useModalityState();
+  const modalityStateDispatch = useModalityStateDispatch();
+  const modalityType = modalityState.modalityType;
 
-    if (state.config.gameMode === 'sandbox') {
-      disabled = false;
-      // In sandbox, guesses would be null, correctValue can be set if needed
-    } else if (
-      state.config.gameMode === 'quiz' ||
-      state.config.gameMode === 'learning' ||
-      state.config.gameMode === 'dailyChallenge'
-    ) {
-      if (state.quiz.status === 'active') {
-        guesses = state.quiz.prompt.guesses[guessType];
-        disabled = guesses?.status !== 'incomplete';
-        const currentCountry = state.quizData[state.quiz.prompt.quizDataIndex];
-        correctValue = currentCountry?.[correctField];
-      } else if (
-        state.quiz.status === 'reviewing' &&
-        state.quiz.reviewIndex !== null
-      ) {
-        const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-        guesses = historyEntry?.[guessType];
-        disabled = true;
-        const historyCountry = state.quizData[historyEntry.quizDataIndex];
-        correctValue = historyCountry?.[correctField];
-      }
+  const status = useMemo(() => {
+    return computeModalityStatus(state.config.gameMode, state.quiz.status, state.quiz.prompt.guesses, modalityType);
+  }, [state.config.gameMode, state.quiz.status, state.quiz.prompt.guesses, modalityType]);
+  useEffect(() => {
+    modalityStateDispatch({ type: 'STATUS_CHANGED', payload: status });
+  }, [status, modalityStateDispatch]);
+
+  const correctValue = useMemo(() => {
+    let countryDataIndex = null;
+    if (state.quiz.status === 'reviewing') {
+      countryDataIndex = state.quiz.history[state.quiz.reviewIndex].quizDataIndex;
+    } else if (state.quiz.status === 'active') {
+      countryDataIndex = state.quiz.prompt.quizDataIndex;
+    } else {
+      return null;
     }
-
-    return { guesses, correctValue, disabled };
-  }, [
-    state.config.gameMode,
-    state.config.quizSet,
-    state.quiz.status,
-    state.quiz.prompt.quizDataIndex,
-    state.quiz.prompt.guesses,
-    state.quiz.reviewIndex,
-    state.quiz.history,
-    state.quizData,
-    guessType,
-    correctField,
-  ]);
-
-  const componentStatus = useMemo(() => {
-    if (state.config.gameMode === 'sandbox') {
-      return 'sandbox';
-    } else if (
-      state.config.gameMode === 'quiz' ||
-      state.config.gameMode === 'learning' ||
-      state.config.gameMode === 'dailyChallenge'
-    ) {
-      if (
-        state.quiz.status === 'not_started' ||
-        state.quiz.status === 'completed'
-      ) {
-        return 'disabled';
-      } else if (
-        state.quiz.status === 'reviewing' &&
-        state.quiz.reviewIndex !== null
-      ) {
-        return 'reviewing';
-      } else if (guesses && guesses.status === 'failed') {
-        return 'failed';
-      } else if (guesses && guesses.status === 'incomplete') {
-        return 'active';
-      } else if (guesses && guesses.status === 'completed') {
-        return 'completed';
-      } else if (guesses && guesses.status === 'prompted') {
-        return 'prompting';
-      }
-    }
-    return 'unknown';
-  }, [
-    state.config.gameMode,
-    state.quiz.status,
-    state.quiz.reviewIndex,
-    guesses?.status,
-    disabled,
-  ]);
+    return countryModalityValue(state.quizData[countryDataIndex], modalityType);
+    // return computeModalityCorrectValue(state.quiz.status, state.quizData, countryData, modalityType);
+  }, [state.quiz.status, state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.reviewIndex, state.quiz.history, modalityType]);
+  useEffect(() => {
+    modalityStateDispatch({ type: 'CORRECT_VALUE_CHANGED', payload: correctValue });
+  }, [correctValue, modalityStateDispatch]);
 
   const incorrectValues = useMemo(() => {
-    if (!guesses || !guesses.attempts) return [];
-    return guesses.attempts.filter((attempt) => attempt !== correctValue);
-  }, [guesses?.attempts, correctValue]);
+    let guesses = null;
+    if (state.quiz.status === 'reviewing') {
+      guesses = state.quiz.history[state.quiz.reviewIndex][modalityType];
+    } else if (state.quiz.status === 'active') {
+      guesses = state.quiz.prompt.guesses[modalityType];
+    } else {
+      return [];
+    }
+    const attempts = guesses?.attempts ?? []
+    const status = guesses?.status
+    if (status === 'incomplete' || status === 'failed' ) {
+      return attempts
+    } else if (status === 'completed') {
+      return attempts.slice(0, -1)
+    }
+    return []
+  }, [state.quiz.prompt.guesses[modalityType], modalityType, state.quiz.status, state.quiz.reviewIndex, state.quiz.history, state.quiz.prompt.quizDataIndex, state.quizData]);
+  useEffect(() => {
+    modalityStateDispatch({ type: 'INCORRECT_VALUES_CHANGED', payload: incorrectValues });
+  }, [incorrectValues, modalityStateDispatch]);
 
-  return {
-    guesses,
-    correctValue,
-    disabled,
-    componentStatus,
-    incorrectValues,
-  };
+  const isCollapsed = useMemo(() => {
+    return state.quiz.status === 'not_started' ? false : 
+    status === 'prompting' ? true : 
+    (status === 'completed' || status === 'failed') && state.quiz.status === 'active' ? true :
+    false;
+  }, [status, state.quiz.status]);
+  useEffect(() => {
+    if (isCollapsed) {
+      modalityStateDispatch({ type: 'COLLAPSE_COMPONENT' });
+    } else {
+      modalityStateDispatch({ type: 'EXPAND_COMPONENT' });
+    }
+  }, [isCollapsed, modalityStateDispatch]);
 }
+
+/**
+ * Computes the correct value for a modality
+ * @param {string} quizStatus - 'active' | 'reviewing' | 'not_started' | 'completed'
+ * @param {Object} quizData - quiz data
+ * @param {number} quizDataIndex - index of the quiz data
+ * @param {number} reviewIndex - index of the review data
+ * @param {string} modality - 'name' | 'flag' | 'location'
+ * @returns {string|null} - the correct value for the modality
+ */
+// export function computeModalityCorrectValue(quizStatus, countryData, modality) {
+//   if (quizStatus === 'active') {
+//     return countryModalityValue(quizData[quizDataIndex], modality);
+//   } else if (quizStatus === 'reviewing') {
+//     return countryModalityValue(history[reviewIndex], modality);
+//   }
+//   return null;
+// }

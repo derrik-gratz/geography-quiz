@@ -6,6 +6,7 @@ import { QuizTextInput } from './components/TextInput.jsx';
 import { QuizFlagSelect } from './components/FlagSelect.jsx';
 import { QuizWorldMap } from './components/WorldMap.jsx';
 import { QuizProvider } from './state/quizProvider.jsx';
+import { ModalityProvider } from './state/modalityProvider.jsx';
 import './QuizPage.css';
 /**
  * QuizPage component
@@ -27,11 +28,17 @@ export function QuizPage() {
           </div>
         </div>
         <div className="right-column">
-          <QuizTextInput />
-          <QuizFlagSelect />
-          <QuizWorldMap />
+          <ModalityProvider modalityType="name">
+            <QuizTextInput />
+          </ModalityProvider>
+          <ModalityProvider modalityType="flag">
+            <QuizFlagSelect />
+          </ModalityProvider>
+          <ModalityProvider modalityType="location">
+            <QuizWorldMap />
+          </ModalityProvider>
         </div>
       </main>
-      </QuizProvider>
+    </QuizProvider>
   );
 }

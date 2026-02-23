@@ -1,17 +1,51 @@
 import { checkModalityGuessLimit } from '@/utils/quizEngine';
 
 /**
+ * Guess state for a single modality (location, name, or flag).
+ * @typedef {Object} ModalityGuessState
+ * @property {string|null} status - 'prompted' | 'incomplete' | 'completed' | 'failed' | null
+ *   - 'prompted': This type is the active prompt (user must answer)
+ *   - 'incomplete': User hasn't answered yet (not the active prompt type)
+ *   - 'completed': User answered correctly
+ *   - 'failed': User answered incorrectly or gave up
+ *   - null: No status yet (initial state)
+ * @property {number} n_attempts - Number of attempts for this modality
+ * @property {Array<{value: *, isCorrect: boolean}>} attempts - Attempts made for this modality
+ */
+
+/**
+ * Guesses for the current prompt (all three modalities).
+ * @typedef {Object} PromptGuesses
+ * @property {ModalityGuessState} location
+ * @property {ModalityGuessState} name
+ * @property {ModalityGuessState} flag
+ */
+
+/**
+ * History entry for one completed prompt (country + guess state per modality).
+ * @typedef {Object} PromptHistoryEntry
+ * @property {number} quizDataIndex - Index into quizData for the country that was quizzed
+ * @property {string} countryCode - Country code for the country that was quizzed
+ * @property {ModalityGuessState} location
+ * @property {ModalityGuessState} name
+ * @property {ModalityGuessState} flag
+ */
+
+/**
  * Creates the initial quiz state structure.
  *
- * @returns {Object} Initial quiz state with all fields set to default values
- *
+ * @returns {QuizState} Initial quiz state with all fields set to default values
+ */
+
+/**
+ * Full quiz state.
  * @typedef {Object} QuizState
  * @property {Object} config - Quiz configuration
  * @property {string|null} config.quizSet - Selected quiz set name (e.g., 'Europe', 'all', or null)
  * @property {string[]} config.selectedPromptTypes - Array of prompt types: 'location', 'name', 'flag'
- * @property {string} config.gameMode - Game mode: 'dailyChallenge' | 'quiz' (normal quiz) | 'sandbox' (exploration mode) | 'learning' (spaced repetition)
+ * @property {string|null} config.gameMode - Game mode: 'dailyChallenge' | 'quiz' | 'sandbox' | 'learning' | null
  *
- * @property {Array<Object>} quizData - Filtered country data for current quiz set
+ * @property {import('@/types/dataSchemas.js').CountryRecord[]} quizData - Filtered country data for current quiz set
  *
  * @property {Object} quiz - Current quiz state
  * @property {string} quiz.status - Quiz status: 'not_started' | 'active' | 'reviewing' | 'completed'
@@ -24,30 +58,10 @@ import { checkModalityGuessLimit } from '@/utils/quizEngine';
  * @property {Object} quiz.prompt - Current prompt state
  * @property {string|null} quiz.prompt.status - Prompt status: 'in_progress' | 'completed' | 'failed' | null
  * @property {string|null} quiz.prompt.type - Prompt type: 'location' | 'name' | 'flag' | null
- * @property {number} quiz.prompt.quizDataIndex - Index into quizData array for current/selected country
- *   - For active prompts: points to current country being quizzed
- *   - For learning mode: points to selected country in quizData (may be temporarily added)
+ * @property {number} quiz.prompt.quizDataIndex - Index into quizData for current/selected country
+ * @property {PromptGuesses} quiz.prompt.guesses - User guesses for current prompt
  *
- * @property {Object} quiz.prompt.guesses - User guesses for current prompt
- * @property {Object} quiz.prompt.guesses.location - Location guess state
- * @property {string|null} quiz.prompt.guesses.location.status - Status: 'prompted' | 'incomplete' | 'completed' | 'failed' | null
- *   - 'prompted': This type is the active prompt (user must answer)
- *   - 'incomplete': User hasn't answered yet (not the active prompt type)
- *   - 'completed': User answered correctly
- *   - 'failed': User answered incorrectly or gave up
- *   - null: No status yet (initial state)
- * @property {number} quiz.prompt.guesses.location.n_attempts - Number of attempts for this type
- * @property {Array<Object>} quiz.prompt.guesses.location.attempts - Array of attempt objects: { value: any, isCorrect: boolean }
- *
- * @property {Object} quiz.prompt.guesses.name - Name guess state (same structure as location)
- * @property {Object} quiz.prompt.guesses.flag - Flag guess state (same structure as location)
- *
- * @property {Array<Object>} quiz.history - Array of completed prompts
- * @property {number} quiz.history[].quizDataIndex - Index into quizData for the country that was quizzed
- * @property {string} quiz.history[].countryCode - Country code for the country that was quizzed
- * @property {Object} quiz.history[].location - Location guess state for this history entry (same structure as prompt.guesses.location)
- * @property {Object} quiz.history[].name - Name guess state for this history entry
- * @property {Object} quiz.history[].flag - Flag guess state for this history entry
+ * @property {PromptHistoryEntry[]} quiz.history - Array of completed prompts
  */
 export function createInitialQuizState() {
   return {
@@ -103,7 +117,6 @@ export function quizReducer(state, action) {
           selectedPromptTypes: action.payload,
         },
       };
-
     case 'SET_QUIZ_DATA':
       return {
         ...state,
@@ -116,7 +129,6 @@ export function quizReducer(state, action) {
           },
         },
       };
-
     case 'PROMPT_GENERATED':
       const { promptType } = action.payload;
       return {
@@ -169,7 +181,6 @@ export function quizReducer(state, action) {
       let newStatus = isCorrect ? 'completed' :
       checkModalityGuessLimit(
         state.config.gameMode, 
-        type, 
         state.quiz.prompt.guesses[type]
       ) ? 'failed' : 'incomplete';
       return {
@@ -191,9 +202,7 @@ export function quizReducer(state, action) {
         },
       };
     case 'GIVE_UP': {
-      // separate scope for guesses
       const guesses = state.quiz.prompt.guesses;
-      // Update guesses: set incomplete or null to 'failed'
       const updatedGuesses = {};
       PROMPT_TYPES.forEach((type) => {
         const currentStatus = guesses[type].status;
