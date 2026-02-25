@@ -133,7 +133,7 @@ export function syncModalityStateWithQuizState() {
     return state.quiz.status === 'not_started'
       ? false
       : status === 'prompting'
-        ? true
+        ? false
         : (status === 'completed' || status === 'failed') &&
             state.quiz.status === 'active'
           ? true

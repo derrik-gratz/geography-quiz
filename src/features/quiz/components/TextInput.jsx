@@ -22,7 +22,7 @@ export function QuizTextInput() {
 
   // Compute if the last guess was wrong (active + at least one incorrect attempt)
   React.useEffect(() => {
-    if (componentStatus === 'active' && incorrectValues.length > 0) {
+    if (componentStatus === 'incomplete' && incorrectValues.length > 0) {
       setIsWrong(true);
     }
   }, [componentStatus, incorrectValues.length]);

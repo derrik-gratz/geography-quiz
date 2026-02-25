@@ -113,7 +113,7 @@ export function QuizFlagSelect() {
       } else if (componentStatus === 'incomplete') {
         return filterByColors(country);
       }
-      return false;
+      return true;
     });
 
     // Sort so correct flag appears first
