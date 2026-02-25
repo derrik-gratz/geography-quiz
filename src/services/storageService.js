@@ -15,7 +15,7 @@ import {
 import {
   getEngineSettings,
   updateLearningRate,
-} from './spacedRepetitionEngine.js';
+} from '../utils/spacedRepetitionEngine.js';
 
 const DB_NAME = 'geography_quiz_db';
 const DB_VERSION = 7;

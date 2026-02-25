@@ -26,7 +26,7 @@ function getCountryViewWindow(countryCode) {
 export function QuizWorldMap() {
   const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { correctValue, disabled, componentStatus, incorrectValues, collapsed } =
+  const { correctValue, disabled, componentStatus, incorrectValues, collapsed, containerTitle } =
     useModalityState();
   syncModalityStateWithQuizState();
   // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
@@ -148,9 +148,9 @@ export function QuizWorldMap() {
     return 'disabled';
   }, [selectedCountry, componentStatus, disabled]);
 
-  const containerTitle = useMemo(() => {
-    return `World Map ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
-  }, [componentStatus]);
+  // const containerTitle = useMemo(() => {
+  //   return `World Map ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
+  // }, [componentStatus]);
   return (
     <CollapsibleContainer
       title={containerTitle}

@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import './App.css';
+import '@/index.css';
+import '@/App.css';
 import 'flag-icons/css/flag-icons.min.css';
-import App from './App.jsx';
-import { clearAllData } from './utils/storageService.js';
+import App from '@/App.jsx';
+import { clearAllData } from '@/services/storageService.js';
 
 // Expose clearAllData for development/testing
 if (import.meta.env.DEV) {

@@ -1,5 +1,3 @@
-correct flag is highlighted during active component. Flag filtering isn't working
-
 make collapsible container border based on guesses even during review, adding borders based on correct answers. Will likely have to add a hook in useComponentState.
 
 move to typescript

@@ -1,7 +1,9 @@
-import { createContext, useReducer, useEffect, useContext } from "react";
+import { createContext, useReducer, useEffect, useContext, useMemo, useCallback } from "react";
 import { getDailySeed } from "@/utils/RNG.js";
-import { getUserMetadata } from "@/utils/storageService.js";
-import { initStorage } from "@/utils/storageService.js";
+import { getUserMetadata, loadAllUserData } from "@/services/storageService.js";
+import { initStorage } from "@/services/storageService.js";
+import { dailyChallengeCompletedToday } from "@/utils/statsService.js";
+import { getCountriesDueForReview } from "@/utils/spacedRepetitionEngine.js";
 
 const AppContext = createContext(null);
 const AppDispatchContext = createContext(null);
@@ -27,6 +29,8 @@ const initialAppState = {
     currentPage: 'quiz',
     userID: null,
     dailySeed: null,
+    userData: null,
+    userDataLoading: true,
 };
 
 export function AppProvider({ children }) {
@@ -35,15 +39,16 @@ export function AppProvider({ children }) {
         dailySeed: getDailySeed(),
       }));
 
-    // Async loading of userID, will probably be replaced with oauth login eventually
-    // userID requires initStorage to be successful with local storage
+    // Async loading of userID and userData
+    // Requires initStorage to be successful with local storage
     useEffect(() => {
       async function init() {
         try {
           await initStorage();
         } catch (err) {
           console.error('Failed to initialize storage:', err);
-          return; // optional: don't load user metadata if storage failed
+          dispatch({ type: 'SET_USER_DATA_LOADING', payload: false });
+          return;
         }
         try {
           const metadata = await getUserMetadata();
@@ -51,12 +56,47 @@ export function AppProvider({ children }) {
         } catch (err) {
           console.error('Failed to get user metadata:', err);
         }
+        try {
+          const userData = await loadAllUserData();
+          dispatch({ type: 'SET_USER_DATA', payload: userData });
+        } catch (err) {
+          console.error('Failed to load user data:', err);
+        }
+        dispatch({ type: 'SET_USER_DATA_LOADING', payload: false });
       }
       init();
     }, []);
 
+    const refetchUserData = useCallback(async () => {
+      dispatch({ type: 'SET_USER_DATA_LOADING', payload: true });
+      try {
+        const userData = await loadAllUserData();
+        dispatch({ type: 'SET_USER_DATA', payload: userData });
+      } catch (err) {
+        console.error('Failed to refetch user data:', err);
+      }
+      dispatch({ type: 'SET_USER_DATA_LOADING', payload: false });
+    }, []);
+
+    const dailyChallengeCompleted = useMemo(() => {
+      if (!state.userData) return false;
+      return dailyChallengeCompletedToday(state.userData);
+    }, [state.userData]);
+
+    const learningModeCountriesDue = useMemo(() => {
+      if (!state.userData) return [];
+      return getCountriesDueForReview(state.userData);
+    }, [state.userData]);
+
+    const appState = useMemo(() => ({
+      ...state,
+      dailyChallengeCompleted,
+      learningModeCountriesDue,
+      refetchUserData,
+    }), [state, dailyChallengeCompleted, learningModeCountriesDue, refetchUserData]);
+
     return (
-        <AppContext.Provider value={state}>
+        <AppContext.Provider value={appState}>
             <AppDispatchContext.Provider value={dispatch}>
                 {children}
             </AppDispatchContext.Provider>
@@ -74,6 +114,12 @@ function appReducer(state, action) {
         }
         case 'SET_DAILY_SEED': {
             return { ...state, dailySeed: action.payload };
+        }
+        case 'SET_USER_DATA': {
+            return { ...state, userData: action.payload };
+        }
+        case 'SET_USER_DATA_LOADING': {
+            return { ...state, userDataLoading: action.payload };
         }
         default: {
             console.error('Unknown action type:', action.type);

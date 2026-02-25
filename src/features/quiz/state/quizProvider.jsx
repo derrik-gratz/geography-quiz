@@ -1,8 +1,6 @@
 import { createContext, useReducer, useMemo, useContext, useEffect } from 'react';
 import { createInitialQuizState, quizReducer } from './quizContext.js';
 import { useQuizProgression } from '../hooks/useQuizProgression.js';
-import { prepareQuizData } from '@/utils/filterCountryData.js';
-import { loadAllUserData } from '@/utils/storageService.js';
 
 // function setQuizData(dispatch, gameMode, quizSet, selectedPromptTypes, userData = null) {
 //   const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);

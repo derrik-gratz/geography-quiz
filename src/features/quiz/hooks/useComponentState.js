@@ -2,7 +2,10 @@
 import { useMemo, useEffect } from 'react';
 import { useQuiz } from '../state/quizProvider.jsx';
 import { countryModalityValue } from '@/utils/quizEngine.js';
-import { useModalityState, useModalityStateDispatch } from '../state/modalityProvider.jsx';
+import {
+  useModalityState,
+  useModalityStateDispatch,
+} from '../state/modalityProvider.jsx';
 
 /**
  * Pure derivation of modality component state from quiz state. Guesses stay in quiz state; this returns only what the UI needs (correctValue, disabled, componentStatus, incorrectValues).
@@ -16,19 +19,24 @@ import { useModalityState, useModalityStateDispatch } from '../state/modalityPro
  */
 function computeModalityStatus(gameMode, quizStatus, guesses, modality) {
   if (gameMode === 'sandbox') {
-    return 'sandbox'
+    return 'sandbox';
   } else if (
     gameMode === 'quiz' ||
     gameMode === 'learning' ||
     gameMode === 'dailyChallenge'
   ) {
     if (quizStatus === 'active') {
-      const componentStatus = guesses[modality]?.status === 'incomplete' ? 'incomplete' : 
-      guesses[modality]?.status === 'completed' ? 'completed' :
-      guesses[modality]?.status === 'failed' ? 'failed' :
-      guesses[modality]?.status === 'prompted' ? 'prompting' :
-      'unknown';
-      return componentStatus
+      const componentStatus =
+        guesses[modality]?.status === 'incomplete'
+          ? 'incomplete'
+          : guesses[modality]?.status === 'completed'
+            ? 'completed'
+            : guesses[modality]?.status === 'failed'
+              ? 'failed'
+              : guesses[modality]?.status === 'prompted'
+                ? 'prompting'
+                : 'unknown';
+      return componentStatus;
     } else if (quizStatus === 'reviewing') {
       return 'reviewing';
     } else if (quizStatus === 'not_started' || quizStatus === 'completed') {
@@ -45,8 +53,18 @@ export function syncModalityStateWithQuizState() {
   const modalityType = modalityState.modalityType;
 
   const status = useMemo(() => {
-    return computeModalityStatus(state.config.gameMode, state.quiz.status, state.quiz.prompt.guesses, modalityType);
-  }, [state.config.gameMode, state.quiz.status, state.quiz.prompt.guesses, modalityType]);
+    return computeModalityStatus(
+      state.config.gameMode,
+      state.quiz.status,
+      state.quiz.prompt.guesses,
+      modalityType,
+    );
+  }, [
+    state.config.gameMode,
+    state.quiz.status,
+    state.quiz.prompt.guesses,
+    modalityType,
+  ]);
   useEffect(() => {
     modalityStateDispatch({ type: 'STATUS_CHANGED', payload: status });
   }, [status, modalityStateDispatch]);
@@ -54,7 +72,8 @@ export function syncModalityStateWithQuizState() {
   const correctValue = useMemo(() => {
     let countryDataIndex = null;
     if (state.quiz.status === 'reviewing') {
-      countryDataIndex = state.quiz.history[state.quiz.reviewIndex].quizDataIndex;
+      countryDataIndex =
+        state.quiz.history[state.quiz.reviewIndex].quizDataIndex;
     } else if (state.quiz.status === 'active') {
       countryDataIndex = state.quiz.prompt.quizDataIndex;
     } else {
@@ -62,9 +81,19 @@ export function syncModalityStateWithQuizState() {
     }
     return countryModalityValue(state.quizData[countryDataIndex], modalityType);
     // return computeModalityCorrectValue(state.quiz.status, state.quizData, countryData, modalityType);
-  }, [state.quiz.status, state.quizData, state.quiz.prompt.quizDataIndex, state.quiz.reviewIndex, state.quiz.history, modalityType]);
+  }, [
+    state.quiz.status,
+    state.quizData,
+    state.quiz.prompt.quizDataIndex,
+    state.quiz.reviewIndex,
+    state.quiz.history,
+    modalityType,
+  ]);
   useEffect(() => {
-    modalityStateDispatch({ type: 'CORRECT_VALUE_CHANGED', payload: correctValue });
+    modalityStateDispatch({
+      type: 'CORRECT_VALUE_CHANGED',
+      payload: correctValue,
+    });
   }, [correctValue, modalityStateDispatch]);
 
   const incorrectValues = useMemo(() => {
@@ -76,24 +105,39 @@ export function syncModalityStateWithQuizState() {
     } else {
       return [];
     }
-    const attempts = guesses?.attempts ?? []
-    const status = guesses?.status
-    if (status === 'incomplete' || status === 'failed' ) {
-      return attempts
+    const attempts = guesses?.attempts ?? [];
+    const status = guesses?.status;
+    if (status === 'incomplete' || status === 'failed') {
+      return attempts;
     } else if (status === 'completed') {
-      return attempts.slice(0, -1)
+      return attempts.slice(0, -1);
     }
-    return []
-  }, [state.quiz.prompt.guesses[modalityType], modalityType, state.quiz.status, state.quiz.reviewIndex, state.quiz.history, state.quiz.prompt.quizDataIndex, state.quizData]);
+    return [];
+  }, [
+    state.quiz.prompt.guesses[modalityType],
+    modalityType,
+    state.quiz.status,
+    state.quiz.reviewIndex,
+    state.quiz.history,
+    state.quiz.prompt.quizDataIndex,
+    state.quizData,
+  ]);
   useEffect(() => {
-    modalityStateDispatch({ type: 'INCORRECT_VALUES_CHANGED', payload: incorrectValues });
+    modalityStateDispatch({
+      type: 'INCORRECT_VALUES_CHANGED',
+      payload: incorrectValues,
+    });
   }, [incorrectValues, modalityStateDispatch]);
 
   const isCollapsed = useMemo(() => {
-    return state.quiz.status === 'not_started' ? false : 
-    status === 'prompting' ? true : 
-    (status === 'completed' || status === 'failed') && state.quiz.status === 'active' ? true :
-    false;
+    return state.quiz.status === 'not_started'
+      ? false
+      : status === 'prompting'
+        ? true
+        : (status === 'completed' || status === 'failed') &&
+            state.quiz.status === 'active'
+          ? true
+          : false;
   }, [status, state.quiz.status]);
   useEffect(() => {
     if (isCollapsed) {
@@ -102,6 +146,22 @@ export function syncModalityStateWithQuizState() {
       modalityStateDispatch({ type: 'EXPAND_COMPONENT' });
     }
   }, [isCollapsed, modalityStateDispatch]);
+
+  const containerTitle = useMemo(() => {
+    const componentTypeText =
+      modalityType === 'name'
+        ? 'Name'
+        : modalityType === 'flag'
+          ? 'Flag'
+          : 'Location';
+    return `${componentTypeText}${modalityState.componentStatus === 'completed' ? '  ✓' : modalityState.componentStatus === 'failed' ? '  ✗' : ''}`;
+  }, [modalityState.componentStatus, modalityType]);
+  useEffect(() => {
+    modalityStateDispatch({
+      type: 'SET_CONTAINER_TITLE',
+      payload: containerTitle,
+    });
+  }, [containerTitle, modalityStateDispatch]);
 }
 
 /**

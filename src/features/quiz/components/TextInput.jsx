@@ -12,7 +12,7 @@ export function QuizTextInput() {
   const state = useQuiz();
   syncModalityStateWithQuizState();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { componentStatus, correctValue, incorrectValues, disabled, collapsed } =
+  const { componentStatus, correctValue, incorrectValues, disabled, collapsed, containerTitle } =
     useModalityState();
 
   const [input, setInput] = useState('');
@@ -141,9 +141,6 @@ export function QuizTextInput() {
     return 'disabled';
   }, [selectedCountry, componentStatus, isWrong, disabled]);
 
-  const containerTitle = useMemo(() => {
-    return `Country Name ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
-  }, [componentStatus]);
   return (
     <div className="quiz-text-input">
       <CollapsibleContainer

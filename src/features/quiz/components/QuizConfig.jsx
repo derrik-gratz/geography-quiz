@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
+import { useApp } from '@/state/AppProvider.jsx';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { prepareQuizData } from '@/utils/filterCountryData.js';
-import { loadAllUserData } from '@/utils/storageService.js';
 import quizSets from '@/data/quiz_sets.json';
 import './QuizConfig.css';
 
@@ -11,6 +11,7 @@ const PROMPT_TYPES = ['location', 'name', 'flag'];
 export function QuizConfig() {
   const state = useQuiz();
   const dispatch = useQuizDispatch();
+  const { userData } = useApp();
   // const { switchGameMode } = useQuizThunks();
   const defaultCollapsed = state.quiz.status !== 'not_started';
 
@@ -45,18 +46,18 @@ export function QuizConfig() {
     dispatch({ type: 'SET_QUIZ_SET', payload: quizSet });
   };
 
-  async function handleGameModeChange(gameMode) {
+  function handleGameModeChange(gameMode) {
     dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
     dispatch({ type: 'SET_QUIZ_SET', payload: "all" });
-    const userData = gameMode === 'learning' ? await loadAllUserData() : null;
+    const userDataForMode = gameMode === 'learning' ? userData : null;
     setQuizData(
       dispatch,
       gameMode,
       state.config.quizSet,
       state.config.selectedPromptTypes,
-      userData,
+      userDataForMode,
     );
-  };
+  }
 
   useEffect(() => {
     if (state.config.gameMode === null) {

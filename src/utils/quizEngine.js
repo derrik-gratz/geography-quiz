@@ -1,6 +1,5 @@
 import { shuffleArray } from '@/utils/RNG.js';
 
-
 /**
  * Returns the value of a modality for a country
  * @param {Object} countryData - country data
@@ -8,7 +7,14 @@ import { shuffleArray } from '@/utils/RNG.js';
  * @returns {string|null} - the value of the modality
  */
 export function countryModalityValue(countryData, modality) {
-  const correctField = modality === 'name' ? 'country' : modality === 'flag' ? 'flagCode' : modality === 'location' ? 'code' : null;
+  const correctField =
+    modality === 'name'
+      ? 'country'
+      : modality === 'flag'
+        ? 'flagCode'
+        : modality === 'location'
+          ? 'code'
+          : null;
   return countryData?.[correctField] ?? null;
 }
 
@@ -35,7 +41,7 @@ export function checkSubmission(
  * @param {Object} modalityGuesses - The guesses for the modality
  * @returns {boolean} True if the guess limit has been reached, false otherwise
  */
-export function checkModalityGuessLimit(gameMode, modalityGuesses){
+export function checkModalityGuessLimit(gameMode, modalityGuesses) {
   const currentAttempts = modalityGuesses?.n_attempts || 0;
   const currentStatus = modalityGuesses?.status;
   if (gameMode === 'dailyChallenge') {
@@ -48,9 +54,7 @@ export function checkModalityGuessLimit(gameMode, modalityGuesses){
     }
   }
   return false;
-
 }
-
 
 /**
  * Returns true when every modality (location, name, flag) has a terminal status (completed, failed, or prompted).
@@ -102,6 +106,8 @@ export function generatePromptType(
 
 /**
  * Derives the prompt value from country data and prompt type.
+ * Different than countryModalityValue as this is the displayed value, not the value
+ * used to check for correctness.
  *
  * @param {Object} countryData - Country data object
  * @param {string} promptType - Prompt type: 'location' | 'name' | 'flag'

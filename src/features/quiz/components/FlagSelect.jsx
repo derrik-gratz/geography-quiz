@@ -1,11 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
-// import { useCollapsible } from '../../../hooks/useCollapsible.js';
 import countryData from '@/data/country_data.json';
 import flagColors from '@/data/flag_colors.json';
 import quizSets from '@/data/quiz_sets.json';
-import {useModalityState} from '../state/modalityProvider.jsx';
+import { useModalityState } from '../state/modalityProvider.jsx';
 import { syncModalityStateWithQuizState } from '../hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
@@ -26,7 +25,7 @@ const availableColors = [
 export function QuizFlagSelect() {
   const state = useQuiz();
   const { submitAnswer, sandboxSelect } = useQuizActions();
-  const { componentStatus, correctValue, incorrectValues, disabled, collapsed } =
+  const { componentStatus, correctValue, incorrectValues, disabled, collapsed, containerTitle } =
   useModalityState();
 
   const [selectedColors, setSelectedColors] = useState([]);
@@ -34,17 +33,7 @@ export function QuizFlagSelect() {
 
   syncModalityStateWithQuizState();
 
-  const handleFlagClick = (flag) => {
-    if (state.config.gameMode === 'sandbox') {
-      sandboxSelect({ inputType: 'flag', countryValue: flag });
-    } else {
-      if (!disabled && !incorrectValues.includes(flag)) {
-        setSelectedFlag(flag);
-      }
-    }
-  };
-
-  // Reset when prompt changes or when disabled
+    // Reset when prompt changes or when disabled
   React.useEffect(() => {
     if (state.config.gameMode === 'sandbox') {
       setSelectedFlag(state.quizData[state.quiz.prompt.quizDataIndex].flagCode);
@@ -58,6 +47,16 @@ export function QuizFlagSelect() {
     state.quizData,
     state.quiz.prompt.quizDataIndex,
   ]);
+
+  const handleFlagClick = (flag) => {
+    if (state.config.gameMode === 'sandbox') {
+      sandboxSelect({ inputType: 'flag', countryValue: flag });
+    } else {
+      if (!disabled && !incorrectValues.includes(flag)) {
+        setSelectedFlag(flag);
+      }
+    }
+  };
 
   const handleSubmit = () => {
     if (selectedFlag && !disabled && componentStatus === 'incomplete') {
@@ -76,19 +75,7 @@ export function QuizFlagSelect() {
   };
 
   // Get all countries with flags as base
-  const allCountries = useMemo(() => {
-    return countryData.filter((country) => country.flagCode);
-  }, []);
-
-  // const buttonText = useMemo(() => {
-  //     if (componentStatus === 'reviewing') {
-  //         return 'Answer:';
-  //     }
-  //     if (componentStatus === 'sandbox') {
-  //         return 'Submit Flag';
-  //     }
-  //     return 'Submit Flag';
-  // }, [componentStatus]);
+  const allCountries = countryData.filter((country) => country.flagCode)
 
   const filterByQuizSet = (country) => {
     if (state.config.quizSet && state.config.quizSet !== 'all') {
@@ -117,21 +104,14 @@ export function QuizFlagSelect() {
           guessedFlagCodes.includes(country.flagCode)
         );
       }
-
-      // If sandbox mode, filter by quiz set
       if (componentStatus === 'sandbox') {
         return filterByQuizSet(country) && filterByColors(country);
-      }
-      if (componentStatus === 'prompting') {
+      } else if (componentStatus === 'prompting') {
         return country.flagCode === correctValue;
-      }
-      // Active prompt: all flags visible, with optional color filtering
-      if (selectedColors.length === 0) {
+      } else if (componentStatus === 'incomplete' && selectedColors.length === 0) {
         return true;
-      }
-      if (componentStatus === 'incomplete') {
+      } else if (componentStatus === 'incomplete') {
         return filterByColors(country);
-        // return selectedColors.every(color => country.colors?.includes(color));
       }
       return false;
     });
@@ -166,9 +146,7 @@ export function QuizFlagSelect() {
     }
     if (incorrectValues.includes(country)) {
       className += ` ${baseClassName}_incorrect`;
-    } else if (selectedFlag === country) {
-      // const isSandbox = state.config.gameMode === 'sandbox';
-      // className += isSandbox ? `${baseClassName}_selected` : `${baseClassName}_selected`;
+    } else if ((componentStatus === 'incomplete' || componentStatus === 'sandbox') && selectedFlag === country) {
       className += ` ${baseClassName}_selected`;
     }
     className += ` fi fi-${country.toLowerCase()}`;
@@ -182,9 +160,6 @@ export function QuizFlagSelect() {
     return 'disabled';
   }, [selectedFlag, componentStatus, disabled]);
 
-  const containerTitle = useMemo(() => {
-    return `Flag Selection${componentStatus === 'completed' ? '  ✓' : componentStatus === 'failed' ? '  ✗' : ''}`;
-  }, [componentStatus]);
   return (
     <CollapsibleContainer
       defaultCollapsed={collapsed ?? false}

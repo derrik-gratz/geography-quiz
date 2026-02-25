@@ -18,11 +18,17 @@ export function createInitialModalityState(modalityType) {
     collapsed: false,
     componentStatus: 'disabled',
     incorrectValues: [],
+    containerTitle: '',
   };
 }
 
 export function modalityReducer(state, action) {
   switch (action.type) {
+    case 'SET_CONTAINER_TITLE':
+      return {
+        ...state,
+        containerTitle: action.payload,
+      };
     case 'SELECTED_VALUE_CHANGED':
       return {
         ...state,

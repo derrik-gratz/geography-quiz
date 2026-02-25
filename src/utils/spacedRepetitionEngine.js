@@ -24,6 +24,24 @@ export function updateLearningRate(currentRate, isCorrect) {
 }
 
 /**
+ * Check if a country is due for review
+ * @param {Object} learningRateData - Learning rate data
+ * @param {Date} today - Today's date
+ * @returns {boolean} True if the country is due for review
+ */
+function isCountryDueForReview(learningRateData, today) {
+  if (!learningRateData || !learningRateData.lastChecked) {
+    return true;
+  }
+  const timeSinceLastChecked = (
+    (today - parseDateString(learningRateData.lastChecked)) /
+    (1000 * 60 * 60 * 24)
+  ).toFixed(2);
+  const learningRate = learningRateData.learningRate ?? DEFAULT_LEARNING_RATE;
+  return timeSinceLastChecked >= learningRate;
+}
+
+/**
  * Get all countries due for review
  * @param {Object} userData - User data with countries object
  * @param {Array} allCountryData - All available country data from country_data.json
@@ -45,19 +63,9 @@ export function getCountriesDueForReview(
   availableCountryData.forEach((country) => {
     const countryCode = country.code;
     const learningRateData = userData.countries[countryCode];
-
-    // If country has no data, it's due (never reviewed)
-    if (!learningRateData || !learningRateData.lastChecked) {
+    if (isCountryDueForReview(learningRateData, today)) {
       dueCountries.push(countryCode);
       return;
-    }
-    const learningRate = learningRateData.learningRate ?? DEFAULT_LEARNING_RATE;
-    const timeSinceLastChecked = (
-      (today - parseDateString(learningRateData.lastChecked)) /
-      (1000 * 60 * 60 * 24)
-    ).toFixed(2);
-    if (timeSinceLastChecked >= learningRate) {
-      dueCountries.push(countryCode);
     }
   });
 

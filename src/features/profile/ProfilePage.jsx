@@ -1,66 +1,20 @@
 /**
  * Profile page component displaying daily challenge statistics from local storage
  */
-import React, { useState, useEffect, useMemo } from 'react';
-import { loadAllUserData, getUserMetadata } from '@/utils/storageService.js';
-// import { calculatePerModalityStats } from '../../utils/statsService.js';
-// import { StatsCard } from './StatsCard.jsx';
-// import allCountryData from '../../data/country_data.json';
-// import { ProfileMap } from './ProfilePage/ProfileMap.jsx';
+import React from 'react';
+import { useApp } from '@/state/AppProvider.jsx';
 import { ScoreTimeline } from './components/ScoreTimeline.jsx';
 import { DailyChallengeModalityMatrix } from './components/DailyChallengeModalityMatrix.jsx';
 import { ProfileMap } from './components/ProfileStatsMap/ProfileMap.jsx';
-// import fakeUserData from '../../types/dummyUserData.js';
 import './ProfilePage.css';
 
 export function ProfilePage() {
-  const [userData, setUserData] = useState(null);
-  const [userMetadata, setUserMetadata] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { userData, userDataLoading } = useApp();
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      // Use dummy data for testing
-      // setUserData(fakeUserData);
-      // Optionally load real metadata
-      const [data, metadata] = await Promise.all([
-        loadAllUserData(),
-        getUserMetadata(),
-      ]);
-      setUserData(data);
-      setUserMetadata(metadata);
-
-      setIsLoading(false);
-    } catch (err) {
-      console.error('Failed to load profile data:', err);
-      setError('Failed to load profile data');
-      setIsLoading(false);
-    }
-  };
-
-  // const perModalityStats = useMemo(() => {
-  //   if (!userData) return null;
-  //   return calculatePerModalityStats(userData);
-  // }, [userData]);
-
-  if (isLoading) {
+  if (userDataLoading) {
     return (
       <div className="profile-page">
         <div className="profile-page__loading">Loading profile...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="profile-page">
-        <div className="profile-page__error">{error}</div>
       </div>
     );
   }

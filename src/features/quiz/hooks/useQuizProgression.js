@@ -8,8 +8,8 @@ import {
 import {
   saveDailyChallenge,
   updateCountryLearningData,
-} from '@/utils/storageService.js';
-import { transformQuizStateToStorage } from '@/utils/storageService.js';
+} from '@/services/storageService.js';
+import { transformQuizStateToStorage } from '@/services/storageService.js';
 import { formatDateString } from '@/types/dataSchemas.js';
 
 export function sleep(ms) {
@@ -21,23 +21,38 @@ export function sleep(ms) {
  * Call from QuizProvider with (state, dispatch). Keeps reducer state pure.
  */
 export function useQuizProgression(state, dispatch) {
-  const promptCompleted = useMemo(() => {
-    if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
+  const isPromptCompleted = useMemo(() => {
+    if (state.quiz.status === 'active') {
+      if (
+        !state.quiz.prompt.type ||
+        state.quiz.prompt.status !== 'in_progress'
+      ) {
+        return false;
+      }
+      return checkPromptCompletion(state.quiz.prompt.guesses);
+    } else {
       return false;
     }
-    return checkPromptCompletion(state.quiz.prompt.guesses);
-  }, [state.quiz.prompt.guesses]);
+  }, [
+    state.quiz.status,
+    state.quiz.prompt.type,
+    state.quiz.prompt.status,
+    state.quiz.prompt.guesses,
+  ]);
 
   const isQuizFinished = useMemo(() => {
     if (state.quiz.status === 'active') {
-      return checkQuizCompletion(state.quizData, state.quiz.prompt.quizDataIndex);
+      return checkQuizCompletion(
+        state.quizData,
+        state.quiz.prompt.quizDataIndex,
+      );
     }
     return false;
   }, [state.quiz.status, state.quiz.prompt.quizDataIndex, state.quizData]);
 
-  // Prompt progress: completion (and learning update) + next prompt generation
+  // After each submiss
   useEffect(() => {
-    if (promptCompleted && state.quiz.status === 'active') {
+    if (isPromptCompleted && state.quiz.status === 'active') {
       dispatch({ type: 'PROMPT_FINISHED' });
 
       if (state.config.gameMode === 'learning') {
@@ -81,7 +96,7 @@ export function useQuizProgression(state, dispatch) {
       }
     }
   }, [
-    promptCompleted,
+    isPromptCompleted,
     state.quiz.status,
     state.quiz.reviewType,
     state.quiz.prompt.type,

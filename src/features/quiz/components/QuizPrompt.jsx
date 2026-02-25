@@ -1,15 +1,11 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
+import React, { useMemo } from 'react';
+import { useQuiz } from '../state/quizProvider.jsx';
 import { useQuizActions } from '../hooks/useQuizActions.js';
+import { useApp } from '@/state/AppProvider.jsx';
 import { calcTimeDelta, formatTimeDelta } from 'react-countdown';
-import { derivePromptValue } from '@/utils/quizEngine.js';
+import { derivePromptValue, checkPromptCompletion } from '@/utils/quizEngine.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
-import { loadAllUserData } from '@/utils/storageService.js';
-import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
-import { getCountriesDueForReview } from '@/utils/spacedRepetitionEngine.js';
 import './QuizPrompt.css';
-import { checkPromptCompletion } from '@/utils/quizEngine.js';
-import { prepareQuizData } from '@/utils/filterCountryData.js';
 
 // {state.quizStatus === 'not_started' && (
 //     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
@@ -23,42 +19,40 @@ import { prepareQuizData } from '@/utils/filterCountryData.js';
 
 export function QuizPrompt({}) {
   const state = useQuiz();
-  const dispatch = useQuizDispatch();
-  const { giveUpPrompt, resetQuiz } = useQuizActions();
-  // const { startQuiz } = useQuizThunks();
-  const [dailyChallengeCompleted, setDailyChallengeCompleted] = useState(false);
-  const [checkingDailyChallenge, setCheckingDailyChallenge] = useState(false);
-  const [learningModeHasCountries, setLearningModeHasCountries] =
-    useState(true);
-  const [checkingLearningMode, setCheckingLearningMode] = useState(false);
-  // Expand when quiz not started, collapse otherwise
-  const defaultCollapsed = false; //state.quiz.status !== 'not_started';
+  const { startQuiz, giveUpPrompt, resetQuiz } = useQuizActions();
+  const {
+    dailyChallengeCompleted,
+    learningModeCountriesDue,
+    userDataLoading,
+  } = useApp();
+  const learningModeHasCountries = learningModeCountriesDue.length > 0;
+  const defaultCollapsed = false;
 
-  function setQuizData(gameMode, quizSet, selectedPromptTypes, userData = null) {
-    const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
-    dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-  }
+  // function setQuizData(gameMode, quizSet, selectedPromptTypes, userData = null) {
+  //   const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
+  //   dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+  // }
   
-  function startQuiz() {
-    if (state.config.gameMode === 'quiz') {
-      if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
-        console.error('Cannot start quiz: no prompt types selected');
-        return;
-      }
-    }
-    setQuizData(
-      state.config.gameMode,
-      state.config.quizSet,
-      state.config.selectedPromptTypes,
-      state.userData,
-    );
-    if (state.quizData.length === 0) {
-      console.error('Cannot start quiz: no countries to quiz');
-      console.error(state);
-      return;
-    }
-    dispatch({ type: 'START_QUIZ' });
-  }
+  // function startQuiz() {
+  //   if (state.config.gameMode === 'quiz') {
+  //     if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
+  //       console.error('Cannot start quiz: no prompt types selected');
+  //       return;
+  //     }
+  //   }
+  //   setQuizData(
+  //     state.config.gameMode,
+  //     state.config.quizSet,
+  //     state.config.selectedPromptTypes,
+  //     state.userData,
+  //   );
+  //   if (state.quizData.length === 0) {
+  //     console.error('Cannot start quiz: no countries to quiz');
+  //     console.error(state);
+  //     return;
+  //   }
+  //   dispatch({ type: 'START_QUIZ' });
+  // }
 
   const promptCompleted = useMemo(() => {
     if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
@@ -73,54 +67,6 @@ export function QuizPrompt({}) {
     }
     return state.quizData[state.quiz.prompt.quizDataIndex];
   }, [state.quizData, state.quiz.prompt.quizDataIndex]);
-  // Check if daily challenge is already completed
-  useEffect(() => {
-    if (
-      state.config.gameMode === 'dailyChallenge' &&
-      state.quiz.status === 'not_started'
-    ) {
-      setCheckingDailyChallenge(true);
-      loadAllUserData()
-        .then((userData) => {
-          const completed = dailyChallengeCompletedToday(userData);
-          setDailyChallengeCompleted(completed);
-        })
-        .catch((error) => {
-          console.error('Failed to check daily challenge status:', error);
-          setDailyChallengeCompleted(false);
-        })
-        .finally(() => {
-          setCheckingDailyChallenge(false);
-        });
-    } else {
-      setDailyChallengeCompleted(false);
-    }
-  }, [state.config.gameMode, state.quiz.status]);
-
-  useEffect(() => {
-    if (
-      state.config.gameMode === 'learning' &&
-      state.quiz.status === 'not_started'
-    ) {
-      setCheckingLearningMode(true);
-      loadAllUserData()
-        .then((userData) => {
-          // Check if there are countries due for review
-
-          const dueCountries = getCountriesDueForReview(userData);
-          setLearningModeHasCountries(dueCountries.length > 0);
-        })
-        .catch((error) => {
-          console.error('Failed to check learning mode countries:', error);
-          setLearningModeHasCountries(false);
-        })
-        .finally(() => {
-          setCheckingLearningMode(false);
-        });
-    } else {
-      setLearningModeHasCountries(true);
-    }
-  }, [state.config.gameMode, state.quiz.status]);
 
   // Reset give up state when prompt changes
   // useEffect(() => {
@@ -272,7 +218,7 @@ export function QuizPrompt({}) {
         state.quiz.reviewIndex !== null
       ) {
         const historyEntry = state.quiz.history[state.quiz.reviewIndex];
-        if (historyEntry && state.quizData[historyEntry.quizDataIndex]) {
+        if (historyEntry && currentPromptData) {
           return (
             <span className="prompt-name">{currentPromptData.country}</span>
           );
@@ -322,7 +268,7 @@ export function QuizPrompt({}) {
           <button
             className="quiz-prompt__start-quiz-button"
             onClick={startQuiz}
-            disabled={isStartDisabled || checkingDailyChallenge}
+            disabled={isStartDisabled || userDataLoading}
           >
             {'Start quiz'}
           </button>
@@ -353,7 +299,7 @@ export function QuizPrompt({}) {
     promptCompleted,
     isStartDisabled,
     dailyChallengeCompleted,
-    checkingDailyChallenge,
+    userDataLoading,
     startQuiz,
     giveUpPrompt,
     resetQuiz,

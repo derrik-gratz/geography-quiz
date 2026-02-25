@@ -1,14 +1,8 @@
 // src/hooks/useQuizActions.js
 import { useCallback } from 'react';
 import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
-// import { filterCountryData } from '@/utils/filterCountryData.js';
 import { checkSubmission } from '@/utils/quizEngine.js';
-import {
-  loadAllUserData,
-  updateCountryLearningData,
-} from '@/utils/storageService.js';
-import { dailyChallengeCompletedToday } from '@/utils/statsService.js';
-import countryData from '@/data/country_data.json';
+import { prepareQuizData } from '@/utils/filterCountryData.js';
 
 export function useQuizActions() {
   const state = useQuiz();
@@ -24,26 +18,48 @@ export function useQuizActions() {
     [dispatch],
   );
 
-  // const startQuiz = useCallback(async () => {
-  //   if (state.config.gameMode === 'quiz') {
-  //     if (
-  //       !state.config.selectedPromptTypes ||
-  //       state.config.selectedPromptTypes.length === 0
-  //     ) {
-  //       console.error('Cannot start quiz: no prompt types selected');
-  //       return;
-  //     }
-  //   }
-  //   if (state.quizData.length === 0) {
-  //     console.error('Cannot start quiz: no countries to quiz');
-  //     return;
-  //   }
-  //   console.log(state.quizData);
-  //   dispatch({ type: 'START_QUIZ' });
-  // }, [
-  //   state.quizData,
-  //   dispatch,
-  // ]);
+  const setQuizData = useCallback(
+    (gameMode, quizSet, selectedPromptTypes, userData = null) => {
+      const quizData = prepareQuizData(
+        gameMode,
+        quizSet,
+        selectedPromptTypes,
+        userData,
+      );
+      dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
+    },
+    [dispatch],
+  );
+
+  const startQuiz = useCallback(() => {
+    if (state.config.gameMode === 'quiz') {
+      if (
+        !state.config.selectedPromptTypes ||
+        state.config.selectedPromptTypes.length === 0
+      ) {
+        console.error('Cannot start quiz: no prompt types selected');
+        return;
+      }
+    }
+    setQuizData(
+      state.config.gameMode,
+      state.config.quizSet,
+      state.config.selectedPromptTypes,
+      state.userData,
+    );
+    if (state.quizData.length === 0) {
+      console.error('Cannot start quiz: no countries to quiz');
+      console.error(state);
+      return;
+    }
+    dispatch({ type: 'START_QUIZ' });
+  }, [
+    dispatch,
+    state.config.gameMode,
+    state.config.selectedPromptTypes,
+    state.config.quizSet,
+    state.userData,
+  ]);
 
   const submitAnswer = useCallback(
     (submissionType, submissionValue) => {
@@ -118,7 +134,7 @@ export function useQuizActions() {
 
   return {
     sandboxSelect,
-    // startQuiz,
+    startQuiz,
     submitAnswer,
     giveUpPrompt,
     resetQuiz,
