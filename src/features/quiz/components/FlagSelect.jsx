@@ -129,7 +129,7 @@ export function QuizFlagSelect() {
       if (selectedColors.length === 0) {
         return true;
       }
-      if (componentStatus === 'active') {
+      if (componentStatus === 'incomplete') {
         return filterByColors(country);
         // return selectedColors.every(color => country.colors?.includes(color));
       }
@@ -159,7 +159,7 @@ export function QuizFlagSelect() {
   const getFlagClassName = (country) => {
     const baseClassName = `quiz-flag-select__flag-icon`;
     let className = baseClassName;
-    if (componentStatus !== 'active') {
+    if (componentStatus !== 'incomplete') {
       if (country === correctValue) {
         className += ` ${baseClassName}_correct`;
       }
