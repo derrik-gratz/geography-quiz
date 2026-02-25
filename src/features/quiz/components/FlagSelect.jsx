@@ -76,7 +76,6 @@ export function QuizFlagSelect() {
 
   // Get all countries with flags as base
   const allCountries = countryData.filter((country) => country.flagCode)
-
   const filterByQuizSet = (country) => {
     if (state.config.quizSet && state.config.quizSet !== 'all') {
       const quizSetData = quizSets.find((q) => q.name === state.config.quizSet);

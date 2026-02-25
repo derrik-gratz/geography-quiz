@@ -7,15 +7,23 @@ import { derivePromptValue, checkPromptCompletion } from '@/utils/quizEngine.js'
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import './QuizPrompt.css';
 
-// {state.quizStatus === 'not_started' && (
-//     <button className="quiz-config__start-button" onClick={startQuiz}>Start quiz</button>
-// )}
-// {state.quizStatus === 'in_progress' && (
-//     <button className="quiz-config__give-up-button" onClick={handleGiveUp}>Give up</button>
-// )}
-// {state.quizStatus === 'completed' && (
-//     <button className="quiz-config__start-button" onClick={resetQuiz}>New quiz</button>
-// )}
+const formatLatitude = (lat) => {
+  const absLat = Math.abs(lat);
+  const direction = lat >= 0 ? 'N' : 'S';
+  return `${absLat.toFixed(1)}°${direction}`;
+};
+
+const formatLongitude = (lon) => {
+  const absLon = Math.abs(lon);
+  const direction = lon >= 0 ? 'E' : 'W';
+  return `${absLon.toFixed(1)}°${direction}`;
+};
+
+const getTimeUntilNextDay = () => {
+  const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+  tomorrow.setHours(0, 0, 0, 0);
+  return formatTimeDelta(calcTimeDelta(tomorrow, new Date()));
+};
 
 export function QuizPrompt({}) {
   const state = useQuiz();
@@ -27,32 +35,6 @@ export function QuizPrompt({}) {
   } = useApp();
   const learningModeHasCountries = learningModeCountriesDue.length > 0;
   const defaultCollapsed = false;
-
-  // function setQuizData(gameMode, quizSet, selectedPromptTypes, userData = null) {
-  //   const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
-  //   dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
-  // }
-  
-  // function startQuiz() {
-  //   if (state.config.gameMode === 'quiz') {
-  //     if (!state.config.selectedPromptTypes || state.config.selectedPromptTypes.length === 0) {
-  //       console.error('Cannot start quiz: no prompt types selected');
-  //       return;
-  //     }
-  //   }
-  //   setQuizData(
-  //     state.config.gameMode,
-  //     state.config.quizSet,
-  //     state.config.selectedPromptTypes,
-  //     state.userData,
-  //   );
-  //   if (state.quizData.length === 0) {
-  //     console.error('Cannot start quiz: no countries to quiz');
-  //     console.error(state);
-  //     return;
-  //   }
-  //   dispatch({ type: 'START_QUIZ' });
-  // }
 
   const promptCompleted = useMemo(() => {
     if (!state.quiz.prompt.type || state.quiz.prompt.status !== 'in_progress') {
@@ -67,36 +49,6 @@ export function QuizPrompt({}) {
     }
     return state.quizData[state.quiz.prompt.quizDataIndex];
   }, [state.quizData, state.quiz.prompt.quizDataIndex]);
-
-  // Reset give up state when prompt changes
-  // useEffect(() => {
-  //     setHasGivenUp(false);
-  // }, [currentPrompt?.countryCode]);
-
-  // const handleGiveUp = () => {
-  //     setHasGivenUp(true);
-
-  //     // Notify parent component about give up
-  //     if (onGiveUp) {
-  //         onGiveUp(currentPrompt);
-  //     }
-
-  //     // Auto-generate next prompt after delay
-  //     setTimeout(() => {
-  //         generatePrompt();
-  //     }, 4000);
-  // };
-  const formatLatitude = (lat) => {
-    const absLat = Math.abs(lat);
-    const direction = lat >= 0 ? 'N' : 'S';
-    return `${absLat.toFixed(1)}°${direction}`;
-  };
-
-  const formatLongitude = (lon) => {
-    const absLon = Math.abs(lon);
-    const direction = lon >= 0 ? 'E' : 'W';
-    return `${absLon.toFixed(1)}°${direction}`;
-  };
 
   const isStartDisabled = useMemo(() => {
     if (state.config.gameMode === 'sandbox') {
@@ -169,12 +121,6 @@ export function QuizPrompt({}) {
     }
   };
 
-  const getTimeUntilNextDay = () => {
-    const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
-    tomorrow.setHours(0, 0, 0, 0);
-    return formatTimeDelta(calcTimeDelta(tomorrow, new Date()));
-  };
-
   const promptContent = useMemo(() => {
     let promptText = '';
     if (state.config.gameMode === 'sandbox') {
@@ -192,7 +138,6 @@ export function QuizPrompt({}) {
           m.
         </span>
       );
-      // promptText = `You have already completed today\'s daily challenge!<br />Next challenge in ${timeUntilNextDay.hours}h:${timeUntilNextDay.minutes}m.`;
     } else if (state.quiz.status === 'not_started' && isStartDisabled) {
       promptText = 'Configure quiz settings';
     } else if (state.quiz.status === 'not_started' && !isStartDisabled) {

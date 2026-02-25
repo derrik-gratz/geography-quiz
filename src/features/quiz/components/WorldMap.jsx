@@ -37,37 +37,16 @@ export function QuizWorldMap() {
     zoom: 1,
   });
 
-  // Get country state (used for both className and style)
-  const getCountryState = (countryCode) => {
-    const isIncorrect = incorrectValues.includes(countryCode);
-    const isCorrect =
-      countryCode === correctValue &&
-      (componentStatus === 'completed' ||
-        componentStatus === 'prompting' ||
-        componentStatus === 'reviewing');
-    const isSelected = countryCode === selectedCountry;
-    const isHovered = countryCode === hoveredCountry;
+    // Reset selection and view when disabled
+    useEffect(() => {
+      if (disabled) {
+        setSelectedCountry(null);
+        setHoveredCountry(null);
+        setDefaultViewWindow(defaultViewWindow);
+      }
+    }, [disabled, defaultViewWindow]);
 
-    if (isCorrect) return 'correct';
-    if (isIncorrect) return 'incorrect';
-    if (isSelected) return 'selected';
-    if (isHovered) return 'hovered';
-    return 'neutral';
-  };
-
-  const getCountryClassName = (countryCode) => {
-    const state = getCountryState(countryCode);
-    return `quiz-world-map__country--${state}`;
-  };
-
-  // Reset selection and view when disabled
-  useEffect(() => {
-    if (disabled) {
-      setSelectedCountry(null);
-      // setViewWindow(defaultViewWindow);
-    }
-  }, [disabled, defaultViewWindow]);
-
+  // set selected country for sandbox mode or quiz mode based on prompt data
   useEffect(() => {
     if (
       state.config.gameMode === 'sandbox' &&
@@ -80,6 +59,7 @@ export function QuizWorldMap() {
     }
   }, [state.config.gameMode, state.quiz.prompt.quizDataIndex]);
 
+  // zoom on correct country when reviewing/prompting
   useEffect(() => {
     let view = { coordinates: [0, 0], zoom: 1 };
     if (
@@ -111,13 +91,17 @@ export function QuizWorldMap() {
 
   const onMouseEnter = (countryCode) => {
     // Allow hovering on correct country when component is active
-    if (!disabled && !incorrectValues.includes(countryCode)) {
-      // Only allow hover on correct country if component is active
-      if (countryCode === correctValue && componentStatus !== 'incomplete') {
-        return; // Don't hover correct country when not active
-      }
+    if (componentStatus === 'incomplete' || componentStatus === 'sandbox') {
       setHoveredCountry(countryCode);
-    }
+    } 
+    return;
+    // if (!disabled && !incorrectValues.includes(countryCode)) {
+    //   // Only allow hover on correct country if component is active
+    //   if (countryCode === correctValue && componentStatus !== 'incomplete') {
+    //     return; // Don't hover correct country when not active
+    //   }
+    //   setHoveredCountry(countryCode);
+    // }
   };
   const onMouseLeave = () => {
     if (!disabled) {
@@ -125,7 +109,8 @@ export function QuizWorldMap() {
     }
   };
 
-  const getSmallCountryPriority = (countryCode) => {
+  // set selected / correct countries on top of others
+  const getCountryPriority = (countryCode) => {
     if (incorrectValues.includes(countryCode)) {
       return -1;
     } else if (selectedCountry === countryCode) {
@@ -148,9 +133,25 @@ export function QuizWorldMap() {
     return 'disabled';
   }, [selectedCountry, componentStatus, disabled]);
 
-  // const containerTitle = useMemo(() => {
-  //   return `World Map ${componentStatus === 'completed' ? '✓' : componentStatus === 'incorrect' ? '✗' : ''}`;
-  // }, [componentStatus]);
+  // css class names for countries
+  const getCountryClassName = (countryCode) => {
+    const isIncorrect = incorrectValues.includes(countryCode);
+    const isCorrect =
+      countryCode === correctValue &&
+      (componentStatus === 'completed' ||
+        componentStatus === 'prompting' ||
+        componentStatus === 'reviewing');
+    const isSelected = countryCode === selectedCountry;
+    const isHovered = countryCode === hoveredCountry;
+
+    const countryStatus = isCorrect ? 'correct' : 
+      isIncorrect ? 'incorrect' : 
+      isSelected ? 'selected' : 
+      isHovered ? 'hovered' : 
+      'neutral';
+    return `quiz-world-map__country--${countryStatus}`;
+  };
+
   return (
     <CollapsibleContainer
       title={containerTitle}
@@ -163,7 +164,7 @@ export function QuizWorldMap() {
             onCountryHoverLeave={onMouseLeave}
             onCountryClick={handleCountryClick}
             getCountryClassName={getCountryClassName}
-            getSmallCountryPriority={getSmallCountryPriority}
+            getCountryPriority={getCountryPriority}
             disabled={disabled}
             className="world-map__base-map"
             initialView={defaultViewWindow}

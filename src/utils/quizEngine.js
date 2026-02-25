@@ -148,3 +148,16 @@ export function checkQuizCompletion(quizData, promptQuizDataIndex) {
   }
   return promptQuizDataIndex >= quizData.length;
 }
+
+/**
+ * Normalized score for a prompt based on the number of completed modalities.
+ * @param {import('@/features/quiz/state/quizContext.js').PromptGuesses} guesses
+ * @returns {number} Score (0, 0.5,1)
+ */
+export function promptScore(guesses) {
+  return (
+    Object.values(guesses).filter(
+      (modalityGuess) => modalityGuess.status === 'completed',
+    ).length / 2
+  );
+}

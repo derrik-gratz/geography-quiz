@@ -26,8 +26,7 @@ export function QuizTextInput() {
       setIsWrong(true);
     }
   }, [componentStatus, incorrectValues.length]);
-
-  // Handle wrong guess timeout
+  // Handle wrong guess timeout + reset
   React.useEffect(() => {
     if (isWrong) {
       const timeoutId = setTimeout(() => {
@@ -70,15 +69,11 @@ export function QuizTextInput() {
       setInput(state.quizData[state.quiz.prompt.quizDataIndex]?.country || '');
       setSelectedCountry(null);
       setAllowSuggestions(false);
-    } else if (componentStatus === 'active' && isWrong && selectedCountry) {
-      setInput(selectedCountry);
-      setAllowSuggestions(false);
     } else if (componentStatus === 'disabled') {
       setInput('');
       setSelectedCountry(null);
       setAllowSuggestions(false);
-    } else if (componentStatus === 'active') {
-      // Allow suggestions when component is active and not in wrong state
+    } else if (componentStatus === 'incomplete') {
       setAllowSuggestions(true);
     }
   }, [

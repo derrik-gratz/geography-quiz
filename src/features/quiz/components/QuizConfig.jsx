@@ -17,19 +17,6 @@ export function QuizConfig() {
 
   const { quizSet, selectedPromptTypes, gameMode } = state.config;
 
-
-// async function switchGameMode(dispatch, state, gameMode) {
-//   dispatch({ type: 'SET_GAME_MODE', payload: gameMode });
-//   const userData = gameMode === 'learning' ? await loadAllUserData() : null;
-//   setQuizData(
-//     dispatch,
-//     gameMode,
-//     state.config.quizSet,
-//     state.config.selectedPromptTypes,
-//     userData,
-//   );
-// }
-
   function setQuizData(dispatch, gameMode, quizSet, selectedPromptTypes, userData = null) {
     const quizData = prepareQuizData(gameMode, quizSet, selectedPromptTypes, userData);
     dispatch({ type: 'SET_QUIZ_DATA', payload: quizData });
@@ -151,7 +138,7 @@ export function QuizConfig() {
                             <input
                               type="checkbox"
                               className="quiz-config__prompt-types-checkbox-input"
-                              checked={state.config.selectedPromptTypes.includes(
+                              checked={selectedPromptTypes.includes(
                                 type,
                               )}
                               onChange={(e) => {

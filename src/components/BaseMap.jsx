@@ -90,7 +90,7 @@ export function BaseMap({
     };
   },
   disabled,
-  getSmallCountryPriority,
+  getCountryPriority,
   className,
   initialView = { coordinates: [0, 0], zoom: 1 },
   additionalControls = [],
@@ -194,8 +194,8 @@ export function BaseMap({
                       style={countryStyle}
                     />
                   );
-                  const priority = getSmallCountryPriority
-                    ? getSmallCountryPriority(countryCode)
+                  const priority = getCountryPriority
+                    ? getCountryPriority(countryCode)
                     : 0;
                   if (priority === -1) {
                     lowPriorityGeos.push(geoElement);
@@ -241,8 +241,8 @@ export function BaseMap({
                       onMouseLeave={() => onCountryHoverLeave()}
                     />
                   );
-                  const priority = getSmallCountryPriority
-                    ? getSmallCountryPriority(countryCode)
+                  const priority = getCountryPriority
+                    ? getCountryPriority(countryCode)
                     : 'regular';
                   if (priority === -1) {
                     lowPriorityCircles.push(circleElement);
