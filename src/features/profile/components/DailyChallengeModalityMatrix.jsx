@@ -44,13 +44,11 @@ export function DailyChallengeModalityMatrix({ userCountryData }) {
     );
   }
   return (
-    <Card>
-      <CardHeader title="Modality performance" />
-      <CardContent>  
-    <div className="daily-challenge-modality-matrix">
-      <ModalityHeatmap plotData={plotData} />
-    </div>
-    </CardContent>
+    <Card style={{ minWidth: '320px', width: '100%' }}>
+      <CardHeader title="Modality performance" slotProps={{ title: { style: { fontSize: '1rem', fontWeight: 'bold', marginBottom: '0rem', paddingBottom: '0rem' }} }}/>
+      <CardContent style={{ paddingTop: '0rem', marginTop: '0rem' }}>  
+        <ModalityHeatmap plotData={plotData} />
+      </CardContent>
     </Card>
   );
 }

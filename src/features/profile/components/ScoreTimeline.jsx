@@ -12,7 +12,7 @@ export function ScoreTimeline({ userData }) {
   const theme = useTheme();
   const scoreLog = userData.dailyChallenge.fullEntries;
   const containerRef = useRef(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
 
   // Observe container size so we re-render the plot with explicit dimensions (keeps font size consistent)
   useEffect(() => {
@@ -135,11 +135,11 @@ export function ScoreTimeline({ userData }) {
   }
 
   return (
-    <Card style={{ minWidth: '400px' }}>
+    <Card style={{ minHeight: '200px', minWidth: '400px' }}>
       <CardHeader title="Score Timeline" slotProps={{ title: { style: { fontSize: '1rem', fontWeight: 'bold' }} }} />
-      <CardContent style={{ padding: '0rem', margin: '0rem 0.5rem' }}>
-        <div ref={containerRef} style={{ width: '100%' }} />
-      </CardContent>
+      <CardContent style={{ padding: '0rem', margin: '0rem 0.5rem' }} ref={containerRef}/>
+        {/* <div ref={containerRef} style={{ width: '100%' }} /> */}
+      {/* </CardContent> */}
     </Card>
   );
 }

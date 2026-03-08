@@ -1,7 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as Plot from '@observablehq/plot';
 import './ModalityHeatmap.css';
 import { useTheme } from '@mui/material/styles';
+
+const ASPECT_RATIO = 6 / 4;
+const PLOT_FONT_SIZE_PX = 14;
 
 /**
  * ModalityMatrix component
@@ -15,21 +18,32 @@ export function ModalityHeatmap({ plotData }) {
   const containerRef = useRef(null);
   const legendRef = useRef(null);
   const chartRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
+  console.log(dimensions);
+  // Observe plot container size so we re-render with explicit dimensions (keeps font size consistent)
+  useEffect(() => {
+    const el = chartRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
+      if (width > 0) {
+        setDimensions({ width: Math.round(width), height: Math.round(width / ASPECT_RATIO) });
+      }
+    });
+    ro.observe(el);
+
+    const width = el.clientWidth || 0;
+    if (width > 0) {
+      setDimensions({ width, height: Math.round(width / ASPECT_RATIO) });
+    }
+
+    return () => ro.disconnect();
+  }, [plotData]);
 
   useEffect(() => {
-    if (!plotData || !chartRef.current) return;
+    if (!plotData || !chartRef.current || !legendRef.current || dimensions.width <= 0) return;
 
-    // Get container dimensions
-    const container = chartRef.current;
-    const containerWidth = container.clientWidth || 500;
-
-    // Calculate aspect ratio (maintain 5:4 ratio)
-    // Use width to calculate height since container height may be 0 initially
-    const aspectRatio = 5 / 4;
-    const width = containerWidth;
-    const height = width / aspectRatio;
-
-    // Get computed CSS variable values for theming
     const getComputedColor = (variable) => {
       return (
         getComputedStyle(document.documentElement)
@@ -38,11 +52,7 @@ export function ModalityHeatmap({ plotData }) {
       );
     };
 
-    // const textColor = getComputedColor('--text-primary');
     const borderColor = getComputedColor('--border-color');
-    // const lowColor = getComputedColor('--color-incorrect');
-    // const highColor = getComputedColor('--color-correct');
-    const unknownColor = getComputedColor('--background-secondary');
 
     const colorScale = {
       type: 'linear',
@@ -54,26 +64,27 @@ export function ModalityHeatmap({ plotData }) {
     };
 
     const plot = Plot.plot({
-      width: width,
-      height: height,
+      width: dimensions.width,
+      height: dimensions.height,
       marginTop: 0,
-      marginRight: 60,
-      marginBottom: 40,
-      marginLeft: 80,
+      marginRight: 20,
+      marginBottom: 50,
+      marginLeft: 90,
       x: {
         label: 'Prompted Modality',
         domain: ['Name', 'Flag', 'Location'],
         axis: 'bottom',
+        labelOffset: 40,
       },
       y: {
         label: 'Input Modality',
         domain: ['Name', 'Flag', 'Location'].reverse(),
         axis: 'left',
+        labelOffset: 80,
       },
       color: {
         ...colorScale,
         legend: false,
-        // className: 'modality-heatmap__legend',
       },
       marks: [
         Plot.cell(plotData, {
@@ -95,36 +106,32 @@ export function ModalityHeatmap({ plotData }) {
           y: 'y',
           text: (d) =>
             Number.isNaN(d.value) ? '' : (d.value * 100).toFixed(0) + '%',
-            fill: theme.palette.primary.contrastText,
-          fontSize: 16,
-          fontWeight: 'bold',
+          fill: theme.palette.primary.contrastText,
+          fontSize: PLOT_FONT_SIZE_PX,
+          // fontWeight: 'bold',
         }),
       ],
       style: {
         background: 'transparent',
-        // color: theme.main.text.primary,
-        fontSize: '14px',
-      }
+        fontSize: `${PLOT_FONT_SIZE_PX}px`,
+      },
     });
 
     const legend = Plot.legend({
       color: colorScale,
-      width: 200,
-      // width: 50%,
+      width: dimensions.width * 0.4,
     });
 
-    if (chartRef.current) {
-      chartRef.current.append(plot);
-    }
-    if (legendRef.current) {
-      legendRef.current.append(legend);
-    }
+    chartRef.current.innerHTML = '';
+    chartRef.current.append(plot);
+    legendRef.current.innerHTML = '';
+    legendRef.current.append(legend);
 
     return () => {
       plot.remove();
       legend.remove();
     };
-  }, [plotData]);
+  }, [plotData, dimensions, theme.palette.error.main, theme.palette.success.main, theme.palette.primary.contrastText]);
 
   if (!plotData) {
     return (
