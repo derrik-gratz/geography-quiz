@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as Plot from '@observablehq/plot';
 import './ScoreTimeline.css';
 import Card from '@mui/material/Card';
@@ -6,14 +6,34 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { useTheme } from '@mui/material/styles';
 
+const PLOT_FONT_SIZE_PX = 14;
 
 export function ScoreTimeline({ userData }) {
   const theme = useTheme();
   const scoreLog = userData.dailyChallenge.fullEntries;
-  const plotRef = useRef(null);
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  // Observe container size so we re-render the plot with explicit dimensions (keeps font size consistent)
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      setDimensions({ width: Math.round(width), height: Math.round(height) });
+    });
+    ro.observe(el);
+
+    // Initial size in case ResizeObserver doesn't fire before first paint
+    const { width, height } = el.getBoundingClientRect();
+    setDimensions({ width: Math.round(width), height: Math.round(height) });
+
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (!scoreLog || scoreLog.length === 0 || !plotRef.current) {
+    if (!scoreLog || scoreLog.length === 0 || !containerRef.current || dimensions.width <= 0 || dimensions.height <= 0) {
       return;
     }
 
@@ -34,8 +54,8 @@ export function ScoreTimeline({ userData }) {
     ]);
 
     const chart = Plot.plot({
-      // width: 600,
-      // height: 250,
+      width: dimensions.width,
+      height: dimensions.height,
       marginTop: 30,
       marginRight: 20,
       marginBottom: 40,
@@ -96,30 +116,30 @@ export function ScoreTimeline({ userData }) {
       style: {
         background: 'transparent',
         color: theme.palette.text.primary,
-        // fontSize: '1rem',
+        fontSize: `${PLOT_FONT_SIZE_PX}px`,
       },
     });
+    
+    containerRef.current.innerHTML = '';
+    containerRef.current.appendChild(chart);
 
-    // Clear previous plot and append new one
-    plotRef.current.innerHTML = '';
-    plotRef.current.appendChild(chart);
-
-    // Cleanup function
     return () => {
-      if (plotRef.current) {
-        plotRef.current.innerHTML = '';
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
       }
     };
-  }, [scoreLog]);
+  }, [scoreLog, dimensions, theme.palette.primary.main, theme.palette.secondary.main, theme.palette.text.primary]);
 
   if (!scoreLog || scoreLog.length === 0) {
     return <div className="score-timeline__empty">No data available</div>;
   }
 
   return (
-    <Card>
+    <Card style={{ minWidth: '400px' }}>
       <CardHeader title="Score Timeline" slotProps={{ title: { style: { fontSize: '1rem', fontWeight: 'bold' }} }} />
-      <CardContent style={{ padding: '0rem', margin: '0rem 0.5rem' }} ref={plotRef}/>
+      <CardContent style={{ padding: '0rem', margin: '0rem 0.5rem' }}>
+        <div ref={containerRef} style={{ width: '100%' }} />
+      </CardContent>
     </Card>
   );
 }

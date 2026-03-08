@@ -73,6 +73,7 @@ export function ModalityHeatmap({ plotData }) {
       color: {
         ...colorScale,
         legend: false,
+        // className: 'modality-heatmap__legend',
       },
       marks: [
         Plot.cell(plotData, {
@@ -108,6 +109,8 @@ export function ModalityHeatmap({ plotData }) {
 
     const legend = Plot.legend({
       color: colorScale,
+      width: 200,
+      // width: 50%,
     });
 
     if (chartRef.current) {

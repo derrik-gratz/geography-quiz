@@ -1,3 +1,7 @@
 .score-timeline__legend-swatch {
-  font-size: 1rem;
+  font-size: 0.8rem;
+}
+
+.score-timeline__legend-swatches.score-timeline__legend-swatches-wrap {
+    justify-content: center;
 }
