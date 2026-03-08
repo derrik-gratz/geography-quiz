@@ -2,7 +2,7 @@
  * Statistics calculation service
  * Pure functions for computing statistics from user data store
  */
-
+import allCountryData from '@/data/country_data.json' with { type: 'json' };
 import {
   formatDateString,
   parseDateString,
@@ -239,4 +239,36 @@ export function calculateCountrySkillScores(countryData, inputModality = null) {
   };
 
   return inputModality ? result[inputModality] : result;
+}
+
+
+/**
+ * @param {import('@/types/dataSchemas.js').DailyChallengeLog} dailyChallengeEntries
+ */
+export function calculateAverageChallengePerformance(dailyChallengeEntries) {
+  if (!dailyChallengeEntries || !dailyChallengeEntries.entries) {
+    return NaN;
+  }
+
+  const averageScore = dailyChallengeEntries.reduce((acc, entry) => acc + entry.score, 0) / dailyChallengeEntries.length;
+  const averageSkillScore = dailyChallengeEntries.reduce((acc, entry) => acc + entry.skillScore, 0) / dailyChallengeEntries.length;
+  return {
+    score: averageScore.toFixed(2),
+    skillScore: averageSkillScore.toFixed(2),
+  };
+}
+
+/**
+ * @param {import('@/types/dataSchemas.js').LearningData} LearningData
+ * @param {import('@/types/dataSchemas.js').CountryData} countryData
+ * @param {number} learnedThreshold - Learning rate minimum for country to be considered learned (default 60)
+ */
+
+export function calculateLearningRateCoverage(LearningData, countryData=allCountryData, learnedThreshold = 60) {
+  if (!LearningData || !countryData) {
+    return NaN;
+  }
+  console.log(LearningData);
+  const learningRateCoverage = Object.values(LearningData).filter((country) => country.learningRate >= learnedThreshold).length / countryData.length;
+  return learningRateCoverage.toFixed(4);
 }

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as Plot from '@observablehq/plot';
 import './ModalityHeatmap.css';
+import { useTheme } from '@mui/material/styles';
 
 /**
  * ModalityMatrix component
@@ -10,6 +11,7 @@ import './ModalityHeatmap.css';
  * @param {Object} props.plotData - Plot data in long format containing accuracy and precision for each input/prompted modality combination
  */
 export function ModalityHeatmap({ plotData }) {
+  const theme = useTheme();
   const containerRef = useRef(null);
   const legendRef = useRef(null);
   const chartRef = useRef(null);
@@ -36,16 +38,16 @@ export function ModalityHeatmap({ plotData }) {
       );
     };
 
-    const textColor = getComputedColor('--text-primary');
+    // const textColor = getComputedColor('--text-primary');
     const borderColor = getComputedColor('--border-color');
-    const lowColor = getComputedColor('--color-incorrect');
-    const highColor = getComputedColor('--color-correct');
+    // const lowColor = getComputedColor('--color-incorrect');
+    // const highColor = getComputedColor('--color-correct');
     const unknownColor = getComputedColor('--background-secondary');
 
     const colorScale = {
       type: 'linear',
-      range: [lowColor, highColor],
-      unknown: unknownColor,
+      range: [theme.palette.error.main, theme.palette.success.main],
+      unknown: '#6e6e6e',
       domain: [0, 1],
       label: 'Accuracy (%)',
       tickFormat: (d) => (d * 100).toFixed(0) + '%',
@@ -92,16 +94,16 @@ export function ModalityHeatmap({ plotData }) {
           y: 'y',
           text: (d) =>
             Number.isNaN(d.value) ? '' : (d.value * 100).toFixed(0) + '%',
-          //   fill: textColor,
+            fill: theme.palette.primary.contrastText,
           fontSize: 16,
           fontWeight: 'bold',
         }),
       ],
       style: {
         background: 'transparent',
-        color: textColor,
+        // color: theme.main.text.primary,
         fontSize: '14px',
-      },
+      }
     });
 
     const legend = Plot.legend({

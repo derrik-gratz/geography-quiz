@@ -5,6 +5,9 @@ import '@/App.css';
 import 'flag-icons/css/flag-icons.min.css';
 import App from '@/App.jsx';
 import { clearAllData } from '@/services/storageService.js';
+import { theme } from '@/theme.js';
+import { ThemeProvider } from '@mui/material/styles';
+
 
 // Expose clearAllData for development/testing
 if (import.meta.env.DEV) {
@@ -31,6 +34,8 @@ if (import.meta.env.DEV) {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </StrictMode>,
 );

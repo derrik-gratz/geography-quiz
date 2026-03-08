@@ -1,6 +1,9 @@
 import { ModalityHeatmap } from '@/components/ModalityHeatmap.jsx';
 import { calculatePerModalityStats } from '@/utils/statsService.js';
 import './DailyChallengeModalityMatrix.css';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
 /**
  * ModalityMatrix component
  * Displays a 3x3 heatmap showing accuracy for each input/prompted modality combination
@@ -41,8 +44,13 @@ export function DailyChallengeModalityMatrix({ userCountryData }) {
     );
   }
   return (
+    <Card>
+      <CardHeader title="Modality performance" />
+      <CardContent>  
     <div className="daily-challenge-modality-matrix">
       <ModalityHeatmap plotData={plotData} />
     </div>
+    </CardContent>
+    </Card>
   );
 }

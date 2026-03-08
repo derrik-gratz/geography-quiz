@@ -13,19 +13,17 @@
   --border-dashed: #e0e0e0;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
-  /* Interactive state colors */
-  --color-hover: #0072b2;
-  --color-hover-outline: #00447a;
-  --color-active-primary: #f0e442;
-  --color-active-primary-outline: #d4c73b;
-  /* --color-active-secondary: #0072B2;
-  --color-active-secondary-outline: #00447a; */
-  --color-selected: #cc79a7;
-  --color-selected-outline: #ae658d;
-  --color-correct: #009e73;
-  --color-correct-outline: #007200;
-  --color-incorrect: #d55e00;
-  --color-incorrect-outline: #b24500;
+  /* Interactive state colors (from MUI theme: secondary=selected, success=correct, error=incorrect, info=hover, warning=active) */
+  --color-hover: var(--mui-palette-info-main);
+  --color-hover-outline: var(--mui-palette-info-dark);
+  --color-active-primary: var(--mui-palette-warning-main);
+  --color-active-primary-outline: var(--mui-palette-warning-dark);
+  --color-selected: var(--mui-palette-secondary-main);
+  --color-selected-outline: var(--mui-palette-secondary-dark);
+  --color-correct: var(--mui-palette-success-main);
+  --color-correct-outline: var(--mui-palette-success-dark);
+  --color-incorrect: var(--mui-palette-error-main);
+  --color-incorrect-outline: var(--mui-palette-error-dark);
   --color-disabled: #6c757d;
   --color-disabled-bg: #f8f9fa;
   --map-country-outline: #aaaaaa;
@@ -80,7 +78,7 @@ button {
 /* App Layout */
 .app {
   text-align: center;
-  padding: 20px;
+  /* padding: 20px; */
   font-family: inherit;
 }
 

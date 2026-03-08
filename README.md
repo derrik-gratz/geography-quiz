@@ -1,3 +1,28 @@
+Profile page:
+User icon
+Name, possibly some level or 'member since' etc.
+
+three cards:
+Daily challenge streak | avg daily challenge skill score | learning rate coverage (% > 60 days)
+
+Badges
+
+Score timeline
+
+Interactive map
+
+Todo:
+
+Settings page (nav bar)
+
+Global stats page (nav bar)
+
+Sandbox mode (globe icon, nav bar)
+
+Learning mode currently allows two guesses?
+
+Move from css vars to theme vars inside component css
+
 make collapsible container border based on guesses even during review, adding borders based on correct answers. Will likely have to add a hook in useComponentState.
 
 move to typescript
