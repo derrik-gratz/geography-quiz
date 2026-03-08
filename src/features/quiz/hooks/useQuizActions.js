@@ -3,10 +3,12 @@ import { useCallback } from 'react';
 import { useQuiz, useQuizDispatch } from '../state/quizProvider.jsx';
 import { checkSubmission } from '@/utils/quizEngine.js';
 import { prepareQuizData } from '@/utils/filterCountryData.js';
+import { useApp } from '@/state/AppProvider.jsx';
 
 export function useQuizActions() {
   const state = useQuiz();
   const dispatch = useQuizDispatch();
+  const { userData } = useApp();
 
   const sandboxSelect = useCallback(
     ({ inputType, countryValue }) => {
@@ -45,7 +47,7 @@ export function useQuizActions() {
       state.config.gameMode,
       state.config.quizSet,
       state.config.selectedPromptTypes,
-      state.userData,
+      userData,
     );
     if (state.quizData.length === 0) {
       console.error('Cannot start quiz: no countries to quiz');
@@ -58,7 +60,7 @@ export function useQuizActions() {
     state.config.gameMode,
     state.config.selectedPromptTypes,
     state.config.quizSet,
-    state.userData,
+    userData,
   ]);
 
   const submitAnswer = useCallback(
