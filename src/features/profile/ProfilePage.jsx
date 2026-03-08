@@ -1,7 +1,7 @@
 /**
  * Profile page component displaying daily challenge statistics from local storage
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useApp } from '@/state/AppProvider.jsx';
 import { ScoreTimeline } from './components/ScoreTimeline.jsx';
 import { DailyChallengeModalityMatrix } from './components/DailyChallengeModalityMatrix.jsx';
@@ -16,7 +16,12 @@ import { calculateAverageChallengePerformance, calculateLearningRateCoverage } f
 
 
 export function ProfilePage() {
-  const { userData, userDataLoading } = useApp();
+  const { userData, userDataLoading, refetchUserData } = useApp();
+
+  useEffect(() => {
+    refetchUserData();
+  }, []);
+
   if (userDataLoading) {
     return (
       <div className="profile-page">

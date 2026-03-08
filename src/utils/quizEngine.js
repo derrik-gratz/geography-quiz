@@ -42,14 +42,13 @@ export function checkSubmission(
  * @returns {boolean} True if the guess limit has been reached, false otherwise
  */
 export function checkModalityGuessLimit(gameMode, modalityGuesses) {
-  const currentAttempts = modalityGuesses?.n_attempts || 0;
-  const currentStatus = modalityGuesses?.status;
+  const currentAttempts = modalityGuesses.length || 0;
   if (gameMode === 'dailyChallenge') {
-    if (currentAttempts >= 5 && currentStatus === 'incomplete') {
+    if (currentAttempts >= 5){ // && currentStatus === 'incomplete') {
       return true;
     }
   } else if (gameMode === 'learning') {
-    if (currentAttempts >= 1 && currentStatus === 'incomplete') {
+    if (currentAttempts >= 1){ // && currentStatus === 'incomplete') {
       return true;
     }
   }

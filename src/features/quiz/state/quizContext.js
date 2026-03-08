@@ -177,11 +177,12 @@ export function quizReducer(state, action) {
     case 'ANSWER_SUBMITTED':
       const { type, value, isCorrect } = action.payload;
       const newNAttempts = state.quiz.prompt.guesses[type].n_attempts + 1;
+      const newAttempts = [...state.quiz.prompt.guesses[type].attempts, value];
 
       let newStatus = isCorrect ? 'completed' :
       checkModalityGuessLimit(
         state.config.gameMode, 
-        state.quiz.prompt.guesses[type]
+        newAttempts
       ) ? 'failed' : 'incomplete';
       return {
         ...state,
@@ -195,7 +196,7 @@ export function quizReducer(state, action) {
                 ...state.quiz.prompt.guesses[type],
                 status: newStatus,
                 n_attempts: newNAttempts,
-                attempts: [...state.quiz.prompt.guesses[type].attempts, value],
+                attempts: newAttempts,
               },
             },
           },

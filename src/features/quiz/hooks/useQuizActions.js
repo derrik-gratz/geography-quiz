@@ -60,7 +60,7 @@ export function useQuizActions() {
     state.config.gameMode,
     state.config.selectedPromptTypes,
     state.config.quizSet,
-    state.userData,
+    userData,
   ]);
 
   const submitAnswer = useCallback(

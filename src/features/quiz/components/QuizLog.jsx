@@ -131,7 +131,8 @@ export function QuizLog(
   }
 
   const exportResults = () => {
-    let exportText = `\`\`\`${state.config.quizSet} Results\n`;
+    const prefix = state.config.gameMode === 'dailyChallenge' ? 'Daily Challenge' : state.config.quizSet;
+    let exportText = `\`\`\`${prefix} Results\n`;
     const score = logEntries.reduce((sum, entry) => {
       return sum + entry.score;
     }, 0);
