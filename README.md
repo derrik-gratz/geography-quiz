@@ -5,6 +5,35 @@ Name, possibly some level or 'member since' etc.
 three cards:
 Daily challenge streak | avg daily challenge skill score | learning rate coverage (% > 60 days)
 
+Profile page rows don't flex at same rate
+
+```
+.profile-page__content-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.profile-page__content-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .profile-page__content-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .profile-page__content-row > * {
+    flex: 0 0 auto;
+  }
+}
+```
+
 Badges
 
 Score timeline
