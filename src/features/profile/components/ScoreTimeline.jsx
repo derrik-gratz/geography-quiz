@@ -90,12 +90,13 @@ export function ScoreTimeline({ userData }) {
         type: "categorical",
         domain: ['General score', 'Skill score'],
         range: [theme.palette.primary.main, theme.palette.secondary.main],
-        legend: true
+        legend: true,
+        className: 'score-timeline__legend',
       },
       style: {
         background: 'transparent',
         color: theme.palette.text.primary,
-        fontSize: '1rem',
+        // fontSize: '1rem',
       },
     });
 

@@ -268,7 +268,6 @@ export function calculateLearningRateCoverage(LearningData, countryData=allCount
   if (!LearningData || !countryData) {
     return NaN;
   }
-  console.log(LearningData);
   const learningRateCoverage = Object.values(LearningData).filter((country) => country.learningRate >= learnedThreshold).length / countryData.length;
   return learningRateCoverage.toFixed(4);
 }
