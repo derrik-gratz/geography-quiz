@@ -43,7 +43,6 @@ export function checkSubmission(
  */
 export function checkModalityGuessLimit(gameMode, modalityGuesses) {
   const currentAttempts = modalityGuesses.length || 0;
-  console.log(gameMode, modalityGuesses);
   if (gameMode === 'dailyChallenge') {
     if (currentAttempts >= 5){ // && currentStatus === 'incomplete') {
       return true;

@@ -184,7 +184,6 @@ export function quizReducer(state, action) {
         state.config.gameMode, 
         newAttempts
       ) ? 'failed' : 'incomplete';
-      console.log('newStatus', newStatus);
       return {
         ...state,
         quiz: {
