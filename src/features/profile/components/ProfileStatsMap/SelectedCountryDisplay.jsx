@@ -1,8 +1,9 @@
 import { SelectedCountryModalityMatrix } from './SelectedCountryModalityMatrix.jsx';
 import allCountryData from '@/data/country_data.json';
 import './SelectedCountryDisplay.css';
+import React from 'react';
 
-export function SelectedCountryDisplay({
+function SelectedCountryDisplayInner({
   selectedCountry,
   countryStats,
   displayMode,
@@ -61,6 +62,7 @@ export function SelectedCountryDisplay({
   ) : (
     ''
   );
+
   return (
     <div className="selected-country-display">
       <div className="selected-country-display__header">
@@ -97,3 +99,5 @@ export function SelectedCountryDisplay({
     </div>
   );
 }
+
+export const SelectedCountryDisplay = React.memo(SelectedCountryDisplayInner);
