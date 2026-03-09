@@ -2,8 +2,8 @@
   position: relative;
   overflow: visible;
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
+  /* gap: 8px; */
+  /* margin-bottom: 8px; */
   flex: 1;
 }
 
