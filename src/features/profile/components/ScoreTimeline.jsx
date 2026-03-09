@@ -90,7 +90,7 @@ export function ScoreTimeline({ userData }) {
         Plot.line(plotData, {
           x: 'date',
           y: 'value',
-          z: 'metric',
+          z: null,
           stroke: 'metric',
           strokeWidth: 2,
           curve: 'linear',
@@ -99,7 +99,7 @@ export function ScoreTimeline({ userData }) {
           x: 'date',
           y: 'value',
           stroke: 'metric',
-          z: 'metric',
+          z: null,
           r: 4,
           title: (d) =>
             `${d.date.toLocaleDateString('en-GB', {
