@@ -31,9 +31,9 @@ export function CollapsibleContainer({
           {isCollapsed ? `▶ ${title}` : `▼ ${title}`}
         </button>
       </div>
-      {!isCollapsed && (
+      {/* {!isCollapsed && ( */}
         <div className="collapsable-container__content">{content}</div>
-      )}
+      {/* )} */}
     </div>
   );
 }

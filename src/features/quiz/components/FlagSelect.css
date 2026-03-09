@@ -7,8 +7,8 @@
 
 .quiz-flag-select__controls {
   display: flex;
-  flex-direction: row; /* Horizontal layout */
-  flex-wrap: wrap; /* Allow wrapping */
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
 }

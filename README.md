@@ -1,5 +1,10 @@
 make collapsible container border based on guesses even during review, adding borders based on correct answers. Will likely have to add a hook in useComponentState.
 
+user preferences/settings
+Review timeout
+Flag size
+colorblind mode
+
 move to typescript
 use a tsconfig.json file to tell the TypeScript to define the baseUrl and paths with '@'
 
