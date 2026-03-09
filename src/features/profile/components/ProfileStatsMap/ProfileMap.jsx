@@ -6,6 +6,9 @@ import {
 } from '@/utils/statsService.js';
 import { SelectedCountryDisplay } from './SelectedCountryDisplay.jsx';
 import './ProfileMap.css';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
 
 /**
  * Map component for profile page showing country statistics
@@ -159,54 +162,52 @@ export function ProfileMap({ countryStats }) {
   };
   const buttonBaseName = 'profile-stats-map__display-mode-selector-button';
   return (
-    <div className={`profile-stats-map`}>
-      {/* <div className="profile-stats-map__display-mode-selector">
-        <button className={`${buttonBaseName} ${displayMode === 'dailyChallenge' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('dailyChallenge')}>Daily challenge performance</button>
-        <button className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`} onClick={() => setDisplayMode('learningRate')}>Learning rate</button>
-      </div> */}
-      <div className="profile-stats-map__display">
-        <div className="profile-stats-map__display-map">
-          <BaseMap
-            onCountryHover={onMouseEnter}
-            onCountryHoverLeave={onMouseLeave}
-            onCountryClick={handleCountryClick}
-            getCountryClassName={getCountryClassName}
-            getSmallCountryPriority={getSmallCountryPriority}
-            getCountryStyle={getCountryStyle}
-            disabled={false}
-            className="world-map__base-map"
-            initialView={defaultViewWindow}
-            additionalControls={[
-              <button
-                className={`${buttonBaseName} ${displayMode === 'dailyChallengeAccuracy' ? `${buttonBaseName}-active` : ''}`}
-                onClick={() => setDisplayMode('dailyChallengeAccuracy')}
-              >
-                Daily challenge accuracy
-              </button>,
-              <button
-                className={`${buttonBaseName} ${displayMode === 'dailyChallengePrecision' ? `${buttonBaseName}-active` : ''}`}
-                onClick={() => setDisplayMode('dailyChallengePrecision')}
-              >
-                Daily challenge precision
-              </button>,
-              <button
-                className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`}
-                onClick={() => setDisplayMode('learningRate')}
-              >
-                Learning rate
-              </button>,
-            ]}
-            showGraticule={true}
-          />
-        </div>
-        <div className="profile-stats-map__display-country-stats">
-          <SelectedCountryDisplay
-            selectedCountry={selectedCountry}
-            countryStats={countryStats}
-            displayMode={displayMode}
-          />
-        </div>
-      </div>
-    </div>
+        <Card>
+          <CardContent>
+            <div className="profile-page__content-row profile-stats-map">
+              <div className={`profile-stats-map__map`}>
+                <BaseMap
+                onCountryHover={onMouseEnter}
+                onCountryHoverLeave={onMouseLeave}
+                onCountryClick={handleCountryClick}
+                getCountryClassName={getCountryClassName}
+                getSmallCountryPriority={getSmallCountryPriority}
+                getCountryStyle={getCountryStyle}
+                disabled={false}
+                className="world-map__base-map"
+                initialView={defaultViewWindow}
+                additionalControls={[
+                  <button
+                    className={`${buttonBaseName} ${displayMode === 'dailyChallengeAccuracy' ? `${buttonBaseName}-active` : ''}`}
+                    onClick={() => setDisplayMode('dailyChallengeAccuracy')}
+                  >
+                    Daily challenge accuracy
+                  </button>,
+                  <button
+                    className={`${buttonBaseName} ${displayMode === 'dailyChallengePrecision' ? `${buttonBaseName}-active` : ''}`}
+                    onClick={() => setDisplayMode('dailyChallengePrecision')}
+                  >
+                    Daily challenge precision
+                  </button>,
+                  <button
+                    className={`${buttonBaseName} ${displayMode === 'learningRate' ? `${buttonBaseName}-active` : ''}`}
+                    onClick={() => setDisplayMode('learningRate')}
+                  >
+                    Learning rate
+                  </button>,
+                ]}
+                showGraticule={true}
+              />
+            </div>
+              <div className="profile-stats-map__stats-display">
+              <SelectedCountryDisplay
+                selectedCountry={selectedCountry}
+                countryStats={countryStats}
+                displayMode={displayMode}
+              />
+              </div>
+          </div>
+          </CardContent>
+        </Card>
   );
 }

@@ -29,20 +29,6 @@ export function ProfilePage() {
       </div>
     );
   }
-  const streakDisplay =
-  userData.dailyChallenge.streak.current >= 5
-    ? '🔥'
-    : userData.dailyChallenge.streak.current >= 10
-      ? '🔥🔥'
-      : userData.dailyChallenge.streak.current >= 25
-        ? '🥵'
-        : userData.dailyChallenge.streak.current >= 50
-          ? '🤯'
-          : userData.dailyChallenge.streak.current >= 75
-            ? '😱'
-            : userData.dailyChallenge.streak.current >= 100
-              ? '👑'
-              : '';
   // if (!statistics) {
   //   return (
   //     <div className="profile-page">
@@ -109,7 +95,6 @@ export function ProfilePage() {
           />
           <CardContent sx={{margin: '0', padding: '0'}}>
             {userData.dailyChallenge.streak.current} days
-            {streakDisplay}
           </CardContent>
         </Card>
         <Card sx={{width: '40%'}}>
@@ -132,14 +117,13 @@ export function ProfilePage() {
           </CardContent>
         </Card>
     </div>
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
+    {/* <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
       <Card sx={{width: '100%'}}>
-        {/* <CardHeader /> */}
         <CardContent>
-          Badges go here
+          Badges coming soon
         </CardContent>
       </Card>
-    </div>
+    </div> */}
           <div className="profile-page__content-row">
             <ScoreTimeline userData={userData} />
             <DailyChallengeModalityMatrix
