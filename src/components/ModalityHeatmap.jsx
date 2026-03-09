@@ -3,7 +3,7 @@ import * as Plot from '@observablehq/plot';
 import './ModalityHeatmap.css';
 import { useTheme } from '@mui/material/styles';
 
-const ASPECT_RATIO = 6 / 4;
+const ASPECT_RATIO = 7 / 4;
 const PLOT_FONT_SIZE_PX = 14;
 
 /**

@@ -56,8 +56,8 @@ export function ScoreTimeline({ userData }) {
     const chart = Plot.plot({
       width: dimensions.width,
       height: dimensions.height,
-      marginTop: 30,
-      marginRight: 20,
+      marginTop: 10,
+      marginRight: 10,
       marginBottom: 40,
       marginLeft: 40,
       x: {
@@ -73,7 +73,7 @@ export function ScoreTimeline({ userData }) {
           });
         },
         tickRotate: sortedLog.length <= 3 ? -45 : 0,
-        ticks: 9 //sortedLog.length <= 20 ? sortedLog.length : 10,
+        ticks: 5 //sortedLog.length <= 20 ? sortedLog.length : 10,
       },
       y: {
         label: 'Score',
@@ -135,10 +135,10 @@ export function ScoreTimeline({ userData }) {
   }
 
   return (
-    <Card style={{ minHeight: '200px', minWidth: '400px' }}>
-      <CardHeader title="Score Timeline" slotProps={{ title: { style: { fontSize: '1rem', fontWeight: 'bold' }} }} />
-      <CardContent style={{ padding: '0rem', margin: '0rem 0.5rem' }} ref={containerRef}/>
-        {/* <div ref={containerRef} style={{ width: '100%' }} /> */}
+    <Card style={{ minHeight: '200px', minWidth: '200px', flex: 1 }}>
+      <CardHeader title="Score Timeline" slotProps={{ title: { style: { fontSize: '1rem', fontWeight: 'bold', marginBottom: '0', paddingBottom: '0' }} }} />
+      <CardContent style={{ padding: '0', margin: '0' }}/>
+        <div ref={containerRef} style={{ width: '100%', display: 'block' }} />
       {/* </CardContent> */}
     </Card>
   );
