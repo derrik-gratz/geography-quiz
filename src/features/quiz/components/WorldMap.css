@@ -1,24 +1,24 @@
 .quiz-world-map__country--correct {
-  --fill: var(--color-correct);
-  --stroke: var(--color-correct);
+  --fill: var(--mui-palette-success-main);
+  --stroke: var(--mui-palette-success-dark);
   cursor: default;
 }
 
 .quiz-world-map__country--incorrect {
-  --fill: var(--color-incorrect);
-  --stroke: var(--color-incorrect);
+  --fill: var(--mui-palette-error-main);
+  --stroke: var(--mui-palette-error-dark);
   cursor: not-allowed;
 }
 
 .quiz-world-map__country--selected {
-  --fill: var(--color-selected);
-  --stroke: var(--color-selected-stroke);
+  --fill: var(--mui-palette-primary-main);
+  --stroke: var(--mui-palette-primary-dark);
   cursor: pointer;
 }
 
 .quiz-world-map__country--hovered {
-  --fill: var(--color-hover);
-  --stroke: var(--color-hover-outline);
+  --fill: var(--mui-palette-secondary-main);
+  --stroke: var(--mui-palette-secondary-dark);
   cursor: pointer;
 }
 
