@@ -64,25 +64,6 @@ export function useQuizProgression(state, dispatch) {
       }
     }
 
-    // Quiz completion
-    if (checkQuizCompletion(state.quizData, state.quiz.prompt.quizDataIndex)) {
-      dispatch({ type: 'QUIZ_COMPLETED' });
-      if (
-        state.config.gameMode === 'dailyChallenge' &&
-        state.quiz.history?.length > 0 &&
-        state.quizData?.length > 0
-      ) {
-        const challengeData = transformQuizStateToStorage(
-          state,
-          state.quizData,
-        );
-        saveDailyChallenge(formatDateString(new Date()), challengeData).catch(
-          (error) => console.error('Failed to save daily challenge:', error),
-        );
-      }
-      return;
-    }
-
     // Generate next prompt
     if (
       !state.quiz.prompt.type &&
@@ -126,6 +107,28 @@ export function useQuizProgression(state, dispatch) {
         lastHistoryEntry && promptScore(lastHistoryEntry) === 1;
       const delay = wasSuccessful ? 2000 : 3500;
       const timeoutId = setTimeout(() => {
+        if (
+          checkQuizCompletion(state.quizData, state.quiz.prompt.quizDataIndex)
+        ) {
+          if (
+            state.config.gameMode === 'dailyChallenge' &&
+            state.quiz.history?.length > 0 &&
+            state.quizData?.length > 0
+          ) {
+            const challengeData = transformQuizStateToStorage(
+              state,
+              state.quizData,
+            );
+            saveDailyChallenge(
+              formatDateString(new Date()),
+              challengeData,
+            ).catch((error) =>
+              console.error('Failed to save daily challenge:', error),
+            );
+          }
+          dispatch({ type: 'QUIZ_COMPLETED' });
+          return;
+        }
         dispatch({ type: 'REVIEW_COMPLETED' });
       }, delay);
       return () => clearTimeout(timeoutId);
@@ -133,6 +136,7 @@ export function useQuizProgression(state, dispatch) {
   }, [
     state.quiz.status,
     state.quiz.reviewType,
+    state.quiz.prompt.quizDataIndex,
     state.quiz.history,
     state.config.gameMode,
     state.quizData,

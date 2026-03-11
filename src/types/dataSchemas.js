@@ -193,66 +193,34 @@ export function createEmptyModalityResult(prompted = false) {
 }
 
 /**
- * Create a DailyChallengeModalityResult from quiz state data
- * The `prompted` flag is automatically determined from the status field
- * @param {Object} guessData - Guess data from quiz state with status, n_attempts, attempts
- * @returns {DailyChallengeModalityResult} Modality result
+ * Create a DailyChallengeModalityResult from explicit values.
+ * This function only shapes the object; callers compute meaningful values elsewhere.
+ *
+ * @param {Partial<DailyChallengeModalityResult>} [values]
+ * @returns {DailyChallengeModalityResult}
  */
-export function createModalityResultFromGuess(guessData) {
-  const { status, n_attempts = 0, attempts = [] } = guessData || {};
-
-  let correct = null;
-  let prompted = false;
-  if (status === 'completed') {
-    correct = true;
-  } else if (status === 'failed' || status === 'incomplete') {
-    correct = false;
-  } else if (status === 'prompted') {
-    correct = null;
-    prompted = true;
-  }
-
-  const guesses = attempts || [];
-  const skillScore = calculateSkillScore(
-    correct === true,
-    guesses.length || n_attempts,
-  );
-
+export function createModalityResult(values = {}) {
   return {
-    skillScore,
-    correct,
-    guesses,
-    prompted,
+    skillScore: values.skillScore ?? 0,
+    correct: values.correct ?? null,
+    guesses: values.guesses ?? [],
+    prompted: values.prompted ?? false,
   };
 }
 
 /**
- * Create a DailyChallengeCountryResult from quiz state data
- * @param {Object} promptEntry - Prompt entry from quiz history
+ * Create a DailyChallengeCountryResult from explicit modality results.
+ * This function only shapes the object; callers compute modality values elsewhere.
+ *
  * @param {string} countryCode - Country code (e.g., "MEX", "CAN")
- * @returns {DailyChallengeCountryResult} Country result
+ * @param {Partial<Omit<DailyChallengeCountryResult, 'countryCode'>>} [results]
+ * @returns {DailyChallengeCountryResult}
  */
-export function createCountryResultFromPrompt(promptEntry, countryCode) {
-  const nameData = promptEntry.name || {
-    status: null,
-    n_attempts: 0,
-    attempts: [],
-  };
-  const flagData = promptEntry.flag || {
-    status: null,
-    n_attempts: 0,
-    attempts: [],
-  };
-  const locationData = promptEntry.location || {
-    status: null,
-    n_attempts: 0,
-    attempts: [],
-  };
-
+export function createCountryResult(countryCode, results = {}) {
   return {
     countryCode,
-    name: createModalityResultFromGuess(nameData),
-    flag: createModalityResultFromGuess(flagData),
-    location: createModalityResultFromGuess(locationData),
+    name: results.name ?? createEmptyModalityResult(false),
+    flag: results.flag ?? createEmptyModalityResult(false),
+    location: results.location ?? createEmptyModalityResult(false),
   };
 }
