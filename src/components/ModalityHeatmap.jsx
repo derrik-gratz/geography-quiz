@@ -18,25 +18,25 @@ export function ModalityHeatmap({ plotData }) {
   const containerRef = useRef(null);
   const legendRef = useRef(null);
   const chartRef = useRef(null);
-  const lastWidthRef = useRef(0);
   const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
-  // Observe plot container size; only update state when width actually changes to avoid extra renders
+  console.log(dimensions);
+  // Observe plot container size so we re-render with explicit dimensions (keeps font size consistent)
   useEffect(() => {
     const el = chartRef.current;
     if (!el) return;
 
     const ro = new ResizeObserver((entries) => {
       const { width } = entries[0].contentRect;
-      if (width <= 0) return;
-      const roundedWidth = Math.round(width);
-      if (roundedWidth === lastWidthRef.current) return;
-      lastWidthRef.current = roundedWidth;
-      setDimensions({
-        width: roundedWidth,
-        height: Math.round(width / ASPECT_RATIO),
-      });
+      if (width > 0) {
+        setDimensions({ width: Math.round(width), height: Math.round(width / ASPECT_RATIO) });
+      }
     });
     ro.observe(el);
+
+    const width = el.clientWidth || 0;
+    if (width > 0) {
+      setDimensions({ width, height: Math.round(width / ASPECT_RATIO) });
+    }
 
     return () => ro.disconnect();
   }, [plotData]);

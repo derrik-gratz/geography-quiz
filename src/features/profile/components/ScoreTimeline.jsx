@@ -12,25 +12,22 @@ export function ScoreTimeline({ userData }) {
   const theme = useTheme();
   const scoreLog = userData.dailyChallenge.fullEntries;
   const containerRef = useRef(null);
-  const lastDimensionsRef = useRef({ width: 0, height: 0 });
   const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
 
-  // Observe container size; only update state when dimensions actually change to avoid extra renders
+  // Observe container size so we re-render the plot with explicit dimensions (keeps font size consistent)
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const ro = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
-      if (width <= 0 || height <= 0) return;
-      const roundedWidth = Math.round(width);
-      const roundedHeight = Math.round(height);
-      const last = lastDimensionsRef.current;
-      if (roundedWidth === last.width && roundedHeight === last.height) return;
-      lastDimensionsRef.current = { width: roundedWidth, height: roundedHeight };
-      setDimensions({ width: roundedWidth, height: roundedHeight });
+      setDimensions({ width: Math.round(width), height: Math.round(height) });
     });
     ro.observe(el);
+
+    // Initial size in case ResizeObserver doesn't fire before first paint
+    const { width, height } = el.getBoundingClientRect();
+    setDimensions({ width: Math.round(width), height: Math.round(height) });
 
     return () => ro.disconnect();
   }, []);
