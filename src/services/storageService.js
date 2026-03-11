@@ -7,20 +7,73 @@ import {
   formatDateString,
   generateLocalUserId,
   createEmptyModalityMatrix,
-  calculateSkillScore,
   getModalityIndex,
   getModalityName,
-  createCountryResultFromPrompt,
+  createCountryResult,
+  createModalityResult,
 } from '@/types/dataSchemas.js';
 import {
   getEngineSettings,
   updateLearningRate,
 } from '../utils/spacedRepetitionEngine.js';
+import {
+  calculateSkillScore,
+  promptScore,
+  promptSkillScore,
+} from '@/utils/quizEngine.js';
 
 const DB_NAME = 'geography_quiz_db';
 const DB_VERSION = 7;
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
+
+function createModalityResultFromGuess(guessData) {
+  const { status, n_attempts = 0, attempts = [] } = guessData || {};
+  const guesses = attempts || [];
+  const guessCount = guesses.length || n_attempts;
+
+  let correct = null;
+  let prompted = false;
+
+  if (status === 'completed') {
+    correct = true;
+  } else if (status === 'failed' || status === 'incomplete') {
+    correct = false;
+  } else if (status === 'prompted') {
+    prompted = true;
+  }
+
+  return createModalityResult({
+    skillScore: calculateSkillScore(correct === true, guessCount),
+    correct,
+    guesses,
+    prompted,
+  });
+}
+
+function createCountryResultFromPrompt(promptEntry, countryCode) {
+  const nameData = promptEntry.name || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+  const flagData = promptEntry.flag || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+  const locationData = promptEntry.location || {
+    status: null,
+    n_attempts: 0,
+    attempts: [],
+  };
+
+  return createCountryResult(countryCode, {
+    name: createModalityResultFromGuess(nameData),
+    flag: createModalityResultFromGuess(flagData),
+    location: createModalityResultFromGuess(locationData),
+  });
+}
 
 function initDB() {
   return new Promise((resolve, reject) => {

@@ -162,3 +162,29 @@ export function promptScore(guesses) {
     ).length / 2
   );
 }
+
+/**
+ * Normalized skill score for a single answered modality.
+ * Correct answers are rewarded more when solved in fewer attempts.
+ *
+ * @param {boolean} isCorrect
+ * @param {number} guessCount
+ * @returns {number} Score in the range 0-0.5
+ */
+export function calculateSkillScore(isCorrect, guessCount) {
+  if (!isCorrect || guessCount <= 0) {
+    return 0;
+  }
+  return (6 - guessCount) / (5 * 2);
+}
+
+export function promptSkillScore(logEntry) {
+  let skillScore = 0;
+  ['name', 'flag', 'location'].forEach((modality) => {
+    skillScore += calculateSkillScore(
+      logEntry[modality].status === 'completed',
+      logEntry[modality].attempts.length,
+    );
+  });
+  return skillScore;
+}

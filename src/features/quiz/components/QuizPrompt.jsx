@@ -196,6 +196,7 @@ export function QuizPrompt({}) {
     isStartDisabled,
     promptCompleted,
     successfulCompletion,
+    dailyChallengeCompleted,
   ]);
 
   const promptButton = useMemo(() => {
