@@ -6,7 +6,6 @@ import allCountryData from '@/data/country_data.json' with { type: 'json' };
 import {
   formatDateString,
   parseDateString,
-  calculateSkillScore,
   getModalityIndex,
   createEmptyModalityMatrix,
   getModalityName,
@@ -241,7 +240,6 @@ export function calculateCountrySkillScores(countryData, inputModality = null) {
   return inputModality ? result[inputModality] : result;
 }
 
-
 /**
  * @param {import('@/types/dataSchemas.js').DailyChallengeLog} dailyChallengeEntries
  */
@@ -250,8 +248,12 @@ export function calculateAverageChallengePerformance(dailyChallengeEntries) {
     return NaN;
   }
 
-  const averageScore = dailyChallengeEntries.reduce((acc, entry) => acc + entry.score, 0) / dailyChallengeEntries.length;
-  const averageSkillScore = dailyChallengeEntries.reduce((acc, entry) => acc + entry.skillScore, 0) / dailyChallengeEntries.length;
+  const averageScore =
+    dailyChallengeEntries.reduce((acc, entry) => acc + entry.score, 0) /
+    dailyChallengeEntries.length;
+  const averageSkillScore =
+    dailyChallengeEntries.reduce((acc, entry) => acc + entry.skillScore, 0) /
+    dailyChallengeEntries.length;
   return {
     score: averageScore.toFixed(2),
     skillScore: averageSkillScore.toFixed(2),
@@ -259,15 +261,22 @@ export function calculateAverageChallengePerformance(dailyChallengeEntries) {
 }
 
 /**
- * @param {import('@/types/dataSchemas.js').LearningData} LearningData
+ * @param {import('@/types/dataSchemas.js').LearningData} learningData
  * @param {import('@/types/dataSchemas.js').CountryData} countryData
  * @param {number} learnedThreshold - Learning rate minimum for country to be considered learned (default 60)
  */
 
-export function calculateLearningRateCoverage(LearningData, countryData=allCountryData, learnedThreshold = 60) {
-  if (!LearningData || !countryData) {
+export function calculateLearningRateCoverage(
+  learningData,
+  countryData = allCountryData,
+  learnedThreshold = 60,
+) {
+  if (!learningData || !countryData) {
     return NaN;
   }
-  const learningRateCoverage = Object.values(LearningData).filter((country) => country.learningRate >= learnedThreshold).length / countryData.length;
+  const learningRateCoverage =
+    Object.values(learningData).filter(
+      (country) => country.learningRate >= learnedThreshold,
+    ).length / countryData.length;
   return learningRateCoverage.toFixed(4);
 }

@@ -44,11 +44,13 @@ export function checkSubmission(
 export function checkModalityGuessLimit(gameMode, modalityGuesses) {
   const currentAttempts = modalityGuesses.length || 0;
   if (gameMode === 'dailyChallenge') {
-    if (currentAttempts >= 5){ // && currentStatus === 'incomplete') {
+    if (currentAttempts >= 5) {
+      // && currentStatus === 'incomplete') {
       return true;
     }
   } else if (gameMode === 'learning') {
-    if (currentAttempts >= 1){ // && currentStatus === 'incomplete') {
+    if (currentAttempts >= 1) {
+      // && currentStatus === 'incomplete') {
       return true;
     }
   }
@@ -159,4 +161,17 @@ export function promptScore(guesses) {
       (modalityGuess) => modalityGuess.status === 'completed',
     ).length / 2
   );
+}
+
+export function promptSkillScore(logEntry) {
+  let skillScore = 0;
+  ['name', 'flag', 'location'].forEach((modality) => {
+    if (
+      logEntry[modality].status === 'completed' ||
+      logEntry[modality].attempts.length > 0
+    ) {
+      skillScore += (6 - logEntry[modality].attempts.length) / (5 * 2); // 5 guesses, 2 modalities per country
+    }
+  });
+  return skillScore;
 }

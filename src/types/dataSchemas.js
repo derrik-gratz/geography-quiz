@@ -18,7 +18,6 @@
  * @property {CountryRecord[]} countries - Array of country records
  */
 
-
 /**
  * @typedef {Object} DailyChallengeModalityResult
  * @property {number} skillScore - Calculated skill score for this modality (float, 0-1)
@@ -177,21 +176,6 @@ export function createEmptyModalityMatrix() {
     }
   }
   return matrix;
-}
-
-/**
- * Calculate skill score from correct/guesses
- * Formula: (6 - guesses) / 10
- * - 1 guess = 0.5, 2 guesses = 0.4, 3 guesses = 0.3, etc.
- * @param {boolean} correct - Was answer correct?
- * @param {number} guesses - Number of guesses made
- * @returns {number} Skill score (0-1, higher is better)
- */
-export function calculateSkillScore(correct, guesses) {
-  if (!correct || guesses <= 0) {
-    return 0;
-  }
-  return (6 - guesses) / (5 * 2); // 5 guesses, 2 modalities per country
 }
 
 /**

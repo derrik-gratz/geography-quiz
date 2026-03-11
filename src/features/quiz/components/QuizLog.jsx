@@ -1,112 +1,67 @@
 import React, { useState, useMemo } from 'react';
 import { useQuiz } from '../state/quizProvider.jsx';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
-import { calculateSkillScore } from '@/types/dataSchemas.js';
+// import { calculateSkillScore } from '@/types/dataSchemas.js';
 import './QuizLog.css';
+import { promptScore, promptSkillScore } from '@/utils/quizEngine.js';
 
-/**
- * QuizLog Component
- *
- * Displays a scrollable table showing quiz progress with attempts per country
- *
- * Shows last 2-3 countries by default, can scroll to see full history
- *
- * @param {Array} props.promptHistory - Array of completed prompts
- * @param {Object} props.attempts - Current question attempts { map: number, text: number, flag: number }
- * @param {Object} props.answers - Current question answers { map?: code, text?: code, flag?: code }
- * @param {Object} props.currentPrompt - Current active prompt
- * @param {Array} props.requiredAnswerTypes - Types user must answer for current question
- * @param {boolean} props.isComplete - Whether current question is complete
- * @returns {JSX.Element} Quiz log table interface
- */
-export function QuizLog(
-  {
-    // promptHistory,
-    // attempts,
-    // answers,
-    // currentPrompt,
-    // requiredAnswerTypes = [],
-    // isComplete = false,
-    // isQuizFinished = false,
-    // quizSetName = 'Geography Quiz'
-  },
-) {
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
+
+export function QuizLog({}) {
   const state = useQuiz();
   const [exportSuccess, setExportSuccess] = useState(false);
   const [obscureNames, setObscureNames] = useState(true);
-  const defaultCollapsed = useMemo(
-    () => state.quiz.status === 'not_started',
-    [state.quiz.status],
-  );
-  // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
+  // const defaultCollapsed = useMemo(
+  //   () => state.quiz.status === 'not_started',
+  //   [state.quiz.status],
+  // );
 
-  const promptScore = (entry) => {
-    const types = ['location', 'name', 'flag'];
-    const completedCount = types.filter(
-      (type) => entry[type]?.status === 'completed',
-    ).length;
-    return completedCount / 2;
+  const logIcon = (status) => {
+    switch (status) {
+      case 'prompted':
+        return '-';
+      case 'incomplete':
+        return '?/';
+      case 'failed':
+        return '✗/';
+      case 'completed':
+        return '✓/';
+      default:
+        return 'x?x';
+    }
+  }
+  const parseGuesses = (guesses) => {
+    return {
+      name:
+        logIcon(guesses.name.status) +
+        (guesses.name.status !== 'prompted' ? guesses.name.attempts.length : ''),
+      flag:
+        logIcon(guesses.flag.status) +
+        (guesses.flag.status !== 'prompted' ? guesses.flag.attempts.length : ''),
+      location:
+        logIcon(guesses.location.status) +
+        (guesses.location.status !== 'prompted'? guesses.location.attempts.length : ''),
+    };
   };
 
-  // Always call useMemo - handle 'not_started' case inside
   const logEntries = useMemo(() => {
-    // Return empty array if quiz hasn't started
     if (state.quiz.status === 'not_started') {
       return [];
     }
-    // console.log(state.quiz.history);
-    // console.log(state.quiz.prompt.guesses);
-    const parseGuesses = (guesses) => {
-      return {
-        location:
-          guesses.location.status === 'prompted'
-            ? '-'
-            : guesses.location.status === 'incomplete'
-              ? '?/' + guesses.location.attempts.length
-              : guesses.location.status === 'failed'
-                ? '✗/' + guesses.location.attempts.length
-                : guesses.location.status === 'completed'
-                  ? '✓/' + guesses.location.attempts.length
-                  : '?',
-        name:
-          guesses.name.status === 'prompted'
-            ? '-'
-            : guesses.name.status === 'incomplete'
-              ? '?/' + guesses.name.attempts.length
-              : guesses.name.status === 'failed'
-                ? '✗/' + guesses.name.attempts.length
-                : guesses.name.status === 'completed'
-                  ? '✓/' + guesses.name.attempts.length
-                  : '?',
-        flag:
-          guesses.flag.status === 'prompted'
-            ? '-'
-            : guesses.flag.status === 'incomplete'
-              ? '?/' + guesses.flag.attempts.length
-              : guesses.flag.status === 'failed'
-                ? '✗/' + guesses.flag.attempts.length
-                : guesses.flag.status === 'completed'
-                  ? '✓/' + guesses.flag.attempts.length
-                  : '?',
-      };
-    };
-    const sumSkillScore = (entry) => {
-      let skillScore = 0;
-      ['flag', 'name', 'location'].forEach((modality) => {
-        skillScore += calculateSkillScore(
-          entry[modality].status === 'completed',
-          entry[modality].attempts.length,
-        );
-      });
-      return skillScore;
-    };
-
     const pastPrompts = state.quiz.history.map((entry) => {
       const correctCountry =
         state.quizData[entry.quizDataIndex]?.country || '?';
       const score = promptScore(entry);
       const guesses = parseGuesses(entry);
-      const skillScore = sumSkillScore(entry);
+      const skillScore = promptSkillScore(entry);
       return { correctCountry, score, guesses, skillScore };
     });
     if (state.quiz.status === 'active') {
@@ -125,23 +80,19 @@ export function QuizLog(
     state.quizData,
   ]);
 
-  // Don't show quiz log if quiz hasn't started
-  if (state.quiz.status === 'not_started') {
-    return null;
-  }
 
   const exportResults = () => {
     const prefix = state.config.gameMode === 'dailyChallenge' ? 'Daily Challenge' : state.config.quizSet;
     let exportText = `\`\`\`${prefix} Results\n`;
     const score = logEntries.reduce((sum, entry) => {
       return sum + entry.score;
-    }, 0);
+    }, 0).toFixed(1);
     exportText += `Score: ${score} / ${state.quizData.length} countries`;
     if (state.config.gameMode === 'dailyChallenge') {
       const skillScore = logEntries.reduce((sum, entry) => {
         return sum + entry.skillScore;
-      }, 0);
-      exportText += `\t(${skillScore}/5)\n\n`;
+      }, 0).toFixed(1);
+      exportText += `\t(${skillScore}/5.0 guesses)\n\n`;
     } else {
       exportText += `\n\n`;
     }
@@ -183,13 +134,12 @@ export function QuizLog(
     return exportText;
   };
 
-  // Copy results to clipboard
   const copyResultsToClipboard = async () => {
     try {
       const resultsText = exportResults();
       await navigator.clipboard.writeText(resultsText);
       setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 1000); // Hide success message after 3 seconds
+      setTimeout(() => setExportSuccess(false), 1000);
       return true;
     } catch (err) {
       console.error('Failed to copy to clipboard:', err);
@@ -197,72 +147,61 @@ export function QuizLog(
     }
   };
 
+  const logTable = () => {
+    return (
+      <TableContainer component={Paper}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell key="correctCountry">Country</TableCell>
+              <TableCell key="location">Map</TableCell>
+              <TableCell key="name">Name</TableCell>
+              <TableCell key="flag">Flag</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {logEntries
+            .slice()
+            .reverse()
+            .map((entry, index) => (
+              <TableRow key={index}>
+                <TableCell key="correctCountry">{entry.correctCountry}</TableCell>
+                <TableCell key="location">{entry.guesses.location}</TableCell>
+                <TableCell key="name">{entry.guesses.name}</TableCell>
+                <TableCell key="flag">{entry.guesses.flag}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const exportSettings = () => {
+    return (
+      <div className="quiz-log__export">
+        <label>
+          <input type="checkbox" checked={obscureNames} onChange={(e) => setObscureNames(e.target.checked)} />
+          Hide country names
+        </label>
+        <button
+          onClick={copyResultsToClipboard}
+          style={{
+            backgroundColor: exportSuccess ? 'var(--mui-palette-success-main)' : 'var(--mui-palette-primary-main)',
+          }}
+        >
+          {exportSuccess ? '✓ Copied!' : 'Copy to Clipboard'}
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <CollapsibleContainer
-      defaultCollapsed={defaultCollapsed}
-      title="Quiz Log"
-      content={
-        <div className="quiz-log">
-          {state.quiz.status === 'completed' && (
-            <div className="quiz-log-export">
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '5px',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={obscureNames}
-                  onChange={(e) => setObscureNames(e.target.checked)}
-                  style={{ margin: 0 }}
-                />
-                Hide country names
-              </label>
-              <button
-                onClick={copyResultsToClipboard}
-                className="quiz-log-export__button"
-                style={{
-                  backgroundColor: exportSuccess ? '#28a745' : '#007bff',
-                }}
-              >
-                {exportSuccess ? '✓ Copied!' : 'Copy to Clipboard'}
-              </button>
-            </div>
-          )}
-          <div className="quiz-log-table-container">
-            <table className="quiz-log-table">
-              <thead>
-                <tr>
-                  <th>Country</th>
-                  {/* <th>Prompt</th> */}
-                  {/* <th>Status</th> */}
-                  <th>Map</th>
-                  <th>Name</th>
-                  <th>Flag</th>
-                </tr>
-              </thead>
-              <tbody>
-                {logEntries
-                  .slice()
-                  .reverse()
-                  .map((entry, index) => (
-                    <tr key={index} className="log-entry">
-                      <td className="country-name">{entry.correctCountry}</td>
-                      <td className="answer-cell">{entry.guesses.location}</td>
-                      <td className="answer-cell">{entry.guesses.name}</td>
-                      <td className="answer-cell">{entry.guesses.flag}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      }
-    />
+    <div className="quiz-log">
+      {state.quiz.status === 'completed' && (
+        exportSettings()
+      )}
+      {logTable()}
+    </div>
   );
 }
