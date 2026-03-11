@@ -7,6 +7,7 @@ import {
   formatDateString,
   generateLocalUserId,
   createEmptyModalityMatrix,
+  calculateSkillScore,
   getModalityIndex,
   getModalityName,
   createCountryResultFromPrompt,
@@ -15,7 +16,6 @@ import {
   getEngineSettings,
   updateLearningRate,
 } from '../utils/spacedRepetitionEngine.js';
-import { promptScore, promptSkillScore } from '@/utils/quizEngine.js';
 
 const DB_NAME = 'geography_quiz_db';
 const DB_VERSION = 7;
@@ -278,11 +278,10 @@ export async function saveDailyChallenge(date, challengeData) {
     // Calculate total score (sum of country scores: 0, 0.5, or 1 per country)
     // Score per country: 0 = failed, 0.5 = partially correct (1-2 modalities), 1 = fully correct (3 modalities)
     const countryScores = results.map((result) => {
-      return promptScore(result);
-      // const correctCount = [result.name, result.flag, result.location].filter(
-      //   (modality) => modality.correct === true,
-      // ).length;
-      // return correctCount * 0.5;
+      const correctCount = [result.name, result.flag, result.location].filter(
+        (modality) => modality.correct === true,
+      ).length;
+      return correctCount * 0.5;
     });
     const score = countryScores.reduce((sum, s) => sum + s, 0);
 
@@ -414,10 +413,11 @@ async function updateCountryStatsFromChallenge(challengeData, userData) {
       }
 
       // Determine if correct from status
-      // const isCorrect = inputData.status === 'completed';
+      const isCorrect = inputData.status === 'completed';
 
       let cell = countryData.matrix[inputIndex][promptedIndex];
-      const skillScore = guessCount > 0 ? promptSkillScore(inputData) : 0;
+      const skillScore =
+        guessCount > 0 ? calculateSkillScore(isCorrect, guessCount) : 0;
       cell.push(skillScore);
       if (cell.length > 5) {
         cell = cell.slice(-5);

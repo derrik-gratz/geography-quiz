@@ -162,16 +162,3 @@ export function promptScore(guesses) {
     ).length / 2
   );
 }
-
-export function promptSkillScore(logEntry) {
-  let skillScore = 0;
-  ['name', 'flag', 'location'].forEach((modality) => {
-    if (
-      logEntry[modality].status === 'completed' ||
-      logEntry[modality].attempts.length > 0
-    ) {
-      skillScore += (6 - logEntry[modality].attempts.length) / (5 * 2); // 5 guesses, 2 modalities per country
-    }
-  });
-  return skillScore;
-}

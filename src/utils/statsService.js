@@ -6,6 +6,7 @@ import allCountryData from '@/data/country_data.json' with { type: 'json' };
 import {
   formatDateString,
   parseDateString,
+  calculateSkillScore,
   getModalityIndex,
   createEmptyModalityMatrix,
   getModalityName,
