@@ -21,7 +21,7 @@ export function QuizPage() {
             <QuizConfig />
           </div>
           <div className="quiz-page__log">
-            <QuizLog />
+              <QuizLog />
           </div>
           <div className="quiz-page__prompt">
             <QuizPrompt />

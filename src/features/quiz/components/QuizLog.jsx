@@ -197,11 +197,13 @@ export function QuizLog({}) {
   }
 
   return (
-    <div className="quiz-log">
-      {state.quiz.status === 'completed' && (
-        exportSettings()
-      )}
-      {logTable()}
-    </div>
+    state.quiz.status !== 'not_started' && (
+      <div className="quiz-log">
+        {state.quiz.status === 'completed' && (
+          exportSettings()
+        )}
+        {logTable()}
+      </div>
+    )
   );
 }
