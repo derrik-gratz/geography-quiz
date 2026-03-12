@@ -13,6 +13,97 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+
+
+// export default function ResponsiveDrawer() {
+//   // const { window } = props;
+//   const [mobileOpen, setMobileOpen] = React.useState(false);
+//   const [isClosing, setIsClosing] = React.useState(false);
+
+//   const handleDrawerClose = () => {
+//     setIsClosing(true);
+//     setMobileOpen(false);
+//   };
+
+//   const handleDrawerTransitionEnd = () => {
+//     setIsClosing(false);
+//   };
+
+//   const handleDrawerToggle = () => {
+//     if (!isClosing) {
+//       setMobileOpen(!mobileOpen);
+//     }
+//   };
+
+//   const drawer = (
+//     <div className="quiz-log">
+//       {state.quiz.status === 'completed' && (
+//         exportSettings()
+//       )}
+//       {logTable()}
+//     </div>
+//   )
+//   return (
+//     <div>
+//     <Drawer
+//       variant="temporary"
+//       slotProps={{
+//         root: {
+//           keepMounted: true, // Better open performance on mobile.
+//         },
+//       }}
+//     >
+//       {drawer}
+//     </Drawer>
+//     <Drawer
+//       variant="permanent"
+//       >
+//       {drawer}
+//     </Drawer>
+//     </div>
+//   )
+// };
+
+// const quizLogDrawer = () => {
+// <Box
+// component="nav"
+// sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+// aria-label="quiz log"
+// >
+// {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+// <Drawer
+//   container={container}
+//   variant="temporary"
+//   open={mobileOpen}
+//   onTransitionEnd={handleDrawerTransitionEnd}
+//   onClose={handleDrawerClose}
+//   sx={{
+//     display: { xs: 'block', sm: 'none' },
+//     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+//   }}
+//   slotProps={{
+//     root: {
+//       keepMounted: true, // Better open performance on mobile.
+//     },
+//   }}
+// >
+//   {drawer}
+// </Drawer>
+// <Drawer
+//   variant="permanent"
+//   sx={{
+//     display: { xs: 'none', sm: 'block' },
+//     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+//   }}
+//   open
+// >
+//   {drawer}
+// </Drawer>
+// </Box>
+// }
+
 
 
 export function QuizLog({}) {
@@ -198,11 +289,8 @@ export function QuizLog({}) {
 
   return (
     state.quiz.status !== 'not_started' && (
-      <div className="quiz-log">
-        {state.quiz.status === 'completed' && (
-          exportSettings()
-        )}
-        {logTable()}
+      <div>
+
       </div>
     )
   );
