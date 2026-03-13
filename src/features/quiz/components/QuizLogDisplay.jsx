@@ -71,44 +71,50 @@ export function QuizLogMobile() {
 
   return (
     <div className="quiz-log-mobile">
+      {!drawerOpen && (
+        <StyledBox
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            height: drawerBleeding,
+            width: '100%',
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+          }}
+          onClick={() => setDrawerOpen(true)}
+        >
+          <Box sx={{ mt: 2, px:3, flexShrink: 0 }}>
+            <Puller />
+            <QuizProgressBar />
+          </Box>
+        </StyledBox>
+      )}
       <Drawer
 
         anchor="bottom"
         open={drawerOpen}
-        // variant="permanent"
         onClose={() => setDrawerOpen(false)}
-        // onOpen={() => setDrawerOpen(true)}
-        // swipeAreaWidth={drawerBleeding}
-        // disableSwipeToOpen={false}
-        // disableBackdropTransition={true}
-      // overscrollBehavior="contain"
-        // sx={{
-        //   '.MuiDrawer-root > .MuiPaper-root': {
-        //     height: `calc(50% - ${drawerBleeding}px)`,
-        //     overflow: 'visible',
-        //   }
-        // }}
         keepMounted={true}
-        modalProps={{
-          keepMounted: true,
-        }}
+        // modalProps={{
+        //   keepMounted: true,
+        // }}
         slotProps={{
           paper: {
             sx: {
               height: `calc(60dvh - ${drawerBleeding}px)`,
-              overflow: 'visible',
+              // overflow: 'visible',
             },
           },
         }}
       >
         <StyledBox
            sx={{
-            position: 'absolute',
-            top: -drawerBleeding,
-            height: drawerBleeding,
+            // position: 'absolute',
+            // top: -drawerBleeding,
+            // height: drawerBleeding,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
-            visibility: 'visible',
+            // visibility: 'visible',
             right: 0,
             left: 0,
           }}
