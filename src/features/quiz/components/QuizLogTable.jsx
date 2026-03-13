@@ -59,7 +59,7 @@ function exportResults(gameMode, nCountries, quizSet, logEntries, obscureNames) 
     const skillScore = logEntries.reduce((sum, entry) => {
       return sum + entry.skillScore;
     }, 0).toFixed(1);
-    exportText += `\n${skillScore}/5.0 guesses\n\n`;
+    exportText += `\t${skillScore}/5.0)\n\n`;
   } else {
     exportText += `\n\n`;
   }
