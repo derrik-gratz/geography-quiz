@@ -24,8 +24,3 @@
   font-weight: bold;
   border-bottom: 3px solid var(--mui-palette-divider);
 }
-
-.MuiDrawer-root > .MuiPaper-root {
-  height: calc(50% - 56px);
-  overflow: 'visible';
-}

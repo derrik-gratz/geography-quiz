@@ -59,7 +59,7 @@ function exportResults(gameMode, nCountries, quizSet, logEntries, obscureNames) 
     const skillScore = logEntries.reduce((sum, entry) => {
       return sum + entry.skillScore;
     }, 0).toFixed(1);
-    exportText += `\t(${skillScore}/5.0 guesses)\n\n`;
+    exportText += `\n${skillScore}/5.0 guesses\n\n`;
   } else {
     exportText += `\n\n`;
   }
@@ -103,7 +103,15 @@ function exportResults(gameMode, nCountries, quizSet, logEntries, obscureNames) 
 
 const logTable = (logEntries) => {
       return (
-        <TableContainer component={Paper} sx={{ maxHeight: "320px", overflow: "auto" }}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            flex: 1,
+            minHeight: 0,
+            overflowY: 'auto',
+            // WebkitOverflowScrolling: 'touch',
+          }}
+        >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -215,18 +223,30 @@ export function QuizLogTable() {
     return null;
   }
 
-  const progressValue =  useMemo(() => (
-    state.quiz.status === 'completed' ?
-        100 :
-      (state.quiz.prompt?.quizDataIndex ?? 0) / (state.quizData?.length || 1) * 100
-  ), [state.quiz.status, state.quiz.prompt?.quizDataIndex, state.quizData?.length]);
+  // const progressValue =  useMemo(() => (
+  //   state.quiz.status === 'completed' ?
+  //       100 :
+  //     (state.quiz.prompt?.quizDataIndex ?? 0) / (state.quizData?.length || 1) * 100
+  // ), [state.quiz.status, state.quiz.prompt?.quizDataIndex, state.quizData?.length]);
 
   return (
-    <div className="quiz-log">
-      {/* <Box sx={{ p: 2, m: 2, pt: 1 }}>
-        <LinearProgress variant="determinate" value={progressValue} sx={{ height: 8, borderRadius: 1 }} />
-      </Box> */}
-      <Box sx={{ m:2 }}>
+    <div
+      className="quiz-log"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: 0,
+      }}
+    >
+      <Box
+        sx={{
+          mx: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          // minHeight: 0,
+        }}
+      >
         {state.quiz.status === 'completed' && exportSettings()}
         {logTable(logEntries)}
       </Box>

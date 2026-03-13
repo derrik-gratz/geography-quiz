@@ -105,35 +105,21 @@ export function QuizLogMobile() {
         ModalProps={{
           keepMounted: true,
         }}
-        PaperProps={{
-          sx: {
-            height: `calc(60dvh - ${drawerBleeding}px)`,
-            overflow: 'hidden',
-            margin: 0,
-            borderTopLeftRadius: 8,
+        slotProps={{
+          paper: {
+            sx: {
+              height: `60dvh`,//`calc(60dvh - ${drawerBleeding}px)`,
+              overflow: 'hidden',
+              margin: 0,
+              borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             display: 'flex',
             flexDirection: 'column',
             overscrollBehavior: 'contain',
+            },
+            
           },
-        }}
-      >
-        <StyledBox
-          sx={{
-            position: 'absolute',
-            top: -drawerBleeding,
-            right: 0,
-            left: 0,
-            height: drawerBleeding,
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            visibility: 'visible',
-            cursor: 'pointer',
-          }}
-          onClick={() => setDrawerOpen(false)}
-        >
-          <Puller />
-        </StyledBox>
+        }}>
         <StyledBox
           sx={{
             flex: 1,
@@ -143,12 +129,20 @@ export function QuizLogMobile() {
             flexDirection: 'column',
           }}
         >
-          <Box sx={{ mt: 2, mx: 2, mb: 1, flexShrink: 0 }}>
-            <QuizProgressBar />
+          <Box
+            sx={{
+              position: 'relative',
+              px: 2,
+              pt: 3,
+            }}
+          >
+            <Puller onClick={() => setDrawerOpen(false)}/>
+            <Box sx={{ mt: 0, mb: 0, flexShrink: 0 }}>
+              <QuizProgressBar />
+            </Box>
           </Box>
           <Box
             sx={{
-              flex: 1,
               minHeight: 0,
               overflow: 'hidden',
               overscrollBehavior: 'contain',
