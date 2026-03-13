@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { useQuiz } from '../state/quizProvider.jsx';
 import Box from '@mui/material/Box';
-
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './QuizLogDisplay.css';
 import { QuizLogTable, QuizProgressBar } from './QuizLogTable.jsx';
 
@@ -68,91 +68,44 @@ export function QuizLogMobile() {
 
   return (
     <div className="quiz-log-mobile">
-      {!drawerOpen && (
-        <StyledBox
-          onClick={() => setDrawerOpen(true)}
-          sx={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: theme.zIndex.drawer + 1,
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            boxShadow: 3,
-            cursor: 'pointer',
-            overscrollBehavior: 'none',
-          }}
-        >
-          <Box
-            sx={{
-              position: 'relative',
-              height: drawerBleeding,
-              px: 2,
-              pt: 1,
-            }}
-          >
-            <Puller />
-            <Box sx={{ mt: 2, flexShrink: 0 }}>
-              <QuizProgressBar />
-            </Box>
-          </Box>
-        </StyledBox>
-      )}
-      <Drawer
+      <SwipeableDrawer
         anchor="bottom"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        ModalProps={{
-          keepMounted: true,
-        }}
+        onOpen={() => setDrawerOpen(true)}
+        swipeAreaWidth={drawerBleeding}
+        disableSwipeToOpen={false}
+        keepMounted
         slotProps={{
           paper: {
             sx: {
-              height: `60dvh`,//`calc(60dvh - ${drawerBleeding}px)`,
-              overflow: 'hidden',
-              margin: 0,
-              borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            overscrollBehavior: 'none',
+              height: `calc(60dvh - ${drawerBleeding}px)`,
+              overflow: 'visible',
             },
-            
           },
-        }}>
+        }}
+      >
         <StyledBox
-          sx={{
-            flex: 1,
-            minHeight: 0,
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
+           sx={{
+            position: 'absolute',
+            top: -drawerBleeding,
+            height: drawerBleeding,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            visibility: 'visible',
+            right: 0,
+            left: 0,
           }}
         >
-          <Box
-            sx={{
-              position: 'relative',
-              px: 2,
-              pt: 3,
-            }}
-          >
-            <Puller onClick={() => setDrawerOpen(false)}/>
-            <Box sx={{ mt: 0, mb: 0, flexShrink: 0 }}>
-              <QuizProgressBar />
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              minHeight: 0,
-              overflow: 'hidden',
-              overscrollBehavior: 'contain',
-            }}
-          >
-            <QuizLogTable />
+          <Box sx={{ mt: 2, px:3, flexShrink: 0 }}>
+            <Puller />
+            <QuizProgressBar />
           </Box>
         </StyledBox>
-      </Drawer>
+        <StyledBox sx={{ px: 1, pb: 1, pt:0, height: '100%', overflow: 'auto' }}>
+        <QuizLogTable />
+        </StyledBox>
+      </SwipeableDrawer>
     </div>
   );
 }
