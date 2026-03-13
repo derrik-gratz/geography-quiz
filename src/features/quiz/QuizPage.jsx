@@ -20,9 +20,6 @@ export function QuizPage() {
           <div className="quiz-page__config">
             <QuizConfig />
           </div>
-          <div className="quiz-page__log">
-            <QuizLog />
-          </div>
           <div className="quiz-page__prompt">
             <QuizPrompt />
           </div>
@@ -38,6 +35,7 @@ export function QuizPage() {
             <QuizWorldMap />
           </ModalityProvider>
         </div>
+        <QuizLog />
       </main>
     </QuizProvider>
   );

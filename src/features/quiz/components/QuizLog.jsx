@@ -13,103 +13,96 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { Global } from '@emotion/react';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { styled } from '@mui/material/styles';
+import { grey } from '@mui/material/colors';
+import LinearProgress from '@mui/material/LinearProgress';
 
+const drawerBleeding = 56;
 
-// export default function ResponsiveDrawer() {
-//   // const { window } = props;
-//   const [mobileOpen, setMobileOpen] = React.useState(false);
-//   const [isClosing, setIsClosing] = React.useState(false);
+const StyledBox = styled('div')(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.applyStyles('dark', {
+    backgroundColor: grey[800],
+  }),
+}));
 
-//   const handleDrawerClose = () => {
-//     setIsClosing(true);
-//     setMobileOpen(false);
-//   };
+const Puller = styled('div')(({ theme }) => ({
+  width: 30,
+  height: 6,
+  backgroundColor: grey[300],
+  borderRadius: 3,
+  position: 'absolute',
+  top: 8,
+  left: 'calc(50% - 15px)',
+  ...theme.applyStyles('dark', {
+    backgroundColor: grey[900],
+  }),
+}));
 
-//   const handleDrawerTransitionEnd = () => {
-//     setIsClosing(false);
-//   };
+/**
+ * Simple swipeable edge drawer (MUI template style).
+ * Bleeding strip shows Puller + ProgressBar; main area shows children (quiz log table).
+ */
+function SwipeableEdgeDrawer({ children, open, onClose, onOpen, progressValue }) {
+  const progress = Math.min(100, Math.max(0, progressValue ?? 0));
 
-//   const handleDrawerToggle = () => {
-//     if (!isClosing) {
-//       setMobileOpen(!mobileOpen);
-//     }
-//   };
-
-//   const drawer = (
-//     <div className="quiz-log">
-//       {state.quiz.status === 'completed' && (
-//         exportSettings()
-//       )}
-//       {logTable()}
-//     </div>
-//   )
-//   return (
-//     <div>
-//     <Drawer
-//       variant="temporary"
-//       slotProps={{
-//         root: {
-//           keepMounted: true, // Better open performance on mobile.
-//         },
-//       }}
-//     >
-//       {drawer}
-//     </Drawer>
-//     <Drawer
-//       variant="permanent"
-//       >
-//       {drawer}
-//     </Drawer>
-//     </div>
-//   )
-// };
-
-// const quizLogDrawer = () => {
-// <Box
-// component="nav"
-// sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-// aria-label="quiz log"
-// >
-// {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-// <Drawer
-//   container={container}
-//   variant="temporary"
-//   open={mobileOpen}
-//   onTransitionEnd={handleDrawerTransitionEnd}
-//   onClose={handleDrawerClose}
-//   sx={{
-//     display: { xs: 'block', sm: 'none' },
-//     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-//   }}
-//   slotProps={{
-//     root: {
-//       keepMounted: true, // Better open performance on mobile.
-//     },
-//   }}
-// >
-//   {drawer}
-// </Drawer>
-// <Drawer
-//   variant="permanent"
-//   sx={{
-//     display: { xs: 'none', sm: 'block' },
-//     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-//   }}
-//   open
-// >
-//   {drawer}
-// </Drawer>
-// </Box>
-// }
+  return (
+    <>
+      <Global
+        styles={{
+          // eslint-disable-next-line
+          '.MuiDrawer-root > .MuiPaper-root': {
+            height: `calc(50% - ${drawerBleeding}px)`,
+            overflow: 'visible',
+            // padding: '1rem',
+            margin: '0.5rem',
+          },
+        }}
+      />
+      <SwipeableDrawer
+        anchor="bottom"
+        open={open}
+        onClose={onClose}
+        onOpen={onOpen}
+        swipeAreaWidth={drawerBleeding}
+        disableSwipeToOpen={false}
+        keepMounted
+      >
+        <StyledBox
+          sx={{
+            position: 'absolute',
+            top: -drawerBleeding,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            visibility: 'visible',
+            width: '100%',
+            right: 0,
+            left: 0,
+          }}
+        >
+          <Puller />
+          <Box sx={{ p: 2, m: 2, pt: 1 }}>
+            <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 1 }} />
+          </Box>
+        {/* </StyledBox> */}
+        {/* <StyledBox sx={{ height: '100%', overflow: 'auto', overflowAnchor: 'none' }}> */}
+          {children}
+        </StyledBox>
+      </SwipeableDrawer>
+    </>
+  );
+}
 
 
 
-export function QuizLog({}) {
+export function QuizLog() {
   const state = useQuiz();
   const [exportSuccess, setExportSuccess] = useState(false);
   const [obscureNames, setObscureNames] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   // const defaultCollapsed = useMemo(
   //   () => state.quiz.status === 'not_started',
   //   [state.quiz.status],
@@ -287,11 +280,30 @@ export function QuizLog({}) {
     );
   }
 
-  return (
-    state.quiz.status !== 'not_started' && (
-      <div>
+  if (state.quiz.status === 'not_started') {
+    return null;
+  }
 
-      </div>
-    )
+  const drawerContent = (
+    <div className="quiz-log">
+      {state.quiz.status === 'completed' && exportSettings()}
+      {logTable()}
+    </div>
+  );
+
+  const total = state.quizData?.length || 1;
+  const progressValue = (state.quiz.prompt?.quizDataIndex ?? 0) / total * 100;
+
+  const toggleDrawer = (newOpen) => () => setDrawerOpen(newOpen);
+
+  return (
+    <SwipeableEdgeDrawer
+      open={drawerOpen}
+      onOpen={toggleDrawer(true)}
+      onClose={toggleDrawer(false)}
+      progressValue={progressValue}
+    >
+      {drawerContent}
+    </SwipeableEdgeDrawer>
   );
 }

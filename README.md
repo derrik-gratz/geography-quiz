@@ -1,9 +1,9 @@
+Drawer margins are still a little off.
+Space on sides and bottom, plus the width changes when the drawer is opened. Currently using global styles to manually specify it as the same size as the main page, which seems a little inelegant.
+
 Profile page:
 User icon
 Name, possibly some level or 'member since' etc.
-
-three cards:
-Daily challenge streak | avg daily challenge skill score | learning rate coverage (% > 60 days)
 
 Profile page rows don't flex at same rate
 
@@ -35,10 +35,6 @@ Profile page rows don't flex at same rate
 ```
 
 Badges
-
-Score timeline
-
-Interactive map
 
 Todo:
 
