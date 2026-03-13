@@ -1,17 +1,15 @@
-import React, { useState, useMemo, useEffect } from 'react';
-
-import Paper from '@mui/material/Paper';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { Global } from '@emotion/react';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { useQuiz } from '../state/quizProvider.jsx';
+import Box from '@mui/material/Box';
 
 import './QuizLogDisplay.css';
-import { QuizLogTable } from './QuizLogTable.jsx';
+import { QuizLogTable, QuizProgressBar } from './QuizLogTable.jsx';
 
 const drawerBleeding = 56;
 
@@ -44,6 +42,9 @@ export function QuizLogDesktop({ children }) {
   }
   return (
     <div className="quiz-log-desktop">
+      <Box sx={{ mt:3, mx: 2, mb:2 }}>
+            <QuizProgressBar />
+      </Box>
       <QuizLogTable />
     </div>
   );
@@ -68,41 +69,51 @@ export function QuizLogMobile() {
 
   return (
     <div className="quiz-log-mobile">
-        <Global
-            styles={{
-            // eslint-disable-next-line
-            '.MuiDrawer-root > .MuiPaper-root': {
-                height: `calc(60% - ${drawerBleeding}px)`,
-                overflow: 'visible',
-                // padding: '1rem',
-                margin: '0rem',
-            },
-            }}
-        />
-  <SwipeableDrawer
-    anchor="bottom"
-    open={drawerOpen}
-    onClose={toggleDrawer(false)}
-    onOpen={toggleDrawer(true)}
-    swipeAreaWidth={drawerBleeding}
-    disableSwipeToOpen={false}
-    keepMounted
-  >
-    <StyledBox
-      sx={{
-        position: 'absolute',
-        top: -drawerBleeding,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        visibility: 'visible',
-        right: 0,
-        left: 0,
-      }}
-    >
-      <Puller />
-      <QuizLogTable />
-    </StyledBox>
-  </SwipeableDrawer>
-  </div>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        swipeAreaWidth={drawerBleeding}
+        disableSwipeToOpen={false}
+        keepMounted
+        disableBackdropTransition={true}
+        PaperProps={{
+          sx: {
+            height: `calc(60dvh - ${drawerBleeding}px)`,
+            overflow: 'visible',
+            margin: 0,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+          },
+        }}
+      >
+        <StyledBox
+          sx={{
+            position: 'absolute',
+            top: -drawerBleeding,
+            right: 0,
+            left: 0,
+            height: drawerBleeding,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            visibility: 'visible',
+          }}
+        >
+          <Puller />
+          <Box sx={{ mt:3, mx: 2, mb:2 }}>
+            <QuizProgressBar />
+          </Box>
+        </StyledBox>
+        <StyledBox
+          sx={{
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
+          <QuizLogTable />
+        </StyledBox>
+      </SwipeableDrawer>
+    </div>
   );
 }

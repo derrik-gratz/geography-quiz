@@ -131,6 +131,18 @@ const logTable = (logEntries) => {
       );
     };
 
+export function QuizProgressBar() {
+  const state = useQuiz();
+  const progressValue =  useMemo(() => (
+    state.quiz.status === 'completed' ?
+        100 :
+      (state.quiz.prompt?.quizDataIndex ?? 0) / (state.quizData?.length || 1) * 100
+  ), [state.quiz.status, state.quiz.prompt?.quizDataIndex, state.quizData?.length]);
+  return (
+    <LinearProgress variant="determinate" value={progressValue} sx={{ height: 8, borderRadius: 1 }} />
+  );
+}
+
 export function QuizLogTable() {
   const state = useQuiz();
   const [exportSuccess, setExportSuccess] = useState(false);
@@ -211,9 +223,9 @@ export function QuizLogTable() {
 
   return (
     <div className="quiz-log">
-      <Box sx={{ p: 2, m: 2, pt: 1 }}>
+      {/* <Box sx={{ p: 2, m: 2, pt: 1 }}>
         <LinearProgress variant="determinate" value={progressValue} sx={{ height: 8, borderRadius: 1 }} />
-      </Box>
+      </Box> */}
       <Box sx={{ m:2 }}>
         {state.quiz.status === 'completed' && exportSettings()}
         {logTable(logEntries)}
