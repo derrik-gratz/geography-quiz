@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { useQuiz } from '../state/quizProvider.jsx';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Drawer from '@mui/material/Drawer';
 import './QuizLogDisplay.css';
 import { QuizLogTable, QuizProgressBar } from './QuizLogTable.jsx';
 
@@ -56,6 +56,9 @@ export function QuizLogMobile() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+
+  const container = window !== undefined ? () => window().document.body : undefined;
+
   useEffect(() => {
     if (state.quiz.status === 'completed') {
       setDrawerOpen(true);
@@ -68,14 +71,27 @@ export function QuizLogMobile() {
 
   return (
     <div className="quiz-log-mobile">
-      <SwipeableDrawer
+      <Drawer
+
         anchor="bottom"
         open={drawerOpen}
+        // variant="permanent"
         onClose={() => setDrawerOpen(false)}
-        onOpen={() => setDrawerOpen(true)}
-        swipeAreaWidth={drawerBleeding}
-        disableSwipeToOpen={false}
-        keepMounted
+        // onOpen={() => setDrawerOpen(true)}
+        // swipeAreaWidth={drawerBleeding}
+        // disableSwipeToOpen={false}
+        // disableBackdropTransition={true}
+      // overscrollBehavior="contain"
+        // sx={{
+        //   '.MuiDrawer-root > .MuiPaper-root': {
+        //     height: `calc(50% - ${drawerBleeding}px)`,
+        //     overflow: 'visible',
+        //   }
+        // }}
+        keepMounted={true}
+        modalProps={{
+          keepMounted: true,
+        }}
         slotProps={{
           paper: {
             sx: {
@@ -96,6 +112,7 @@ export function QuizLogMobile() {
             right: 0,
             left: 0,
           }}
+          onClick={() => setDrawerOpen(!drawerOpen)}
         >
           <Box sx={{ mt: 2, px:3, flexShrink: 0 }}>
             <Puller />
@@ -105,7 +122,7 @@ export function QuizLogMobile() {
         <StyledBox sx={{ px: 1, pb: 1, pt:0, height: '100%', overflow: 'auto' }}>
         <QuizLogTable />
         </StyledBox>
-      </SwipeableDrawer>
+      </Drawer>
     </div>
   );
 }

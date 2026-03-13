@@ -78,6 +78,7 @@ button {
 /* App Layout */
 .app {
   text-align: center;
+  overscroll-behavior: none;
   /* padding: 20px; */
   font-family: inherit;
 }
