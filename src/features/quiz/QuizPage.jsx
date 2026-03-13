@@ -38,8 +38,8 @@ export function QuizPage() {
             <QuizWorldMap />
           </ModalityProvider>
         </div>
-        <QuizLogMobile />
       </main>
+      <QuizLogMobile />
     </QuizProvider>
   );
 }
