@@ -1,7 +1,7 @@
 import React from 'react';
 import { QuizConfig } from './components/QuizConfig.jsx';
 import { QuizPrompt } from './components/QuizPrompt.jsx';
-import { QuizLog } from './components/QuizLog.jsx';
+import { QuizLogMobile, QuizLogDesktop } from './components/QuizLogDisplay.jsx';
 import { QuizTextInput } from './components/TextInput.jsx';
 import { QuizFlagSelect } from './components/FlagSelect.jsx';
 import { QuizWorldMap } from './components/WorldMap.jsx';
@@ -23,6 +23,9 @@ export function QuizPage() {
           <div className="quiz-page__prompt">
             <QuizPrompt />
           </div>
+          <div className="quiz-page__log">
+            <QuizLogDesktop />
+            </div>
         </div>
         <div className="right-column">
           <ModalityProvider modalityType="name">
@@ -35,7 +38,7 @@ export function QuizPage() {
             <QuizWorldMap />
           </ModalityProvider>
         </div>
-        <QuizLog />
+        <QuizLogMobile />
       </main>
     </QuizProvider>
   );
