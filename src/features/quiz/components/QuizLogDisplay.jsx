@@ -81,6 +81,7 @@ export function QuizLogMobile() {
             borderTopRightRadius: 8,
             boxShadow: 3,
             cursor: 'pointer',
+            overscrollBehavior: 'none',
           }}
         >
           <Box
@@ -115,7 +116,7 @@ export function QuizLogMobile() {
             borderTopRightRadius: 8,
             display: 'flex',
             flexDirection: 'column',
-            overscrollBehavior: 'contain',
+            overscrollBehavior: 'none',
             },
             
           },
