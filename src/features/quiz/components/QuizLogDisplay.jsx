@@ -85,6 +85,9 @@ export function QuizLogMobile() {
             margin: 0,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            overscrollBehavior: 'contain',
           },
         }}
       >
@@ -101,17 +104,29 @@ export function QuizLogMobile() {
           }}
         >
           <Puller />
-          <Box sx={{ mt:3, mx: 2, mb:2 }}>
-            <QuizProgressBar />
-          </Box>
         </StyledBox>
         <StyledBox
           sx={{
-            height: '100%',
-            overflow: 'auto',
+            flex: 1,
+            minHeight: 0,
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <QuizLogTable />
+          <Box sx={{ mt: 2, mx: 2, mb: 1, flexShrink: 0 }}>
+            <QuizProgressBar />
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              minHeight: 0,
+              overflow: 'hidden',
+              overscrollBehavior: 'contain',
+            }}
+          >
+            <QuizLogTable />
+          </Box>
         </StyledBox>
       </SwipeableDrawer>
     </div>
