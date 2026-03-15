@@ -4,15 +4,11 @@ import { useQuizActions } from '@/features/quiz/hooks/useQuizActions.js';
 import { useModalityState } from '@/features/quiz/state/modalityProvider.jsx';
 import { syncModalityStateWithQuizState } from '@/features/quiz/hooks/useComponentState.js';
 import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
-import { CountryTextEntry } from '@/components/CountryTextEntry.jsx';
 import { SubmitButton } from '@/components/SubmitButton.jsx';
 import './TextInput.css';
-
 import countryData from '@/data/country_data.json';
-// import './CountryTextEntry.css';
 import AutoComplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-// import { createFilterOptions } from '@mui/material/Autocomplete';
 
 export function QuizTextInput() {
   const state = useQuiz();
