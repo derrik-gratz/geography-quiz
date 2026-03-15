@@ -151,45 +151,44 @@ export function QuizTextInput() {
           >
             {(componentStatus === 'incomplete' || componentStatus === 'sandbox') &&
             <SubmitButton
-            handleSubmit={handleSubmit}
-            status={submitButtonStatus}
-          />
-            }
-            
-    <AutoComplete
-      value={value}
-      options={countryData}
-      getOptionLabel={(option) => option.country}
-      // getOptionKeys={(option) => option.country}
-      onChange={(event, value) => {
-        handleCountryChange(value);
-      }}
-      // isOptionEqualToValue={(option, value) => (option.country === value.country || option.aliases.includes(value.country)}
-      sx={{
-        width: '100%',
-        backgroundColor: 'white',
-        borderRadius: '4px',
-      }}
-      getOptionDisabled={(option) => incorrectValues.includes(option.country)}
-      filterOptions={customFiler}
-      disabled={disabled}
-      renderOption={(props, option) => {
-        const { key, ...other } = props;
-        return (
-        <li key={key} {...other}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div>{option.country}</div>
-          {option.aliases && option.aliases.length > 0 && (
-            <div className="country-text-entry__suggestion-aliases" style={{ paddingLeft: '1rem' }}>
-              ({Array.isArray(option.aliases) ? option.aliases.join(', ') : option.aliases})
-            </div>
-          )}
+              handleSubmit={handleSubmit}
+              status={submitButtonStatus}
+            />}
+            <AutoComplete
+              value={value}
+              options={countryData}
+              getOptionLabel={(option) => option.country}
+              // getOptionKeys={(option) => option.country}
+              onChange={(event, value) => {
+                handleCountryChange(value);
+              }}
+              // isOptionEqualToValue={(option, value) => (option.country === value.country || option.aliases.includes(value.country)}
+              sx={{
+                width: '100%',
+                backgroundColor: 'white',
+                borderRadius: '4px',
+              }}
+              getOptionDisabled={(option) => incorrectValues.includes(option.country)}
+              filterOptions={customFiler}
+              disabled={disabled}
+              renderOption={(props, option) => {
+                const { key, ...other } = props;
+                  return (
+                  <li key={key} {...other}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div>{option.country}</div>
+                    {option.aliases && option.aliases.length > 0 && (
+                      <div className="country-text-entry__suggestion-aliases" style={{ paddingLeft: '1rem' }}>
+                        ({Array.isArray(option.aliases) ? option.aliases.join(', ') : option.aliases})
+                      </div>
+                    )}
+                    </div>
+                  </li>
+                );
+              }}
+              renderInput={(params) => <TextField {...params} placeholder={'Type a country...'} />}
+            />
           </div>
-        </li>
-  );}}
-      renderInput={(params) => <TextField {...params} placeholder={'Type a country...'} />}
-    />
-  </div>
         }
       />
     </div>
