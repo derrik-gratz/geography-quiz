@@ -64,7 +64,7 @@ export function QuizConfig() {
       defaultCollapsed={defaultCollapsed}
       title="Quiz Configuration"
       content={
-        <div className="quiz-config">
+        <div className="quiz-config" style={{ overflow: 'hidden' }}>
           {state.quiz.status === 'not_started' ? (
             <>
               <div className="quiz-config__game-mode-select">

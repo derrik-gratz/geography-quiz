@@ -9,17 +9,6 @@ import './TextInput.css';
 import countryData from '@/data/country_data.json';
 import AutoComplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary, {
-  // AccordionSummaryProps,
-  accordionSummaryClasses,
-} from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-
-// import Accordion from '@mui/material/Accordion';
-// import AccordionSummary from '@mui/material/AccordionSummary';
-// import AccordionDetails from '@mui/material/AccordionDetails';
-import { styled } from '@mui/material/styles';
 
 export function QuizTextInput() {
   const state = useQuiz();
@@ -121,6 +110,10 @@ export function QuizTextInput() {
   }, [selectedCountry, componentStatus, isWrong, disabled]);
 
   const handleCountryChange = (country) => {
+    if (country === null) {
+      setSelectedCountry(null);
+      return;
+    }
     if (state.config.gameMode === 'sandbox' && state.quizData.length > 0) {
       sandboxSelect({ inputType: 'name', countryValue: country.country });
     } else {
@@ -153,8 +146,8 @@ export function QuizTextInput() {
 
   
   return (
-    <div className="quiz-text-input">
-      {/* <CollapsibleContainer
+    // <div className="quiz-text-input">
+      <CollapsibleContainer
         defaultCollapsed={collapsed ?? false}
         title={containerTitle}
         classNames={componentStatus}
@@ -168,20 +161,15 @@ export function QuizTextInput() {
               overflow: 'visible',
               alignItems: 'center',
             }}
-          > */}
-      <Accordion
-      defaultExpanded={!collapsed}
-      >
-      <AccordionSummary>
-        {containerTitle}
-      </AccordionSummary>
-      <AccordionDetails>
+          >
+          {/* <> */}
             {(componentStatus === 'incomplete' || componentStatus === 'sandbox') &&
             <SubmitButton
               handleSubmit={handleSubmit}
               status={submitButtonStatus}
             />}
             <AutoComplete
+              // classes={{}}
               value={value}
               options={countryData}
               getOptionLabel={(option) => option.country}
@@ -215,10 +203,9 @@ export function QuizTextInput() {
               }}
               renderInput={(params) => <TextField {...params} placeholder={'Type a country...'} />}
             />
-            </AccordionDetails>
-            </Accordion>
-          {/* </div> */}
-      {/* /> */}
-  </div>
+            </div>
+            }
+            />
+  // </div>
   );
 }
