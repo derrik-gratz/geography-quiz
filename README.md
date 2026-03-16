@@ -1,44 +1,10 @@
-Drawer margins are still a little off.
-Space on sides and bottom, plus the width changes when the drawer is opened. Currently using global styles to manually specify it as the same size as the main page, which seems a little inelegant.
-
-Profile page:
-User icon
-Name, possibly some level or 'member since' etc.
-
-Profile page rows don't flex at same rate
-
-```
-.profile-page__content-row {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  width: 100%;
-}
-
-.profile-page__content-row > * {
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-@media (max-width: 768px) {
-  .profile-page__content-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .profile-page__content-row > * {
-    flex: 0 0 auto;
-  }
-}
-```
-
-Badges
-
 Todo:
 
+move from collapsible container to accordion
+
 Settings page (nav bar)
+
+Badges
 
 Global stats page (nav bar)
 

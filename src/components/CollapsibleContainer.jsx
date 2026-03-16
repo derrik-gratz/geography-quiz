@@ -1,6 +1,10 @@
 // import { useCollapsible } from '../../hooks/useCollapsible.js';
 import './CollapsibleContainer.css';
 import { useState, useEffect } from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+
 
 export function CollapsibleContainer({
   content,

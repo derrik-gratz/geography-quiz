@@ -9,6 +9,17 @@ import './TextInput.css';
 import countryData from '@/data/country_data.json';
 import AutoComplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary, {
+  // AccordionSummaryProps,
+  accordionSummaryClasses,
+} from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+
+// import Accordion from '@mui/material/Accordion';
+// import AccordionSummary from '@mui/material/AccordionSummary';
+// import AccordionDetails from '@mui/material/AccordionDetails';
+import { styled } from '@mui/material/styles';
 
 export function QuizTextInput() {
   const state = useQuiz();
@@ -131,9 +142,19 @@ export function QuizTextInput() {
       return normalizeText(option.country).includes(normalizedInput) || option.aliases.some((alias) => normalizeText(alias).includes(normalizedInput));
     });
   };
+
+  // const AccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
+
+  // const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  //   padding: theme.spacing(2),
+  //   borderTop: '1px solid rgba(0, 0, 0, .125)',
+  //   backgroundColor: 'var(--background-dark)',
+  // }));
+
+  
   return (
     <div className="quiz-text-input">
-      <CollapsibleContainer
+      {/* <CollapsibleContainer
         defaultCollapsed={collapsed ?? false}
         title={containerTitle}
         classNames={componentStatus}
@@ -147,7 +168,14 @@ export function QuizTextInput() {
               overflow: 'visible',
               alignItems: 'center',
             }}
-          >
+          > */}
+      <Accordion
+      defaultExpanded={!collapsed}
+      >
+      <AccordionSummary>
+        {containerTitle}
+      </AccordionSummary>
+      <AccordionDetails>
             {(componentStatus === 'incomplete' || componentStatus === 'sandbox') &&
             <SubmitButton
               handleSubmit={handleSubmit}
@@ -187,9 +215,10 @@ export function QuizTextInput() {
               }}
               renderInput={(params) => <TextField {...params} placeholder={'Type a country...'} />}
             />
-          </div>
-        }
-      />
-    </div>
-  )
+            </AccordionDetails>
+            </Accordion>
+          {/* </div> */}
+      {/* /> */}
+  </div>
+  );
 }

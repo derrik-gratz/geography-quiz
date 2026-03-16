@@ -11,11 +11,17 @@ export const theme = createTheme({
   cssVariables: true,
   palette: {
     mode: 'light',
+    background: {
+      light: '#fafafa',
+      lightPaper: '#fff',
+      dark: '#303030',
+      darkPaper: '#424242',
+    },
     primary: {
       main: '#8bcaea',
-        light: '#A2D4EE',
-        dark: '#618DA3',
-        contrastText: '#fff',
+      light: '#A2D4EE',
+      dark: '#618DA3',
+      contrastText: '#fff',
     },
     secondary: {
       main: '#cc79a7',
@@ -47,5 +53,6 @@ export const theme = createTheme({
       light: '#F3E967',
       contrastText: '#00000',
     },
+    type: 'light',
   },
 });
