@@ -9,6 +9,8 @@ import './TextInput.css';
 import countryData from '@/data/country_data.json';
 import AutoComplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
 export function QuizTextInput() {
   const state = useQuiz();
@@ -180,7 +182,7 @@ export function QuizTextInput() {
               // isOptionEqualToValue={(option, value) => (option.country === value.country || option.aliases.includes(value.country)}
               sx={{
                 width: '100%',
-                backgroundColor: 'white',
+                backgroundColor: null,
                 borderRadius: '4px',
               }}
               getOptionDisabled={(option) => incorrectValues.includes(option.country)}
@@ -194,7 +196,9 @@ export function QuizTextInput() {
                     <div>{option.country}</div>
                     {option.aliases && option.aliases.length > 0 && (
                       <div className="country-text-entry__suggestion-aliases" style={{ paddingLeft: '1rem' }}>
-                        ({Array.isArray(option.aliases) ? option.aliases.join(', ') : option.aliases})
+                        <Typography variant="caption">
+                        <i>{Array.isArray(option.aliases) ? option.aliases.join(', ') : option.aliases}</i>
+                        </Typography>
                       </div>
                     )}
                     </div>
