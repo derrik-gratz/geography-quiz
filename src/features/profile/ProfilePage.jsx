@@ -72,7 +72,7 @@ export function ProfilePage() {
       {/* <div className="profile-page__header">
         <h1 className="profile-page__title">User profile</h1>
       </div> */}
-      {/* {dataModeToggle()} */}
+      {dataModeToggle()}
       {!userData || userData.dailyChallenge.fullEntries.length === 0 ? (
         <div className="profile-page__empty-state">
           <p>
