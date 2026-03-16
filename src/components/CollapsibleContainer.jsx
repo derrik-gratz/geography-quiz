@@ -5,7 +5,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import { useTheme } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
 
 export function CollapsibleContainer({
   content,
@@ -46,20 +47,25 @@ export function CollapsibleContainer({
       }}
       square={true}
       disableGutters={true}
-      // sx={{
-
-      // }}
+      sx={{
+        border: '1px solid',
+        borderColor: 'divider',
+      }}
       >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        sx={{
-          backgroundColor: classNames === 'completed' ?
-            'var(--color-correct)' : classNames === 'incorrect' ?
-            'var(--color-incorrect)' : 'var(--background-secondary)',
-        }}
+        sx={(theme) => ({
+          backgroundColor:
+            classNames === 'completed'
+              ? theme.palette.success.main
+              : classNames === 'incorrect'
+                ? theme.palette.error.main
+                : null,
+        })}
         >
         {title}
       </AccordionSummary>
+      <Divider />
       <AccordionDetails>
         {content}
       </AccordionDetails>
