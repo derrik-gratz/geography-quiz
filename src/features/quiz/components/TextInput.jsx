@@ -122,7 +122,7 @@ export function QuizTextInput() {
     }
   };
 
-  const customFiler = (options, { inputValue }) => {
+  const customFilter = (options, { inputValue }) => {
     const normalizedInput = normalizeText(inputValue);
     return options.filter((option) => {
       return normalizeText(option.country).includes(normalizedInput) || option.aliases.some((alias) => normalizeText(alias).includes(normalizedInput));
@@ -165,7 +165,7 @@ export function QuizTextInput() {
                 borderRadius: '4px',
               }}
               getOptionDisabled={(option) => incorrectValues.includes(option.country)}
-              filterOptions={customFiler}
+              filterOptions={customFilter}
               disabled={disabled}
               renderOption={(props, option) => {
                 const { key, ...other } = props;
