@@ -91,7 +91,7 @@ function SelectedCountryDisplayInner({
           )}
         {displayMode === 'learningRate' && learningRateDataAvailable && (
           <div className="selected-country-display__body-text">
-            Learning rate: {countryStats[selectedCountry].learningRate} days{' '}
+            Learning rate: {countryStats[selectedCountry].learningRate.toFixed(1)} days{' '}
             <br /> Last checked: {countryStats[selectedCountry].lastChecked}
           </div>
         )}
