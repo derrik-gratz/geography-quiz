@@ -56,9 +56,11 @@ export function QuizTextInput() {
   // Reset when prompt changes
   React.useEffect(() => {
     if (componentStatus === 'sandbox') {
+      const country = state.quizData[state.quiz.prompt.quizDataIndex]?.country;
       setSelectedCountry(
-        state.quizData[state.quiz.prompt.quizDataIndex]?.country,
+        getCountryData(country),
       );
+      sandboxSelect({ inputType: 'name', countryValue: country });
     } else if (componentStatus === 'completed') {
       setSelectedCountry(getCountryData(correctValue));
     } else if (componentStatus === 'prompting') {
@@ -80,7 +82,8 @@ export function QuizTextInput() {
   // Display value for autocomplete
   const value = useMemo(() => {
     if (componentStatus === 'sandbox') {
-      return state.quizData[state.quiz.prompt.quizDataIndex]?.country;
+      // console.log('sandbox', state.quizData[state.quiz.prompt.quizDataIndex]?.country);
+      return getCountryData(state.quizData[state.quiz.prompt.quizDataIndex]?.country);
     } else if (componentStatus === 'reviewing' && correctValue) {
       return getCountryData(correctValue);
     } else if (componentStatus === 'prompting') {
