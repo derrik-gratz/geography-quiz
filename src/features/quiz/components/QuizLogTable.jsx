@@ -147,7 +147,7 @@ export function QuizProgressBar() {
       (state.quiz.prompt?.quizDataIndex ?? 0) / (state.quizData?.length || 1) * 100
   ), [state.quiz.status, state.quiz.prompt?.quizDataIndex, state.quizData?.length]);
   return (
-    <LinearProgress variant="determinate" value={progressValue} sx={{ height: 8, borderRadius: 1 }} />
+    <LinearProgress variant="determinate" value={progressValue} sx={{ height: 8, borderRadius: 1, width: '100%' }} />
   );
 }
 

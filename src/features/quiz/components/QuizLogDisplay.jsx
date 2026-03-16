@@ -10,6 +10,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Drawer from '@mui/material/Drawer';
 import './QuizLogDisplay.css';
 import { QuizLogTable, QuizProgressBar } from './QuizLogTable.jsx';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const drawerBleeding = 56;
 
@@ -83,8 +84,9 @@ export function QuizLogMobile() {
           }}
           onClick={() => setDrawerOpen(true)}
         >
-          <Box sx={{ mt: 2, px:3, flexShrink: 0 }}>
-            <Puller />
+          <Box sx={{ mx: 3, my: 1, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            {/* <Puller /> */}
+            <ExpandMoreIcon sx={{ transform: 'rotate(180deg)', padding: 0, margin: 0 }} />
             <QuizProgressBar />
           </Box>
         </StyledBox>
@@ -120,8 +122,9 @@ export function QuizLogMobile() {
           }}
           onClick={() => setDrawerOpen(!drawerOpen)}
         >
-          <Box sx={{ mt: 2, px:3, flexShrink: 0 }}>
-            <Puller />
+          <Box sx={{ mx: 3, my: 2, flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            {/* <Puller /> */}
+            <ExpandMoreIcon />
             <QuizProgressBar />
           </Box>
         </StyledBox>
