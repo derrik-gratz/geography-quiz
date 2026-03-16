@@ -9,13 +9,14 @@ import './ProfileMap.css';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-
+import { useTheme } from '@mui/material/styles';
 /**
  * Map component for profile page showing country statistics
  * @param {Object} props
  * @param {Object} props.countryStats - Country statistics object keyed by country code
  */
 export function ProfileMap({ countryStats }) {
+  const theme = useTheme();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [defaultViewWindow, setDefaultViewWindow] = useState({
@@ -116,8 +117,8 @@ export function ProfileMap({ countryStats }) {
       );
     };
 
-    const incorrectColor = getComputedColor('--color-incorrect');
-    const correctColor = getComputedColor('--color-correct');
+    const incorrectColor = theme.palette.error.main;
+    const correctColor = theme.palette.success.main;
 
     // Clamp accuracy to 0-1 range
     // const clampedAccuracy = Math.max(0, Math.min(1, avgAccuracy || 0));

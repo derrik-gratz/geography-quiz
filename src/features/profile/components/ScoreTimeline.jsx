@@ -120,7 +120,7 @@ export function ScoreTimeline({ userData }) {
       },
       style: {
         background: 'transparent',
-        color: theme.palette.text.primary,
+        // color: theme.palette.text.primary,
         fontSize: `${PLOT_FONT_SIZE_PX}px`,
       },
     });

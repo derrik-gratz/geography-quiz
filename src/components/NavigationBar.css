@@ -9,7 +9,7 @@
 .navigation-bar__button {
   padding: 0.5rem 1rem;
   background: none;
-  color: var(--text-primary);
+  /* color: var(--text-primary); */
   border: 2px solid;
   /* border-color: var(--border-color); */
   border-radius: 4px;
