@@ -53,9 +53,11 @@ export function CollapsibleContainer({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{
-          backgroundColor: classNames === 'completed' ?
-            'var(--color-correct)' : classNames === 'incorrect' ?
-            'var(--color-incorrect)' : 'var(--background-secondary)',
+          backgroundColor: classNames === 'completed' || classNames === 'reviewing_success' ?
+            'var(--color-correct)' : 
+            classNames === 'failed' || classNames === 'reviewing_failure' ?
+            'var(--color-incorrect)' : 
+            'var(--background-secondary)',
         }}
         >
         {title}

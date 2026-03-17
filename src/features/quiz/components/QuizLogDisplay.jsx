@@ -6,7 +6,8 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { useQuiz } from '../state/quizProvider.jsx';
 import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+// import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { CollapsibleContainer } from '@/components/CollapsibleContainer.jsx';
 import Drawer from '@mui/material/Drawer';
 import './QuizLogDisplay.css';
 import { QuizLogTable, QuizProgressBar } from './QuizLogTable.jsx';
@@ -41,12 +42,18 @@ export function QuizLogDesktop({ children }) {
     return null;
   }
   return (
-    <div className="quiz-log-desktop">
-      <Box sx={{ mt:3, mx: 2, mb:2 }}>
-            <QuizProgressBar />
-      </Box>
-      <QuizLogTable />
-    </div>
+    // <div className="quiz-log-desktop">
+    <CollapsibleContainer
+      defaultCollapsed={false}
+      title="Quiz Log"
+      content={
+        <>
+        <Box sx={{ mt:3, mx: 2, mb:2 }}>
+              <QuizProgressBar />
+        </Box>
+        <QuizLogTable />
+        </>
+    }/>
   );
 }
 
@@ -57,7 +64,7 @@ export function QuizLogMobile() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  // const container = window !== undefined ? () => window().document.body : undefined;
 
   useEffect(() => {
     if (state.quiz.status === 'completed') {

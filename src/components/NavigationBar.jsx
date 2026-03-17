@@ -1,32 +1,3 @@
-// import Box from '@mui/material/Box';
-// import BottomNavigation from '@mui/material/BottomNavigation';
-// import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-// import QuizIcon from '@mui/icons-material/Quiz';
-// import PersonIcon from '@mui/icons-material/Person';
-// import { useApp, useAppDispatch } from '@/state/AppProvider.jsx';
-
-// export function NavigationBar() {
-//   const appContext = useApp();
-//   const appDispatch = useAppDispatch();
-
-//   const setCurrentPage = (page) => {
-//     appDispatch({ type: 'SET_CURRENT_PAGE', payload: page });
-//   };
-
-//   return (
-//     <Box sx={{ width: '100%', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }}>
-//       <BottomNavigation
-//         showLabels
-//         value={appContext.currentPage}
-//         onChange={(event, newValue) => setCurrentPage(newValue)}
-//       >
-//         <BottomNavigationAction value="quiz" label="Quiz" icon={<QuizIcon />} />
-//         <BottomNavigationAction value="profile" label="Profile" icon={<PersonIcon />} />
-//       </BottomNavigation>
-//     </Box>
-//   );
-// }
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -35,6 +6,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { useApp, useAppDispatch } from '@/state/AppProvider.jsx';
 

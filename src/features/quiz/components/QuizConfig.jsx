@@ -60,6 +60,8 @@ export function QuizConfig() {
   ];
 
   return (
+    <>
+    {state.quiz.status === 'not_started' ? (
     <CollapsibleContainer
       defaultCollapsed={defaultCollapsed}
       title="Quiz Configuration"
@@ -160,5 +162,6 @@ export function QuizConfig() {
         </div>
       }
     />
-  );
+    ) : null}
+    </>)
 }

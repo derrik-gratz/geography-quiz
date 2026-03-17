@@ -17,7 +17,13 @@ import {
  * @param {string} guessType - 'name' | 'flag' | 'location'
  * @returns {string} componentStatus - 'sandbox' | 'active' | 'reviewing' | 'disabled' | 'unknown'
  */
-function computeModalityStatus(gameMode, quizStatus, guesses, modality) {
+function computeModalityStatus(
+  gameMode,
+  quizStatus,
+  guesses,
+  modality,
+  history,
+) {
   if (gameMode === 'sandbox') {
     return 'sandbox';
   } else if (
@@ -38,7 +44,14 @@ function computeModalityStatus(gameMode, quizStatus, guesses, modality) {
                 : 'unknown';
       return componentStatus;
     } else if (quizStatus === 'reviewing') {
-      return 'reviewing';
+      const lastHistoryEntry = history[history.length - 1][modality].status;
+      const status =
+        lastHistoryEntry === 'failed'
+          ? 'reviewing_failure'
+          : lastHistoryEntry === 'completed'
+            ? 'reviewing_success'
+            : 'reviewing';
+      return status;
     } else if (quizStatus === 'not_started' || quizStatus === 'completed') {
       return 'disabled';
     }
@@ -58,12 +71,14 @@ export function syncModalityStateWithQuizState() {
       state.quiz.status,
       state.quiz.prompt.guesses,
       modalityType,
+      state.quiz.history,
     );
   }, [
     state.config.gameMode,
     state.quiz.status,
     state.quiz.prompt.guesses,
     modalityType,
+    state.quiz.history,
   ]);
   useEffect(() => {
     modalityStateDispatch({ type: 'STATUS_CHANGED', payload: status });

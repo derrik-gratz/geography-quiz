@@ -1,7 +1,5 @@
 Todo:
 
-move from collapsible container to accordion
-
 Settings page (nav bar)
 
 Badges
