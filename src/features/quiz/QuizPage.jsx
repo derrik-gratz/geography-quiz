@@ -21,7 +21,7 @@ import './QuizPage.css';
 export function QuizPage() {
   return (
     <QuizProvider>
-      <main className="app-main">
+      <main className="app-main" style={{paddingBottom: '2rem'}}>
         <div className="left-column">
           <div className="quiz-page__config">
             <QuizConfig />
