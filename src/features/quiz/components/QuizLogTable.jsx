@@ -109,6 +109,7 @@ const logTable = (logEntries) => {
             flex: 1,
             minHeight: 0,
             overflowY: 'auto',
+            maxHeight: '20rem',
             // WebkitOverflowScrolling: 'touch',
           }}
         >

@@ -17,7 +17,7 @@ function getCountryViewWindow(countryCode) {
   if (countryData?.location) {
     return {
       coordinates: [countryData.location.long, countryData.location.lat],
-      zoom: 8,
+      zoom: countryData.location.zoom,
     };
   }
   return { coordinates: [0, 0], zoom: 1 };
@@ -63,7 +63,7 @@ export function QuizWorldMap() {
   useEffect(() => {
     let view = { coordinates: [0, 0], zoom: 1 };
     if (
-      (componentStatus === 'reviewing' || componentStatus === 'prompting') &&
+      (['reviewing', 'reviewing_success', 'reviewing_failure', 'prompting', 'completed'].includes(componentStatus)) &&
       correctValue
     ) {
       view = getCountryViewWindow(correctValue);
@@ -117,10 +117,7 @@ export function QuizWorldMap() {
       return 1;
     } else if (
       countryCode === correctValue &&
-      (componentStatus === 'completed' ||
-        componentStatus === 'prompting' ||
-        componentStatus === 'reviewing')
-    ) {
+      (['completed', 'prompting', 'reviewing_success', 'reviewing_failure', 'reviewing'].includes(componentStatus))) {
       return 1;
     } else {
       return 0;
@@ -138,9 +135,7 @@ export function QuizWorldMap() {
     const isIncorrect = incorrectValues.includes(countryCode);
     const isCorrect =
       countryCode === correctValue &&
-      (componentStatus === 'completed' ||
-        componentStatus === 'prompting' ||
-        componentStatus === 'reviewing');
+      (['completed', 'prompting', 'reviewing_success', 'reviewing_failure', 'reviewing'].includes(componentStatus));
     const isSelected = countryCode === selectedCountry;
     const isHovered = countryCode === hoveredCountry;
 

@@ -11,11 +11,13 @@
   max-height: 10rem;
 }
 
-.collapsable-container.completed {
+.collapsable-container.completed,
+.collapsable-container.reviewing_success {
   border-color: #28a74650;
 }
 
-.collapsable-container.failed {
+.collapsable-container.failed,
+.collapsable-container.reviewing_failure {
   border-color: #dc354650;
 }
 
