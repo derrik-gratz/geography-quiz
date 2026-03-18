@@ -95,7 +95,6 @@ export function QuizFlagSelect() {
   };
 
   const filteredFlags = useMemo(() => {
-    console.log('componentStatus', componentStatus);
     let countries = allCountries.filter((country) => {
       if (['reviewing', 'reviewing_success', 'reviewing_failure', 'completed'].includes(componentStatus)) {
         const guessedFlagCodes = incorrectValues || [];

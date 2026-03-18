@@ -5,17 +5,17 @@ import { useQuizProgression } from '../hooks/useQuizProgression.js';
 const QuizContext = createContext(null);
 const QuizDispatchContext = createContext(null);
 
-export function useQuizThunks() {
-  const state = useQuiz();
-  const dispatch = useQuizDispatch();
-  return useMemo(
-    () => ({
-      startQuiz: () => startQuiz(dispatch, state),
-      switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode),
-    }),
-    [dispatch, state],
-  );
-}
+// export function useQuizThunks() {
+//   const state = useQuiz();
+//   const dispatch = useQuizDispatch();
+//   return useMemo(
+//     () => ({
+//       startQuiz: () => startQuiz(dispatch, state),
+//       switchGameMode: (gameMode) => switchGameMode(dispatch, state, gameMode),
+//     }),
+//     [dispatch, state],
+//   );
+// }
 
 export function useQuiz() {
   const context = useContext(QuizContext);
