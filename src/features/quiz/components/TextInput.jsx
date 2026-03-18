@@ -86,7 +86,7 @@ export function QuizTextInput() {
     if (componentStatus === 'sandbox') {
       // console.log('sandbox', state.quizData[state.quiz.prompt.quizDataIndex]?.country);
       return getCountryData(state.quizData[state.quiz.prompt.quizDataIndex]?.country);
-    } else if (componentStatus === 'reviewing' && correctValue) {
+    } else if (['reviewing', 'reviewing_success', 'reviewing_failure'].includes(componentStatus) && correctValue) {
       return getCountryData(correctValue);
     } else if (componentStatus === 'prompting') {
       return getCountryData(state.quizData[state.quiz.prompt.quizDataIndex]?.country);
