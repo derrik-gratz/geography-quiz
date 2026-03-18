@@ -501,7 +501,7 @@
     "location": {
       "lat": 60,
       "long": -110,
-      "zoom": 8
+      "zoom": 6
     },
     "flagCode": "CA",
     "availablePrompts": ["name", "flag", "location"]
@@ -2928,7 +2928,7 @@
     "location": {
       "lat": 40,
       "long": -100,
-      "zoom": 8
+      "zoom": 6
     },
     "flagCode": "US",
     "availablePrompts": ["name", "flag", "location"]

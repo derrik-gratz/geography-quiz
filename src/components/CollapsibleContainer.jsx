@@ -14,6 +14,7 @@ export function CollapsibleContainer({
   classNames = '',
   defaultCollapsed = false,
 }) {
+  const theme = useTheme();
   // const { isCollapsed, toggleCollapsed } = useCollapsible(defaultCollapsed);
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [expanded, setExpanded] = useState(!defaultCollapsed);
