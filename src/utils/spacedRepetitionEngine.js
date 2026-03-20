@@ -17,9 +17,11 @@ const MAX_LEARNING_RATE = 128;
 export function updateLearningRate(currentRate, isCorrect) {
   const rate = currentRate ?? DEFAULT_LEARNING_RATE;
   if (isCorrect) {
-    return Math.min(rate * CORRECT_MULTIPLIER, MAX_LEARNING_RATE).toFixed(1);
+    return Number(
+      Math.min(rate * CORRECT_MULTIPLIER, MAX_LEARNING_RATE).toFixed(1),
+    );
   } else {
-    return Math.max(rate / WRONG_DIVISOR, MIN_LEARNING_RATE).toFixed(1);
+    return Number(Math.max(rate / WRONG_DIVISOR, MIN_LEARNING_RATE).toFixed(1));
   }
 }
 

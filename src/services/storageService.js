@@ -27,6 +27,59 @@ const DB_VERSION = 7;
 const STORE_NAME = 'user_data';
 const USER_METADATA_KEY = 'geography_quiz_user_metadata';
 
+function normalizeLearningRateValue(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = Number.parseFloat(value);
+    if (Number.isFinite(parsed)) {
+      return parsed;
+    }
+  }
+  return getEngineSettings().DEFAULT_LEARNING_RATE;
+}
+
+function normalizeUserData(userData) {
+  if (!userData?.countries || typeof userData.countries !== 'object') {
+    return { data: userData, changed: false };
+  }
+
+  let changed = false;
+  const normalizedCountries = Object.fromEntries(
+    Object.entries(userData.countries).map(([countryCode, countryData]) => {
+      if (!countryData || typeof countryData !== 'object') {
+        return [countryCode, countryData];
+      }
+
+      const normalizedLearningRate = normalizeLearningRateValue(
+        countryData.learningRate,
+      );
+      if (normalizedLearningRate !== countryData.learningRate) {
+        changed = true;
+        return [
+          countryCode,
+          { ...countryData, learningRate: normalizedLearningRate },
+        ];
+      }
+
+      return [countryCode, countryData];
+    }),
+  );
+
+  if (!changed) {
+    return { data: userData, changed: false };
+  }
+
+  return {
+    data: {
+      ...userData,
+      countries: normalizedCountries,
+    },
+    changed: true,
+  };
+}
+
 function createModalityResultFromGuess(guessData) {
   const { status, n_attempts = 0, attempts = [] } = guessData || {};
   const guesses = attempts || [];
@@ -184,7 +237,17 @@ async function loadUserData() {
       request.onsuccess = () => {
         const data = request.result;
         if (data) {
-          resolve(data.data); // Extract the data property
+          const normalizedData = normalizeUserData(data.data);
+          if (normalizedData.changed) {
+            // Persist migration in the background so future loads are already clean.
+            saveUserData(normalizedData.data).catch((error) => {
+              console.error(
+                'Failed to persist learning rate normalization:',
+                error,
+              );
+            });
+          }
+          resolve(normalizedData.data); // Extract the data property
         } else {
           // Return empty structure
           resolve({
