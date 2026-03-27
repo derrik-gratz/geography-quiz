@@ -12,18 +12,18 @@
 .profile-stats-map__country {
   --fill: var(--map-country-fill);
   --stroke: var(--map-country-outline);
-  --stroke-width: 0.5;
+  --stroke-width: 0.3;
 }
 
 .profile-stats-map__country_selected {
   --fill: var(--mui-palette-primary-main);
   --stroke: var(--mui-palette-primary-dark);
-  --stroke-width: 1;
+  --stroke-width: 0.5;
 }
 .profile-stats-map__country_hovered {
   --fill: var(--mui-palette-secondary-main);
   --stroke: var(--mui-palette-secondary-dark);
-  --stroke-width: 1;
+  --stroke-width: 0.5;
 }
 
 .profile-stats-map__display-mode-selector-button {
