@@ -44,9 +44,13 @@
     "code": "AIA",
     "capital": "The Valley",
     "location": {
-      "lat": 18,
+      "lat": 18.22,
       "long": -63,
       "zoom": 8
+    },
+    "mapMarker": {
+      "lat": 19,
+      "long": -63.1
     },
     "flagCode": "AI",
     "availablePrompts": ["name", "flag", "location"]
@@ -356,9 +360,13 @@
     "code": "BLM",
     "capital": "Gustavia",
     "location": {
-      "lat": 17,
-      "long": -62,
+      "lat": 17.9,
+      "long": -62.83,
       "zoom": 8
+    },
+    "mapMarker": {
+      "lat": 17.4,
+      "long": -64
     },
     "flagCode": "FR",
     "availablePrompts": ["name", "location"]
@@ -954,8 +962,8 @@
     "code": "FSM",
     "capital": "Palikir",
     "location": {
-      "lat": -6,
-      "long": -158,
+      "lat": 6,
+      "long": 158,
       "zoom": 8
     },
     "flagCode": "FM",
@@ -1695,9 +1703,13 @@
     "code": "MAF",
     "capital": "Marigot",
     "location": {
-      "lat": -18,
+      "lat": 18.1,
       "long": -63,
       "zoom": 8
+    },
+    "mapMarker": {
+      "lat": 18.4,
+      "long": -62
     },
     "flagCode": "FR",
     "availablePrompts": [
@@ -1923,6 +1935,10 @@
       "long": -62,
       "zoom": 8
     },
+    "mapMarker": {
+      "lat": 16.1,
+      "long": -62.4
+    },
     "flagCode": "MS",
     "availablePrompts": ["name", "flag", "location"]
   },
@@ -2026,6 +2042,10 @@
       "lat": -29,
       "long": 167,
       "zoom": 8
+    },
+    "mapMarker": {
+      "lat": -29,
+      "long": 167
     },
     "flagCode": "NF",
     "availablePrompts": ["flag", "name"]
@@ -2648,14 +2668,18 @@
     "availablePrompts": ["name", "flag", "location"]
   },
   {
-    "country": "Saint Maarten",
-    "aliases": [],
+    "country": "Sint Maarten",
+    "aliases": ["Saint Maarten"],
     "code": "SXM",
     "capital": "Philipsburg",
     "location": {
-      "lat": 18,
+      "lat": 18.0,
       "long": -63,
       "zoom": 8
+    },
+    "mapMarker": {
+      "lat": 18.0,
+      "long": -62
     },
     "flagCode": "SX",
     "availablePrompts": ["name", "flag", "location"]
