@@ -293,7 +293,7 @@ export function BaseMap({
                   }
                   const geomElement = (
                     <>
-                    {circleElement}{lineElement}
+                    {lineElement}{circleElement}
                     </>
                   )
                   const priority = getCountryPriority
