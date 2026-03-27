@@ -211,7 +211,7 @@ export function BaseMap({
                         fill={countryStyle.default.fill}
                         stroke={countryStyle.default.stroke}
                         // can't figure out how to specify this with CSS
-                        strokeWidth={countryStyle.default.strokeWidth}
+                        strokeWidth="0.3"
                         r={currentRadius}
                         onClick={() => onCountryClick(countryCode)}
                         onMouseEnter={() => onCountryHover(countryCode)}
