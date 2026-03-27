@@ -2045,7 +2045,7 @@
     },
     "mapMarker": {
       "lat": -29,
-      "long": 167
+      "long": 168
     },
     "flagCode": "NF",
     "availablePrompts": ["flag", "name"]
