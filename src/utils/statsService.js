@@ -279,5 +279,5 @@ export function calculateLearningRateCoverage(
     Object.values(learningData).filter(
       (country) => country.learningRate >= learnedThreshold,
     ).length / countryData.length;
-  return learningRateCoverage.toFixed(4);
+  return learningRateCoverage;
 }

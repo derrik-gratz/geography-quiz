@@ -113,7 +113,7 @@ export function ProfilePage() {
           sx={{padding: '1rem 0.5rem 0.5rem 0.5rem'}}
           />
           <CardContent sx={{margin: '0', padding: '0'}}>
-            {(learningRateCoverage * 100).toFixed(0)}%
+            {(learningRateCoverage * 100).toFixed(1)}%
           </CardContent>
         </Card>
     </div>
