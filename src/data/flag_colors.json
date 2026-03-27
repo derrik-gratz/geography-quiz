@@ -402,7 +402,6 @@
     "GY",
     "JM",
     "LK",
-    "LT",
     "MD",
     "MK",
     "ML",
@@ -529,5 +528,5 @@
     "YE",
     "ZW"
   ],
-  "orange": ["AM", "BT", "CI", "CY", "IN", "IE", "ME", "NE"]
+  "orange": ["AM", "BT", "CI", "CY", "IN", "IE", "ME", "NE", "LT"]
 }

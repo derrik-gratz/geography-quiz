@@ -171,19 +171,20 @@ export function BaseMap({
         >
           {showGraticule && <Graticule stroke="#999" step={[20,20]} />}
           <Geographies geography={mainGeographies}>
-            {({ geographies }) => {
+            {({ geographies, projection }) => {
               let lowPriorityGeos = [];
               let regularGeos = [];
               let specialGeos = [];
-
+              const currentRadius = getCircleRadius();
               geographies.forEach((geo) => {
                 const countryCode = getCountryCode(geo);
                 if (
                   allCountryData.find((country) => country.code === countryCode)
                 ) {
+                  const countryData = allCountryData.find((country) => country.code === countryCode);
                   const countryClassName = `base-map__country ${getCountryClassName(countryCode) || ''}`;
                   const countryStyle = getCountryStyle(countryCode);
-                  const geoElement = (
+                  let geoElement = (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
@@ -194,6 +195,35 @@ export function BaseMap({
                       style={countryStyle}
                     />
                   );
+                  let markerElement = null;
+                  if (countryData.mapMarker) {
+                    console.log(countryData.country)
+                    const [long, lat] = countryData.mapMarker ? [countryData.mapMarker.long, countryData.mapMarker.lat] : getCentroid(geo);
+                    const [cx, cy] = projection([long, lat]);
+                    const countryClassName = `base-map__country base-map__small-country ${getCountryClassName(countryCode) || ''}`;
+                    const countryStyle = getCountryStyle(countryCode);
+                    markerElement = (
+                      <circle
+                        key={`${geo.rsmKey}-${viewWindow.zoom}-marker1`}
+                        className={countryClassName}
+                        cx={cx}
+                        cy={cy}
+                        fill={countryStyle.default.fill}
+                        stroke={countryStyle.default.stroke}
+                        // can't figure out how to specify this with CSS
+                        strokeWidth={countryStyle.default.strokeWidth}
+                        r={currentRadius}
+                        onClick={() => onCountryClick(countryCode)}
+                        onMouseEnter={() => onCountryHover(countryCode)}
+                        onMouseLeave={() => onCountryHoverLeave()}
+                      />
+                    );
+                    geoElement = (
+                      <>
+                      {geoElement}{markerElement}
+                      </>
+                    )
+                  }
                   const priority = getCountryPriority
                     ? getCountryPriority(countryCode)
                     : 0;
@@ -221,8 +251,9 @@ export function BaseMap({
                 if (
                   allCountryData.find((country) => country.code === countryCode)
                 ) {
-                  const [centroid_x, centroid_y] = getCentroid(geo);
-                  const [cx, cy] = projection([centroid_x, centroid_y]);
+                  const countryData = allCountryData.find((country) => country.code === countryCode);
+                  const [long, lat] = countryData.mapMarker ? [countryData.mapMarker.long, countryData.mapMarker.lat] : getCentroid(geo);
+                  const [cx, cy] = projection([long, lat]);
                   const countryClassName = `base-map__country base-map__small-country ${getCountryClassName(countryCode) || ''}`;
                   const countryStyle = getCountryStyle(countryCode);
                   const circleElement = (
@@ -241,15 +272,39 @@ export function BaseMap({
                       onMouseLeave={() => onCountryHoverLeave()}
                     />
                   );
+                  let lineElement = null;
+                  if (countryData.mapMarker) {
+                    const [anchorX, anchorY] = projection([countryData.location.long, countryData.location.lat]);
+                    lineElement = (
+                      <line
+                        key={`${geo.rsmKey}-${viewWindow.zoom}-anchor`}
+                        // className={countryClassName}
+                        x1={cx}
+                        y1={cy}
+                        x2={anchorX}
+                        y2={anchorY}
+                        stroke="grey"
+                        // fill={countryStyle.default.fill}
+                        // stroke={countryStyle.default.stroke}
+                        strokeWidth={countryStyle.default.strokeWidth}
+                      />
+                    );
+                    // regularCircles.push(lineElement);
+                  }
+                  const geomElement = (
+                    <>
+                    {circleElement}{lineElement}
+                    </>
+                  )
                   const priority = getCountryPriority
                     ? getCountryPriority(countryCode)
                     : 'regular';
                   if (priority === -1) {
-                    lowPriorityCircles.push(circleElement);
+                    lowPriorityCircles.push(geomElement);
                   } else if (priority === 1) {
-                    specialCircles.push(circleElement);
+                    specialCircles.push(geomElement);
                   } else {
-                    regularCircles.push(circleElement);
+                    regularCircles.push(geomElement);
                   }
                 }
               });
