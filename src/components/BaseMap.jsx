@@ -197,6 +197,7 @@ export function BaseMap({
                   );
                   let markerElement = null;
                   if (countryData.mapMarker) {
+                    // Leaving this here to remind of rerender burden
                     console.log(countryData.country)
                     const [long, lat] = countryData.mapMarker ? [countryData.mapMarker.long, countryData.mapMarker.lat] : getCentroid(geo);
                     const [cx, cy] = projection([long, lat]);

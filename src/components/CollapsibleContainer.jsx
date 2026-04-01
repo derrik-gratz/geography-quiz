@@ -56,10 +56,11 @@ export function CollapsibleContainer({
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{
-          backgroundColor: classNames === 'completed' || classNames === 'reviewing_success' ?
-          theme.palette.success.main : 
-            classNames === 'failed' || classNames === 'reviewing_failure' ?
+          backgroundColor: 
+          ['failed', 'reviewing_failure'].includes(classNames) ?
             theme.palette.error.main : 
+          ['completed', 'reviewing_success', 'prompting', 'reviewing'].includes(classNames) ?
+            theme.palette.success.main : 
             null,
         }}
         >

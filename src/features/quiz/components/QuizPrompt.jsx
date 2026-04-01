@@ -172,7 +172,7 @@ export function QuizPrompt({}) {
       } else if (state.quiz.reviewType === 'learning' && currentPromptData) {
         return <span className="prompt-name">{currentPromptData.country}</span>;
       } else {
-        promptText = 'Review mode';
+        promptText = 'Review';
       }
     } else if (
       state.config.gameMode === 'learning' &&
