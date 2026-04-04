@@ -23,6 +23,7 @@
     "@mui/material": "^7.3.9",
     "@observablehq/plot": "^0.6.17",
     "@react-oauth/google": "^0.13.4",
+    "@supabase/supabase-js": "^2.101.1",
     "flag-icons": "^7.5.0",
     "react": "^18.2.0",
     "react-countdown": "^2.3.6",
@@ -51,6 +52,7 @@
     "lint-staged": "^16.2.7",
     "prettier": "3.8.1",
     "sass": "^1.90.0",
+    "supabase": "^2.84.10",
     "vite": "^7.1.11",
     "vitest": "^4.0.9"
   },

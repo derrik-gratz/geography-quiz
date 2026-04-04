@@ -1,0 +1,61 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Project geoquiz {
+  database_type: 'PostgreSQL'
+}
+
+enum modalities {
+  "flag"
+  "map"
+  "name"
+}
+
+Table challenges {
+  id int [increment, pk]
+  day date [unique]
+}
+
+Table challenge_prompts {
+  id int [pk, increment]
+  challenge_id int [ref: > challenges.id]
+  country_id int [ref: > countries.id]
+  prompted_modality modalities
+  position int
+}
+
+
+Table challenge_attempts {
+  id int [pk, increment]
+  user_id int [ref: > users.id]
+  prompt_id int [ref: > challenge_prompts.id]
+  flag_score float
+  name_score float
+  map_score float
+  indexes {
+    (user_id, prompt_id) [unique]
+  }
+}
+
+
+Table learning_rate {
+  user_id int [ref: > users.id]
+  country_id int [ref: > countries.id]
+  last_checked date
+  rate number
+  indexes {
+    (user_id, country_id) [pk]
+  }
+}
+
+Table countries {
+  id int [increment, pk]
+  code varchar(3) [unique]
+}
+
+Table users {
+  id int [pk, increment]
+  username varchar
+}
+
+

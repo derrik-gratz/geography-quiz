@@ -130,3 +130,9 @@ button {
     max-width: 800px;
   }
 }
+
+/* Google Identity Services button container (toolbar) */
+.google-sign-in-button {
+  display: flex;
+  align-items: center;
+}
