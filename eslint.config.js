@@ -9,7 +9,7 @@ import css from '@eslint/css';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
-  { ignores: ['node_modules/', 'dist/', 'eslint.config.js'] },
+  { ignores: ['node_modules/', 'dist/', 'eslint.config.js', 'vite.config.js'] },
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],
     plugins: { js, react: pluginReact, 'react-hooks': pluginReactHooks },
