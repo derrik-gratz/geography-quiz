@@ -1,26 +1,83 @@
 /**
  * Profile page component displaying daily challenge statistics from local storage
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '@/state/AppProvider.jsx';
 import { ScoreTimeline } from './components/ScoreTimeline.jsx';
 import { DailyChallengeModalityMatrix } from './components/DailyChallengeModalityMatrix.jsx';
 import { ProfileMap } from './components/ProfileStatsMap/ProfileMap.jsx';
+import { Login } from './components/Login.jsx';
+import { supabase } from '@/utils/supabase.js';
 import './ProfilePage.css';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { calculateAverageChallengePerformance, calculateLearningRateCoverage } from '@/utils/statsService.js';
 
+function hasSupabaseEnv() {
+  return Boolean(
+    import.meta.env.VITE_SUPABASE_URL &&
+      (import.meta.env.VITE_SUPABASE_KEY ??
+        import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY),
+  );
+}
 
 export function ProfilePage() {
   const { userData, userDataLoading, refetchUserData } = useApp();
+  const hasSupabase = hasSupabaseEnv();
+  const [authReady, setAuthReady] = useState(!hasSupabase);
+  const [loggedIn, setLoggedIn] = useState(!hasSupabase);
+
+  useEffect(() => {
+    if (!hasSupabase) {
+      return undefined;
+    }
+
+    let cancelled = false;
+
+    async function syncAuth() {
+      const { data, error } = await supabase.auth.getClaims();
+      if (cancelled) return;
+      const sub = data?.claims?.sub;
+      setLoggedIn(Boolean(!error && sub));
+      setAuthReady(true);
+    }
+
+    syncAuth();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      syncAuth();
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [hasSupabase]);
 
   useEffect(() => {
     refetchUserData();
-  }, []);
+  }, [refetchUserData]);
+
+  if (hasSupabase && !authReady) {
+    return (
+      <div className="profile-page">
+        <div className="profile-page__loading">Loading…</div>
+      </div>
+    );
+  }
+
+  if (hasSupabase && !loggedIn) {
+    return (
+      <div className="profile-page">
+        <Login />
+      </div>
+    );
+  }
 
   if (userDataLoading) {
     return (
@@ -69,10 +126,13 @@ export function ProfilePage() {
 
   return (
     <div className="profile-page">
-      {/* <div className="profile-page__header">
-        <h1 className="profile-page__title">User profile</h1>
-      </div> */}
-      {/* {dataModeToggle()} */}
+      {hasSupabase ? (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1, px: 1 }}>
+          <Button size="small" variant="text" onClick={() => supabase.auth.signOut()}>
+            Sign out
+          </Button>
+        </Box>
+      ) : null}
       {!userData || userData.dailyChallenge.fullEntries.length === 0 ? (
         <div className="profile-page__empty-state">
           <p>

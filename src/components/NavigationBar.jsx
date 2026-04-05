@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import { useApp, useAppDispatch } from '@/state/AppProvider.jsx';
-import { AuthToolbarSection } from '@/components/AuthToolbarSection.jsx';
 
 export function NavigationBar() {
   const appContext = useApp();
@@ -32,7 +31,6 @@ export function NavigationBar() {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}></Typography>
-          <AuthToolbarSection />
           <IconButton
             size="large"
             edge="end"

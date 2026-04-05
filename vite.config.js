@@ -10,6 +10,8 @@ export default defineConfig({
   base: '/geography-quiz/',
   plugins: [react()],
   resolve: {
+    // Avoid "Invalid hook call" / "dispatcher is null" when a dependency resolves a second React.
+    dedupe: ['react', 'react-dom'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
